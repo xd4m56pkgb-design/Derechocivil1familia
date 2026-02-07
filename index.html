@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DERECHO CIVIL I: DERECHO DE FAMILIA</title>
+
+<style>
+body { font-family: Arial; max-width: 800px; margin:20px auto; background:#f5f7fb; }
+h1 { text-align:center; margin-bottom:10px; }
+#controls { display:flex; gap:10px; justify-content:center; margin-bottom:12px; }
+select, button { padding:8px 12px; border-radius:4px; font-size:14px; }
+#restartBtn { background:#3498db; color:white; border:none; }
+#restartBtn:hover { background:#2c80b8; }
+
+#questionStats{
+  text-align:center;
+  font-size:0.92rem;
+  color:#2c3e50;
+  margin: 0 auto 18px auto;
+  max-width: 760px;
+  background:#ffffff;
+  padding:10px 12px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.10);
+}
+#questionStats .muted{ color:#666; font-size:0.88rem; }
+#questionStats b{ color:#111; }
+
+#questionContainer {
+  background:#fff; padding:20px; border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1); display:none;
+}
+
+.option {
+  display:block; width:100%; padding:10px; margin:5px 0;
+  background:#fafafa; border:1px solid #ccc; border-radius:4px; cursor:pointer;
+}
+.option.correct { background:#e5ffe5; border-color:green; }
+.option.incorrect { background:#ffe5e5; border-color:red; }
+
+#explanation {
+  margin-top:15px; padding:12px; background:#eef2f7;
+  border-left:4px solid #3498db;
+}
+
+#nextBtn {
+  margin-top:15px; padding:8px 12px; border:none;
+  background:#27ae60; color:white; border-radius:4px; cursor:pointer;
+}
+
+#liveScore{
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: right;
+}
+
+#timer{
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #c0392b;
+  text-align: right;
+  margin-bottom: 4px;
+}
+
+#coverage{
+  font-size: 0.9rem;
+  color: #555;
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+#firma{
+  margin-top: 30px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #777;
+  padding: 15px 0;
+  font-style: italic;
+}
+
+.card{
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  margin: 0 auto 25px auto;
+  max-width: 600px;
+  text-align: center;
+}
+#instrucciones h3{
+  margin-top: 0;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  color: #2c3e50;
+}
+#instrucciones ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #444;
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+}
+#instrucciones ul li{ margin-bottom: 6px; }
+</style>
+</head>
+
+<body>
+
+<h1>DERECHO CIVIL I: DERECHO DE FAMILIA</h1>
+
+<div id="instrucciones" class="card">
+  <h3>INDICACIONES:</h3>
+  <ul>
+    <li>Lee el capítulo a repasar en el libro o en tus apuntes.</li>
+    <li>Elige el primer capítulo del desplegable (resto de temas en proceso).</li>
+    <li>20 preguntas aleatorias de 40 en cada tema, realiza 2 test consecutivos para realizar todas</li>
+    <li>Repasa las explicaciones tras contestar la pregunta para estudiar.</li>
+    <li>Dispones de un cronómetro activo.</li>
+    <li>El sistema calcula tu nota como en la UNED.</li>
+    <li>© by M.García</li>
+  </ul>
+</div>
+
+<div id="controls">
+  <label>Tema:</label>
+  <select id="temaSelect">
+    <option value="all">EXAMEN DE TODO EL CONTENIDO</option>
+    <option value="1">CAPÍTULO 1, EL DERECHO DE FAMILIA</option>
+    <option value="2">TEMA 2</option>
+    <option value="3">TEMA 3</option>
+    <option value="4">TEMA 4</option>
+    <option value="5">TEMA 5</option>
+    <option value="6">TEMA 6</option>
+    <option value="7">TEMA 7</option>
+    <option value="8">TEMA 8</option>
+    <option value="9">TEMA 9</option>
+    <option value="10">TEMA 10</option>
+    <option value="11">TEMA 11</option>
+  </select>
+
+  <button id="restartBtn">Iniciar Test</button>
+</div>
+
+<!-- CONTADOR / ESTADÍSTICAS POR TEMA -->
+<div id="questionStats"></div>
+
+<div id="questionContainer">
+  <div id="questionCounter"></div>
+  <div id="timer"></div>
+  <div id="liveScore"></div>
+  <div id="coverage"></div>
+  <div id="questionText"></div>
+  <div id="options"></div>
+  <div id="feedback"></div>
+  <div id="explanation"></div>
+  <div id="finalResult"></div>
+  <div id="firma">© by M.García</div>
+  <button id="nextBtn" style="display:none;">Siguiente</button>
+</div>
+
+<script>
+// =====================================================
+// CONFIGURACIÓN
+// =====================================================
+const MAX_EXAM_QUESTIONS = 20;
+let usedIds = [];
+
+// ================== CRONÓMETRO ==================
+let EXAM_SECONDS = 30 * 60; // 30 minutos
+let remainingSeconds = 0;
+let timerInterval = null;
+
+// =====================================================
+// PREGUNTAS
+// =====================================================
+const masterQuestions = [
+  {
+    id: 1,
+    tema: 1,
+    epigrafe: "1",
+    text: "Que la familia sea considerada un dato prenormativo anterior al Derecho comporta, desde el punto de vista jurídico, que:",
+    options: [
+      "la familia solo adquiere existencia cuando es creada por una norma jurídica",
+      "el Derecho no crea la familia, sino que la ordena y regula como institución jurídica",
+      "la familia carece de relevancia jurídica al ser una realidad exclusivamente social"
+    ],
+    correctIndex: 1,
+    explanation:
+      "El texto parte de que la familia existe como institución social previa al Derecho, que no la crea, sino que la regula y la convierte en institución jurídica."
+  },
+  {
+    id: 2,
+    tema: 1,
+    epigrafe: "1",
+    text: "La afirmación de que el Derecho no crea la familia, sino que la regula como institución jurídica, implica que:",
+    options: [
+      "la configuración jurídica de la familia ha sido históricamente variable",
+      "la familia mantiene una estructura jurídica inmutable con independencia del contexto",
+      "la regulación jurídica de la familia responde a un modelo único y permanente"
+    ],
+    correctIndex: 0,
+    explanation:
+      "El texto subraya que la familia ha adoptado formas diversas según factores sociales, históricos y culturales, lo que explica su variabilidad jurídica."
+  },
+  {
+    id: 3,
+    tema: 1,
+    epigrafe: "1",
+    text: "Según la concepción contemporánea de la familia reflejada en el texto, la mera convivencia no basta para atribuir la condición jurídica de familia porque:",
+    options: [
+      "la convivencia carece por completo de efectos jurídicos en el Derecho civil",
+      "la noción jurídica de familia se apoya esencialmente en vínculos conyugales o de parentesco",
+      "la convivencia solo genera familia cuando existe descendencia común"
+    ],
+    correctIndex: 1,
+    explanation:
+      "El texto indica expresamente que la concepción contemporánea de la familia se fundamenta en vínculos conyugales o de parentesco, no siendo suficiente la mera convivencia."
+  },
+  {
+    id: 4,
+    tema: 1,
+    epigrafe: "1",
+    text: "La equiparación constitucional entre hijos matrimoniales y extramatrimoniales produjo como consecuencia jurídica que:",
+    options: [
+      "se mantuviera intacto el sistema tradicional de filiación del Código Civil",
+      "fuera necesaria la reforma del sistema de filiación del Código Civil en 1981",
+      "la filiación pasara a regularse exclusivamente por normas autonómicas"
+    ],
+    correctIndex: 1,
+    explanation:
+      "El reconocimiento constitucional de la igualdad entre hijos matrimoniales y extramatrimoniales obligó a reformar el sistema de filiación del Código Civil en 1981."
+  },
+  {
+    id: 5,
+    tema: 1,
+    epigrafe: "1",
+    text: "La inexistencia de una definición jurídica general de familia en la Constitución y en la legislación ordinaria implica jurídicamente que:",
+    options: [
+      "el ordenamiento solo reconoce una forma de familia con carácter general",
+      "son válidas múltiples realidades familiares, salvo cuando una norma concreta exige precisión",
+      "la determinación de la familia queda completamente al margen del Derecho"
+    ],
+    correctIndex: 1,
+    explanation:
+      "El texto afirma que no existe una definición jurídica general de familia, siendo admisibles diversas realidades familiares, salvo a efectos de normas concretas."
+  },
+  {
+    id: 6,
+    tema: 1,
+    epigrafe: "1",
+    text: "Cuando el texto señala que las distinciones entre tipos de familia pertenecen al ámbito sociológico, está indicando que:",
+    options: [
+      "el Derecho carece de pautas generales para diferenciar tipos de familia",
+      "el Derecho impone una clasificación general de modelos familiares",
+      "la Constitución define exhaustivamente las distintas modalidades familiares"
+    ],
+    correctIndex: 0,
+    explanation:
+      "El texto precisa que las distinciones entre tipos de familia no responden a pautas jurídicas generales, sino al ámbito sociológico."
+  },
+  
+  // ==================================================
+// TEMA 1 — EPÍGRAFE 2
+// EL DERECHO DE FAMILIA (Preguntas 7–10)
+// ==================================================
+
+{
+  id: 7,
+  tema: 1,
+  epigrafe: "2",
+  text: "La intervención del Derecho en la organización de la familia se justifica, desde la perspectiva de la tutela, principalmente porque:",
+  options: [
+    "permite sustituir de forma general la actuación de los poderes públicos por la iniciativa privada",
+    "atiende a la protección de personas necesitadas, especialmente menores y personas con discapacidad",
+    "garantiza la autonomía absoluta de los miembros de la familia frente al Estado"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto señala que al Derecho le interesa la familia por razones de organización social y, de modo especial, por la tutela de personas necesitadas de protección, como menores y personas con discapacidad."
+},
+{
+  id: 8,
+  tema: 1,
+  epigrafe: "2",
+  text: "La solidaridad y el socorro mutuo en el ámbito familiar cumplen una función relevante porque:",
+  options: [
+    "eliminan por completo la necesidad de intervención del Estado en los conflictos sociales",
+    "resuelven de hecho numerosas tensiones sociales, permitiendo que la estructura política y administrativa se desentienda de ellas",
+    "atribuyen a la familia competencias propias de la Administración pública"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto destaca que la solidaridad familiar resuelve en la práctica muchas tensiones sociales, lo que permite a la organización política y administrativa no asumir directamente esas funciones."
+},
+{
+  id: 9,
+  tema: 1,
+  epigrafe: "2",
+  text: "Los conflictos derivados de la convivencia familiar exigen una mediación jurídica del Estado porque:",
+  options: [
+    "la convivencia familiar genera conflictos que no pueden resolverse sin intervención judicial constante",
+    "la existencia de conflictos familiares requiere reglas de intermediación jurídica a las que el Estado no puede permanecer ajeno",
+    "todo conflicto familiar debe transformarse necesariamente en un proceso judicial"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto indica que la convivencia familiar origina conflictos que requieren reglas de mediación jurídica, frente a los cuales el Estado no puede permanecer ajeno."
+},
+{
+  id: 10,
+  tema: 1,
+  epigrafe: "2",
+  text: "El contenido estructural del Derecho de familia, como sector del Derecho civil, comprende fundamentalmente la regulación de:",
+  options: [
+    "las relaciones patrimoniales entre familiares y la sucesión hereditaria",
+    "el matrimonio y sus crisis, las relaciones entre progenitores e hijos y las instituciones tutelares en función sustitutiva de la patria potestad",
+    "todas las formas de convivencia con independencia de su reconocimiento jurídico"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto define el Derecho de familia como el conjunto de reglas que regulan el matrimonio y sus crisis, las relaciones entre padres o progenitores e hijos y las instituciones tutelares que sustituyen a la patria potestad."
+},
+// ==================================================
+// TEMA 1 — EPÍGRAFE 3
+// MODERNAS ORIENTACIONES DEL DERECHO DE FAMILIA (Preguntas 11–12)
+// ==================================================
+
+{
+  id: 11,
+  tema: 1,
+  epigrafe: "3",
+  text: "El Derecho de familia ha sido el sector del Derecho civil más intensamente reformado en la época contemporánea porque:",
+  options: [
+    "carecía de regulación sistemática en el Código Civil",
+    "la conservación prolongada del Código Civil de 1889 y la aprobación de la Constitución de 1978 generaron una fuerte tensión normativa",
+    "las Comunidades Autónomas asumieron competencias exclusivas en materia familiar"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto explica que la profunda reforma del Derecho de familia se debe, por un lado, a la pervivencia de un Código Civil inspirado en principios decimonónicos y, por otro, a la irrupción de la Constitución de 1978 con principios radicalmente distintos."
+},
+{
+  id: 12,
+  tema: 1,
+  epigrafe: "3",
+  text: "La contradicción entre la redacción originaria del Código Civil de 1889 y la Constitución de 1978 en materia familiar se manifiesta principalmente en que:",
+  options: [
+    "el Código Civil reconocía la igualdad jurídica plena entre todos los miembros de la familia",
+    "el modelo patriarcal y discriminatorio del Código Civil resultaba incompatible con los principios constitucionales",
+    "la Constitución asumió sin cambios los principios inspiradores del Código Civil"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El Código Civil de 1889 respondía a un modelo patriarcal, con subordinación de la mujer y discriminación entre hijos, incompatible con los principios de igualdad proclamados por la Constitución de 1978."
+},
+
+// ==================================================
+// TEMA 1 — EPÍGRAFE 3.1
+// PRINCIPIOS CONSTITUCIONALES EN RELACIÓN CON EL DERECHO DE FAMILIA (Preguntas 13–15)
+// ==================================================
+
+{
+  id: 13,
+  tema: 1,
+  epigrafe: "3.1",
+  text: "La proclamación constitucional de la igualdad entre hombre y mujer respecto del matrimonio tuvo como consecuencia jurídica que:",
+  options: [
+    "se mantuviera la atribución de la autoridad familiar al marido",
+    "se afirmara la igualdad absoluta de derechos y deberes de los cónyuges en el matrimonio",
+    "se reconociera únicamente la igualdad patrimonial entre los cónyuges"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El artículo 32.1 de la Constitución consagra la igualdad entre hombre y mujer en el matrimonio, lo que implica la plena igualdad jurídica entre los cónyuges."
+},
+{
+  id: 14,
+  tema: 1,
+  epigrafe: "3.1",
+  text: "La aconfesionalidad del Estado proclamada por la Constitución produce, en relación con el matrimonio, el efecto jurídico de que:",
+  options: [
+    "el matrimonio queda sometido exclusivamente a las normas religiosas",
+    "el poder civil recupera la competencia para regular el matrimonio y sus efectos",
+    "se elimina toda forma de matrimonio con relevancia jurídica"
+  ],
+  correctIndex: 1,
+  explanation:
+    "La aconfesionalidad del Estado supone la recuperación del poder civil en la regulación del matrimonio, delegándose en el legislador ordinario la posibilidad de admitir el divorcio."
+},
+{
+  id: 15,
+  tema: 1,
+  epigrafe: "3.1",
+  text: "En materia de filiación, la Constitución impone al legislador ordinario el mandato de:",
+  options: [
+    "mantener la distinción entre hijos matrimoniales y extramatrimoniales",
+    "regular la investigación de la paternidad",
+    "atribuir la filiación exclusivamente por vínculo matrimonial"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El artículo 39.2 de la Constitución ordena al legislador ordinario la regulación de la investigación de la paternidad."
+},
+
+// ==================================================
+// TEMA 1 — EPÍGRAFE 3.2
+// LA LEGISLACIÓN REFORMADORA DEL CÓDIGO CIVIL (Preguntas 16–20)
+// ==================================================
+
+{
+  id: 16,
+  tema: 1,
+  epigrafe: "3.2",
+  text: "Las Leyes 11/1981 y 30/1981 transformaron el sistema familiar del Código Civil porque:",
+  options: [
+    "introdujeron ajustes parciales sin alterar la estructura del Derecho de familia",
+    "plasmaron los principios constitucionales en materia de filiación, patria potestad y matrimonio",
+    "trasladaron la regulación familiar al ámbito autonómico"
+  ],
+  correctIndex: 1,
+  explanation:
+    "Ambas leyes incorporaron al Código Civil los principios constitucionales, reformando profundamente la filiación, la patria potestad y el régimen matrimonial."
+},
+{
+  id: 17,
+  tema: 1,
+  epigrafe: "3.2",
+  text: "Se considera que las reformas de 1981 instauraron un sistema familiar posconstitucional porque:",
+  options: [
+    "desarrollaron un modelo coherente con los principios de la Constitución de 1978",
+    "se limitaron a modernizar el lenguaje jurídico del Código Civil",
+    "introdujeron un sistema transitorio pendiente de desarrollo posterior"
+  ],
+  correctIndex: 0,
+  explanation:
+    "Las reformas de 1981 adecuaron el Derecho de familia a los principios constitucionales, configurando un sistema plenamente posconstitucional."
+},
+{
+  id: 18,
+  tema: 1,
+  epigrafe: "3.2",
+  text: "El reconocimiento del matrimonio entre personas del mismo sexo por la Ley 13/2005 tuvo como alcance jurídico que:",
+  options: [
+    "creó una institución matrimonial distinta del matrimonio civil",
+    "extendió la institución matrimonial existente a parejas del mismo sexo",
+    "limitó los efectos del matrimonio a determinados ámbitos patrimoniales"
+  ],
+  correctIndex: 1,
+  explanation:
+    "La Ley 13/2005 no creó una nueva figura, sino que amplió el acceso al matrimonio civil a las parejas del mismo sexo."
+},
+{
+  id: 19,
+  tema: 1,
+  epigrafe: "3.2",
+  text: "La reforma de 2005 que suprimió el sistema causal y la separación previa al divorcio produjo como consecuencia que:",
+  options: [
+    "el divorcio quedara condicionado a la existencia de causa legal",
+    "se facilitara el acceso al divorcio sin necesidad de alegar causa ni separación previa",
+    "se eliminara la institución del divorcio del Código Civil"
+  ],
+  correctIndex: 1,
+  explanation:
+    "La reforma de 2005 eliminó el sistema causal y la exigencia de separación previa, simplificando el acceso al divorcio."
+},
+{
+  id: 20,
+  tema: 1,
+  epigrafe: "3.2",
+  text: "Las reformas posteriores a 1981 no alteraron el sistema familiar instaurado porque:",
+  options: [
+    "se limitaron a incidir en aspectos concretos sin modificar sus principios estructurales",
+    "carecieron de relevancia jurídica efectiva",
+    "fueron anuladas por el Tribunal Constitucional"
+  ],
+  correctIndex: 0,
+  explanation:
+    "El texto indica que las reformas posteriores afectaron a aspectos específicos del Derecho de familia, pero sin alterar el sistema posconstitucional establecido en 1981."
+},
+
+// ==================================================
+// TEMA 1 — EPÍGRAFE 3.3
+// REFERENCIA A LA LEGISLACIÓN FORAL O ESPECIAL (Preguntas 21–24)
+// ==================================================
+
+{
+  id: 21,
+  tema: 1,
+  epigrafe: "3.3",
+  text: "La legislación foral o especial tiene una relevancia particular en el Derecho de familia porque:",
+  options: [
+    "regula de forma uniforme todos los aspectos familiares en España",
+    "ha incidido especialmente en materia de régimen económico del matrimonio",
+    "sustituye al Código Civil como norma general en materia familiar"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto destaca que la legislación foral ha tenido una especial relevancia en el régimen económico del matrimonio."
+},
+{
+  id: 22,
+  tema: 1,
+  epigrafe: "3.3",
+  text: "La exposición del Derecho de familia suele centrarse en la legislación estatal porque:",
+  options: [
+    "las normas autonómicas carecen de relevancia jurídica",
+    "el Derecho estatal constituye el Derecho de familia de aplicación general en España",
+    "la Constitución prohíbe la regulación autonómica del Derecho de familia"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto explica que la exposición se centra en el Derecho estatal por ser el de aplicación general, sin perjuicio de la existencia de normas autonómicas."
+},
+{
+  id: 23,
+  tema: 1,
+  epigrafe: "3.3",
+  text: "La particularidad del Derecho de familia en Cataluña radica en que:",
+  options: [
+    "carece de regulación propia en materia familiar",
+    "ha integrado su normativa familiar en un Código de Familia y posteriormente en un Código Civil propio",
+    "aplica exclusivamente el Código Civil estatal"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto destaca que Cataluña ha seguido una política legislativa propia, integrando la regulación familiar en un Código de Familia y luego en su Código Civil."
+},
+{
+  id: 24,
+  tema: 1,
+  epigrafe: "3.3",
+  text: "Pese a la intensa intervención normativa, el Derecho de familia se considera sistemáticamente Derecho privado porque:",
+  options: [
+    "regula relaciones entre particulares en el ámbito de la persona, la familia y el patrimonio",
+    "excluye por completo la actuación de los poderes públicos",
+    "se integra en el Derecho administrativo por su carácter imperativo"
+  ],
+  correctIndex: 0,
+  explanation:
+    "El texto señala que el Derecho de familia se adscribe al Derecho civil y, por tanto, al Derecho privado, al regular relaciones entre particulares."
+},
+
+// ==================================================
+// TEMA 1 — EPÍGRAFE 4.3
+// LOS ACUERDOS FAMILIARES (Preguntas 25–27)
+// ==================================================
+
+{
+  id: 25,
+  tema: 1,
+  epigrafe: "4.3",
+  text: "La existencia de normas imperativas en el Derecho de familia comporta, respecto de la autonomía privada de los cónyuges, que:",
+  options: [
+    "queda totalmente excluida en las relaciones familiares",
+    "no desaparece, sino que convive con límites y espacios de autorregulación",
+    "solo puede ejercerse mediante intervención judicial previa"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto señala que, pese a la presencia de normas imperativas, el Derecho de familia no elimina la autonomía privada, sino que la admite en numerosos supuestos, especialmente a través de acuerdos entre los cónyuges."
+},
+{
+  id: 26,
+  tema: 1,
+  epigrafe: "4.3",
+  text: "No resulta adecuado afirmar que la imperatividad sea la regla y la autonomía privada la excepción en el Derecho de familia actual porque:",
+  options: [
+    "las reformas recientes han reforzado de forma significativa la capacidad de autorregulación de los cónyuges",
+    "la autonomía privada solo opera en ausencia total de normas legales",
+    "el régimen económico matrimonial está impuesto legalmente en todos los casos"
+  ],
+  correctIndex: 0,
+  explanation:
+    "El texto destaca que, especialmente tras las reformas de 1981, la autonomía privada ha adquirido una relevancia creciente, hasta el punto de que no puede considerarse una simple excepción."
+},
+{
+  id: 27,
+  tema: 1,
+  epigrafe: "4.3",
+  text: "La construcción del negocio jurídico de Derecho de familia presenta límites como categoría explicativa general porque:",
+  options: [
+    "facilita la explicación sistemática de todas las instituciones familiares",
+    "no proporciona un régimen normativo general y altera el esquema clásico del negocio jurídico",
+    "permite integrar sin dificultad el matrimonio en la teoría general del negocio jurídico"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto considera dudosa esta construcción porque no aclara las instituciones familiares, no aporta un régimen general y altera incluso la explicación del matrimonio."
+},
+
+// ==================================================
+// TEMA 1 — EPÍGRAFE 4.4
+// EL SENTIDO ÉTICO DEL DERECHO DE FAMILIA (Preguntas 28–30)
+// ==================================================
+
+{
+  id: 28,
+  tema: 1,
+  epigrafe: "4.4",
+  text: "El Derecho de familia no puede concebirse como un sistema de reglas mecánicas de aplicación constante porque:",
+  options: [
+    "las relaciones familiares presentan una profundidad y cotidianeidad incompatibles con soluciones automáticas",
+    "carece de normas jurídicas aplicables a la vida familiar",
+    "su aplicación queda siempre excluida del control judicial"
+  ],
+  correctIndex: 0,
+  explanation:
+    "El texto subraya que la intensidad y cercanía de las relaciones familiares dificultan la aplicación automática de reglas jurídicas mecánicas."
+},
+{
+  id: 29,
+  tema: 1,
+  epigrafe: "4.4",
+  text: "El contenido ético del Derecho de familia cumple la función de:",
+  options: [
+    "sustituir las normas jurídicas por criterios morales",
+    "influir en la configuración normativa y en su aplicación práctica mediante principios morales y convenciones sociales",
+    "eliminar la necesidad de regulación jurídica de la familia"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto destaca la influencia de principios morales y convenciones sociales tanto en la regulación del Derecho de familia como en su aplicación práctica."
+},
+{
+  id: 30,
+  tema: 1,
+  epigrafe: "4.4",
+  text: "El Derecho de familia adquiere su verdadera relevancia y significación especialmente cuando:",
+  options: [
+    "las relaciones familiares se desarrollan con normalidad",
+    "se producen situaciones de crisis familiar que requieren una solución jurídica",
+    "los conflictos familiares se resuelven exclusivamente por vías éticas"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto indica que, aunque muchas vivencias familiares no requieren intervención jurídica, el Derecho de familia resulta esencial en los supuestos de crisis."
+},
+
+// ==================================================
+// TEMA 1 — EPÍGRAFE 5
+// LOS DERECHOS SUBJETIVOS FAMILIARES: EL CONCEPTO DE POTESTAD (Preguntas 31–34)
+// ==================================================
+
+{
+  id: 31,
+  tema: 1,
+  epigrafe: "5",
+  text: "Los llamados derechos subjetivos familiares se caracterizan tradicionalmente porque:",
+  options: [
+    "son disponibles y transmisibles, pudiendo ejercitarse bajo condición o término",
+    "son indisponibles, intransmisibles, irrenunciables e imprescriptibles",
+    "son renunciables e imprescriptibles, pero solo dentro del matrimonio"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto atribuye a los derechos de familia, entendidos como derechos subjetivos, los rasgos tradicionales de indisponibilidad, intransmisibilidad, irrenunciabilidad e imprescriptibilidad."
+},
+{
+  id: 32,
+  tema: 1,
+  epigrafe: "5",
+  text: "La naturaleza especialmente personalísima de los derechos familiares implica, respecto de su ejercicio, que:",
+  options: [
+    "pueden ejercitarse libremente mediante representante en cualquier caso",
+    "no pueden ejercitarse mediante representante ni operar la representación en las relaciones entre cónyuges o entre padres e hijos",
+    "solo pueden ejercitarse por representante cuando exista autorización judicial"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto indica que, por su especial naturaleza, estos derechos no pueden ejercitarse por representante y no opera la representación en relaciones entre cónyuges ni entre padres e hijos."
+},
+{
+  id: 33,
+  tema: 1,
+  epigrafe: "5",
+  text: "Es técnicamente más adecuado hablar de potestad, y no de derecho subjetivo, cuando los poderes atribuidos a un familiar:",
+  options: [
+    "se orientan al interés particular de quien los ejerce",
+    "no atienden al interés del titular, sino al cuidado, vigilancia o consideración de los intereses de otras personas",
+    "dependen exclusivamente de la voluntad del titular, sin límites legales"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto afirma que cuando el poder no se dirige al interés particular del titular, sino a la protección o atención de otros, resulta más preciso calificarlo como potestad."
+},
+{
+  id: 34,
+  tema: 1,
+  epigrafe: "5",
+  text: "El criterio que permite diferenciar una potestad familiar de un derecho subjetivo propiamente dicho es, esencialmente, si:",
+  options: [
+    "su ejercicio está sometido a condición o término",
+    "el poder se configura para proteger intereses ajenos y no el interés particular del titular",
+    "la relación familiar se basa en convivencia o en parentesco"
+  ],
+  correctIndex: 1,
+  explanation:
+    "Según el texto, la potestad se identifica porque el poder se ejerce orientado al cuidado o consideración de intereses de otra u otras personas, no al interés particular del titular."
+},
+
+// ==================================================
+// TEMA 1 — EPÍGRAFE 6 / 6.1 / 6.2
+// FAMILIA, GRUPOS FAMILIARES Y MEDIACIÓN (Preguntas 35–40)
+// ==================================================
+
+{
+  id: 35,
+  tema: 1,
+  epigrafe: "6",
+  text: "La necesidad de recurrir a instrumentos distintos de las normas tradicionales para afrontar los conflictos familiares actuales se justifica porque:",
+  options: [
+    "las normas jurídicas clásicas han quedado totalmente obsoletas",
+    "la pluralidad de formas familiares y la complejidad de las relaciones exigen mecanismos complementarios de intervención",
+    "los conflictos familiares deben resolverse siempre fuera del Derecho"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto señala que la diversidad de los grupos familiares y la complejidad de las relaciones actuales hacen necesario recurrir a instrumentos complementarios junto a las normas tradicionales."
+},
+{
+  id: 36,
+  tema: 1,
+  epigrafe: "6",
+  text: "El Proyecto de Ley de Familias persigue, en relación con la diversidad de situaciones familiares, la finalidad de:",
+  options: [
+    "establecer un modelo único y cerrado de familia",
+    "garantizar los derechos y la igualdad jurídica de las distintas realidades familiares",
+    "limitar la protección jurídica a las familias basadas en el matrimonio"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto indica que el Proyecto de Ley de Familias se orienta a garantizar los derechos y la igualdad jurídica de todas las situaciones familiares, respetando la diversidad."
+},
+{
+  id: 37,
+  tema: 1,
+  epigrafe: "6.1",
+  text: "Las Comunidades Autónomas han podido regular la mediación familiar fundamentalmente al amparo del título competencial de:",
+  options: [
+    "la legislación procesal civil",
+    "la protección social de la familia",
+    "la organización de la Administración de Justicia"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto señala que la regulación autonómica de la mediación familiar se apoya en el título competencial relativo a la protección social de la familia."
+},
+{
+  id: 38,
+  tema: 1,
+  epigrafe: "6.1",
+  text: "La inexistencia de una ley autonómica específica de mediación familiar en determinados territorios implica que:",
+  options: [
+    "no existen servicios o centros de mediación familiar en dichos territorios",
+    "queda excluida cualquier forma de mediación familiar",
+    "pueden existir servicios o centros especializados aun sin una ley específica"
+  ],
+  correctIndex: 2,
+  explanation:
+    "El texto aclara que la ausencia de ley autonómica específica no implica necesariamente la inexistencia de servicios o centros de mediación familiar."
+},
+{
+  id: 39,
+  tema: 1,
+  epigrafe: "6.2",
+  text: "El ámbito objetivo de aplicación de la mediación regulada por la Ley 5/2012 queda delimitado porque:",
+  options: [
+    "se aplica a todo tipo de conflictos, con independencia de su naturaleza",
+    "solo comprende asuntos civiles y mercantiles que versen sobre derechos y obligaciones disponibles",
+    "incluye de forma preferente los conflictos con las Administraciones públicas"
+  ],
+  correctIndex: 1,
+  explanation:
+    "La Ley 5/2012 aplica la mediación a asuntos civiles y mercantiles, incluidos los transfronterizos, siempre que afecten a derechos y obligaciones disponibles."
+},
+{
+  id: 40,
+  tema: 1,
+  epigrafe: "6.2",
+  text: "El acuerdo alcanzado en un procedimiento de mediación conforme a la Ley 5/2012 puede adquirir eficacia jurídica porque:",
+  options: [
+    "produce automáticamente efectos ejecutivos desde su firma",
+    "puede dotarse de fuerza ejecutiva mediante homologación judicial o elevación a escritura pública",
+    "sustituye en todo caso a la resolución judicial"
+  ],
+  correctIndex: 1,
+  explanation:
+    "El texto indica que el acuerdo de mediación no es obligatoriamente ejecutivo, pero puede adquirir fuerza ejecutiva mediante homologación judicial o elevación a escritura pública."
+}
+  
+  
+  
+];
+
+// =====================================================
+// UTILIDADES
+// =====================================================
+function $(id){ return document.getElementById(id); }
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+
+function getSelectedTema(){
+  const temaValue = $("temaSelect").value;
+  return (temaValue === "all") ? "all" : Number(temaValue);
+}
+
+function getCandidatesForTema(selectedTema){
+  return (selectedTema === "all")
+    ? [...masterQuestions]
+    : masterQuestions.filter(q => q.tema === selectedTema);
+}
+
+function updateQuestionStats(){
+  const selectedTema = getSelectedTema();
+  const candidates = getCandidatesForTema(selectedTema);
+  const total = candidates.length;
+
+  const usedInTema = candidates.filter(q => usedIds.includes(q.id)).length;
+  const remaining = Math.max(0, total - usedInTema);
+  const coveragePct = (total === 0) ? 0 : Math.round((usedInTema / total) * 100);
+
+  const labelTema = (selectedTema === "all") ? "Todo el contenido" : ("Tema " + selectedTema);
+
+  $("questionStats").innerHTML =
+    "<div><b>" + labelTema + "</b> · Preguntas disponibles: <b>" + total + "</b></div>" +
+    "<div class='muted'>Vistas en esta sesión: <b>" + usedInTema + "</b> · Quedan sin salir: <b>" + remaining + "</b> · Cobertura: <b>" + coveragePct + "%</b></div>";
+}
+
+let selectedQuestions = [];
+let currentIndex = 0;
+let totalCorrect = 0;
+let totalWrong = 0;
+let currentOptions = [];
+let currentTemaRunning = "all";
+
+function updateLiveScore(){
+  const puntosAciertos = totalCorrect * 0.5;
+  const puntosFallos   = totalWrong * 0.2;
+
+  let notaActual = puntosAciertos - puntosFallos;
+  if (notaActual < 0) notaActual = 0;
+
+  notaActual = Math.round(notaActual * 100) / 100;
+
+  $("liveScore").innerHTML =
+    "Aciertos: " + totalCorrect +
+    " · Fallos: " + totalWrong +
+    " · Nota provis.: " + notaActual.toFixed(2) + " / 10";
+}
+
+function updateCoverageDuringExam(){
+  const candidates = getCandidatesForTema(currentTemaRunning);
+  const total = candidates.length;
+
+  // Ojo: durante el examen aún NO metemos en usedIds; esto muestra cobertura histórica + “este test”
+  const inThisTest = selectedQuestions.length;
+  const usedInTema = candidates.filter(q => usedIds.includes(q.id)).length;
+
+  const remaining = Math.max(0, total - usedInTema);
+  $("coverage").innerHTML =
+    "Banco del tema: " + total +
+    " · Vistas: " + usedInTema +
+    " · Restan: " + remaining +
+    " · Test actual: " + inThisTest;
+}
+
+function updateTimerDisplay(){
+  const m = Math.floor(remainingSeconds / 60);
+  const s = remainingSeconds % 60;
+  $("timer").innerHTML = "Tiempo: " + String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+}
+
+function startTimer(){
+  if (timerInterval) clearInterval(timerInterval);
+  remainingSeconds = EXAM_SECONDS;
+  updateTimerDisplay();
+
+  timerInterval = setInterval(function(){
+    remainingSeconds--;
+    updateTimerDisplay();
+    if (remainingSeconds <= 0){
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timeIsOver();
+    }
+  }, 1000);
+}
+
+function timeIsOver(){
+  document.querySelectorAll(".option").forEach(b => b.disabled = true);
+  $("feedback").innerHTML = "<span style='color:red;'>Tiempo agotado. Se cierra el examen.</span>";
+  showResult();
+}
+
+// =====================================================
+// INICIAR EXAMEN
+// =====================================================
+$("restartBtn").onclick = function(){
+  const selectedTema = getSelectedTema();
+  currentTemaRunning = selectedTema;
+
+  let candidates = getCandidatesForTema(selectedTema);
+
+  if (candidates.length === 0){
+    $("questionContainer").style.display = "block";
+    $("questionCounter").innerHTML = "⚠️ No hay preguntas para este tema.";
+    $("questionText").innerHTML = "";
+    $("options").innerHTML = "";
+    $("feedback").innerHTML = "";
+    $("explanation").innerHTML = "";
+    $("finalResult").innerHTML = "";
+    $("nextBtn").style.display = "none";
+    updateQuestionStats();
+    return;
+  }
+
+  // preguntas aún no usadas (para no repetir dentro de sesión)
+  let remaining = candidates.filter(q => !usedIds.includes(q.id));
+  if (remaining.length === 0){
+    usedIds = [];
+    remaining = candidates;
+  }
+
+  shuffle(remaining);
+
+  selectedQuestions = remaining.length > MAX_EXAM_QUESTIONS
+    ? remaining.slice(0, MAX_EXAM_QUESTIONS)
+    : remaining;
+
+  currentIndex = 0;
+  totalCorrect = 0;
+  totalWrong = 0;
+
+  $("instrucciones").style.display = "none";
+  $("questionContainer").style.display = "block";
+
+  startTimer();
+  updateLiveScore();
+  updateCoverageDuringExam();
+  loadQuestion();
+  updateQuestionStats();
+};
+
+// =====================================================
+// CARGAR PREGUNTA
+// =====================================================
+function loadQuestion(){
+  const q = selectedQuestions[currentIndex];
+
+  $("questionCounter").innerHTML =
+    "Pregunta " + (currentIndex + 1) + " de " + selectedQuestions.length;
+
+  $("questionText").innerHTML = q.text;
+  $("options").innerHTML = "";
+  $("feedback").innerHTML = "";
+  $("explanation").innerHTML = "";
+  $("finalResult").innerHTML = "";
+  $("nextBtn").style.display = "none";
+  $("explanation").style.display = "block";
+
+  const opcionesMezcladas = q.options.map((texto, i) => ({
+    texto,
+    indexOriginal: i
+  }));
+
+  shuffle(opcionesMezcladas);
+  currentOptions = opcionesMezcladas;
+
+  opcionesMezcladas.forEach(op => {
+    const btn = document.createElement("button");
+    btn.className = "option";
+    btn.innerHTML = op.texto;
+    btn.onclick = () => handleAnswer(op.indexOriginal);
+    $("options").appendChild(btn);
+  });
+}
+
+// =====================================================
+// RESPUESTA
+// =====================================================
+function handleAnswer(idx){
+  const q = selectedQuestions[currentIndex];
+  const btns = document.querySelectorAll(".option");
+
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    const optInfo = currentOptions[i];
+
+    if (optInfo.indexOriginal === q.correctIndex) b.classList.add("correct");
+    if (optInfo.indexOriginal === idx && idx !== q.correctIndex) b.classList.add("incorrect");
+  });
+
+  if (idx === q.correctIndex){
+    totalCorrect++;
+    $("feedback").innerHTML = "<span style='color:green;'>¡Correcto!</span>";
+  } else {
+    totalWrong++;
+    $("feedback").innerHTML = "<span style='color:red;'>Incorrecto</span>";
+  }
+
+  updateLiveScore();
+  $("explanation").innerHTML = q.explanation;
+
+  $("nextBtn").innerHTML =
+    (currentIndex === selectedQuestions.length - 1) ? "Ver resultado" : "Siguiente";
+
+  $("nextBtn").style.display = "inline-block";
+  $("nextBtn").onclick = nextQuestion;
+}
+
+// =====================================================
+// SIGUIENTE
+// =====================================================
+function nextQuestion(){
+  currentIndex++;
+  if(currentIndex >= selectedQuestions.length){
+    showResult();
+    return;
+  }
+  loadQuestion();
+}
+
+// =====================================================
+// RESULTADO
+// =====================================================
+function showResult(){
+  if (timerInterval){
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+
+  $("questionText").innerHTML = "";
+  $("options").innerHTML = "";
+  $("feedback").innerHTML = "";
+  $("explanation").innerHTML = "";
+  $("nextBtn").style.display = "none";
+
+  $("questionCounter").innerHTML = "✅ Examen finalizado";
+  $("explanation").style.display = "none";
+
+  // Guardar como "vistas"
+  selectedQuestions.forEach(q => {
+    if(!usedIds.includes(q.id)) usedIds.push(q.id);
+  });
+
+  const total = selectedQuestions.length;
+  const puntosAciertos = totalCorrect * 0.5;
+  const puntosFallos  = totalWrong * 0.2;
+
+  let notaFinal = puntosAciertos - puntosFallos;
+  if (notaFinal < 0) notaFinal = 0;
+  notaFinal = Math.round(notaFinal * 100) / 100;
+
+  let calificacion = "";
+  if (notaFinal < 5)       calificacion = "Suspenso";
+  else if (notaFinal < 7)  calificacion = "Aprobado";
+  else if (notaFinal < 9)  calificacion = "Notable";
+  else if (notaFinal < 10) calificacion = "Sobresaliente";
+  else                     calificacion = "Matrícula de honor";
+
+  $("finalResult").innerHTML =
+    "<b>Aciertos:</b> " + totalCorrect + "<br>" +
+    "<b>Fallos:</b> " + totalWrong + "<br>" +
+    "<b>Preguntas totales:</b> " + total + "<br><br>" +
+    "<b>Nota final:</b> " + notaFinal.toFixed(2) + " / 10 (" + calificacion + ")";
+
+  updateCoverageDuringExam();
+  updateQuestionStats();
+}
+
+// =====================================================
+// INICIALIZACIÓN
+// =====================================================
+$("temaSelect").onchange = updateQuestionStats;
+updateQuestionStats();
+</script>
+
+</body>
+</html>
