@@ -1,0 +1,1833 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Administrativo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:hidden;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:flex-start;   /* 🔧 no space-between */
+}
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1 1 auto;                /* 🔧 ocupa el ancho */
+}
+.sumTitle{
+  min-width:0;
+  white-space:normal;           /* 🔧 permite saltos */
+  overflow:visible;             /* 🔧 no recorta */
+  text-overflow:clip;           /* 🔧 no pone … */
+  word-break:break-word;
+  line-height:1.25;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{ margin:0 0 10px; line-height:1.6; white-space:pre-wrap }
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">CAPÍTULO 2 - EL MATRIMONIO</h1>
+  <div class="small"> by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. EL MATRIMONIO
+Hasta la aprobación de la Ley 13/2005, de 1 de julio, el matrimonio ha sido concebido en
+nuestra sociedad como la unión estable entre hombre y mujer destinada a compartir la vida y
+sus avatares. En lo esencial, la idea contemporánea de matrimonio mantiene una notable
+continuidad con concepciones históricas anteriores.
+Desde la perspectiva civil, el análisis del matrimonio prescinde de los aspectos religiosos o
+sacramentales, propios de la tradición romana y, especialmente, de la canónica, aunque debe
+reconocerse que el desarrollo del Derecho canónico ha influido de forma relevante en
+numerosos aspectos de la regulación jurídico-civil del matrimonio. En este epígrafe
+introductorio se atiende al matrimonio desde una óptica laica y estatal, destacando sus notas
+culturales y jurídicas fundamentales, sin establecer jerarquías ni menosprecio respecto de
+otras formas de convivencia.
+1.1. Heterosexualidad y LGTBI
+Hasta la aprobación de la Ley 13/2005, el matrimonio exigía la unión de un hombre y una
+mujer, quedando excluidas otras relaciones de pareja no compuestas por personas de distinto
+sexo, con independencia de que se tratara de parejas homosexuales masculinas o femeninas o
+de personas transexuales. Esta concepción tradicional fue considerada confirmada
+implícitamente por el art. 32 de la Constitución, al reconocer que el hombre y la mujer tienen
+derecho a contraer matrimonio.
+Una parte minoritaria de la doctrina defendió la posibilidad del matrimonio de personas
+transexuales tras el reconocimiento judicial del cambio de sexo, posición respaldada por la
+Resolución de la Dirección General de los Registros y del Notariado de 24 de enero de
+2005, aunque con argumentos discutidos. Posteriormente, la Ley 3/2007, sobre rectificación
+registral del sexo, introdujo nuevos criterios que han sido superados por la Ley 4/2023, para la
+igualdad real y efectiva de las personas trans y la garantía de los derechos de las personas
+LGTBI.
+La Ley 4/2023 reconoce la autodeterminación de género, refuerza la igualdad real y efectiva
+de las personas LGTBI y establece mecanismos de protección frente a la discriminación. Su
+disposición adicional segunda modifica el art. 44 del Código Civil, proclamando que toda
+persona tiene derecho a contraer matrimonio conforme al Código Civil, quedando derogada la
+Ley 3/2007 y siendo aplicable el nuevo régimen de rectificación registral del sexo.
+1.2. Monogamia
+En la cultura occidental, el matrimonio ha implicado tradicionalmente la unión de un solo
+hombre con una sola mujer. Tras la admisión del matrimonio homosexual, el requisito de la
+monogamia se mantiene, de modo que el matrimonio debe celebrarse entre dos personas, y
+solo dos, con independencia de su sexo.
+En el ámbito cultural y jurídico vigente, continúa afirmándose la exigencia de la monogamia, sin
+que otras fórmulas de colectivización de las relaciones afectivas tengan encaje en el Derecho
+positivo. No obstante, algunos autores contrarios al matrimonio homosexual sostienen que,
+eliminada la heterosexualidad como requisito y atendiendo a criterios sociológicos, podría
+plantearse en el futuro la superación de la monogamia, siguiendo modelos culturales distintos,
+como los que admiten la pluralidad de esposas, lo que obligaría a considerar también supuestos
+de poliandria.
+1.3. Comunidad de vida y existencia
+La celebración del matrimonio está orientada a constituir una relación íntima y estable que
+comprende los aspectos esenciales de la vida, afrontados en común por los cónyuges, sin que
+ninguno de ellos pierda su propia individualidad. Aunque esta nota resulte difícil de delimitar en
+sentido positivo, adquiere especial relevancia por sus consecuencias negativas.
+El matrimonio no puede concebirse como una relación destinada a satisfacer necesidades
+afectivas o carnales pasajeras, ni como una unión momentánea o circunstancial, carente de
+la voluntad de formar una auténtica comunidad de vida y existencia. Tampoco responden a esta
+idea los matrimonios celebrados con la finalidad de obtener ventajas ajenas a la convivencia,
+como ocurre con los denominados matrimonios de complacencia, que no obedecen al
+propósito de constituir una verdadera comunidad de vida.
+1.4. Estabilidad
+La estabilidad o permanencia es una nota inherente a la unión matrimonial y se presenta como
+corolario de la comunidad de vida y existencia. En algunos sistemas normativos, esta estabilidad
+se concibe como perpetuidad vitalicia, al asentarse el matrimonio en el principio de
+indisolubilidad. No obstante, esta concepción no corresponde a la legislación española
+contemporánea, tras la promulgación de la Ley 30/1981.
+1.5. Solemnidad: Referencia a las uniones de hecho
+El consentimiento matrimonial es un acto solemne, revestido de formalidades legales que
+garantizan la concurrencia de los presupuestos exigidos por el ordenamiento. Cuando no se
+cumplen tales requisitos formales, aun existiendo convivencia y los restantes elementos del
+matrimonio, la relación debe calificarse como unión de hecho, denominada también unión libre,
+concubinato, convivencia more uxorio o pareja de hecho.
+Existe un movimiento social favorable a las parejas de hecho, y diversas normas y resoluciones
+judiciales han asimilado en aspectos concretos estas uniones al matrimonio. No obstante, no
+existe una regulación estatal general, aunque varias Comunidades Autónomas han aprobado
+leyes propias y, en todo caso, existe un Registro de Parejas de Hecho para acreditar su
+existencia y duración a efectos concretos.
+En algunas regulaciones autonómicas se exige la inscripción registral para acceder a
+determinados efectos legales, estableciéndose requisitos específicos. Los principales problemas
+jurídicos surgen en el momento de la ruptura, pues, en general, no procede la aplicación
+analógica del régimen matrimonial, debiendo acudirse a la normativa existente, a los pactos entre
+las partes o, en su defecto, a criterios como el enriquecimiento injusto u otras construcciones
+jurisprudenciales. Las obligaciones respecto de los hijos no se ven afectadas por la existencia
+o no de matrimonio o pareja de hecho.
+2. EL MATRIMONIO HOMOSEXUAL O ENTRE PERSONAS DEL MISMO SEXO
+La Ley 13/2005 supuso una ruptura histórica con la concepción secular del matrimonio,
+tradicionalmente presidida por la heterosexualidad y vinculada indirectamente a la reproducción.
+Desde una perspectiva histórica, la reforma introdujo una idea inicialmente revolucionaria,
+aunque comparable a otras transformaciones jurídicas que con el tiempo se han consolidado
+como principios generalmente aceptados, como la igualdad entre hombre y mujer o la abolición
+de la esclavitud.
+La incidencia real del matrimonio homosexual en España es estadísticamente reducida, pues no
+alcanza ni el uno por ciento del total de núcleos familiares, lo que pone de relieve la distancia
+entre la percepción social generada por la norma y la realidad demográfica.
+En el Derecho comparado, numerosos países reconocen el matrimonio entre personas del mismo
+sexo o figuras equivalentes, mientras que en otros Estados la homosexualidad continúa siendo
+delito. En Estados Unidos, tras diversas regulaciones estatales, la sentencia del Tribunal
+Supremo de 26 de junio de 2015 declaró inconstitucionales las prohibiciones del matrimonio
+homosexual, imponiendo su validez en todos los Estados.
+En el ámbito internacional privado, la Resolución de la DGRN de 7 de abril de 2006 reconoció la
+validez en España del matrimonio entre un español y un extranjero cuya ley nacional no admitía
+este tipo de matrimonio. Asimismo, la sentencia del TJUE de 5 de junio de 2018 (asunto
+Coman) interpretó el concepto de “cónyuge” de forma neutra desde el punto de vista del género
+a efectos de residencia, obligando a los Estados miembros a reconocer el matrimonio
+homosexual para tales fines, sin imponerles su regulación interna.
+3. LA NATURALEZA DEL MATRIMONIO
+Aunque la noción social de matrimonio ha sido clara durante siglos, los juristas han debatido
+históricamente sobre su calificación técnica, con independencia de la admisión del divorcio o
+del matrimonio homosexual. El problema no es definir qué es el matrimonio en términos sociales,
+sino cómo debe ser calificado jurídicamente.
+3.1. La tesis contractual
+Desde la recepción medieval del Derecho canónico, al incorporarse la aﬀectio maritalis romana
+como elemento consensual, se sostuvo la consideración del matrimonio como contrato, tesis
+especialmente atractiva para los canonistas, al permitir justificar el vínculo y la indisolubilidad
+mediante el principio pacta sunt servanda.
+Sin embargo, esta concepción presenta graves dificultades, ya que los contratos civiles se basan
+en la autonomía privada, la libertad de estipulación y la posibilidad de ineficacia del contrato
+incumplido, elementos incompatibles con el esquema matrimonial, especialmente cuando rige el
+principio de indisolubilidad.
+Para salvar estas objeciones, algunos autores calificaron el matrimonio como contrato sui
+generis, entendiendo que carece de las notas esenciales de los contratos, dado que su
+contenido y efectos están normativamente predeterminados. No obstante, esta solución resulta
+insatisfactoria, pues la relación matrimonial carece de patrimonialidad técnica, y la mera
+coincidencia de consentimientos no permite aplicar el régimen jurídico propio de los contratos.
+3.2. El matrimonio como “negocio jurídico de Derecho de familia”
+El desarrollo de la categoría del negocio jurídico llevó a algunos autores a calificar el matrimonio
+como un negocio jurídico complejo y típico del Derecho de familia, entendiendo que esta
+noción permitía explicar su singularidad. Sin embargo, esta calificación supone una mera
+abstracción conceptual que no mejora la comprensión de la institución.
+La noción de negocio jurídico aplicada al matrimonio no aclara su régimen normativo, ni explica
+sus efectos materiales, que se encuentran predeterminados por el Derecho positivo,
+generando además indefinición y confusión conceptual.
+3.3. La institución matrimonial
+Aunque el consentimiento es imprescindible, no es suficiente para determinar la existencia
+del matrimonio, como demuestra la diferencia entre matrimonio y uniones de hecho. El
+llamado estatuto matrimonial queda sustraído a la voluntad de los contrayentes y es
+imperativamente fijado por la ley, salvo en aspectos concretos como el régimen
+económico.
+Ello evidencia que el matrimonio constituye una institución jurídica propia y autónoma, dotada
+de un conjunto normativo específico, que regula tanto su nacimiento como su desarrollo y
+crisis. Esta concepción institucional ha sido reiteradamente respaldada por la jurisprudencia del
+Tribunal Supremo y del Tribunal Constitucional, así como por el propio legislador en las
+Exposiciones de Motivos de las Leyes 13/2005 y 15/2005.
+4. LOS SISTEMAS MATRIMONIALES
+4.1. La idea de “sistema matrimonial”
+La expresión sistema matrimonial se ha utilizado tradicionalmente por la doctrina civilista para
+referirse a la ordenación que realiza el Estado sobre las formas o ritos matrimoniales a los
+que se reconoce eficacia y validez civil. Se trata, por tanto, del modo en que un ordenamiento
+jurídico decide qué matrimonios son válidos desde el punto de vista civil y bajo qué formas
+pueden celebrarse.
+Autores clásicos como Sánchez Román y Lacruz Berdejo definieron los sistemas matrimoniales
+como los criterios legales adoptados por los distintos Estados para reputar válidamente
+celebrado el matrimonio, especialmente en relación con la forma de celebración civilmente
+eficaz.
+El concepto tiene una función sistemática y comparada, pues permite identificar los elementos
+normativos esenciales de cada ordenamiento en materia matrimonial y comparar las distintas
+soluciones adoptadas por los Estados.
+En Europa, y particularmente en España, la cuestión se ve condicionada por la precedencia
+histórica del matrimonio canónico, cuya regulación y jurisdicción por parte de la Iglesia
+Católica se adelantó durante siglos a la configuración del matrimonio civil por los Estados
+modernos. De ahí que el problema del sistema matrimonial esté ligado a la relación entre el
+poder civil y las confesiones religiosas.
+Aunque la noción de sistema matrimonial es, desde el punto de vista teórico, una categoría
+expositiva, la decisión legislativa sobre el sistema adoptado constituye una opción política
+de gran relevancia, pues implica determinar si el Estado asume en exclusiva la potestad
+normativa y jurisdiccional sobre el matrimonio o si la comparte, en mayor o menor medida, con
+las confesiones religiosas.
+4.2. Clasificación de los sistemas matrimoniales
+La clasificación de los sistemas matrimoniales tiene un valor instrumental y propedéutico, y
+debe limitarse a los criterios fundamentales, evitando casuismos excesivos.
+A) Forma o formas matrimoniales
+El primer criterio clasificatorio atiende a si el ordenamiento reconoce una sola forma de
+matrimonio o varias formas con eficacia civil.
+1) Sistemas de matrimonio único
+Dentro de estos sistemas se distinguen dos opciones:
+a) Matrimonio exclusivamente religioso
+Característico de Estados confesionales o teocráticos. Históricamente fue el modelo vigente en
+España desde la Real Cédula de 1562 hasta la Ley de Matrimonio Civil de 1870.
+b) Reconocimiento exclusivo del matrimonio civil
+El Estado solo reconoce efectos civiles al matrimonio celebrado conforme a sus propias normas,
+dejando el matrimonio religioso como una cuestión de conciencia personal. Este modelo surge
+con la Revolución francesa y el Code Napoléon y se extendió a numerosos países europeos,
+rigiendo también en España durante un breve periodo.
+2) Reconocimiento estatal de plurales formas de matrimonio
+El Estado reconoce varias formas matrimoniales con eficacia civil. Dentro de estos sistemas cabe
+distinguir:
+• Sistema de libertad de forma, en el que cualquier forma sería válida sin
+formalidades obligatorias, modelo que carece de relevancia práctica y doctrinal por
+razones de seguridad jurídica.
+• Sistemas electivos, en los que el Estado determina varias formas
+matrimoniales válidas y permite al ciudadano elegir entre ellas.
+Dentro de los sistemas electivos se distinguen:
+a) Sistema electivo formal
+El Estado reconoce efectos civiles a los matrimonios religiosos, pero se reserva en
+exclusiva la regulación y jurisdicción matrimonial, incorporando las normas religiosas al
+ordenamiento estatal (caso de Inglaterra).
+b) Sistema electivo material
+El Estado respeta las normas propias de la confesión religiosa en el matrimonio religioso
+(forma, ritos, disolución), otorgándole efectos civiles, mientras regula la forma civil del
+matrimonio. Puede existir o no reserva de jurisdicción estatal, sin que ello altere la
+naturaleza del sistema.
+B) Igualdad o subsidiariedad
+El segundo criterio atiende a si las distintas formas matrimoniales se reconocen en plano de
+igualdad o en relación de subordinación.
+1) Sistemas facultativos
+Las distintas formas matrimoniales se reconocen en plano de igualdad, sin primacía del
+matrimonio civil ni del religioso. El ciudadano puede optar libremente por cualquiera. También se
+denominan sistemas puramente electivos.
+2) Sistemas de subsidiariedad
+Se otorga primacía a una forma matrimonial, siendo las demás subsidiarias. Están vinculados a
+la confesionalidad estatal y suelen permitir una forma alternativa solo a quienes acrediten no
+profesar la confesión dominante.
+5. LA CONSTITUCIÓN DE 1978 Y EL SISTEMA MATRIMONIAL
+La Constitución de 1978 impuso un replanteamiento completo del sistema matrimonial, al
+consagrar los principios de aconfesionalidad del Estado (art. 16.3 CE), libertad religiosa y de
+creencias (art. 16 CE) y la recuperación del poder civil en materia matrimonial (art. 32.2 CE).
+Estos principios resultan incompatibles con el sistema de matrimonio civil subsidiario, propio
+de Estados confesionales.
+La primera manifestación de este nuevo marco constitucional fue la sustitución del Concordato
+de 1953 por el Acuerdo entre el Estado español y la Santa Sede de 3 de enero de 1979, que
+mantiene el reconocimiento de efectos civiles al matrimonio canónico, pero sin sometimiento del
+Derecho estatal a la normativa canónica, en coherencia con el principio de cooperación religiosa
+previsto en la Constitución.
+Posteriormente, las Leyes 24/1992, 25/1992 y 26/1992 aprobaron los Acuerdos de Cooperación
+con las confesiones evangélica, judía e islámica, reconociendo efectos civiles a los matrimonios
+celebrados conforme a sus ritos, siempre que se inscriban en el Registro Civil. Estas
+normasfueron modificadas por la Ley 15/2015, que amplió los órganos competentes para
+tramitar el expediente previo matrimonial.
+La reforma decisiva del sistema matrimonial vino dada por las Leyes 11/1981 y 30/1981, que
+transformaron el Derecho de familia del Código Civil conforme a los principios constitucionales. El
+sistema resultante es un sistema electivo formal y facultativo, definido como un sistema de
+forma múltiple y clase única (civil), en el que el Estado reconoce efectos civiles a matrimonios
+celebrados en distintas formas religiosas, pero se reserva la regulación jurídica del matrimonio.
+Este carácter electivo formal se ve reforzado por la reforma del art. 60.2 CC, que amplía el
+reconocimiento de efectos civiles a matrimonios celebrados conforme a ritos de confesiones
+religiosas con notorio arraigo en España. En todo caso, el Estado mantiene la competencia
+exclusiva para legislar sobre las formas de matrimonio (art. 149.1.8 CE), quedando excluida
+cualquier intervención normativa autonómica en esta materia.
+6. LOS ESPONSALES O PROMESA DE MATRIMONIO
+6.1. Terminología y concepto
+En la redacción vigente del Código Civil, la figura tradicionalmente conocida como esponsales
+recibe la denominación exclusiva de promesa de matrimonio. Con uno u otro nombre, la
+institución consiste en la promesa recíproca de contraer matrimonio realizada por los novios,
+que eventualmente llegarán a ser cónyuges si el matrimonio llega a celebrarse.
+Los esponsales presentan una evolución histórica caracterizada por un pasado de gran
+relevancia jurídica, un presente de escasa aplicación práctica y un futuro incierto, en un
+contexto social marcado por el abandono de rituales y formalismos. Su importancia histórica se
+manifiesta en su regulación en el Derecho romano, en el Derecho canónico medieval y en las
+disposiciones de la Iglesia Católica, incluyendo el Codex iuris canonici. El Digesto los definía
+como sponsalia sunt mentio et repromissio nuptiarum futurarum, y el propio término procede del
+verbo latino spondere.
+Hasta la Ley 30/1981, el Código Civil utilizaba también la denominación esponsales, pero el
+legislador optó por sustituirla por la expresión promesa de matrimonio, en un intento de
+secularización nominal y de alejamiento del lenguaje canónico. No obstante, desde el punto de
+vista semántico y jurídico, ambas expresiones designan la misma realidad, siendo la diferencia
+meramente terminológica.
+En la práctica actual, la promesa de matrimonio carece de la relevancia que tuvo históricamente y
+no es equiparable a la convivencia marital ni al matrimonio. Así lo ha declarado la jurisprudencia,
+negando que la mera promesa de matrimonio pueda considerarse unión de hecho o arraigo
+familiar suficiente para producir determinados efectos jurídicos, como la suspensión de una orden
+de expulsión de extranjeros.
+6.2. Libertad matrimonial y esponsales
+Desde los precedentes del Derecho romano, la libertad matrimonial de los contrayentes se
+mantiene intacta hasta el mismo momento de la celebración del matrimonio, exista o no promesa
+previa. Este principio se basa en la incoercibilidad del consentimiento matrimonial, que impide
+obligar jurídicamente a contraer matrimonio.
+El vigente art. 42 del Código Civil establece que la promesa de matrimonio no produce
+obligación de contraerlo, ni de cumplir lo pactado para el supuesto de su no celebración, y que
+no se admitirá demanda alguna que pretenda exigir su cumplimiento. Se prioriza así la libertad
+matrimonial hasta el instante mismo de la prestación del consentimiento.
+El Código Civil mantiene la tradición histórica conforme a la cual la incoercibilidad del matrimonio
+no puede eludirse mediante cláusulas penales u otras estipulaciones vinculadas a la promesa
+dematrimonio. En consecuencia, los esponsales carecen de eficacia vinculante respecto de la
+celebración del matrimonio.
+La promesa de matrimonio no tiene naturaleza contractual, ni puede calificarse como
+precontrato ni como acuerdo jurídico propiamente dicho. Se trata de un uso social reconocido
+por la ley, cuya relevancia jurídica se limita a la posible obligación legal de resarcir los gastos
+realizados en atención al matrimonio proyectado, configurándose dicha obligación ex lege, a
+partir de la existencia fáctica de la promesa.
+6.3. La obligación de resarcimiento de los gastos asumidos
+El art. 43.1 del Código Civil establece que el incumplimiento sin causa de la promesa cierta
+de matrimonio, realizada por persona mayor de edad o menor emancipado, solo produce la
+obligación de resarcir a la otra parte de los gastos hechos y de las obligaciones contraídas
+en consideración al matrimonio prometido. La consecuencia jurídica de la no celebración del
+matrimonio se limita, por tanto, al resarcimiento del perjuicio patrimonial sufrido por quien
+confió en la promesa.
+El fundamento del resarcimiento radica en la quiebra de la confianza legítima generada por la
+promesa de matrimonio, evitando un empobrecimiento patrimonial carente de sentido al
+frustrarse el matrimonio proyectado. El resarcimiento comprende tanto los gastos efectivamente
+realizados como las obligaciones asumidas, aunque no se hayan hecho aún efectivas, siempre
+que estén directamente vinculadas al matrimonio previsto y sean debidamente probadas.
+La responsabilidad derivada del art. 43 CC tiene un alcance limitado, circunscrito a las partidas
+expresamente previstas en el precepto. Cuando se producen daños patrimoniales distintos o
+superiores, la vía adecuada será la acción por enriquecimiento sin causa, quedando excluida la
+aplicación del art. 1902 CC.
+El precepto exige que el incumplimiento sea “sin causa”, a diferencia de la redacción anterior,
+que exigía “justa causa”. La supresión del adjetivo implica que basta con que quien no desea
+contraer matrimonio alegue una causa suficiente para sí mismo, derivada del ejercicio de su
+libertad matrimonial, lo que actúa como circunstancia exoneradora del resarcimiento. De este
+modo, la exigencia legal de causa queda notablemente atenuada.
+El art. 43.2 CC dispone que la acción de resarcimiento caduca al año, contado desde el día de
+la negativa a la celebración del matrimonio. Se trata, en términos literales, de un plazo de
+caducidad, no susceptible de interrupción, aunque la cuestión carece prácticamente de
+relevancia práctica por la escasa litigiosidad en esta materia.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+  "1": "El matrimonio es una institución jurídica civil que regula una unión estable de vida en común, con continuidad histórica y desvinculada en su análisis jurídico de los elementos religiosos.",
+  "1.1": "La evolución normativa ha eliminado la heterosexualidad como requisito matrimonial, reconociendo el derecho universal a contraer matrimonio y reforzando la igualdad y la autodeterminación de género.",
+  "1.2": "La monogamia sigue siendo un requisito estructural del matrimonio, configurándolo como unión exclusiva entre dos personas con independencia de su sexo.",
+  "1.3": "El matrimonio exige la voluntad de constituir una auténtica comunidad estable de vida y existencia, excluyendo uniones instrumentales o de conveniencia.",
+  "1.4": "La estabilidad es un rasgo esencial del matrimonio, aunque en el sistema español actual no implica indisolubilidad permanente.",
+  "1.5": "El matrimonio es un acto solemne sujeto a formalidades legales, diferenciándose de las uniones de hecho, que carecen de regulación estatal general y generan efectos jurídicos limitados.",
+
+  "2": "El matrimonio entre personas del mismo sexo supuso una transformación histórica del concepto jurídico matrimonial basada en igualdad y no discriminación, con reconocimiento progresivo en el Derecho comparado.",
+
+  "3": "La discusión jurídica sobre la naturaleza del matrimonio se centra en su calificación técnica más que en su definición social.",
+  "3.1": "La tesis contractual del matrimonio es insuficiente porque la institución matrimonial carece de autonomía negocial plena y de contenido patrimonial típico.",
+  "3.2": "La calificación del matrimonio como negocio jurídico es una construcción doctrinal abstracta que no explica adecuadamente su régimen jurídico real.",
+  "3.3": "El matrimonio es una institución jurídica autónoma cuyo contenido esencial viene determinado imperativamente por la ley, más allá del consentimiento inicial.",
+
+  "4": "El sistema matrimonial define qué formas de matrimonio reconoce el Estado con eficacia civil y bajo qué condiciones jurídicas.",
+  "4.1": "El sistema matrimonial es la opción estatal sobre las formas válidas de celebración matrimonial y refleja decisiones políticas sobre la relación entre Estado y religión.",
+  "4.2": "Los sistemas matrimoniales se clasifican según la pluralidad de formas admitidas y según su reconocimiento en plano de igualdad o subordinación.",
+
+  "5": "La Constitución de 1978 configuró un sistema matrimonial basado en aconfesionalidad, libertad religiosa y primacía normativa del Estado en materia matrimonial.",
+
+  "6": "Los esponsales o promesa de matrimonio son un uso social con relevancia jurídica limitada, sin eficacia obligacional para contraer matrimonio.",
+  "6.1": "La promesa de matrimonio es una promesa recíproca socialmente reconocida sin naturaleza contractual ni efectos obligacionales para celebrar el matrimonio.",
+  "6.2": "La libertad matrimonial implica que la promesa de matrimonio no puede obligar jurídicamente a contraer matrimonio ni mediante pactos ni cláusulas penales.",
+  "6.3": "El incumplimiento injustificado de la promesa matrimonial solo genera obligación de resarcir gastos y compromisos asumidos en atención al matrimonio proyectado."
+
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    const BANCO_1 = `#ID=1
+
+
+// [1]
+Q: Desde el punto de vista civil, ¿qué rasgo identifica mejor al matrimonio como institución jurídica?
+A) Una convivencia socialmente relevante sin necesidad de forma legal.
+B) Una comunidad de vida jurídicamente constituida mediante consentimiento formalizado.
+C) Un acuerdo privado orientado principalmente a producir efectos patrimoniales.
+OK: B
+EXP: En la óptica civil, el matrimonio es una institución jurídica basada en consentimiento solemne que crea un estatuto legal de vida en común.
+
+// [2]
+Q: ¿Por qué el Derecho civil analiza el matrimonio desde una perspectiva laica y estatal?
+A) Porque la regulación civil se centra en efectos jurídicos y deja lo religioso fuera del estatuto civil.
+B) Porque las confesiones religiosas no pueden celebrar matrimonios en ningún caso.
+C) Porque el matrimonio carece de relevancia histórica fuera del ámbito civil.
+OK: A
+EXP: El análisis civil prescinde de lo sacramental para centrarse en la institución jurídica estatal y sus efectos.
+
+// [3]
+Q: ¿Cómo debe entenderse, en términos generales, la influencia del Derecho canónico en el matrimonio civil?
+A) Como una sustitución completa del modelo civil por el religioso en la legislación vigente.
+B) Como una influencia histórica relevante en múltiples aspectos de la regulación civil del matrimonio.
+C) Como un fenómeno marginal sin impacto en la configuración jurídica del matrimonio.
+OK: B
+EXP: Históricamente, el Derecho canónico influyó en categorías y soluciones luego incorporadas o adaptadas en la regulación civil.
+
+
+#ID=1.1
+
+// [4]
+Q: Antes de la Ley 13/2005, ¿qué requisito estructural se exigía para contraer matrimonio en España?
+A) Que existiera convivencia previa continuada entre los contrayentes.
+B) Que se tratara de la unión entre un hombre y una mujer.
+C) Que el vínculo se celebrara necesariamente mediante rito religioso.
+OK: B
+EXP: El modelo anterior a 2005 partía de la heterosexualidad como requisito del matrimonio civil.
+
+// [5]
+Q: ¿Qué lectura se sostuvo tradicionalmente del art. 32 CE respecto del modelo matrimonial?
+A) Que el precepto garantizaba un matrimonio exclusivamente religioso.
+B) Que el precepto confirmaba implícitamente la concepción heterosexual del matrimonio.
+C) Que el precepto imponía un sistema de libertad total de forma matrimonial.
+OK: B
+EXP: Se entendió que “hombre y mujer” apuntalaba el modelo heterosexual vigente antes de 2005.
+
+// [6]
+Q: ¿Qué tesis defendió una parte minoritaria de la doctrina sobre personas transexuales antes de las reformas más recientes?
+A) Que podían contraer matrimonio tras reconocimiento judicial del cambio de sexo.
+B) Que el cambio registral impedía cualquier forma de matrimonio.
+C) Que el matrimonio quedaba sujeto a autorización administrativa previa.
+OK: A
+EXP: Se defendió que, reconocido el cambio de sexo, podía sostenerse la aptitud matrimonial, aunque con debate doctrinal.
+
+// [7]
+Q: En el itinerario normativo descrito, ¿qué papel cumple la Ley 3/2007?
+A) Elimina la relevancia del sexo registral en todo el ordenamiento civil.
+B) Establece criterios para la rectificación registral del sexo, con proyección jurídica.
+C) Reconoce directamente el matrimonio entre personas del mismo sexo.
+OK: B
+EXP: La Ley 3/2007 regula la rectificación registral del sexo; luego su enfoque queda superado por la Ley 4/2023.
+
+// [8]
+Q: ¿Qué efecto destaca el texto respecto de la Ley 4/2023 en relación con el matrimonio?
+A) Restringe el acceso al matrimonio en función de la identidad de género.
+B) Proclama el derecho a contraer matrimonio conforme al Código Civil y ajusta el marco registral.
+C) Traslada la regulación matrimonial a las Comunidades Autónomas.
+OK: B
+EXP: La Ley 4/2023 refuerza igualdad y autodeterminación, y modifica el art. 44 CC proclamando el derecho a contraer matrimonio.
+
+
+#ID=1.2
+
+// [9]
+Q: Tras la admisión del matrimonio entre personas del mismo sexo, ¿qué ocurre con la monogamia?
+A) Se sustituye por un sistema abierto a más de dos contrayentes.
+B) Se mantiene: el matrimonio se celebra entre dos personas, y solo dos.
+C) Se convierte en una regla dispositiva libremente renunciable.
+OK: B
+EXP: El texto afirma que la monogamia permanece como nota estructural: dos personas, con independencia del sexo.
+
+// [10]
+Q: ¿Qué discusión se menciona sobre la posible evolución futura del modelo monogámico?
+A) Que la monogamia ya ha sido derogada por el Derecho positivo.
+B) Que algunos autores plantean, por criterios sociológicos, una eventual superación del modelo monogámico.
+C) Que el sistema monogámico solo rige en el matrimonio religioso.
+OK: B
+EXP: Se alude a debates doctrinales (no a cambios vigentes) sobre hipotéticas evoluciones culturales y jurídicas.
+
+
+#ID=1.3
+
+// [11]
+Q: ¿Qué describe mejor la “comunidad de vida y existencia” como nota del matrimonio?
+A) Un vínculo centrado en intercambios patrimoniales con autonomía contractual plena.
+B) Una relación íntima y estable que abarca aspectos esenciales de la vida, sin pérdida de individualidad.
+C) Una convivencia ocasional orientada a fines específicos y limitados.
+OK: B
+EXP: El texto define el matrimonio como relación estable e integral de vida en común, manteniéndose la individualidad de cada cónyuge.
+
+// [12]
+Q: ¿Qué exclusión conceptual formula el texto al definir el matrimonio por su comunidad de vida?
+A) Excluye vínculos que busquen satisfacer necesidades pasajeras sin voluntad de convivencia auténtica.
+B) Excluye solo los matrimonios religiosos, por carecer de efectos civiles.
+C) Excluye los matrimonios con régimen económico pactado.
+OK: A
+EXP: Se niega que el matrimonio sea unión momentánea o puramente afectiva/carnal sin voluntad de comunidad de vida real.
+
+// [13]
+Q: ¿Por qué se mencionan los “matrimonios de complacencia” en este epígrafe?
+A) Porque son la forma ordinaria de matrimonio civil tras 2005.
+B) Porque ilustran un supuesto en que falta el propósito de constituir verdadera comunidad de vida.
+C) Porque demuestran que la solemnidad es innecesaria si hay convivencia.
+OK: B
+EXP: Se usan como ejemplo negativo: finalidad ajena a la convivencia real, incompatible con la idea de comunidad de vida.
+
+
+#ID=1.4
+
+// [14]
+Q: Según el texto, ¿por qué la estabilidad se considera inherente al matrimonio?
+A) Porque se presume una permanencia como consecuencia lógica de la comunidad de vida.
+B) Porque la ley exige una duración mínima para que el matrimonio sea válido.
+C) Porque la estabilidad deriva exclusivamente del régimen económico matrimonial.
+OK: A
+EXP: La estabilidad aparece como corolario de la comunidad de vida y existencia, aunque no implique perpetuidad.
+
+// [15]
+Q: ¿Qué precisión hace el texto sobre estabilidad e indisolubilidad en el sistema español actual?
+A) Que la legislación española contemporánea mantiene la indisolubilidad vitalicia como regla.
+B) Que la concepción de perpetuidad no se corresponde con el Derecho español tras la Ley 30/1981.
+C) Que la estabilidad solo existe en matrimonios canónicos con efectos civiles.
+OK: B
+EXP: La permanencia no equivale a indisolubilidad: el marco español posterior a 1981 admite la disolución del vínculo.
+
+
+#ID=1.5
+
+// [16]
+Q: ¿Qué función cumplen las formalidades en el consentimiento matrimonial, según el texto?
+A) Sustituir la voluntad de los contrayentes por un acto administrativo.
+B) Garantizar la concurrencia de los presupuestos exigidos por el ordenamiento.
+C) Permitir que el matrimonio produzca efectos solo económicos.
+OK: B
+EXP: La solemnidad asegura requisitos legales y validez del consentimiento como presupuesto del estatuto matrimonial.
+
+// [17]
+Q: Si no se cumplen los requisitos formales, aun existiendo convivencia y elementos materiales, ¿cómo califica el texto la relación?
+A) Como matrimonio irregular plenamente válido.
+B) Como unión de hecho (pareja de hecho / convivencia more uxorio).
+C) Como contrato civil de convivencia con efectos automáticos.
+OK: B
+EXP: Falta el elemento formal; por ello se califica como unión de hecho, aunque exista convivencia.
+
+// [18]
+Q: ¿Qué afirma el texto sobre la regulación general estatal de las parejas de hecho?
+A) Que existe una regulación estatal general completa y uniforme.
+B) Que no existe una regulación estatal general, aunque sí normas autonómicas y registro para ciertos efectos.
+C) Que las parejas de hecho se regulan únicamente por el Código Civil, por analogía.
+OK: B
+EXP: Se destaca ausencia de régimen estatal general, coexistiendo normas autonómicas y mecanismos registrales para acreditar efectos concretos.
+
+// [19]
+Q: En caso de ruptura de una pareja de hecho, ¿qué pauta general indica el texto sobre el régimen aplicable?
+A) Procede siempre la aplicación analógica del régimen matrimonial.
+B) En general no procede la analogía matrimonial; se atiende a normativa existente, pactos o criterios como enriquecimiento injusto.
+C) Se aplica automáticamente el régimen económico de gananciales.
+OK: B
+EXP: El texto subraya que la analogía matrimonial suele rechazarse, acudiendo a pactos, normas disponibles y soluciones jurisprudenciales.
+`;
+
+const BANCO_2 = `#ID=2
+
+// [20]
+Q: ¿Qué caracteriza, según el texto, la ruptura histórica introducida por la Ley 13/2005?
+A) La sustitución del matrimonio civil por un sistema de uniones de hecho.
+B) La superación del requisito de heterosexualidad en la concepción secular del matrimonio.
+C) La eliminación de la solemnidad como requisito del matrimonio.
+OK: B
+EXP: La reforma rompe con la concepción tradicional presidida por la heterosexualidad, abriendo el matrimonio a personas del mismo sexo.
+
+// [21]
+Q: ¿Cómo encuadra el texto la reforma de 2005 en una perspectiva histórica más amplia?
+A) Como una transformación comparable a otros cambios que acabaron consolidándose como principios aceptados.
+B) Como una excepción aislada sin paralelos en la evolución jurídica.
+C) Como una reforma meramente terminológica sin impacto estructural.
+OK: A
+EXP: Se compara con transformaciones históricas (igualdad, abolición de esclavitud) que con el tiempo se consolidaron.
+
+// [22]
+Q: ¿Qué hecho estadístico destaca el texto sobre el matrimonio homosexual en España?
+A) Que supera ampliamente el diez por ciento de los núcleos familiares.
+B) Que su incidencia es reducida y no alcanza el uno por ciento del total de núcleos familiares.
+C) Que constituye la forma mayoritaria de matrimonio desde 2005.
+OK: B
+EXP: El texto subraya la distancia entre percepción social y realidad demográfica, con incidencia estadística baja.
+
+// [23]
+Q: En el plano comparado e internacional, ¿qué contraste subraya el texto?
+A) Universalidad del reconocimiento del matrimonio homosexual en todos los países.
+B) Convivencia de modelos: países que lo reconocen y otros donde la homosexualidad sigue siendo delito.
+C) Prohibición del matrimonio homosexual en la Unión Europea.
+OK: B
+EXP: Se describe diversidad comparada: reconocimiento en muchos Estados y criminalización en otros.
+
+
+#ID=3
+
+// [24]
+Q: ¿Cuál es el núcleo del debate jurídico sobre la “naturaleza” del matrimonio, según el texto?
+A) Definir socialmente qué es una pareja y sus costumbres.
+B) Determinar cómo debe calificarse técnicamente el matrimonio en categorías jurídicas.
+C) Sustituir el matrimonio por un contrato de convivencia regulado.
+OK: B
+EXP: El problema no es el concepto social del matrimonio, sino su calificación jurídica (contrato, negocio, institución).
+
+// [25]
+Q: ¿Por qué el texto afirma que el debate persiste con independencia del divorcio o del matrimonio homosexual?
+A) Porque la cuestión técnica de calificación no depende de que exista o no una modalidad concreta.
+B) Porque el divorcio elimina cualquier necesidad de calificación jurídica.
+C) Porque el matrimonio homosexual impide toda discusión doctrinal.
+OK: A
+EXP: La discusión es estructural: cómo encajar jurídicamente el matrimonio, haya o no divorcio o matrimonio entre personas del mismo sexo.
+
+
+#ID=3.1
+
+// [26]
+Q: ¿Qué razón hizo especialmente atractiva para canonistas la tesis contractual del matrimonio?
+A) Permitía fundamentar el vínculo y la indisolubilidad en el principio pacta sunt servanda.
+B) Permitía transformar el matrimonio en un contrato puramente patrimonial.
+C) Permitía prescindir del consentimiento como elemento central.
+OK: A
+EXP: La tesis contractual servía para justificar vínculo e indisolubilidad mediante la lógica obligacional del pacto.
+
+// [27]
+Q: ¿Qué objeción principal formula el texto contra concebir el matrimonio como contrato civil típico?
+A) Que el contrato civil no exige consentimiento.
+B) Que la autonomía privada y la ineficacia por incumplimiento no encajan con el esquema matrimonial.
+C) Que todo contrato civil debe ser necesariamente religioso.
+OK: B
+EXP: El contrato típico se asienta en libertad de estipulación e ineficacia por incumplimiento, incompatibles con el estatuto matrimonial.
+
+// [28]
+Q: ¿Por qué resulta insatisfactoria la idea de “contrato sui generis” aplicada al matrimonio?
+A) Porque el matrimonio no contiene consentimientos coincidentes.
+B) Porque no tiene patrimonialidad técnica y sus efectos están predeterminados, lo que impide aplicar el régimen contractual.
+C) Porque el Derecho positivo prohíbe cualquier calificación jurídica del matrimonio.
+OK: B
+EXP: La predeterminación normativa y falta de patrimonialidad técnica hacen inadecuada la traslación del régimen de contratos.
+
+
+#ID=3.2
+
+// [29]
+Q: ¿Qué pretendía lograr la calificación del matrimonio como “negocio jurídico de Derecho de familia”?
+A) Explicar su singularidad encajándolo en una categoría más amplia que el contrato.
+B) Convertir el matrimonio en un acuerdo patrimonial libremente modulable.
+C) Eliminar el carácter imperativo del estatuto matrimonial.
+OK: A
+EXP: Se buscaba una etiqueta conceptual para explicar la singularidad del matrimonio dentro del Derecho de familia.
+
+// [30]
+Q: ¿Qué crítica central realiza el texto a esa calificación como negocio jurídico?
+A) Que aclara por completo el régimen normativo del matrimonio.
+B) Que es una abstracción que no mejora la comprensión ni explica efectos materiales predeterminados.
+C) Que impide la existencia del consentimiento matrimonial.
+OK: B
+EXP: El texto afirma que no aclara régimen ni efectos, y puede generar indefinición y confusión conceptual.
+
+
+#ID=3.3
+
+// [31]
+Q: ¿Qué ejemplo utiliza el texto para mostrar que el consentimiento es imprescindible pero no suficiente para el matrimonio?
+A) La diferencia entre matrimonio y unión de hecho pese a existir convivencia.
+B) La diferencia entre matrimonio y tutela.
+C) La diferencia entre matrimonio y filiación.
+OK: A
+EXP: La comparación con uniones de hecho evidencia que el consentimiento, sin marco institucional y forma, no basta.
+
+// [32]
+Q: ¿Qué significa que el “estatuto matrimonial” esté sustraído a la voluntad de los contrayentes?
+A) Que los contrayentes fijan libremente el contenido esencial del vínculo.
+B) Que la ley fija imperativamente el régimen básico, salvo aspectos concretos como el régimen económico.
+C) Que el estatuto depende exclusivamente de la religión de los contrayentes.
+OK: B
+EXP: La institución tiene contenido normativamente predeterminado, con margen limitado (p. ej., régimen económico).
+
+// [33]
+Q: ¿Qué conclusión institucional extrae el texto sobre la naturaleza del matrimonio?
+A) Que es un contrato típico sometido a autonomía privada plena.
+B) Que es una institución jurídica autónoma con normativa específica para nacimiento, desarrollo y crisis.
+C) Que es una unión de hecho con efectos civiles ocasionales.
+OK: B
+EXP: La concepción institucional subraya un régimen propio, imperativo en lo esencial, y estructurado por el Derecho positivo.
+
+
+#ID=4
+
+// [34]
+Q: ¿Qué designa, en sentido jurídico, la expresión “sistema matrimonial”?
+A) El régimen económico elegido por los cónyuges tras casarse.
+B) La ordenación estatal de las formas o ritos a los que se reconoce validez civil.
+C) La regulación interna de las confesiones religiosas sobre el matrimonio.
+OK: B
+EXP: El sistema matrimonial define qué formas de celebración reconoce el Estado con eficacia civil.
+
+// [35]
+Q: ¿Por qué el texto vincula el problema del sistema matrimonial a la relación entre poder civil y confesiones religiosas?
+A) Porque en Europa el matrimonio civil fue anterior históricamente al canónico.
+B) Porque la precedencia histórica del matrimonio canónico condiciona la configuración posterior del matrimonio civil.
+C) Porque el Estado carece de potestad normativa en materia matrimonial.
+OK: B
+EXP: La historia del matrimonio canónico y su jurisdicción influyó en cómo los Estados modernos diseñaron su sistema matrimonial.
+
+// [36]
+Q: ¿Por qué la decisión sobre el sistema matrimonial se califica como opción política relevante?
+A) Porque determina si el Estado asume en exclusiva la potestad normativa y jurisdiccional o la comparte en algún grado.
+B) Porque permite a cada ciudadano crear su propia forma de matrimonio sin formalidades.
+C) Porque elimina la necesidad de inscripción registral.
+OK: A
+EXP: Elegir sistema implica decidir el reparto de competencias normativas y jurisdiccionales entre Estado y confesiones.
+
+
+#ID=5
+
+// [37]
+Q: ¿Qué principios constitucionales hacen incompatible el sistema de matrimonio civil subsidiario propio de Estados confesionales?
+A) Aconfesionalidad del Estado, libertad religiosa y recuperación del poder civil en materia matrimonial.
+B) Unidad religiosa del Estado y jurisdicción eclesiástica exclusiva.
+C) Supremacía del Derecho canónico en relaciones familiares.
+OK: A
+EXP: El texto cita aconfesionalidad (art. 16.3), libertad religiosa (art. 16) y poder civil (art. 32.2) como marco incompatible con subsidiariedad confesional.
+
+// [38]
+Q: Según el texto, ¿qué rasgo define al sistema resultante tras las reformas de 1981 en España?
+A) Un sistema de libertad de forma sin formalidades obligatorias.
+B) Un sistema electivo formal y facultativo: forma múltiple con clase única civil y regulación estatal.
+C) Un sistema exclusivamente religioso con eficacia civil automática.
+OK: B
+EXP: Se reconoce eficacia civil a formas religiosas, pero el Estado se reserva la regulación jurídica del matrimonio.
+
+
+#ID=6
+
+// [39]
+Q: En el Código Civil vigente, ¿qué regla fija el art. 42 sobre la promesa de matrimonio?
+A) Produce obligación exigible de contraer matrimonio si fue formalizada por escrito.
+B) No produce obligación de contraerlo ni permite demandar su cumplimiento.
+C) Obliga a cumplir lo pactado bajo cláusula penal si no se celebra.
+OK: B
+EXP: Se protege la libertad matrimonial: no hay acción para exigir celebración ni cumplimiento de pactos vinculados a no celebrar.
+
+// [40]
+Q: ¿Qué consecuencia jurídica principal atribuye el art. 43 CC al incumplimiento “sin causa” de una promesa cierta de matrimonio?
+A) Indemnización general por daños morales y aplicación preferente del art. 1902 CC.
+B) Resarcimiento de gastos y obligaciones contraídas en consideración al matrimonio prometido, con alcance limitado.
+C) Nulidad de cualquier relación posterior entre los prometidos.
+OK: B
+EXP: La consecuencia se limita al resarcimiento patrimonial (gastos/obligaciones) en consideración al matrimonio, con régimen y límites propios.
+`;
+    const BANCO_3 = `...Pega aquí tu BANCO_3 completo...`;
+    const BANCO_4 = `...Pega aquí tu BANCO_4 completo...`;
+    const BANCO_5 = `...Pega aquí tu BANCO_5 completo...`;
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const lines = String(t ?? "").replace(/\r/g,"").split("\n");
+
+  const isBullet = (s) => /^\s*(•|–|-)\s+/.test(s);
+  const isEpig   = (s) => /^\s*\d+(?:\.\d+)*\.\s+/.test(s);     // 1. / 1.1. / 1.1.1.
+  const isEnum   = (s) => /^\s*\d+\s*-\s+/.test(s);             // 1- ...
+  const newBlock = (s) => isBullet(s) || isEpig(s) || isEnum(s);
+
+  const paras = [];
+  let cur = "";
+
+  for(let i=0;i<lines.length;i++){
+    const raw = lines[i];
+    const line = raw.trim();
+
+    // ✅ línea vacía = FIN de párrafo (esto es lo que te faltaba)
+    if(!line){
+      if(cur) paras.push(cur.trim());
+      cur = "";
+      continue;
+    }
+
+    // ✅ listas/epígrafes/enumeraciones: cada uno en su propio párrafo
+    if(newBlock(line)){
+      if(cur) paras.push(cur.trim());
+      paras.push(line);
+      cur = "";
+      continue;
+    }
+
+    // empieza párrafo
+    if(!cur){
+      cur = line;
+      continue;
+    }
+
+    // ✅ une cortes típicos de PDF (sin cargarte párrafos)
+    const prevEndsSentence = /[.!?:]$/.test(cur.trim());
+    const nextStartsLower  = /^[a-záéíóúñ]/.test(line);
+
+    if(!prevEndsSentence && nextStartsLower){
+      cur += " " + line;
+    }else{
+      paras.push(cur.trim());
+      cur = line;
+    }
+  }
+
+  if(cur) paras.push(cur.trim());
+
+  return paras.map(p => `<p>${escapeHtml(p)}</p>`).join("");
+}
+    function normalizeKey(s){
+      return String(s || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g," ")
+        .slice(0,220);
+    }
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge">${quizCount} preguntas</span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>

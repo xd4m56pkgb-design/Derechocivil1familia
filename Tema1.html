@@ -1,0 +1,1726 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:hidden;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:flex-start;   /* 🔧 no space-between */
+}
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1 1 auto;                /* 🔧 ocupa el ancho */
+}
+.sumTitle{
+  min-width:0;
+  white-space:normal;           /* 🔧 permite saltos */
+  overflow:visible;             /* 🔧 no recorta */
+  text-overflow:clip;           /* 🔧 no pone … */
+  word-break:break-word;
+  line-height:1.25;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{ margin:0 0 10px; line-height:1.6; white-space:pre-wrap }
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 1 – El Derecho de familia</h1>
+  <div class="small"> by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LA FAMILIA Y EL PARENTESCO EN GENERAL
+La familia es un dato prenormativo, anterior al Derecho, que existe como institución social
+antes de su regulación jurídica. El Derecho de familia no crea la familia, sino que la regula,
+convirtiéndola en institución jurídica.
+La configuración de la familia ha sido históricamente variable, condicionada por factores
+sociales, morales, históricos y culturales, lo que ha dado lugar a formas familiares diversas
+según cada época. La concepción contemporánea se apoya esencialmente en vínculos
+conyugales o de parentesco, sin que la mera convivencia sea suficiente para atribuir la
+condición de familia.
+La idea de familia puede modificarse rápidamente por cambios normativos, como demuestra la
+equiparación constitucional entre hijos matrimoniales y extramatrimoniales (art. 39.2 CE), que
+obligó a la reforma del sistema de filiación del Código Civil en 1981.
+Por ello, no existe una definición jurídica general de familia en la Constitución ni en la
+legislación ordinaria, siendo válidas múltiples realidades familiares, salvo a efectos de normas
+concretas. Las distinciones entre distintos tipos de familia pertenecen al ámbito sociológico, ya
+que el Derecho carece de pautas generales al respecto.
+2. EL DERECHO DE FAMILIA
+Al Derecho le interesa la familia por razones de organización social y de tutela de las personas
+necesitadas de protección, especialmente menores de edad y personas con discapacidad,
+cuya atención ha de procurarse mediante mecanismos sustitutivos cuando la familia no existe o
+no resulta suficiente. La solidaridad y el socorro mutuo entre los cónyuges y los miembros de la
+familia resuelven de hecho no pocas tensiones sociales, permitiendo que la estructura política y
+administrativa pueda desentenderse de ellas.
+La convivencia familiar puede originar numerosos conflictos que requieren una regla de
+mediación jurídica, a los que el Estado no puede permanecer ajeno. El Derecho de familia es el
+conjunto de reglas de intermediación y organización familiar de carácter estructural y
+comprende la regulación del matrimonio y sus situaciones de crisis, las relaciones entre
+padres o progenitores e hijos y las instituciones tutelares en función sustitutiva de la patria
+potestad.
+3. MODERNAS ORIENTACIONES DEL DERECHO DE FAMILIA
+El Derecho de familia es el sector del Derecho civil que ha sido objeto de reformas más
+profundas en tiempos contemporáneos, siendo notoria la abundancia de innovaciones
+legislativas producidas en los últimos años y el sentido básico de dichas reformas. Este
+fenómeno resulta especialmente visible en España como consecuencia de dos factores
+técnicos fundamentales.
+Por un lado, la conservación prolongada de la redacción originaria del Código Civil de 1889,
+inspirado en criterios propios del momento codificador, caracterizados por el carácter patriarcal
+de la familia, la sumisión de la mujer a la autoridad del marido y la discriminación radical
+entre hijos legítimos e ilegítimos. Por otro lado, la aprobación de la Constitución de 1978,
+que, partiendo de conquistas sociológicas ya asumidas, consagra principios relativos a la
+dinámica familiar absolutamente contradictorios con los inspiradores de los Códigos
+decimonónicos.
+3.1. Principios constitucionales en relación con el derecho de familia.
+La Constitución establece como principios básicos en materia de familia la absoluta
+igualdadentre hombre y mujer respecto del matrimonio (art. 32.1). Al proclamar la
+aconfesionalidad del Estado (art. 16.3), presupone la recuperación del poder civil en la
+regulación del matrimonio, delegando en el legislador ordinario la posibilidad de existencia
+del divorcio.
+Asimismo, la Constitución consagra la absoluta igualdad ante la ley de los hijos matrimoniales
+y extramatrimoniales, así como los deberes de los padres en ambos casos (art. 39.2 y 3). A
+efectos de la determinación de la filiación, ordena al legislador ordinario la regulación de la
+investigación de la paternidad (art. 39.2, último inciso).
+3.2. La legislación reformadora del Código civil
+Los principios constitucionales en materia de familia se han plasmado fundamentalmente
+mediante las reformas del Código Civil operadas en 1981 por dos leyes de especial relevancia.
+La Ley 11/1981, de 13 de mayo, modificó el Código Civil en materia de filiación, patria
+potestad y régimen económico del matrimonio, y la Ley 30/1981, de 7 de julio, reformó la
+regulación del matrimonio y estableció el procedimiento en las causas de nulidad, separación
+y divorcio. Ambas leyes instauraron el sistema familiar posconstitucional.
+Con posterioridad se han dictado otras leyes que han incidido en aspectos concretos del
+Derecho de familia, aunque sin alterar el sistema instaurado en 1981, relativas a la tutela, la
+adopción, la no discriminación por razón de sexo, la celebración del matrimonio civil, la
+protección jurídica del menor, los nombres y apellidos, la protección patrimonial de las
+personas con discapacidad y las relaciones familiares entre nietos y abuelos.
+Asumen una significación comparable a la reforma de 1981 las Leyes 13/2005 y 15/2005, la
+primera al reconocer el matrimonio entre personas del mismo sexo, y la segunda al reformar
+profundamente la crisis matrimonial, suprimiendo el sistema causal y la necesidad de
+separación previa al divorcio.
+Otras reformas posteriores han afectado a la adopción internacional, al Registro Civil, a la
+jurisdicción voluntaria, a la protección de la infancia y la adolescencia, al apoyo a las
+personas con discapacidad en el ejercicio de su capacidad jurídica, a la filiación en relación
+con las personas trans y LGTBI, y a la organización de la Administración de Justicia,
+destacando la Ley Orgánica 1/2025, que introduce los Tribunales de Instancia, exige la
+actividad negociadora previa como requisito de procedibilidad en numerosos procesos civiles y
+de familia y modifica diversos preceptos del Código Civil en materia matrimonial.
+3.3. Referencia a la legislación foral o especial
+La exposición del Derecho de familia se centra en las disposiciones legislativas de ámbito
+estatal, consideradas como Derecho de familia de aplicación general en España, sin abordar
+de forma sistemática las disposiciones autonómicas vigentes. No obstante, la legislación foral o
+especial ha tenido una gran relevancia en materia de régimen económico del matrimonio,
+por lo que se apuntan sus aspectos básicos en las Comunidades Autónomas de índole foral.
+Tras la aprobación de la Constitución de 1978 y la instauración del Estado autonómico, algunas
+Comunidades Autónomas han regulado otros aspectos del Derecho de familia, especialmente en
+materia de adopción y protección de los menores, mediante diversas leyes autonómicas. En
+este contexto, destaca el caso de Cataluña, que ha seguido una política legislativa propia en
+materia familiar, integrando su normativa en un Código de Familia y posteriormente en un
+Código Civil propio, cuyo libro segundo se dedica a la persona y la familia.
+Pese a estas particularidades, el Derecho de familia ha sido adscrito tradicionalmente en
+España al Derecho civil, considerándose en términos sistemáticos Derecho privado, al igual
+que las restantes instituciones civiles relativas a la persona, la familia y el patrimonio.
+4. NATURALEZA DE LAS NORMAS Y CARACTERES DEL DERECHO DE FAMILIA
+4.1. La imperatividad de las normas del Derecho de familia
+La mayoría de las normas del Derecho de familia son imperativas (ius cogens), lo que significa
+que prevalecen sobre la voluntad de las personas. La autonomía privada existe, pero en un
+ámbito muy limitado.
+Los miembros de la familia no pueden decidir libremente el contenido jurídico del matrimonio ni
+los deberes hacia los hijos si contradicen la ley. Por tanto, el ordenamiento protege el interés
+familiar y social por encima de acuerdos particulares
+4.2. El debate sobre la ubicación sistemática del Derecho de familia
+Tradicionalmente se ha destacado el carácter imperativo del Derecho de familia frente al
+predominio de normas dispositivas en el resto del Derecho civil y privado. Esto ha generado
+debates doctrinales sobre si debería pertenecer al Derecho civil, al Derecho público o a una
+categoría intermedia.
+Sin embargo, en España el Derecho de familia se integra sistemáticamente dentro del Derecho
+civil, considerándose Derecho privado. Esto se justifica porque el Derecho civil regula las
+realidades sociales básicas: persona, familia y patrimonio.
+4.3. Los acuerdos familiares
+La existencia de normas imperativas en el Derecho de familia no supone la eliminación de la
+autonomía privada de las personas unidas por relaciones familiares. En numerosos supuestos
+conflictivos, las propias normas legales presuponen y reclaman acuerdos o convenios entre
+los interesados, especialmente entre cónyuges, tanto en la vida familiar ordinaria como en
+situaciones de separación o divorcio, incluidas las relativas al domicilio familiar y a las
+pensiones.
+La autonomía privada ha desempeñado un papel particularmente relevante en las relaciones
+patrimoniales entre los cónyuges, pues el principio básico en materia de régimen económico
+del matrimonio es la libertad de elección del sistema aplicable o incluso la elaboración del
+régimen que consideren oportuno. En las últimas décadas, esta capacidad de autorregulación
+ha adquirido mayor relevancia, especialmente tras las reformas de 1981, hasta el punto de que
+no resulta adecuado explicar el sistema afirmando que la imperatividad es la regla y la autonomía
+privada la excepción.
+Algunos autores han propuesto agrupar estos supuestos bajo la categoría del negocio jurídico
+de Derecho de familia, pero dicha construcción conceptual es considerada dudosa, al no
+facilitar la explicación de las instituciones familiares ni proporcionar un régimen normativo
+general, además de alterar el esquema general del negocio jurídico, incluso en relación con el
+matrimonio.
+4.4. El sentido ético del derecho de familia
+El Derecho de familia, aun siendo imperativo, no puede pretender regular los aspectos más
+íntimos y entrañables de las relaciones familiares, ni intervenir de forma constante en la vida
+cotidiana de la familia. Tampoco pueden los miembros de la familia exigir que todas sus
+desavenencias encuentren siempre una respuesta jurídica directa o una intervención
+continuada del juez.
+La profundidad y cotidianeidad de las relaciones familiares dificultan concebir el Derecho de
+familia como un sistema de reglas mecánicas, pues tanto su configuración normativa como su
+aplicación práctica presuponen una concordia familiar y la aceptación común de principios
+morales o éticos, lo que permite destacar el contenido ético del Derecho de familia.
+Este carácter ético se manifiesta, en primer lugar, en la especial influencia de los principios
+morales y de las convenciones sociales en este sector del ordenamiento, especialmente en la
+regulación del matrimonio y de las relaciones entre padres e hijos, lo que exige al legislador
+cautela y prudencia. En segundo lugar, implica que la regulación jurídica de la familia y las
+pautas de conducta habitualmente seguidas por los grupos familiares suelen ser coincidentes.
+Aunque la mayor parte de las vivencias familiares se desarrollan sin necesidad de acudir al
+Derecho, ello no convierte al Derecho de familia en superfluo, pues el ordenamiento debe ofrecer
+vías de solución para los supuestos de crisis familiar, momento en el que el Derecho de familia
+adquiere su verdadera relevancia y significación.
+5. LOS DERECHOS SUBJETIVOS FAMILIARES: EL CONCEPTO DE POTESTAD
+Los llamados derechos de familia, entendidos como derechos subjetivos propios del Derecho
+de familia, se caracterizan tradicionalmente por ser indisponibles, intransmisibles,
+irrenunciables e imprescriptibles. Su especial naturaleza impide que su ejercicio quede
+sometido a condición o término, que puedan ejercitarse mediante representante, o que opere
+la representación en las relaciones entre cónyuges o entre padres e hijos, tratándose de
+derechos especialmente personalísimos, derivados directamente de los lazos familiares.
+No obstante, debe revisarse si los poderes o facultades que las normas atribuyen a algunos
+familiares respecto de otros pueden calificarse técnicamente como derechos subjetivos o si, por
+el contrario, deben entenderse como potestades. Cuando tales poderes no atienden al interés
+particular de quien los ejerce, sino que implican el cuidado, la vigilancia o la consideración de
+los intereses de otra u otras personas, resulta más preciso hablar de potestad, siendo el
+Derecho de familia el ámbito propio de esta categoría en el Derecho privado.
+6. FAMILIA, GRUPOS FAMILIARES Y MEDIACIÓN FAMILIAR
+La pluralidad de las formas de los grupos familiares y la complejidad de las relaciones
+actuales han provocado que determinadas situaciones fácticas hayan alcanzado en los últimos
+años una cierta consagración normativa o, al menos, una necesidad de comprensión y apoyo
+por los poderes públicos. Esta realidad exige que, junto a las normas tradicionales de
+regulación de los problemas familiares, se recurra al auxilio de otros instrumentos.
+En este contexto, destaca la regulación proyectada en el Proyecto de Ley de Familias, orientada
+a garantizar los derechos y la igualdad jurídica en las distintas situaciones familiares,
+otorgando protección a todas ellas con pleno respeto a la diversidad familiar.
+6.1. Legislación autonómica sobre mediación
+Al amparo del título competencial de la protección social de la familia, la primera década
+del siglo XXI se ha caracterizado por una intensa actividad normativa de las Comunidades
+Autónomas orientada a regular la mediación familiar en sus respectivos territorios. Se parte de
+la idea de que las técnicas de mediación pueden contribuir a la solución de diversos conflictos
+surgidos en el seno de los grupos familiares.
+En este marco, numerosas Comunidades Autónomas han aprobado leyes específicas de
+mediación familiar, desarrolladas por sus correspondientes reglamentos y disposiciones
+complementarias. No obstante, en el momento de cierre de la obra, algunos territorios carecen
+de ley específica, sin que ello implique la inexistencia de servicios o centros especializados en
+mediación familiar.
+6.2. La ampliación del ámbito objetivo: la mediación en asuntos civiles y mercantiles (ley
+5/12)
+Fue aprobada la Ley 5/2012, de 6 de julio, de mediación en asuntos civiles y mercantiles,
+desarrollada parcialmente por el Real Decreto 980/2013, que regula la formación de los
+mediadores, crea el Registro de Mediadores, establece la obligación de aseguramiento de su
+responsabilidad civil y fija las bases del procedimiento simplificado de mediación por medios
+electrónicos.
+La Ley define la mediación como un medio adecuado de solución de controversias en el que
+dos o más partes intentan voluntariamente alcanzar un acuerdo mediante un procedimiento
+estructurado con la intervención de un mediador. Su ámbito de aplicación comprende los
+asuntos civiles y mercantiles, incluidos los conflictos transfronterizos, siempre que afecten a
+derechos y obligaciones disponibles, quedando excluidas la mediación penal, con las
+Administraciones públicas, la laboral y la de consumo.
+La mediación se rige por los principios de voluntariedad, igualdad y equilibrio entre las partes,
+imparcialidad y neutralidad del mediador y confidencialidad, así como por las reglas de
+buena fe, respeto mutuo, colaboración y apoyo al mediador. La Ley establece un estatuto
+mínimo del mediador y regula un procedimiento flexible, en el que alcanzar un acuerdo no es
+obligatorio. No obstante, cuando se alcanza, el acuerdo de mediación puede adquirir fuerza
+ejecutiva mediante homologación judicial o elevación a escritura pública.
+La Ley 5/2012 es una ley general, no limitada a los conflictos familiares, aunque estos se
+encuentren incluidos cuando versen sobre derechos disponibles. Ha sido objeto de diversas
+reformas, destacando las introducidas por la Ley Orgánica 1/2025, que modifica aspectos
+relativos a la confidencialidad, al procedimiento y a la duración de la mediación cuando
+constituye requisito de procedibilidad, así como al régimen de presentación y homologación
+del acuerdo de mediación.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+  "1": "La familia es una realidad social previa al Derecho, que el ordenamiento jurídico no crea sino que regula como institución jurídica.",
+  "2": "El Derecho de familia es el conjunto de normas que organizan jurídicamente la familia, protegen a sus miembros y regulan matrimonio, filiación y funciones tutelares.",
+  "3": "El Derecho de familia ha experimentado profundas reformas contemporáneas impulsadas por el paso del modelo codificador tradicional a los principios constitucionales.",
+  "3.1": "La Constitución establece los principios básicos del Derecho de familia, especialmente la igualdad entre cónyuges y entre hijos y la intervención civil en la regulación matrimonial.",
+  "3.2": "La legislación reformadora del Código Civil, especialmente las reformas de 1981 y posteriores, configura el sistema familiar posconstitucional.",
+  "3.3": "La legislación foral y autonómica complementa el Derecho de familia estatal, especialmente en materias como régimen económico matrimonial, adopción y protección de menores.",
+  "4": "El Derecho de familia se caracteriza por la prevalencia de normas imperativas, la limitación de la autonomía privada y su fuerte contenido ético y social.",
+  "4.1": "La mayoría de las normas del Derecho de familia son imperativas (ius cogens), prevaleciendo sobre la voluntad de los particulares.",
+  "4.2": "Pese a su fuerte imperatividad, el Derecho de familia se integra sistemáticamente en España dentro del Derecho civil como Derecho privado.",
+  "4.3": "La autonomía privada sigue existiendo en el Derecho de familia, especialmente en acuerdos familiares y en la regulación patrimonial entre cónyuges.",
+  "4.4": "El Derecho de familia posee un marcado contenido ético, al estar profundamente influido por valores morales y sociales y actuar especialmente en situaciones de crisis familiar.",
+  "5": "Los derechos familiares presentan rasgos de indisponibilidad y carácter personalísimo, siendo más preciso hablar de potestades cuando se ejercen en interés de otro miembro de la familia.",
+  "6": "La diversidad actual de formas familiares exige nuevas respuestas jurídicas y mecanismos complementarios como la mediación familiar.",
+  "6.1": "Las Comunidades Autónomas han desarrollado legislación propia sobre mediación familiar para gestionar conflictos dentro de los grupos familiares.",
+  "6.2": "La Ley 5/2012 regula la mediación civil y mercantil como sistema voluntario de resolución de conflictos, aplicable también a conflictos familiares sobre derechos disponibles."
+
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    const BANCO_1 = `#ID=1
+
+// [1]
+Q: ¿Qué implica jurídicamente que la familia sea considerada una realidad prenormativa anterior al Derecho?
+A) Que la familia solo adquiere relevancia jurídica cuando es definida normativamente por el legislador.
+B) Que la familia constituye una realidad social previa cuya regulación jurídica depende del ordenamiento.
+C) Que la familia existe jurídicamente únicamente cuando produce efectos patrimoniales.
+OK: B
+EXP: La familia existe socialmente antes del Derecho, que solo la regula jurídicamente.
+
+// [2]
+Q: ¿Qué significa que el Derecho de familia no cree la familia, sino que la convierta en institución jurídica?
+A) Que el Derecho determina los modelos familiares legítimos mediante regulación constitutiva.
+B) Que el Derecho transforma relaciones sociales familiares en relaciones jurídicas organizadas.
+C) Que el Derecho crea la familia mediante actos jurídicos constitutivos obligatorios.
+OK: B
+EXP: El Derecho no crea la familia, la juridifica.
+
+// [3]
+Q: ¿Por qué la mera convivencia no suele ser suficiente para atribuir la condición jurídica de familia?
+A) Porque la convivencia carece de relevancia jurídica en el ámbito civil.
+B) Porque la condición jurídica de familia suele apoyarse en vínculos jurídicos reconocidos legalmente.
+C) Porque la convivencia solo produce efectos administrativos y no civiles.
+OK: B
+EXP: El Derecho exige normalmente matrimonio o parentesco.
+
+// [4]
+Q: ¿Qué efecto jurídico tuvo la equiparación constitucional entre hijos matrimoniales y extramatrimoniales?
+A) Suprimió el sistema de filiación tradicional basado en la determinación biológica.
+B) Impuso la igualdad jurídica entre filiaciones, obligando a reformar la regulación civil.
+C) Eliminó la posibilidad de establecer filiación extramatrimonial.
+OK: B
+EXP: La igualdad constitucional exigió reformar el sistema civil.
+
+// [5]
+Q: ¿Qué relevancia jurídica tiene la inexistencia de una definición general de familia en la Constitución?
+A) Permite la adaptación del concepto jurídico de familia a realidades sociales diversas según cada norma.
+B) Impide reconocer jurídicamente modelos familiares distintos del tradicional.
+C) Limita la protección jurídica familiar a los supuestos matrimoniales.
+OK: A
+EXP: No hay definición cerrada → pluralidad jurídica posible.
+
+
+#ID=2
+
+// [6]
+Q: ¿Qué interés justifica la intervención del Derecho en la organización familiar desde la tutela de personas vulnerables?
+A) La necesidad de garantizar la organización económica del núcleo familiar.
+B) La protección jurídica de personas en situación de especial vulnerabilidad dentro del grupo familiar.
+C) La regulación de las relaciones laborales dentro del ámbito doméstico.
+OK: B
+EXP: Protección de menores y personas con discapacidad.
+
+// [7]
+Q: ¿Qué función social cumple la solidaridad familiar respecto del Estado?
+A) Sustituye estructuralmente las funciones asistenciales del Estado.
+B) Contribuye a absorber tensiones sociales mediante mecanismos internos de ayuda familiar.
+C) Limita la intervención pública en políticas sociales generales.
+OK: B
+EXP: La familia absorbe funciones sociales.
+
+// [8]
+Q: ¿Por qué los conflictos derivados de la convivencia familiar requieren mediación jurídica estatal?
+A) Porque la convivencia familiar implica siempre relaciones contractuales.
+B) Porque los conflictos familiares pueden afectar a derechos que requieren tutela jurídica.
+C) Porque el Estado asume la dirección organizativa de la familia.
+OK: B
+EXP: Requieren regulación jurídica.
+
+// [9]
+Q: ¿Qué materias integran el contenido estructural del Derecho de familia?
+A) La regulación del matrimonio, la filiación y las instituciones de protección familiar.
+B) Exclusivamente la regulación económica del matrimonio.
+C) Solo las relaciones patrimoniales entre familiares.
+OK: A
+EXP: Son los pilares del Derecho de familia.
+
+
+#ID=3
+
+// [10]
+Q: ¿Por qué el Derecho de familia ha experimentado reformas especialmente profundas en la época contemporánea?
+A) La necesidad de adaptar el sistema jurídico familiar a transformaciones sociales y constitucionales.
+B) La sustitución del Derecho civil por el Derecho público en materia familiar.
+C) La desaparición del modelo matrimonial como base jurídica familiar.
+OK: A
+EXP: Cambios sociales + Constitución.
+
+// [11]
+Q: ¿Qué contradicción existía entre el modelo del Código Civil de 1889 y los principios de la Constitución de 1978?
+A) El Código Civil establecía igualdad jurídica plena entre todos los miembros de la familia.
+B) El modelo del Código Civil respondía a esquemas patriarcales incompatibles con la Constitución.
+C) El Código Civil impedía la regulación legal del divorcio.
+OK: B
+EXP: Modelo patriarcal vs igualdad constitucional.
+
+// [12]
+Q: ¿Qué factores explican la necesidad de reformar el Derecho de familia en la etapa constitucional?
+A) La evolución social junto a la incorporación de principios constitucionales igualitarios.
+B) La unificación del Derecho civil europeo.
+C) La sustitución del Derecho civil por legislación autonómica.
+OK: A
+EXP: Reforma social + constitucional.
+
+// [13]
+Q: ¿Qué transformación conceptual introduce la Constitución en la concepción jurídica de la familia?
+A) Introduce un modelo jurídico familiar basado en igualdad, pluralidad y protección constitucional.
+B) Establece un modelo único de familia jurídicamente protegido.
+C) Reduce la intervención del Derecho en las relaciones familiares.
+OK: A
+EXP: Igualdad + pluralidad + protección.
+
+
+#ID=3.1
+
+// [14]
+Q: ¿Qué consecuencias tuvo la igualdad constitucional entre hombre y mujer respecto del matrimonio?
+A) Impuso la revisión del sistema jurídico matrimonial para eliminar desigualdades entre cónyuges.
+B) Eliminó la regulación civil del matrimonio.
+C) Suprimió el régimen económico matrimonial legal.
+OK: A
+EXP: Eliminación desigualdades.
+
+// [15]
+Q: ¿Qué efecto jurídico deriva de la aconfesionalidad del Estado en relación con el matrimonio?
+A) Refuerza la competencia civil del Estado sobre el matrimonio y permite su regulación legal completa.
+B) Prohíbe el matrimonio religioso con efectos civiles.
+C) Impone un modelo matrimonial único obligatorio.
+OK: A
+EXP: Regulación civil + divorcio.
+
+// [16]
+Q: ¿Qué mandato impone la Constitución al legislador respecto de la investigación de la paternidad?
+A) Obliga al legislador a establecer mecanismos legales de investigación de la paternidad.
+B) Limita la investigación de la paternidad a procesos penales.
+C) Subordina la investigación a la voluntad paterna.
+OK: A
+EXP: Mandato constitucional.
+
+// [17]
+Q: ¿Qué alcance tiene la igualdad constitucional entre hijos matrimoniales y extramatrimoniales?
+A) Garantiza igualdad jurídica plena entre todos los hijos con independencia de su filiación.
+B) Permite diferencias patrimoniales entre hijos matrimoniales y extramatrimoniales.
+C) Limita derechos sucesorios a la filiación matrimonial.
+OK: A
+EXP: Igualdad total.
+
+
+#ID=3.2
+
+// [18]
+Q: ¿Qué transformación del sistema familiar introdujeron las reformas del Código Civil de 1981?
+A) Adaptaron el sistema familiar a los principios constitucionales de igualdad y no discriminación.
+B) Sustituyeron el Derecho civil por normativa administrativa.
+C) Eliminan la regulación civil del matrimonio.
+OK: A
+EXP: Adaptación constitucional.
+
+// [19]
+Q: ¿Por qué se considera que las reformas de 1981 instauraron el sistema familiar posconstitucional?
+A) Incorporaron de forma sistemática los principios constitucionales al Derecho civil familiar.
+B) Derogaron el Código Civil en materia familiar.
+C) Sustituyeron el matrimonio por uniones civiles obligatorias.
+OK: A
+EXP: Integración constitucional.
+
+// [20]
+Q: ¿Qué finalidad general han tenido las reformas posteriores del Derecho de familia tras 1981?
+A) Desarrollar y actualizar el sistema familiar sin alterar su estructura posconstitucional básica.
+B) Sustituir completamente el modelo familiar civil.
+C) Eliminar la regulación jurídica del matrimonio.
+OK: A
+EXP: Evolución sin ruptura estructural.
+`;
+    const BANCO_2 = `#ID=3.3
+
+// [21]
+Q: ¿Qué relevancia tiene la legislación foral o especial en materia de régimen económico del matrimonio?
+A) Ha tenido una incidencia relevante, especialmente en la configuración del régimen económico matrimonial en territorios con Derecho civil propio.
+B) Solo ha afectado a materias sucesorias sin incidencia en la regulación matrimonial.
+C) Ha sustituido completamente la regulación estatal del régimen económico matrimonial.
+OK: A
+EXP: Especialmente relevante en régimen económico matrimonial.
+
+// [22]
+Q: ¿Por qué el estudio del Derecho de familia suele centrarse en la legislación estatal pese a la existencia de normas autonómicas?
+A) Porque la legislación estatal actúa como Derecho común general aplicable a todo el territorio nacional.
+B) Porque las Comunidades Autónomas carecen de competencia normativa en Derecho civil.
+C) Porque la legislación autonómica tiene carácter meramente interpretativo.
+OK: A
+EXP: El Derecho estatal funciona como base común.
+
+// [23]
+Q: ¿Qué particularidad presenta la regulación del Derecho de familia en Cataluña respecto del resto de Comunidades Autónomas?
+A) Ha desarrollado un sistema normativo propio integrado en su propio Código Civil con regulación sistemática de la familia.
+B) Ha limitado su normativa familiar exclusivamente al ámbito patrimonial del matrimonio.
+C) Ha renunciado a la regulación propia del Derecho de familia en favor del Derecho estatal.
+OK: A
+EXP: Cataluña tiene Código Civil propio con regulación familiar integrada.
+
+
+#ID=4
+
+// [24]
+Q: ¿Por qué el Derecho de familia se caracteriza por una fuerte presencia de normas imperativas?
+A) Porque predomina la existencia de normas imperativas destinadas a proteger intereses familiares y sociales.
+B) Porque el Derecho de familia carece de autonomía frente al Derecho público.
+C) Porque las relaciones familiares son exclusivamente patrimoniales.
+OK: A
+EXP: Predomina el ius cogens por protección de intereses superiores.
+
+// [25]
+Q: ¿Qué implica la prevalencia del ius cogens sobre la autonomía privada en el ámbito familiar?
+A) Que la autonomía privada queda subordinada a límites legales establecidos para proteger intereses familiares.
+B) Que la autonomía privada desaparece completamente en el ámbito familiar.
+C) Que la autonomía privada prevalece siempre sobre la norma legal en materia familiar.
+OK: A
+EXP: Existe autonomía, pero dentro de límites legales.
+
+
+#ID=4.2
+
+// [26]
+Q: ¿Por qué el Derecho de familia se integra dentro del Derecho civil pese a su carácter imperativo?
+A) Porque regula relaciones jurídicas entre particulares, aunque con fuerte intervención normativa.
+B) Porque depende jerárquicamente del Derecho administrativo.
+C) Porque carece de normas imperativas.
+OK: A
+EXP: Regula relaciones privadas con fuerte intervención normativa.
+
+// [27]
+Q: ¿Qué argumentos doctrinales han cuestionado su adscripción al Derecho privado?
+A) Que la fuerte presencia de normas imperativas lo aproxima funcionalmente al Derecho público.
+B) Que el Derecho de familia regula exclusivamente relaciones económicas.
+C) Que el Derecho de familia depende del Derecho penal.
+OK: A
+EXP: Imperatividad intensa → debate doctrinal.
+
+
+#ID=4.3
+
+// [28]
+Q: ¿Qué papel desempeña la autonomía privada en los acuerdos familiares actuales?
+A) Permite la autorregulación familiar dentro de los límites establecidos por el ordenamiento jurídico.
+B) Permite sustituir completamente la regulación legal imperativa.
+C) Solo tiene efectos simbólicos sin valor jurídico.
+OK: A
+EXP: Existe autorregulación dentro de límites legales.
+
+// [29]
+Q: ¿Por qué ha aumentado la relevancia de la autorregulación familiar en las últimas décadas?
+A) Por la evolución social y las reformas legales que han reforzado la capacidad de autorregulación patrimonial familiar.
+B) Por la desaparición de las normas imperativas familiares.
+C) Por la sustitución del Derecho civil por acuerdos privados.
+OK: A
+EXP: Reformas modernas → más espacio autonomía privada.
+
+// [30]
+Q: ¿Qué límites presenta la categoría del negocio jurídico de Derecho de familia?
+A) No ofrece un régimen normativo general ni explica de forma completa las instituciones familiares.
+B) Sustituye completamente la teoría general del negocio jurídico.
+C) Solo es aplicable a relaciones patrimoniales matrimoniales.
+OK: A
+EXP: Categoría doctrinal discutida y limitada.
+
+
+#ID=4.4
+
+// [31]
+Q: ¿Por qué el Derecho de familia no puede concebirse como un sistema de reglas mecánicas?
+A) Porque las relaciones familiares están influidas por factores morales, sociales y afectivos que dificultan una aplicación automática de normas.
+B) Porque el Derecho de familia carece de normas jurídicas obligatorias.
+C) Porque depende exclusivamente de decisiones judiciales discrecionales.
+OK: A
+EXP: Influencia ética y social.
+
+// [32]
+Q: ¿Qué función cumple el contenido ético del Derecho de familia?
+A) Orienta la interpretación y aplicación de las normas familiares conforme a valores sociales y morales.
+B) Sustituye completamente la función normativa del Derecho.
+C) Limita la intervención del legislador en materia familiar.
+OK: A
+EXP: Función interpretativa y orientadora.
+
+
+#ID=5
+
+// [33]
+Q: ¿Qué características tradicionales definen a los derechos subjetivos familiares?
+A) Indisponibilidad, intransmisibilidad, irrenunciabilidad e imprescriptibilidad.
+B) Libre transmisión, disponibilidad plena y prescripción ordinaria.
+C) Naturaleza exclusivamente patrimonial.
+OK: A
+EXP: Derechos personalísimos.
+
+// [34]
+Q: ¿Qué consecuencias jurídicas se derivan del carácter personalísimo de los derechos familiares?
+A) Impide normalmente su ejercicio mediante representación por su carácter personalísimo.
+B) Permite su libre transmisión entre familiares.
+C) Permite su ejercicio condicionado a plazo.
+OK: A
+EXP: No suelen ser ejercitables por representación.
+
+// [35]
+Q: ¿Por qué en algunos casos es más correcto hablar de potestades que de derechos subjetivos?
+A) Porque determinados poderes familiares se ejercen en interés de otra persona y no en interés propio.
+B) Porque son derechos patrimoniales transmisibles.
+C) Porque son facultades discrecionales sin límites jurídicos.
+OK: A
+EXP: La clave es el interés protegido.
+
+
+#ID=6
+
+// [36]
+Q: ¿Qué justifica la necesidad de recurrir a instrumentos distintos de las normas tradicionales en los conflictos familiares actuales?
+A) La complejidad y pluralidad actual de las relaciones familiares exige mecanismos complementarios de resolución de conflictos.
+B) La desaparición del Derecho civil como sistema regulador.
+C) La sustitución del sistema judicial por mecanismos privados obligatorios.
+OK: A
+EXP: Complejidad social → nuevos instrumentos.
+
+// [37]
+Q: ¿Qué finalidad persigue el Proyecto de Ley de Familias respecto de la diversidad familiar?
+A) Garantizar la igualdad jurídica y la protección de la diversidad de modelos familiares.
+B) Limitar la protección jurídica a la familia matrimonial tradicional.
+C) Sustituir la regulación civil por regulación administrativa.
+OK: A
+EXP: Protección pluralidad familiar.
+
+
+#ID=6.1
+
+// [38]
+Q: ¿Qué título competencial ha permitido a las Comunidades Autónomas legislar sobre mediación familiar?
+A) La competencia en materia de protección social de la familia.
+B) La competencia exclusiva estatal en Derecho penal.
+C) La competencia autonómica en política monetaria.
+OK: A
+EXP: Protección social familiar → base competencial.
+
+
+#ID=6.2
+
+// [39]
+Q: ¿Qué condición delimita el ámbito de aplicación de la mediación según la Ley 5/2012?
+A) Que el conflicto afecte a derechos y obligaciones disponibles por las partes.
+B) Que exista necesariamente intervención judicial previa.
+C) Que el conflicto tenga naturaleza penal.
+OK: A
+EXP: Solo derechos disponibles.
+
+// [40]
+Q: ¿Qué efecto jurídico puede adquirir el acuerdo alcanzado en mediación conforme a la Ley 5/2012?
+A) Puede adquirir fuerza ejecutiva mediante homologación judicial o elevación a escritura pública.
+B) Solo tiene valor moral entre las partes.
+C) Solo produce efectos administrativos.
+OK: A
+EXP: Puede convertirse en título ejecutivo.
+`;
+    const BANCO_3 = `...Pega aquí tu BANCO_3 completo...`;
+    const BANCO_4 = `...Pega aquí tu BANCO_4 completo...`;
+    const BANCO_5 = `...Pega aquí tu BANCO_5 completo...`;
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const lines = String(t ?? "").replace(/\r/g,"").split("\n");
+
+  const isBullet = (s) => /^\s*(•|–|-)\s+/.test(s);
+  const isEpig   = (s) => /^\s*\d+(?:\.\d+)*\.\s+/.test(s);     // 1. / 1.1. / 1.1.1.
+  const isEnum   = (s) => /^\s*\d+\s*-\s+/.test(s);             // 1- ...
+  const newBlock = (s) => isBullet(s) || isEpig(s) || isEnum(s);
+
+  const paras = [];
+  let cur = "";
+
+  for(let i=0;i<lines.length;i++){
+    const raw = lines[i];
+    const line = raw.trim();
+
+    // ✅ línea vacía = FIN de párrafo (esto es lo que te faltaba)
+    if(!line){
+      if(cur) paras.push(cur.trim());
+      cur = "";
+      continue;
+    }
+
+    // ✅ listas/epígrafes/enumeraciones: cada uno en su propio párrafo
+    if(newBlock(line)){
+      if(cur) paras.push(cur.trim());
+      paras.push(line);
+      cur = "";
+      continue;
+    }
+
+    // empieza párrafo
+    if(!cur){
+      cur = line;
+      continue;
+    }
+
+    // ✅ une cortes típicos de PDF (sin cargarte párrafos)
+    const prevEndsSentence = /[.!?:]$/.test(cur.trim());
+    const nextStartsLower  = /^[a-záéíóúñ]/.test(line);
+
+    if(!prevEndsSentence && nextStartsLower){
+      cur += " " + line;
+    }else{
+      paras.push(cur.trim());
+      cur = line;
+    }
+  }
+
+  if(cur) paras.push(cur.trim());
+
+  return paras.map(p => `<p>${escapeHtml(p)}</p>`).join("");
+}
+    function normalizeKey(s){
+      return String(s || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g," ")
+        .slice(0,220);
+    }
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge">${quizCount} preguntas</span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
