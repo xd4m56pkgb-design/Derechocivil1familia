@@ -1,0 +1,1874 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+}
+summary::-webkit-details-marker{ display:none }
+.inner{ padding:0 16px 16px }
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.sumTitle{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 4 – Derecho Civil 1 - Familia</h1>
+  <div class="small">LOS EFECTOS DEL MATRIMONIO, by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LAS RELACIONES CONYUGALES
+1.1. Las relaciones personales y patrimoniales
+La unión matrimonial es una de las relaciones interpersonales más intensas de la experiencia
+humana y genera múltiples derechos y deberes entre los cónyuges.
+Los Códigos Civiles solo pueden regular los aspectos más generales de esta convivencia, ya que
+la vida matrimonial presenta innumerables situaciones que escapan a una regulación detallada.
+En situaciones de armonía, las normas pueden parecer irrelevantes; sin embargo, el legislador
+debe prever los supuestos de conflicto grave, estableciendo reglas que permitan resolver
+desacuerdos que trascienden el ámbito íntimo y pueden desembocar en intervención judicial o
+crisis matrimonial.
+La regulación de las relaciones entre cónyuges comprende tanto los aspectos personales de la
+convivencia como las cuestiones patrimoniales que surgen en cualquier matrimonio.
+Por ello, doctrinalmente se habla de “efectos personales” y “efectos patrimoniales” del
+matrimonio, como categorías clásicas y generalmente aceptadas.
+1.2. El principio de igualdad conyugal
+Tradicionalmente, los conflictos conyugales se resolvían conforme al principio patriarcal o de
+autoridad marital, de modo que prevalecía la opinión del marido en caso de desacuerdo.
+Este sistema constituye hoy una referencia histórica superada, ya que el ordenamiento vigente
+establece el principio constitucional de igualdad entre los cónyuges (art. 32 CE).
+La Ley 30/1981 incorporó este principio al Código Civil, estableciendo en el art. 66 que “el marido
+y la mujer son iguales en derechos y deberes”.
+Posteriormente, la Ley 13/2005, al admitir el matrimonio entre personas del mismo sexo, adaptó
+la redacción del precepto, que actualmente dispone: “Los cónyuges son iguales en derechos y
+deberes”, manteniendo intacto el contenido material del principio.
+2. LOS DEBERES CONYUGALES
+Los deberes conyugales tienen escasa relevancia en situaciones de normalidad matrimonial,
+asentadas en el afecto y en la voluntad de convivencia. Sin embargo, su verdadero alcance se
+manifiesta en los supuestos de incumplimiento.
+Aunque su infracción no genera el aparato coactivo propio de las obligaciones en sentido técnico
+(arts. 1088 y ss. CC), sí produce consecuencias jurídicas, como puede ser la desheredación
+conforme al art. 855 CC.
+Los deberes conyugales no pueden entenderse como obligaciones patrimoniales típicas, ya que
+el componente puramente patrimonial está ausente del matrimonio, incluso en sus llamados
+efectos patrimoniales.
+Tampoco responden al esquema clásico acreedor-deudor, pues los derechos y deberes
+matrimoniales son recíprocos y mutuos, vinculando a ambos cónyuges (arts. 67 y 68 CC).
+2.1. La atención del interés familiar
+El art. 67 CC establece que los cónyuges deben actuar en interés de la familia.
+El concepto resulta difícil de concretar, ya que la familia no es un ente autónomo portador de
+intereses propios. Tradicionalmente puede identificarse con la familia nuclear (cónyuges e hijos),
+aunque la reforma del art. 68 por la Ley 15/2005 amplía la perspectiva.
+Actualmente, los cónyuges están obligados a:
+• Vivir juntos.
+• Guardarse fidelidad.
+• Socorrerse mutuamente.
+• Compartir responsabilidades domésticas.
+• Atender a ascendientes, descendientes y personas dependientes a su cargo.
+El interés familiar funciona como criterio valorativo para el juez en caso de conflicto,
+permitiéndole ponderar objetivamente las circunstancias y, en la práctica, proteger a los
+miembros más desamparados o necesitados.
+La reforma evidencia que la noción de familia supera la estrictamente nuclear, incluyendo la
+atención a personas dependientes.
+2.2. El respeto debido al otro cónyuge
+El art. 67 CC consagra el deber de respeto mutuo.
+Este deber implica:
+• No interferir en decisiones personales pertenecientes a la esfera íntima.
+• Tratar al cónyuge con deferencia y consideración.
+• Excluir conductas injuriosas, vejatorias o dañinas física o moralmente.
+El respeto incluye el rechazo de la infidelidad, aunque esta tenga consideración normativa
+autónoma por su tradicional relevancia social.
+Las conductas injuriosas o vejatorias fueron anteriormente causa de separación legal (art. 82.1.a
+CC, hoy sin contenido tras la Ley 15/2005).
+Respecto al llamado débito conyugal, la jurisprudencia ha afirmado que no existe derecho a exigir
+prestación sexual. El matrimonio no otorga derecho alguno sobre la sexualidad del otro cónyuge,
+y la imposición mediante fuerza o intimidación constituye delito.
+2.3. La ayuda y socorro mutuos
+Tras la Ley 30/1981, el art. 67 CC recoge la ayuda mutua y el art. 68 CC el socorro mutuo.
+La doctrina es prácticamente unánime en señalar que existe una reiteración innecesaria, pues
+ambos términos son sustancialmente sinónimos. Aunque algunos autores han intentado
+diferenciar ambos conceptos —atribuyendo al socorro un carácter económico y a la ayuda un
+alcance más amplio— resulta difícil sostener tal distinción desde el significado ordinario del
+lenguaje.
+En consecuencia, el deber de ayuda y socorro mutuos debe entenderse referido a la atención de
+cualesquiera necesidades del otro cónyuge, incluyendo de forma particular la obligación
+alimenticia entre cónyuges.
+Las reformas posteriores (Ley 13/2005 y Ley 15/2005) modificaron la terminología y añadieron la
+corresponsabilidad doméstica, pero no corrigieron la reiteración técnica previamente criticada por
+la doctrina.
+2.4. El deber de convivencia
+La convivencia constituye el designio fundamental del matrimonio. Salvo supuestos
+excepcionales de matrimonios de complacencia (nulos por falta de consentimiento real), el
+matrimonio se celebra para compartir vida en común.
+El art. 68 CC establece que los cónyuges están obligados a vivir juntos. Además, el art. 69 CC
+presume, salvo prueba en contrario, que los cónyuges viven juntos, configurando la convivencia
+como situación normal del matrimonio.
+El cese efectivo de la convivencia supone la infracción de un deber y suele revelar una crisis
+matrimonial.
+No obstante, la obligación de vivir juntos admite modulaciones razonables derivadas de
+circunstancias laborales, profesionales o familiares, sin exigir necesariamente residencia en el
+mismo municipio o domicilio permanente común.
+En relación con el llamado débito conyugal, la jurisprudencia europea ha declarado que la
+obligación marital no puede interpretarse como imposición de relaciones sexuales. El
+consentimiento matrimonial no implica consentimiento permanente a futuras relaciones, pues ello
+sería incompatible con el derecho a la libertad sexual y a la autonomía corporal.
+2.5. La fidelidad conyugal
+El art. 68 CC establece expresamente que los cónyuges están obligados a guardarse fidelidad. La
+fidelidad se refiere a la exclusividad de las relaciones sexuales entre los cónyuges, vinculada
+históricamente a la erradicación del adulterio y a la lealtad matrimonial.
+En el pasado, la infidelidad fue causa legal de separación (art. 82.1.a CC) y, hasta 1978, el
+adulterio constituyó incluso delito. Con la reforma de 2005 desaparece el sistema causalista de
+separación, de modo que la infidelidad deja de tener consecuencias automáticas en el ámbito de
+la crisis matrimonial.
+Actualmente, la fidelidad se configura como un parámetro de normalidad matrimonial, sin
+sanción económica específica. La jurisprudencia ha reiterado que el incumplimiento del deber de
+fidelidad no genera automáticamente indemnización ni pensión compensatoria.
+No obstante, pueden plantearse acciones por vulneración del honor cuando se difunden
+imputaciones falsas de infidelidad. La información no veraz puede dañar tanto al cónyuge al que
+se atribuye como al que supuestamente la soporta.
+En definitiva, la fidelidad tiene relevancia ética y social, pero su infracción no activa un régimen
+indemnizatorio automático.
+2.6. La corresponsabilidad doméstica
+La Ley 15/2005 añadió al art. 68 CC el deber de compartir las responsabilidades domésticas y el
+cuidado de ascendientes, descendientes y otras personas dependientes a cargo.
+Se introduce así el principio de corresponsabilidad doméstica, que amplía el ámbito tradicional
+del matrimonio más allá de la pareja nuclear, incorporando el cuidado de familiares dependientes.
+El precepto convierte en norma jurídica una exigencia de reparto equitativo de tareas domésticas
+y de cuidados. Sin embargo, su aplicación práctica presenta dificultades, pues cada matrimonio
+constituye una realidad concreta y diversa.
+La corresponsabilidad doméstica puede generar tensiones cuando existe desacuerdo sobre su
+alcance, especialmente en el contexto del actual sistema de divorcio sin necesidad de causa.
+En todo caso, el precepto refleja una opción legislativa clara por la igualdad material dentro del
+matrimonio, aunque su eficacia depende en gran medida de la dinámica interna de cada pareja.
+3. OTRAS CUESTIONES
+3.1. Domicilio conyugal
+El domicilio conyugal es la vivienda que constituye el hogar común del matrimonio. El art. 70 CC
+establece que los cónyuges fijarán de común acuerdo el domicilio conyugal y, en caso de
+discrepancia, resolverá el juez atendiendo al interés de la familia.
+La regla del acuerdo refleja el principio de igualdad conyugal, superando la antigua autoridad
+marital que obligaba a la mujer a seguir la residencia del marido. La intervención judicial solo
+procede cuando existe desacuerdo grave, lo que normalmente revela una crisis matrimonial.
+El domicilio conyugal tiene relevancia procesal, pues sirve como criterio para determinar la
+competencia territorial en procesos matrimoniales (art. 769.1 LEC). Tras la LO 1/2025, la
+competencia se atribuye progresivamente a los Tribunales de Instancia, transformándose los
+juzgados de familia en secciones especializadas.
+En síntesis, el domicilio conyugal es una decisión compartida basada en la igualdad, con posible
+intervención judicial en caso de conflicto y relevancia práctica en materia procesal.
+3.2. Honores
+El Código Civil originario reconocía que la mujer gozaba de los honores del marido. La reforma de
+1975 extendió la previsión a ambos cónyuges, pero la Ley 30/1981 suprimió definitivamente esta
+regulación.
+Se considera que la transmisión de honores (títulos nobiliarios o dignidades) tiene hoy más
+relevancia social que jurídica. La Ley 33/2006 reforzó el principio de igualdad en la sucesión de
+títulos nobiliarios, eliminando la preferencia masculina.
+Actualmente, el matrimonio no implica automáticamente la transmisión jurídica de honores; la
+cuestión queda en el ámbito simbólico y representativo.
+3.3. Nacionalidad y vecindad
+Históricamente, la mujer adquiría la nacionalidad y la vecindad del marido. Esta situación fue
+superada por la Ley 14/1975, que estableció que el matrimonio por sí solo no modifica la
+nacionalidad de los cónyuges ni condiciona su adquisición, pérdida o recuperación.
+Aunque el Código vigente no lo formule expresamente en los mismos términos, el principio se
+deduce del sistema actual basado en la igualdad.
+En cuanto a la vecindad civil, la reforma de 1990 eliminó la atribución automática de la vecindad
+del marido a la mujer (art. 14.4 CC).
+En consecuencia, el matrimonio no altera ni la nacionalidad ni la vecindad civil de los cónyuges,
+en coherencia con el principio constitucional de igualdad.
+4. LA CAPACIDAD PATRIMONIAL DE LOS CÓNYUGES
+La reforma operada por la Ley 11/1981 tuvo como finalidad adaptar la regulación patrimonial del
+matrimonio al principio constitucional de igualdad conyugal.
+Los arts. 1315 y siguientes del Código Civil se inspiran en ese principio, eliminando la
+preeminencia tradicional del marido y configurando un sistema basado en la igualdad en la
+administración y disposición de los bienes familiares.
+En el ámbito patrimonial, la igualdad se manifiesta en que ninguno de los cónyuges tiene
+facultades exclusivas sobre los bienes comunes ni puede representar al otro sin su autorización.
+Ambos cónyuges pueden realizar actos de administración y disposición relativos a las
+necesidades ordinarias de la familia (art. 1319.1), lo que implica la llamada potestad doméstica.
+Esta facultad comporta que los bienes comunes queden afectos frente a terceros por los actos
+realizados por cualquiera de ellos (art. 1319.2).
+Asimismo, ambos cónyuges están obligados a contribuir al levantamiento de las cargas del
+matrimonio (art. 1318), pudiendo el juez adoptar medidas cautelares si uno incumple este deber.
+Finalmente, el art. 1320 exige el consentimiento de ambos cónyuges para disponer de los
+derechos sobre la vivienda habitual y los muebles de uso ordinario, incluso cuando pertenezcan a
+uno solo, garantizando así la protección del domicilio familiar.
+5. LA CONTRATACIÓN ENTRE CÓNYUGES.
+5.1. En general.
+En su redacción originaria, el Código Civil, siguiendo una tradición histórica consolidada, prohibía
+determinados contratos onerosos entre los cónyuges, además de las donaciones. Entre ellos
+destacaba la compraventa, pues el antiguo art. 1458 establecía que el marido y la mujer no
+podían venderse bienes recíprocamente salvo que existiera separación de bienes, con el fin de
+evitar desplazamientos patrimoniales fraudulentos. Por analogía, se entendía igualmente
+prohibida la dación en pago, la permuta o la transacción, e incluso se sostuvo que la mujer no
+podía adquirir por compra al marido aunque este actuara como mandatario de un tercero.
+La Ley 11/1981 supuso un giro radical al adoptar un criterio permisivo. El nuevo art. 1458 pasó a
+permitir la compraventa entre cónyuges y el art. 1323 reconoció expresamente que podían
+transmitirse bienes y derechos por cualquier título y celebrar toda clase de contratos. Desde
+entonces, el principio general es la plena admisibilidad de la contratación entre cónyuges.
+Posteriormente, la Ley 13/2005 sustituyó las referencias a “marido y mujer” por “cónyuges”,
+manteniendo intacto el contenido material del precepto.
+5.2. Las donaciones entre cónyuges.
+La redacción originaria del Código Civil, en línea con la tradición romanista y las Partidas,
+establecía la prohibición absoluta de las donaciones entre cónyuges, salvo los regalos módicos
+realizados en ocasiones familiares. La finalidad de esta prohibición era evitar la influencia
+indebida de un cónyuge sobre el otro y los posibles desplazamientos patrimoniales derivados de
+situaciones de supremacía marital, en un contexto histórico de desigualdad jurídica entre los
+esposos.
+Con la consagración del principio de igualdad conyugal, esta justificación perdió fundamento. Al
+reconocerse a ambos cónyuges igual capacidad de obrar en la administración y disposición de
+los bienes, la reforma de 1981 permitió expresamente las donaciones y cualquier otro contrato
+entre ellos, conforme al art. 1323. De este modo, la decisión de realizar actos de liberalidad entre
+cónyuges queda sometida a su autonomía y voluntad, en coherencia con el principio
+constitucional de igualdad.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+  "1": "El matrimonio genera efectos personales y patrimoniales, cuya regulación solo puede fijar principios generales útiles para resolver conflictos graves que trascienden lo íntimo.",
+  "1.1": "La convivencia matrimonial produce derechos y deberes en el plano personal y en el patrimonial, dando lugar a los clásicos “efectos personales” y “efectos patrimoniales” del matrimonio.",
+  "1.2": "El antiguo principio patriarcal queda superado por el principio constitucional de igualdad entre cónyuges, incorporado al Código Civil y neutral en su terminología tras la reforma de 2005.",
+  "2": "Los deberes conyugales son recíprocos y no encajan en el esquema acreedor-deudor ni en la coacción típica de las obligaciones, pero su incumplimiento puede producir consecuencias jurídicas.",
+  "2.1": "El “interés familiar” funciona como criterio valorativo para el juez en caso de conflicto y hoy se proyecta sobre una noción amplia que incluye responsabilidades y cuidados de personas dependientes.",
+  "2.2": "El respeto mutuo exige miramiento y deferencia y excluye conductas injuriosas o dañinas; el vínculo matrimonial no otorga derecho alguno sobre la sexualidad del otro cónyuge.",
+  "2.3": "Ayuda y socorro son, en esencia, un mismo deber de asistencia integral entre cónyuges, que abarca necesidades de todo tipo e incluye especialmente la obligación alimenticia.",
+  "2.4": "La convivencia es el designio normal del matrimonio: es un deber y se presume, aunque puede modularse por circunstancias razonables; no implica un deber de relaciones sexuales.",
+  "2.5": "La fidelidad es un parámetro propio de la normalidad matrimonial sin sanción económica automática hoy, aunque imputaciones falsas de infidelidad pueden afectar al honor y generar responsabilidad.",
+  "2.6": "La corresponsabilidad doméstica impone el reparto de tareas y cuidados (ascendientes, descendientes y dependientes), reflejando una opción por la igualdad material dentro del matrimonio.",
+  "3": "Junto a los deberes nucleares, el Código aborda cuestiones conexas (domicilio, honores, nacionalidad y vecindad) bajo el principio de igualdad conyugal.",
+  "3.1": "El domicilio conyugal se fija por acuerdo y, si hay discrepancia, decide el juez atendiendo al interés familiar; además tiene relevancia procesal como punto de conexión en litigios matrimoniales.",
+  "3.2": "La transmisión de honores entre cónyuges desaparece del Código Civil por su carácter más social que jurídico, quedando la cuestión en el plano simbólico.",
+  "3.3": "El matrimonio no modifica por sí solo la nacionalidad ni la vecindad civil de los cónyuges, consolidándose un modelo coherente con la igualdad.",
+  "4": "La capacidad patrimonial matrimonial se reordena en 1981 para adecuarse a la igualdad conyugal, eliminando facultades exclusivas y reforzando la protección de cargas y vivienda familiar.",
+  "5": "La contratación entre cónyuges pasa de un modelo tradicionalmente restrictivo a uno permisivo, basado en la libertad contractual y la igualdad.",
+  "5.1": "Desde 1981 se admite la contratación onerosa entre cónyuges (incluida la compraventa), sustituyendo el antiguo enfoque prohibitivo por un principio general de validez.",
+  "5.2": "Las donaciones entre cónyuges dejan de prohibirse al desaparecer la supremacía marital: con igualdad de capacidad, la liberalidad queda dentro de la autonomía de los cónyuges."
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    const BANCO_1 = `#ID = 1.1
+
+// [1]
+Q: ¿Por qué el Derecho civil solo puede regular de forma general la convivencia matrimonial?
+A) Porque el matrimonio es una institución puramente moral sin relevancia jurídica.
+B) Porque la vida conyugal presenta una diversidad de situaciones que no puede ser anticipada exhaustivamente por la ley.
+C) Porque las relaciones entre cónyuges se rigen exclusivamente por acuerdos privados.
+OK: B
+EXP: El legislador solo puede establecer marcos generales, ya que la convivencia matrimonial es una realidad dinámica y compleja que no admite regulación detallada de todas sus situaciones posibles.
+
+// [2]
+Q: ¿Qué justifica la distinción doctrinal entre efectos personales y efectos patrimoniales del matrimonio?
+A) Que el matrimonio produce consecuencias exclusivamente económicas.
+B) Que la relación conyugal genera tanto deberes de convivencia como implicaciones económicas estructuradas jurídicamente.
+C) Que los efectos personales carecen de relevancia jurídica frente a los patrimoniales.
+OK: B
+EXP: El matrimonio produce consecuencias en el plano personal (convivencia, fidelidad, ayuda) y en el plano patrimonial (cargas, administración de bienes), lo que justifica su diferenciación sistemática.
+
+#ID = 1.2
+
+// [3]
+Q: ¿Qué supuso la superación del principio patriarcal en la regulación del matrimonio?
+A) La desaparición de toda norma reguladora de la vida conyugal.
+B) La sustitución de la autoridad marital por el principio constitucional de igualdad entre cónyuges.
+C) La atribución al juez de la dirección de la vida familiar.
+OK: B
+EXP: El sistema patriarcal fue sustituido por el principio de igualdad conyugal consagrado constitucionalmente, eliminando la prevalencia jurídica del marido en caso de desacuerdo.
+
+// [4]
+Q: ¿Por qué la reforma que reconoció el matrimonio entre personas del mismo sexo no alteró el contenido material del principio de igualdad?
+A) Porque el principio de igualdad ya era neutro respecto al sexo de los contrayentes.
+B) Porque la igualdad solo se aplica en el ámbito patrimonial.
+C) Porque la reforma eliminó los deberes conyugales tradicionales.
+OK: A
+EXP: La igualdad conyugal ya estaba formulada en términos sustanciales; la reforma solo adaptó la redacción terminológica sin modificar el contenido jurídico del principio.`;
+
+
+    const BANCO_2 = `
+// ==================================================
+// TEMA X — EPÍGRAFE 2
+// LOS DEBERES CONYUGALES (Preguntas 5–20)
+// ==================================================
+
+#ID = 2
+
+// [5]
+Q: ¿Por qué los deberes conyugales no pueden equipararse técnicamente a obligaciones civiles patrimoniales?
+A) Porque carecen de toda relevancia jurídica y pertenecen exclusivamente al ámbito moral.
+B) Porque no responden al esquema acreedor-deudor ni tienen contenido patrimonial típico.
+C) Porque solo obligan a uno de los cónyuges y no generan reciprocidad.
+OK: B
+EXP: Los deberes conyugales no encajan en la estructura clásica de obligación civil, ya que no existe relación acreedor-deudor ni contenido patrimonial típico, sino vínculos personales recíprocos.
+
+// [6]
+Q: ¿Qué relevancia jurídica adquieren los deberes conyugales cuando se produce su incumplimiento?
+A) Ninguna, ya que el Derecho no interviene en la vida matrimonial.
+B) Generan automáticamente indemnización por daños morales.
+C) Pueden producir consecuencias jurídicas específicas, aunque no actúe el aparato coactivo propio de las obligaciones civiles.
+OK: C
+EXP: Aunque no son obligaciones patrimoniales en sentido técnico, su incumplimiento puede tener efectos jurídicos concretos, como la desheredación u otras consecuencias previstas por la ley.
+
+// ==================================================
+// 2.1. LA ATENCIÓN DEL INTERÉS FAMILIAR (Preguntas 7–9)
+// ==================================================
+
+#ID = 2.1
+
+// [7]
+Q: ¿Qué función cumple el concepto de “interés de la familia” en caso de conflicto entre cónyuges?
+A) Sustituye la voluntad de los cónyuges por la decisión automática del legislador.
+B) Actúa como criterio valorativo que permite al juez ponderar objetivamente las circunstancias.
+C) Identifica exclusivamente el interés económico común.
+OK: B
+EXP: El interés familiar funciona como criterio interpretativo que permite al juez resolver conflictos ponderando las circunstancias y protegiendo a los miembros más necesitados.
+
+// [8]
+Q: ¿Por qué resulta complejo definir jurídicamente el interés familiar como si fuera un interés autónomo?
+A) Porque la familia es un ente con personalidad jurídica propia.
+B) Porque el interés familiar se identifica exclusivamente con la voluntad del marido.
+C) Porque la familia no es un sujeto autónomo portador de intereses diferenciados.
+OK: C
+EXP: La familia no es un ente autónomo con intereses propios, sino una realidad relacional, lo que dificulta concretar jurídicamente un interés familiar independiente.
+
+// [9]
+Q: ¿Cómo amplía la reforma de 2005 la concepción tradicional del interés familiar?
+A) Limita el interés familiar únicamente a los hijos menores.
+B) Extiende la atención a ascendientes y personas dependientes a cargo.
+C) Reduce el interés familiar al ámbito estrictamente patrimonial.
+OK: B
+EXP: La reforma amplía la perspectiva tradicional, incluyendo la atención a ascendientes y personas dependientes, superando la visión estrictamente nuclear.
+
+// ==================================================
+// 2.2. EL RESPETO DEBIDO AL OTRO CÓNYUGE (Preguntas 10–12)
+// ==================================================
+
+#ID = 2.2
+
+// [10]
+Q: ¿Qué comportamientos quedan excluidos por el deber de respeto mutuo entre los cónyuges?
+A) Toda discrepancia ideológica entre los esposos.
+B) Conductas injuriosas, vejatorias o interferencias en la esfera íntima del otro.
+C) Cualquier decisión adoptada sin consentimiento previo.
+OK: B
+EXP: El respeto mutuo implica excluir conductas que lesionen la dignidad o la esfera íntima del otro cónyuge, así como comportamientos vejatorios o dañinos.
+
+// [11]
+Q: ¿Por qué el llamado débito conyugal no puede interpretarse como derecho a exigir relaciones sexuales?
+A) Porque el matrimonio elimina la dimensión sexual.
+B) Porque el consentimiento matrimonial no supone consentimiento permanente a futuras relaciones.
+C) Porque solo puede exigirse judicialmente en caso de separación.
+OK: B
+EXP: El consentimiento matrimonial no implica consentimiento perpetuo a relaciones sexuales, ya que ello vulneraría la libertad sexual y la autonomía corporal.
+
+// [12]
+Q: ¿Qué consecuencias jurídicas puede generar una conducta vejatoria o injuriosa dentro del matrimonio?
+A) Ninguna, al tratarse de cuestiones privadas.
+B) Únicamente efectos morales sin trascendencia jurídica.
+C) Puede fundamentar acciones jurídicas o consecuencias en situaciones de crisis matrimonial.
+OK: C
+EXP: Aunque ya no existe sistema causalista, las conductas vejatorias pueden tener relevancia jurídica en contextos de conflicto o vulneración de derechos.
+
+// ==================================================
+// 2.3. LA AYUDA Y SOCORRO MUTUOS (Preguntas 13–14)
+// ==================================================
+
+#ID = 2.3
+
+// [13]
+Q: ¿Existe una diferencia jurídica sustancial entre ayuda mutua y socorro mutuo?
+A) Sí, porque uno es exclusivamente económico y el otro exclusivamente moral.
+B) No, pues ambos términos son sustancialmente sinónimos en el régimen actual.
+C) Sí, porque uno genera responsabilidad civil automática y el otro no.
+OK: B
+EXP: La doctrina considera que ayuda y socorro mutuos expresan una misma idea de asistencia recíproca, existiendo una reiteración técnica en el texto legal.
+
+// [14]
+Q: ¿Qué alcance práctico tiene el deber de ayuda y socorro en relación con la obligación alimenticia entre cónyuges?
+A) Se limita a situaciones de enfermedad grave.
+B) Comprende la atención a las necesidades del otro, incluida la dimensión económica.
+C) Solo opera cuando existe separación judicial.
+OK: B
+EXP: El deber de ayuda y socorro abarca la atención integral a las necesidades del otro cónyuge, incluyendo el deber de alimentos.
+
+// ==================================================
+// 2.4. EL DEBER DE CONVIVENCIA (Preguntas 15–16)
+// ==================================================
+
+#ID = 2.4
+
+// [15]
+Q: ¿Por qué la convivencia se considera el elemento estructural del matrimonio?
+A) Porque es el único efecto patrimonial del matrimonio.
+B) Porque el matrimonio se orienta a compartir vida en común.
+C) Porque es una exigencia exclusivamente religiosa.
+OK: B
+EXP: La convivencia constituye el designio esencial del matrimonio, orientado a la comunidad de vida entre los cónyuges.
+
+// [16]
+Q: ¿En qué medida la obligación de vivir juntos admite modulaciones sin suponer incumplimiento?
+A) No admite ninguna excepción.
+B) Puede adaptarse a circunstancias laborales o familiares razonables.
+C) Solo admite excepción por voluntad unilateral.
+OK: B
+EXP: La convivencia puede modularse por razones profesionales o familiares sin que ello implique necesariamente infracción del deber conyugal.
+
+// ==================================================
+// 2.5. LA FIDELIDAD CONYUGAL (Preguntas 17–18)
+// ==================================================
+
+#ID = 2.5
+
+// [17]
+Q: ¿Qué cambio produjo la reforma de 2005 en las consecuencias jurídicas de la infidelidad?
+A) Convirtió la infidelidad en delito penal.
+B) Eliminó su consideración automática como causa de separación.
+C) Estableció indemnización obligatoria.
+OK: B
+EXP: La reforma suprimió el sistema causalista, de modo que la infidelidad dejó de generar automáticamente efectos jurídicos en la separación.
+
+// [18]
+Q: ¿Por qué el incumplimiento del deber de fidelidad no genera automáticamente indemnización?
+A) Porque la fidelidad es solo una recomendación moral.
+B) Porque el ordenamiento no prevé sanción económica específica por su incumplimiento.
+C) Porque solo puede reclamarse en vía penal.
+OK: B
+EXP: La fidelidad tiene relevancia ética y social, pero su infracción no activa automáticamente un régimen indemnizatorio.
+
+// ==================================================
+// 2.6. LA CORRESPONSABILIDAD DOMÉSTICA (Preguntas 19–20)
+// ==================================================
+
+#ID = 2.6
+
+// [19]
+Q: ¿Qué finalidad persigue la incorporación del principio de corresponsabilidad doméstica al art. 68 CC?
+A) Reforzar la autoridad de uno de los cónyuges.
+B) Convertir en norma jurídica el reparto equitativo de tareas y cuidados.
+C) Limitar la autonomía interna del matrimonio.
+OK: B
+EXP: El principio busca trasladar al plano jurídico la igualdad material en el reparto de responsabilidades domésticas y de cuidado.
+
+// [20]
+Q: ¿Qué dificultades prácticas presenta la exigencia jurídica de reparto equitativo de responsabilidades domésticas?
+A) Que cada matrimonio constituye una realidad diversa difícil de estandarizar.
+B) Que solo puede aplicarse en matrimonios con hijos.
+C) Que requiere siempre intervención judicial automática.
+OK: A
+EXP: La diversidad de dinámicas familiares dificulta la aplicación uniforme del principio, cuya eficacia depende en gran medida de la realidad concreta de cada pareja.`;
+
+
+    const BANCO_3 = `
+    
+// ==================================================
+// TEMA X — EPÍGRAFE 3
+// OTRAS CUESTIONES (Preguntas 21–26)
+// ==================================================
+
+// ==================================================
+// 3.1. DOMICILIO CONYUGAL (Preguntas 21–22)
+// ==================================================
+
+#ID = 3.1
+
+// [21]
+Q: ¿Qué criterio establece el Código Civil para la fijación del domicilio conyugal?
+A) La decisión unilateral del cónyuge con mayor capacidad económica.
+B) El acuerdo de ambos cónyuges y, en caso de desacuerdo, la decisión judicial atendiendo al interés de la familia.
+C) La residencia habitual del marido, como regla general.
+OK: B
+EXP: El domicilio conyugal se fija por acuerdo, reflejo del principio de igualdad; solo ante conflicto interviene el juez, ponderando el interés familiar.
+
+// [22]
+Q: ¿Qué relevancia jurídica tiene el domicilio conyugal más allá del ámbito interno del matrimonio?
+A) Carece de efectos jurídicos externos.
+B) Determina la competencia territorial en los procesos matrimoniales.
+C) Solo tiene efectos fiscales.
+OK: B
+EXP: El domicilio conyugal cumple una función procesal relevante, pues sirve como criterio para fijar la competencia territorial en litigios matrimoniales.
+
+// ==================================================
+// 3.2. HONORES (Preguntas 23–24)
+// ==================================================
+
+#ID = 3.2
+
+// [23]
+Q: ¿Qué transformación produjo la reforma de 1981 respecto a la transmisión de honores entre cónyuges?
+A) Mantuvo la preferencia masculina en la sucesión.
+B) Eliminó la previsión específica sobre transmisión automática de honores por matrimonio.
+C) Estableció que ambos cónyuges adquirían automáticamente los títulos del otro.
+OK: B
+EXP: La reforma suprimió la regulación que vinculaba honores al matrimonio, en coherencia con el principio de igualdad y la pérdida de relevancia jurídica de esta materia.
+
+// [24]
+Q: ¿Qué carácter tiene actualmente la cuestión de los honores en relación con el matrimonio?
+A) Principalmente simbólico o social, más que jurídico.
+B) Constituye un efecto esencial del matrimonio.
+C) Tiene consecuencias patrimoniales automáticas.
+OK: A
+EXP: La transmisión de honores carece hoy de efectos jurídicos automáticos derivados del matrimonio y se sitúa en el plano simbólico o representativo.
+
+// ==================================================
+// 3.3. NACIONALIDAD Y VECINDAD (Preguntas 25–26)
+// ==================================================
+
+#ID = 3.3
+
+// [25]
+Q: ¿Qué principio rige actualmente en materia de nacionalidad respecto del matrimonio?
+A) El matrimonio altera automáticamente la nacionalidad del cónyuge extranjero.
+B) El matrimonio no modifica por sí solo la nacionalidad de los cónyuges.
+C) La nacionalidad sigue siempre la del marido.
+OK: B
+EXP: El sistema actual, basado en la igualdad, establece que el matrimonio no altera automáticamente la nacionalidad de ninguno de los cónyuges.
+
+// [26]
+Q: ¿Qué ocurre con la vecindad civil como consecuencia del matrimonio?
+A) Se atribuye automáticamente la del cónyuge con vecindad civil común.
+B) El matrimonio no produce modificación automática de la vecindad civil.
+C) Se pierde la vecindad anterior y se adquiere la común.
+OK: B
+EXP: En coherencia con el principio de igualdad, el matrimonio no modifica de forma automática la vecindad civil de los cónyuges.`;
+
+
+    const BANCO_4 = `
+    
+// ==================================================
+// TEMA X — EPÍGRAFE 4
+// LA CAPACIDAD PATRIMONIAL DE LOS CÓNYUGES (Preguntas 27–32)
+// ==================================================
+
+#ID = 4
+
+// [27]
+Q: ¿Qué objetivo perseguía la reforma de 1981 en materia patrimonial matrimonial?
+A) Reforzar la autoridad del marido en la gestión de los bienes comunes.
+B) Adaptar el régimen económico matrimonial al principio constitucional de igualdad conyugal.
+C) Sustituir los regímenes económicos por un sistema único obligatorio.
+OK: B
+EXP: La reforma de 1981 eliminó la preeminencia tradicional del marido y configuró un sistema patrimonial basado en la igualdad en la administración y disposición de los bienes.
+
+// [28]
+Q: ¿Cómo se manifiesta el principio de igualdad en la administración de los bienes comunes?
+A) En que cada cónyuge puede actuar unilateralmente sin límite alguno.
+B) En que ninguno tiene facultades exclusivas sobre los bienes comunes ni representación automática del otro.
+C) En que solo el cónyuge titular puede administrar los bienes familiares.
+OK: B
+EXP: La igualdad implica ausencia de potestad exclusiva de uno sobre el otro y necesidad de actuación conjunta o dentro de los límites legales establecidos.
+
+// [29]
+Q: ¿En qué consiste la llamada potestad doméstica del art. 1319 CC?
+A) En la facultad de disponer libremente de cualquier bien común.
+B) En la capacidad de realizar actos relativos a las necesidades ordinarias de la familia.
+C) En la posibilidad de sustituir judicialmente la voluntad del otro cónyuge.
+OK: B
+EXP: La potestad doméstica permite a cualquiera de los cónyuges realizar actos dirigidos a atender las necesidades ordinarias del hogar.
+
+// [30]
+Q: ¿Qué efectos produce frente a terceros el ejercicio de la potestad doméstica por uno de los cónyuges?
+A) Solo obliga al cónyuge que realizó el acto.
+B) Afecta los bienes comunes frente a terceros de buena fe.
+C) Carece de eficacia si no existe consentimiento expreso del otro cónyuge.
+OK: B
+EXP: Los actos realizados en ejercicio de la potestad doméstica comprometen los bienes comunes frente a terceros, garantizando la seguridad jurídica en el tráfico.
+
+// [31]
+Q: ¿Qué implica la obligación de contribuir al levantamiento de las cargas del matrimonio?
+A) Que solo el cónyuge con ingresos debe asumir los gastos familiares.
+B) Que ambos cónyuges deben participar proporcionalmente en las cargas conforme a sus recursos.
+C) Que las cargas solo comprenden los gastos estrictamente domésticos.
+OK: B
+EXP: El art. 1318 CC impone a ambos cónyuges el deber de contribuir a las cargas del matrimonio según sus posibilidades económicas, pudiendo el juez adoptar medidas si hay incumplimiento.
+
+// [32]
+Q: ¿Por qué el consentimiento de ambos cónyuges es necesario para disponer de la vivienda habitual?
+A) Porque siempre es un bien ganancial.
+B) Porque la ley protege el domicilio familiar como núcleo de convivencia, incluso si pertenece a uno solo.
+C) Porque lo exige el Registro de la Propiedad para cualquier transmisión.
+OK: B
+EXP: El art. 1320 CC protege la vivienda habitual exigiendo el consentimiento de ambos cónyuges, aunque sea bien privativo, para salvaguardar la estabilidad del hogar familiar.`;
+
+
+    const BANCO_5 = `
+// ==================================================
+// TEMA X — EPÍGRAFE 5
+// LA CONTRATACIÓN ENTRE CÓNYUGES (Preguntas 33–40)
+// ==================================================
+
+// ==================================================
+// 5.1. EN GENERAL (Preguntas 33–36)
+// ==================================================
+
+#ID = 5.1
+
+// [33]
+Q: ¿Por qué el Código Civil originario prohibía determinados contratos onerosos entre cónyuges?
+A) Porque el matrimonio anulaba la capacidad jurídica individual de los cónyuges.
+B) Para evitar desplazamientos patrimoniales fraudulentos y situaciones de abuso en un contexto de desigualdad.
+C) Porque todo contrato entre cónyuges se consideraba nulo por definición.
+OK: B
+EXP: La prohibición respondía a un modelo histórico de desigualdad y buscaba impedir fraudes o transmisiones patrimoniales encubiertas entre marido y mujer.
+
+// [34]
+Q: ¿Qué fundamento histórico justificaba la prohibición de compraventa entre marido y mujer?
+A) La inexistencia de patrimonio separado dentro del matrimonio.
+B) La prevención de simulaciones y transmisiones ficticias en un régimen de supremacía marital.
+C) La incompatibilidad absoluta entre matrimonio y negocio jurídico.
+OK: B
+EXP: La prohibición pretendía evitar simulaciones o desplazamientos patrimoniales fraudulentos en un contexto donde el marido ostentaba posición predominante.
+
+// [35]
+Q: ¿Qué cambio sistemático introdujo la Ley 11/1981 respecto a la contratación entre cónyuges?
+A) Mantuvo la prohibición de contratos onerosos pero permitió donaciones.
+B) Sustituyó el régimen prohibitivo por un principio general de libertad contractual entre cónyuges.
+C) Estableció autorización judicial previa para cualquier contrato entre ellos.
+OK: B
+EXP: La reforma de 1981 adoptó un criterio permisivo, permitiendo la transmisión de bienes y la celebración de toda clase de contratos entre cónyuges.
+
+// [36]
+Q: ¿Qué significado tiene actualmente el art. 1323 CC en relación con la autonomía patrimonial de los cónyuges?
+A) Reconoce la plena capacidad para transmitirse bienes y celebrar contratos como cualquier otro sujeto de Derecho.
+B) Limita la contratación a los casos de separación de bienes.
+C) Subordina toda contratación al consentimiento judicial.
+OK: A
+EXP: El art. 1323 CC consagra la libertad de contratación entre cónyuges, en coherencia con el principio de igualdad y autonomía patrimonial.
+
+// ==================================================
+// 5.2. DONACIONES ENTRE CÓNYUGES (Preguntas 37–40)
+// ==================================================
+
+#ID = 5.2
+
+// [37]
+Q: ¿Cuál era la razón histórica de la prohibición de donaciones entre cónyuges?
+A) Impedir la influencia indebida y los abusos derivados de la desigualdad jurídica entre los esposos.
+B) Evitar el enriquecimiento injusto dentro del matrimonio.
+C) Garantizar la estabilidad del régimen económico matrimonial.
+OK: A
+EXP: La prohibición se justificaba por la desigualdad tradicional entre los cónyuges y el riesgo de liberalidades condicionadas por situaciones de supremacía.
+
+// [38]
+Q: ¿Por qué la consagración del principio de igualdad conyugal hizo innecesaria esa prohibición?
+A) Porque el matrimonio dejó de tener efectos patrimoniales.
+B) Porque ambos cónyuges pasaron a tener igual capacidad de disposición, eliminando la justificación de tutela especial.
+C) Porque se sustituyó el régimen de gananciales por separación de bienes.
+OK: B
+EXP: Al reconocerse igualdad plena en capacidad y administración, desaparece la base histórica que justificaba impedir donaciones entre cónyuges.
+
+// [39]
+Q: ¿Qué alcance tiene hoy la libertad de realizar actos de liberalidad entre cónyuges?
+A) Está limitada exclusivamente a regalos de escaso valor.
+B) Es plena, dentro de los límites generales del Derecho civil.
+C) Requiere autorización judicial previa.
+OK: B
+EXP: Actualmente los cónyuges pueden realizar donaciones y otros actos de liberalidad conforme a las reglas generales, sin prohibición específica por razón del vínculo matrimonial.
+
+// [40]
+Q: ¿Cómo se integra la admisión de donaciones entre cónyuges en el modelo constitucional de igualdad?
+A) Como excepción tolerada por razones prácticas.
+B) Como consecuencia lógica del reconocimiento de igualdad jurídica y autonomía patrimonial entre los cónyuges.
+C) Como una concesión excepcional del legislador sin fundamento constitucional.
+OK: B
+EXP: La admisión de donaciones responde directamente al principio constitucional de igualdad, que impide mantener restricciones basadas en la antigua desigualdad conyugal.`;
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
