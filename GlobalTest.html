@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TEST GLOBAL · Derecho Civil I: Parte 2, familia</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel: rgba(255,255,255,.09);
+      --panel2: rgba(255,255,255,.13);
+      --bd: rgba(255,255,255,.16);
+      --txt: rgba(255,255,255,.90);
+      --muted: rgba(255,255,255,.70);
+      --shadow: 0 14px 34px rgba(0,0,0,.30);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --accentA: rgba(96,165,250,.16);
+      --accentB: rgba(167,139,250,.12);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--txt);
+      background:
+        radial-gradient(1100px 650px at 18% -10%, var(--accentA), transparent 68%),
+        radial-gradient(900px 650px at 95% 8%, var(--accentB), transparent 66%),
+        linear-gradient(180deg, #0d1426 0%, var(--bg) 60%, #0d1426 100%);
+      min-height:100vh;
+    }
+    .wrap{ max-width: 980px; margin:0 auto; padding: 22px 14px 50px; }
+    header{ display:flex; justify-content:space-between; gap:12px; align-items:flex-end; flex-wrap:wrap; }
+    h1{ margin:0; font-size: 20px; }
+    p{ margin:6px 0 0; color: var(--muted); font-size: 13.5px; line-height: 1.45; max-width: 740px; }
+    .btn{
+      appearance:none;
+      border:1px solid var(--bd);
+      background: var(--panel);
+      color: var(--txt);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:800;
+      font-size: 13px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      justify-content:center;
+    }
+    .btn:hover{ background: var(--panel2); border-color: rgba(255,255,255,.22); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(96,165,250,.20), rgba(167,139,250,.16));
+      border-color: rgba(96,165,250,.32);
+    }
+    .panel{
+      margin-top: 14px;
+      background: var(--panel);
+      border:1px solid var(--bd);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      padding: 14px;
+    }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .col{ flex: 1; min-width: 220px; }
+    label{ font-size: 13px; color: var(--muted); display:block; margin: 0 0 6px; }
+    select,input{
+      width:100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.10);
+      color: var(--txt);
+      outline:none;
+      font-size: 14px;
+    }
+    select option{ color:#111827; }
+    .pill{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.10);
+      color: rgba(255,255,255,.82);
+      white-space:nowrap;
+    }
+    .qbox{
+      margin-top: 14px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .q{
+      font-weight:900;
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .opt{ display:block; padding: 10px 12px; border-radius: 12px; border:1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); margin: 8px 0; cursor:pointer; }
+    .opt:hover{ background: rgba(255,255,255,.10); }
+    .opt input{ margin-right: 10px; }
+    .ok{ border-color: rgba(52,211,153,.55) !important; background: rgba(52,211,153,.12) !important; }
+    .bad{ border-color: rgba(248,113,113,.55) !important; background: rgba(248,113,113,.12) !important; }
+    .exp{
+      margin-top: 12px;
+      color: rgba(255,255,255,.86);
+      font-size: 13.5px;
+      line-height: 1.5;
+      display:none;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .muted{ color: var(--muted); }
+    .hr{ height:1px; background: rgba(255,255,255,.12); margin: 12px 0; }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>TEST GLOBAL · Derecho Civil I: Parte 2, familia</h1>
+        <p>Este test mezcla preguntas de <strong>todos los temas listados en la herramienta de estudio</strong>.</p>
+      </div>
+      <div class="row">
+        <a class="btn" href="./index.html">Volver al índice</a>
+      </div>
+    </header>
+
+    <div class="panel">
+      <div class="row">
+        <div class="col">
+          <label>Modo</label>
+          <select id="mode">
+            <option value="all">Todos los temas (global)</option>
+            <option value="one">Solo un tema</option>
+          </select>
+        </div>
+
+        <div class="col" id="oneThemeCol" style="display:none">
+          <label>Tema</label>
+          <select id="theme"></select>
+        </div>
+
+        <div class="col">
+          <label>Nº de preguntas</label>
+          <input id="n" type="number" min="5" max="100" value="20">
+        </div>
+
+        <div class="col" style="display:flex; gap:10px; align-items:flex-end;">
+          <button class="btn primary" id="start">Cargar y empezar</button>
+          <div class="pill" id="status">Listo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qbox" id="quiz" style="display:none">
+      <div class="row" style="justify-content:space-between;">
+        <div class="pill" id="pos">—</div>
+        <div class="pill" id="score">✔ 0 / ✖ 0</div>
+      </div>
+      <div class="hr"></div>
+      <div class="q" id="qtext"></div>
+      <div id="opts"></div>
+      <div class="row" style="margin-top:12px;">
+        <button class="btn primary" id="check">Corregir</button>
+        <button class="btn" id="next" disabled>Siguiente</button>
+        <span class="muted" id="hint"></span>
+      </div>
+      <div class="exp" id="exp"></div>
+    </div>
+  </div>
+
+<script>
+/* =========================================================
+   1) LEER EL ÍNDICE Y SACAR TEMAS
+========================================================= */
+function extractTemasFromIndex(html){
+  const m = html.match(/const\s+TEMAS\s*=\s*\[[\s\S]*?\]\s*;/);
+  if(!m) throw new Error("No encuentro `const TEMAS = [...]` en index.html");
+
+  const arrTxt = m[0]
+    .replace(/^const\s+TEMAS\s*=\s*/, "")
+    .replace(/;\s*$/, "");
+
+  const TEMAS = Function("return " + arrTxt)();
+
+  return TEMAS
+    .filter(t => typeof t?.file === "string" && /^Tema\d+\.html$/i.test(t.file))
+    .map(t => ({ id: t.id, titulo: t.titulo, file: t.file }));
+}
+
+/* =========================================================
+   2) EXTRAER BANCOS DE UN TemaX.html
+========================================================= */
+function extractBanksFromTema(html){
+  const re = /const\s+BANCO_\w+\s*=\s*`([\s\S]*?)`\s*;/g;
+  const out = [];
+  let mm;
+  while((mm = re.exec(html))){
+    out.push(mm[1]);
+  }
+  return out;
+}
+
+/* =========================================================
+   3) PARSEAR PREGUNTAS Q/A/B/C/OK/EXP
+========================================================= */
+function parseQuestionsFromBank(bankText){
+  const chunks = bankText.split(/\n\s*\/\/\s*\[\d+\]\s*\n/).slice(1);
+  const qs = [];
+
+  for(const c of chunks){
+    const q   = (c.match(/\n?Q:\s*([\s\S]*?)\nA\)/) || [])[1];
+    const A   = (c.match(/\nA\)\s*([\s\S]*?)\nB\)/) || [])[1];
+    const B   = (c.match(/\nB\)\s*([\s\S]*?)\nC\)/) || [])[1];
+    const C   = (c.match(/\nC\)\s*([\s\S]*?)\nOK:/)  || [])[1];
+    const OK  = (c.match(/\nOK:\s*([ABC])/)          || [])[1];
+    const EXP = (c.match(/\nEXP:\s*([\s\S]*?)\s*$/)  || [])[1];
+
+    if(!q || !A || !B || !C || !OK || !EXP) continue;
+
+    qs.push({
+      q: q.trim(),
+      opts: { A: A.trim(), B: B.trim(), C: C.trim() },
+      ok: OK.trim(),
+      exp: EXP.trim()
+    });
+  }
+  return qs;
+}
+
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+/* =========================================================
+   UI
+========================================================= */
+const mode = document.getElementById("mode");
+const themeSel = document.getElementById("theme");
+const oneThemeCol = document.getElementById("oneThemeCol");
+const startBtn = document.getElementById("start");
+const status = document.getElementById("status");
+
+const quiz = document.getElementById("quiz");
+const qtext = document.getElementById("qtext");
+const opts = document.getElementById("opts");
+const checkBtn = document.getElementById("check");
+const nextBtn = document.getElementById("next");
+const expBox = document.getElementById("exp");
+const pos = document.getElementById("pos");
+const score = document.getElementById("score");
+const hint = document.getElementById("hint");
+const nInput = document.getElementById("n");
+
+let TEMAS = [];
+let TEST = [];
+let idx = 0;
+let okc = 0;
+let badc = 0;
+let locked = false;
+let picked = null;
+
+mode.addEventListener("change", () => {
+  oneThemeCol.style.display = mode.value === "one" ? "" : "none";
+});
+
+async function initThemes(){
+  status.textContent = "Leyendo index…";
+  const res = await fetch("./index.html", { cache:"no-store" });
+  if(!res.ok) throw new Error(`No puedo leer index (${res.status})`);
+  const indexHtml = await res.text();
+
+  TEMAS = extractTemasFromIndex(indexHtml);
+  if(!TEMAS.length) throw new Error("TEMAS está vacío (revisa const TEMAS en index)");
+
+  themeSel.innerHTML = TEMAS.map(t => `<option value="${t.file}">Tema ${t.id} · ${t.titulo}</option>`).join("");
+  status.textContent = `Index OK (${TEMAS.length} temas)`;
+}
+initThemes().catch(err => {
+  status.textContent = "Error leyendo index";
+  console.error(err);
+});
+
+async function buildGlobalQuestions(files){
+  status.textContent = "Cargando temas…";
+  let all = [];
+
+  for(const file of files){
+    status.textContent = "Leyendo " + file + "…";
+    const res = await fetch("./" + file, { cache:"no-store" });
+    if(!res.ok) throw new Error(`No puedo leer ${file} (${res.status})`);
+    const html = await res.text();
+
+    const banks = extractBanksFromTema(html);
+    if(!banks.length){
+      console.warn("Sin bancos en", file);
+      continue;
+    }
+
+    for(const b of banks){
+      const qs = parseQuestionsFromBank(b);
+      all.push(...qs);
+    }
+  }
+  return all;
+}
+
+function renderQ(){
+  const it = TEST[idx];
+  locked = false;
+  picked = null;
+  nextBtn.disabled = true;
+  expBox.style.display = "none";
+  expBox.textContent = "";
+
+  pos.textContent = `${idx+1} / ${TEST.length}`;
+  score.textContent = `✔ ${okc} / ✖ ${badc}`;
+  hint.textContent = "";
+
+  qtext.textContent = it.q;
+
+  const letters = ["A","B","C"];
+  opts.innerHTML = letters.map(L => `
+    <label class="opt" data-letter="${L}">
+      <input type="radio" name="opt" value="${L}">
+      <strong>${L})</strong> ${it.opts[L]}
+    </label>
+  `).join("");
+
+  opts.querySelectorAll(".opt").forEach(el => {
+    el.addEventListener("click", () => {
+      if(locked) return;
+      picked = el.dataset.letter;
+      opts.querySelectorAll(".opt").forEach(x => x.style.outline = "none");
+      el.style.outline = "2px solid rgba(96,165,250,.55)";
+    });
+  });
+}
+
+checkBtn.addEventListener("click", () => {
+  if(locked) return;
+  if(!picked){
+    hint.textContent = "Elige A, B o C.";
+    return;
+  }
+  locked = true;
+
+  const it = TEST[idx];
+  const correct = it.ok;
+
+  opts.querySelectorAll(".opt").forEach(el => {
+    const L = el.dataset.letter;
+    if(L === correct) el.classList.add("ok");
+    if(L === picked && picked !== correct) el.classList.add("bad");
+  });
+
+  if(picked === correct) okc++; else badc++;
+  score.textContent = `✔ ${okc} / ✖ ${badc}`;
+
+  expBox.textContent = "EXP: " + it.exp;
+  expBox.style.display = "block";
+
+  nextBtn.disabled = false;
+});
+
+nextBtn.addEventListener("click", () => {
+  if(idx < TEST.length - 1){
+    idx++;
+    renderQ();
+  }else{
+    hint.textContent = `Fin. Resultado: ✔ ${okc} / ✖ ${badc}`;
+    nextBtn.disabled = true;
+  }
+});
+
+startBtn.addEventListener("click", async () => {
+  const n = Math.max(5, Math.min(100, parseInt(nInput.value || "20", 10)));
+  const files =
+    mode.value === "one"
+      ? [themeSel.value]
+      : TEMAS.map(t => t.file);
+
+  try{
+    const allQ = await buildGlobalQuestions(files);
+
+    if(!allQ.length){
+      status.textContent = "0 preguntas encontradas (revisa BANCO_ en los temas)";
+      quiz.style.display = "none";
+      return;
+    }
+
+    shuffle(allQ);
+    TEST = allQ.slice(0, Math.min(n, allQ.length));
+    idx = 0; okc = 0; badc = 0;
+
+    quiz.style.display = "";
+    status.textContent = `${allQ.length} preguntas disponibles · mostrando ${TEST.length}`;
+    renderQ();
+  }catch(e){
+    console.error(e);
+    status.textContent = "Error cargando temas (mira consola)";
+    quiz.style.display = "none";
+  }
+});
+</script>
+</body>
+</html>

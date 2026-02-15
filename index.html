@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DERECHO CIVIL I.2: FAMILIA</title>
+  <meta name="description" content="Índice de temas, by M.García" />
+
+  <style>
+    :root{
+      /* ✅ MODO CLARO (neutro, legible, sin azul oscuro) */
+      --bg:#f6f7f9;
+      --panel:#ffffff;
+      --panel2:#fbfbfc;
+      --bd:#e5e7eb;
+      --txt:#111827;
+      --muted:#6b7280;
+      --shadow: 0 10px 26px rgba(17,24,39,.08);
+      --radius: 16px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+
+      --accentSoft: rgba(17,24,39,.04);
+      --accentSoft2: rgba(17,24,39,.06);
+      --primaryBg:#eef2ff;       /* lavanda muy suave */
+      --primaryBd:#dbeafe;       /* borde suave */
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--txt);
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg) 65%, #ffffff 100%);
+      min-height:100vh;
+    }
+
+    .wrap{
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 26px 16px 40px;
+    }
+
+    header{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:flex-end;
+      justify-content:space-between;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      margin:0;
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+
+    p{
+      margin:6px 0 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.45;
+      max-width: 680px;
+    }
+
+    .top{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid var(--bd);
+      background: var(--panel);
+      color: var(--txt);
+      padding: 10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:700;
+      font-size: 13px;
+      box-shadow: var(--shadow);
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      justify-content:center;
+    }
+    .btn:hover{ background: var(--panel2); border-color: rgba(17,24,39,.18); }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn.primary{
+      background: var(--primaryBg);
+      border-color: var(--primaryBd);
+    }
+    .btn.danger{
+      background: rgba(239,68,68,.08);
+      border-color: rgba(239,68,68,.22);
+    }
+
+    .intro{
+      margin: 14px 0 4px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      background: linear-gradient(90deg, rgba(17,24,39,.03), rgba(17,24,39,.02));
+      border: 1px solid var(--bd);
+      box-shadow: var(--shadow);
+      font-size: 13.5px;
+      line-height: 1.55;
+      color: var(--txt);
+    }
+    .intro strong{ color: rgba(17,24,39,.92); }
+
+    .bar{
+      margin: 14px 0 10px;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      align-items:center;
+    }
+
+    .search{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 12px 14px;
+      background: var(--panel);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .search input{
+      width:100%;
+      border:none;
+      outline:none;
+      background: transparent;
+      color: var(--txt);
+      font-size: 14.5px;
+    }
+    .search input::placeholder{ color: rgba(107,114,128,.85); }
+
+    .pill{
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      background: var(--panel);
+      border: 1px solid var(--bd);
+      box-shadow: var(--shadow);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(17,24,39,.75);
+      min-width: 120px;
+      text-align:center;
+    }
+
+    /* ✅ Separadores */
+    .sep{
+      margin: 14px 0 8px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .sep .label{
+      font-weight: 900;
+      letter-spacing:.3px;
+      font-size: 13px;
+      color: rgba(17,24,39,.90);
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(17,24,39,.04);
+      border: 1px solid rgba(17,24,39,.10);
+      box-shadow: 0 6px 16px rgba(17,24,39,.06);
+      white-space: nowrap;
+    }
+    .sep .line{
+      height: 1px;
+      flex:1;
+      background: linear-gradient(90deg, rgba(17,24,39,.12), rgba(17,24,39,0));
+    }
+
+    /* ✅ Caja Código Universitario */
+    .codigo{
+      margin: 10px 0 6px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      background: linear-gradient(90deg, rgba(17,24,39,.03), rgba(17,24,39,.02));
+      border: 1px solid var(--bd);
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .codigo .txt{
+      font-weight: 900;
+      font-size: 13.5px;
+      line-height: 1.25;
+    }
+    .codigo .sub{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.25;
+    }
+
+    /* ✅ Tarjeta Test Global */
+    .global{
+      margin: 10px 0 6px;
+      padding: 14px 14px;
+      border-radius: var(--radius);
+      background: linear-gradient(90deg, rgba(99,102,241,.08), rgba(59,130,246,.06));
+      border: 1px solid rgba(17,24,39,.10);
+      box-shadow: var(--shadow);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .global .txt{
+      font-weight: 900;
+      font-size: 13.5px;
+      line-height: 1.25;
+    }
+    .global .sub{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.25;
+    }
+
+    /* Tutorías */
+    .tutorias{
+      margin: 10px 0 6px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      background: var(--panel);
+      border: 1px solid var(--bd);
+      box-shadow: var(--shadow);
+    }
+    .tutoriasHead{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:baseline;
+      margin-bottom: 10px;
+    }
+    .tutoriasTitle{
+      font-weight: 900;
+      font-size: 13.5px;
+    }
+    .tutoriasHint{
+      color: var(--muted);
+      font-size: 12.5px;
+    }
+    .tutoriasRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .tutoriasRow select{
+      flex: 1;
+      min-width: 240px;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(17,24,39,.12);
+      background: rgba(17,24,39,.03);
+      color: var(--txt);
+      outline: none;
+    }
+    .tutoriasRow select option{ color:#111827; }
+
+    /* Grid temas */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    @media (max-width: 980px){ .grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 640px){
+      .bar{ grid-template-columns:1fr; }
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: var(--panel);
+      border: 1px solid var(--bd);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 170px;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-40px -40px auto auto;
+      width:160px;height:160px;
+      background: radial-gradient(circle at 30% 30%, rgba(17,24,39,.06), transparent 60%);
+      pointer-events:none;
+    }
+
+    .t{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+    }
+
+    .t h3{
+      margin:0;
+      font-size: 15px;
+      line-height: 1.2;
+      letter-spacing: .2px;
+      display:-webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
+    }
+
+    .t small{
+      display:block;
+      margin-top:6px;
+      font-family: var(--mono);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .badge{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(17,24,39,.12);
+      background: rgba(17,24,39,.03);
+      color: rgba(17,24,39,.75);
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+
+    .actions{
+      margin-top: auto;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      padding-top: 12px;
+    }
+    .actions a{
+      flex:1;
+      min-width: 140px;
+      text-align:center;
+      border-radius: 12px;
+    }
+
+    footer{
+      margin-top: 16px;
+      color: rgba(107,114,128,.85);
+      font-size: 12px;
+      text-align:center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>DERECHO CIVIL I.2: FAMILIA · Herramienta de estudio</h1>
+        <p>by M.García</p>
+      </div>
+
+    </header>
+
+    <div class="intro">
+      <strong>Herramienta complementaria de estudio.</strong>
+      Este entorno de estudio está diseñado para reforzar la comprensión conceptual y facilitar el entrenamiento previo al examen.
+      <strong>No sustituye en ningún caso el manual oficial de la asignatura</strong>, que sigue siendo la referencia académica obligatoria para el estudio completo de la materia.
+    </div>
+    
+     <div class="top" style="flex-direction:column; align-items:flex-end; gap:6px;">
+  
+  <div style="display:flex; gap:10px;">
+    <a class="btn primary" id="continueBtn" href="#" style="display:none">
+      Continuar
+    </a>
+    <button class="btn danger" id="resetBtn" type="button" style="display:none">
+      Reset
+    </button>
+     
+  </div>
+    <small id="continueHint" style="color:#6b7280; display:none; font-size:12px;">
+    Pulsa “Continuar” para volver al último tema que estabas estudiando.
+  </small>
+
+  
+</div>
+
+    <!-- ✅ SEPARADOR: BOE -->
+    <div class="sep" style="margin-top:18px;">
+      <div class="label">BOE</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- Caja Código Universitario -->
+    <div class="codigo">
+      <div>
+        <div class="txt">Acceso al Código Universitario de Derecho Civil</div>
+        <div class="sub">BOE · Biblioteca Jurídica (se abre en una pestaña nueva)</div>
+      </div>
+      <a class="btn primary"
+         href="https://www.boe.es/biblioteca_juridica/codigos/codigo.php?id=321_Codigo_Universitario_de_Derecho_Civil&tipo=U&modo=2"
+         target="_blank" rel="noopener">
+        Abrir Código
+      </a>
+    </div>
+
+    <!-- ✅ SEPARADOR: TUTORÍAS -->
+    <div class="sep">
+      <div class="label">TUTORÍAS</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="tutorias">
+      <div class="tutoriasHead">
+        <span class="tutoriasTitle">Tutorías del profesor (antes hay que autenticarse en INTECCA UNED)</span>
+        <span class="tutoriasHint"></span>
+      </div>
+
+      <div class="tutoriasRow">
+        <select id="tutSelect" aria-label="Selecciona una tutoría">
+          <option value="">— Selecciona una tutoría —</option>
+        </select>
+
+        <a class="btn primary" id="tutOpen" href="#" target="_blank" rel="noopener" style="display:none">
+          Abrir
+        </a>
+      </div>
+    </div>
+
+    <!-- ✅ SEPARADOR: TEST GLOBAL -->
+    <div class="sep" style="margin-top:18px;">
+      <div class="label">TEST GLOBAL</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="global">
+      <div>
+        <div class="txt">Test global (todos los temas)</div>
+        <div class="sub">Entrena con preguntas mezcladas entre todos los temas</div>
+      </div>
+      <a class="btn primary" href="GlobalTest.html">Ir al test</a>
+    </div>
+
+    <!-- ✅ SEPARADOR: TEMAS -->
+    <div class="sep" style="margin-top:18px;">
+      <div class="label">TEMAS DE ESTUDIO</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="bar">
+      <div class="search">
+        <span style="opacity:.55">🔎</span>
+        <input id="q" type="search" placeholder="Buscar por número o título… (ej: 1, bases, privado)" autocomplete="off" />
+      </div>
+      <div class="pill" id="count">0 temas</div>
+    </div>
+
+    <section class="grid" id="grid"></section>
+
+    <footer>by M.García</footer>
+  </div>
+
+  <script>
+    // =========================
+    // EDITA SOLO ESTA LISTA
+    // =========================
+    const TEMAS = [
+      { id: 1, titulo: "CAPÍTULO 1, EL DERECHO DE FAMILIA", file: "Tema1.html" },
+      { id: 2, titulo: "CAPÍTULO 2, EL MATRIMONIO", file: "Tema2.html" },
+      { id: 3, titulo: "CAPÍTULO 3, LA CELEBRACIÓN DEL MATRIMONIO", file: "Tema3.html" },
+      // id: 4, titulo: "LAS OTRAS NORMAS CON VALOR REGLAMENTARIO", file: "Tema4.html" },
+      // id: 5, titulo: "LAS RELACIONES ENTRE LAS FUENTES DEL DERECHO ADMINISTRATIVO", file: "Tema5.html" },
+    ];
+
+    // =========================
+    // EDITA SOLO ESTA LISTA (Tutorías)
+    // =========================
+    const TUTORIAS = [
+      { label: "Héctor Peidro - Tutoría 1 - 2026", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=469499&ID_Grabacion=972356&hashData=a3937a0405c9ae1a5851f7176a6bbdff&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 1 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=872794&hashData=790b544c3116ed994dd883ff3c2557e1&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 2 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=876205&hashData=6fe6f769f7a87a2029b2fa1c73ff5f65&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 3 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=879953&hashData=69fbb2ef102c5bc978f7431ef5e9b716&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 4 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=883390&hashData=57dd94f9686b04ce70c898e3e4fa8fb7&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 5 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=887073&hashData=dbea332a1cf62d2f3d99dc52435cbaed&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 6 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=890763&hashData=a43e8295b42b962651d89a21ddfe404c&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 7 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=894374&hashData=03d362e02a41ebaff6f1b3042c18c8c9&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 8 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=897959&hashData=2d385c3c880eeddeb6d2ad4764fad4af&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 9 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=901692&hashData=679a841cc6e61f71201a568f84a878ed&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 10 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=909193&hashData=6bd3b230913fa0bdd577cb192fbc40bd&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 11 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=909305&hashData=d32ea88af0a60930528ee220fad89b4c&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+      { label: "Héctor Peidro - Tutoría 12 - 2024/2025", url: "https://www.intecca.uned.es/portal/grabacion?ID_Sala=435718&ID_Grabacion=912869&hashData=c2c9a0480c00e7c3ee942dfbca1b0266&paramsToCheck=SURfR3JhYmFjaW9uLElEX1NhbGEs" },
+    ];
+
+    const LS_LAST = "da_last_opened_v1";
+
+    // UI
+    const grid = document.getElementById("grid");
+    const q = document.getElementById("q");
+    const count = document.getElementById("count");
+    const continueBtn = document.getElementById("continueBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    // Tutorías UI
+    const tutSelect = document.getElementById("tutSelect");
+    const tutOpen = document.getElementById("tutOpen");
+
+    function norm(s){
+      return (s || "").toString().toLowerCase()
+        .normalize("NFD").replace(/\p{Diacritic}/gu,"");
+    }
+
+    function escapeHTML(str){
+      return (str ?? "").toString()
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function card(t){
+      return `
+        <article class="card" data-hay="${escapeHTML(norm(t.id + ' ' + t.titulo))}">
+          <div class="t">
+            <div style="min-width:0">
+              <h3>${escapeHTML(t.titulo)}</h3>
+              <small>Tema ${escapeHTML(t.id)} · ${escapeHTML(t.file)}</small>
+            </div>
+            <div class="badge">T${escapeHTML(t.id)}</div>
+          </div>
+
+          <div class="actions">
+            <a class="btn primary" href="${escapeHTML(t.file)}" data-open="${escapeHTML(t.file)}">Estudiar tema</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderTutorias(){
+      if (!tutSelect) return;
+
+      tutSelect.innerHTML = `<option value="">— Selecciona una tutoría —</option>`;
+
+      TUTORIAS.forEach(t => {
+        const opt = document.createElement("option");
+        opt.value = t.url;
+        opt.textContent = t.label;
+        tutSelect.appendChild(opt);
+      });
+
+      if (!TUTORIAS.length){
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "Aún no hay tutorías añadidas";
+        tutSelect.appendChild(opt);
+      }
+
+      tutOpen.href = "#";
+      tutOpen.style.display = "none";
+    }
+
+    tutSelect?.addEventListener("change", () => {
+      const url = tutSelect.value;
+      if (url){
+        tutOpen.href = url;
+        tutOpen.style.display = "";
+      } else {
+        tutOpen.href = "#";
+        tutOpen.style.display = "none";
+      }
+    });
+
+    function render(){
+      grid.innerHTML = TEMAS.map(card).join("");
+      count.textContent = `${TEMAS.length} temas`;
+
+      grid.querySelectorAll("[data-open]").forEach(a => {
+        a.addEventListener("click", () => localStorage.setItem(LS_LAST, a.getAttribute("data-open")));
+      });
+
+      filter();
+      refreshContinue();
+      renderTutorias();
+    }
+
+    function filter(){
+      const query = norm(q.value);
+      const cards = grid.querySelectorAll(".card");
+      let shown = 0;
+
+      cards.forEach(c => {
+        const hay = c.getAttribute("data-hay") || "";
+        const ok = !query || hay.includes(query);
+        c.style.display = ok ? "" : "none";
+        if (ok) shown++;
+      });
+
+      count.textContent = `${shown}/${TEMAS.length} temas`;
+    }
+
+ function refreshContinue(){
+  const last = localStorage.getItem(LS_LAST);
+  const hint = document.getElementById("continueHint");
+
+  if (last){
+    continueBtn.href = last;
+    continueBtn.style.display = "";
+    resetBtn.style.display = "";
+    if (hint) hint.style.display = "";
+  } else {
+    continueBtn.style.display = "none";
+    resetBtn.style.display = "none";
+    if (hint) hint.style.display = "none";
+  }
+    }
+
+    q.addEventListener("input", filter);
+
+    resetBtn.addEventListener("click", () => {
+      localStorage.removeItem(LS_LAST);
+      refreshContinue();
+    });
+
+    render();
+  </script>
+</body>
+</html>
