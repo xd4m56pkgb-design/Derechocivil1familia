@@ -1,0 +1,1840 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+}
+summary::-webkit-details-marker{ display:none }
+.inner{ padding:0 16px 16px }
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.sumTitle{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 9 – Derecho Civil 1 - Familia</h1>
+  <div class="small">EL RÉGIMEN ECONÓMICO-MATRIMONIAL, by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. EL RÉGIMEN ECONÓMICO DEL MATRIMONIO
+El matrimonio no genera únicamente efectos personales, sino también efectos patrimoniales,
+pues la comunidad de vida entre los cónyuges implica necesariamente una comunidad de
+intereses económicos. Esa dimensión patrimonial puede organizarse de formas diversas,
+dependiendo de las circunstancias personales, familiares y económicas de los contrayentes.
+En la práctica, muchos futuros cónyuges —especialmente cuando se trata de primeras nupcias—
+prestan escasa atención a la regulación económica de su convivencia, movidos por el entusiasmo
+inicial o por la falta de previsión. Sin embargo, en situaciones de desigualdad económica o en
+segundas nupcias, especialmente cuando existen hijos de relaciones anteriores, suele aparecer
+una mayor preocupación por fijar desde el inicio las reglas patrimoniales que regirán el
+matrimonio.
+Frente a esa posible despreocupación inicial, el legislador ha actuado con carácter previsivo. Por
+un lado, ha estimulado la libertad de los cónyuges para pactar el régimen económico que
+consideren más adecuado. Por otro, ha establecido regímenes económicos supletorios,
+aplicables cuando los cónyuges no han dispuesto nada al respecto.
+El conjunto de normas destinadas a regular las consecuencias patrimoniales de la convivencia
+matrimonial y de su eventual disolución —ya sea por crisis matrimonial o por fallecimiento—
+recibe la denominación técnica de régimen económico del matrimonio o régimen económico-
+matrimonial, con independencia de que su contenido provenga de la voluntad de los cónyuges o
+de una configuración legal establecida por el legislador.
+2. DATOS HISTÓRICOS Y DE DERECHO COMPARADO: LOS SISTEMAS ECONÓMICO-
+MATRIMONIALES
+Los distintos ordenamientos jurídicos han configurado una pluralidad de sistemas económico-
+matrimoniales, que pueden clasificarse atendiendo a una idea básica: si predomina la
+separación de bienes o la comunidad de bienes entre los cónyuges. Dentro de cada modelo
+cabe, además, distinguir entre fórmulas absolutas o versiones mitigadas, en las que la separación
+o la comunidad se limita a determinados bienes o aspectos.
+2.1. Los sistemas de separación
+En los sistemas de separación rige la regla de que los patrimonios de los cónyuges
+permanecen diferenciados, sin formarse una masa común. Cada bien pertenece al cónyuge que
+ya era su titular antes del matrimonio o que lo adquiere durante el mismo.
+Cuando cada cónyuge conserva plenamente las facultades de administración y disposición de
+sus propios bienes, se habla de separación absoluta. Este sistema actúa como régimen legal
+supletorio de primer grado en numerosos países de tradición anglosajona y también en
+determinados territorios españoles como Cataluña y las Islas Baleares. En el Código Civil común,
+la separación de bienes opera como régimen supletorio de segundo grado.
+2.2. Los sistemas de comunidad
+En el ámbito cultural de tradición continental europea son más frecuentes los sistemas de
+comunidad limitada, considerados más acordes con la comunidad de vida que implica el
+matrimonio. Frente a la rigidez de la separación, estos sistemas permiten una masa patrimonial
+común que facilita la atención a las cargas del matrimonio.
+El modelo más extendido en Derecho comparado es el sistema de comunidad de ganancias,
+denominado en el Código Civil sociedad de gananciales. Su rasgo esencial consiste en la
+coexistencia de bienes privativos de cada cónyuge y una masa ganancial, integrada por los
+bienes adquiridos constante matrimonio a título oneroso, los obtenidos por el trabajo de los
+cónyuges y las rentas o intereses tanto de bienes comunes como privativos.
+La sociedad de gananciales es el régimen legal supletorio de primer grado en el Código Civil
+común y también, con denominaciones propias, en otros territorios y países de nuestro entorno
+jurídico. Junto a él existen variantes próximas, como el régimen de consorcio conyugal en
+Aragón.
+Más excepcional es la comunidad universal, en la que todos los bienes de los cónyuges —
+anteriores y posteriores al matrimonio, adquiridos a título oneroso o gratuito— pasan a ser
+comunes. Este modelo rige en determinados ámbitos territoriales españoles y se caracteriza por
+la total fusión patrimonial.
+Finalmente, puede incluirse dentro de los sistemas de comunidad el régimen de participación
+en las ganancias, introducido en el Código Civil por la Ley 11/1981. Aunque durante el
+matrimonio funciona con separación de patrimonios, en el momento de su liquidación atribuye a
+cada cónyuge el derecho a participar en las ganancias obtenidas por el otro, integrando así una
+modalidad mixta entre separación y comunidad.
+3. REGLAS BÁSICAS DEL RÉGIMEN ECONÓMICO-MATRIMONIAL EN DERECHO ESPAÑOL
+3.1. Ubicación normativa
+Tras la reforma de 1981, el Código Civil dedica los arts. 1315 a 1324, bajo la rúbrica de
+«Disposiciones generales», a un conjunto de normas de carácter imperativo que constituyen la
+base estructural del régimen económico-matrimonial. Estas reglas no dependen del régimen
+concreto elegido por los cónyuges, pues se aplican con independencia de que rija la sociedad de
+gananciales, la separación de bienes u otro sistema pactado.
+Su finalidad esencial es garantizar el principio de igualdad conyugal proclamado en el art. 32.1
+de la Constitución. No se trata de regular un modelo patrimonial específico, sino de fijar la
+arquitectura básica que ha de presidir cualquier sistema económico del matrimonio, sea legal o
+convencional. Por ello, estas normas operan como fundamento común sobre el que se asientan
+los distintos regímenes económico-matrimoniales y como límite a la autonomía de la voluntad de
+los cónyuges.
+3.2. La denominación de «régimen matrimonial primario»
+Parte de la doctrina ha denominado a este conjunto normativo «régimen matrimonial primario»,
+expresión de origen francés difundida en España especialmente por el profesor Lacruz Berdejo.
+Con esta denominación se pretende subrayar que dichas normas constituyen el núcleo básico e
+inderogable que precede y condiciona a los distintos regímenes patrimoniales.
+Sin embargo, más que insistir en la etiqueta, lo relevante es destacar el carácter general y
+estructural de estas disposiciones, que actúan como marco común del sistema. La expresión
+«régimen matrimonial primario» pone el acento en su función fundacional, pero lo decisivo es
+comprender que estas normas garantizan la igualdad, cohesionan el sistema y delimitan el ámbito
+dentro del cual pueden configurarse los concretos regímenes económico-matrimoniales.
+4. LA LIBERTAD DE CONFIGURACIÓN DEL RÉGIMEN ECONÓMICO-MATRIMONIAL
+El art. 1315 del Código Civil establece que «el régimen económico del matrimonio será el que los
+cónyuges estipulen en capitulaciones matrimoniales, sin otras limitaciones que las establecidas
+en este Código». Este precepto consagra como principio básico la libertad de configuración del
+régimen económico-matrimonial, expresión directa de la autonomía privada en el ámbito
+patrimonial del matrimonio.
+La norma parte de la idea de que la organización económica de la vida conyugal es una cuestión
+inter privatos, que corresponde decidir a los propios cónyuges según sus intereses,
+circunstancias personales y situación patrimonial. El legislador no impone un modelo obligatorio,
+sino que reconoce la primacía del pacto, siempre dentro de los límites legales.
+Esta opción no constituye una novedad de la reforma de 1981. Ya estaba presente en las
+redacciones anteriores del precepto y responde a una decisión consciente del momento
+codificador. Al aprobarse el Código Civil se abandonó la tradición castellana que imponía
+imperativamente la sociedad de gananciales, optándose por un sistema que prioriza la libertad
+de estipulación. Con ello se buscó también una mayor coherencia con los territorios de Derecho
+foral, donde históricamente había mayor margen para el pacto.
+La Base 22 de la Ley de 11 de mayo de 1888 refleja con claridad esta orientación: el contrato
+sobre bienes con ocasión del matrimonio debía asentarse sobre la libertad de estipulación,
+entendiéndose que, en defecto o insuficiencia de pacto, regiría supletoriamente la sociedad legal
+de gananciales. De este modo, el sistema combina autonomía de la voluntad y previsión legal
+supletoria, configurando un modelo flexible que articula libertad y seguridad jurídica.
+5. LA IGUALDAD CONYUGAL
+La libertad de configuración del régimen económico-matrimonial no es ilimitada. El art. 1315
+permite a los cónyuges establecer el régimen que deseen, pero «sin otras limitaciones que las
+establecidas en este Código».
+Entre esas limitaciones destaca el art. 1328, que declara nula cualquier estipulación que limite la
+igualdad de derechos de cada cónyuge. No se trata solo de una regla técnica sobre
+capitulaciones, sino de la proyección patrimonial del principio de igualdad interconyugal
+consagrado en el art. 32.1 de la Constitución.
+En consecuencia, la autonomía privada en materia económica matrimonial encuentra su límite
+infranqueable en la igualdad jurídica entre los esposos, que no puede ser alterada por pacto.
+6. EL LEVANTAMIENTO DE LAS CARGAS DEL MATRIMONIO
+En cualquier régimen económico-matrimonial rige la regla del art. 1318.1 CC: los bienes de los
+cónyuges están sujetos al levantamiento de las cargas del matrimonio. Esto significa que ambos
+quedan obligados a contribuir a los gastos derivados del sostenimiento de la familia.
+Las «cargas del matrimonio» comprenden el conjunto de gastos necesarios para la vida familiar:
+educación e instrucción de los hijos, asistencia sanitaria, atención del hogar y, en general, todo lo
+necesario para el mantenimiento del núcleo familiar conforme a sus circunstancias concretas.
+Si uno de los cónyuges incumple su deber de contribución, el juez, a instancia del otro, puede
+adoptar medidas cautelares y ordenar anticipos para asegurar el cumplimiento (art. 1318.2).
+La contribución no tiene por qué ser igualitaria. Puede pactarse libremente y, en defecto de
+convenio, será proporcional a los recursos económicos de cada cónyuge, como expresamente
+establece el art. 1438 para el régimen de separación y, por remisión del art. 1413, también para el
+de participación.
+7. LA POTESTAD DOMÉSTICA
+La potestad doméstica surge históricamente para permitir atender las necesidades familiares
+cuando la mujer carecía de plena capacidad jurídica. Hoy el art. 1319.1 reconoce que cualquiera
+de los cónyuges puede realizar actos dirigidos a cubrir las necesidades ordinarias de la familia,
+conforme al uso del lugar y a las circunstancias familiares. Es una manifestación directa del
+principio de igualdad conyugal.
+Desde la perspectiva interna, ambos esposos están legitimados para comprometer los bienes
+familiares en la satisfacción de necesidades ordinarias.
+Desde la perspectiva externa, el art. 1319.2 protege a los terceros que contratan con uno de los
+cónyuges: responden solidariamente los bienes comunes y los del cónyuge que contrajo la deuda
+y, subsidiariamente, los del otro. La norma es imperativa y se aplica cualquiera que sea el
+régimen económico-matrimonial.
+En régimen de separación, al no existir bienes comunes, responderán primero los bienes del
+cónyuge contratante y, de forma subsidiaria, los del otro.
+8. LA PROTECCIÓN DE LA VIVIENDA HABITUAL
+El art. 1320.1 CC establece que para disponer de derechos sobre la vivienda habitual y los
+muebles de uso ordinario de la familia se requiere el consentimiento de ambos cónyuges, aunque
+la titularidad corresponda solo a uno de ellos.
+La norma no se limita a la propiedad, sino que alcanza a cualquier derecho sobre la vivienda:
+venta, arrendamiento, usufructo, hipoteca o renuncia. Se protege así la función familiar de la
+vivienda por encima de la titularidad individual.
+La exigencia de consentimiento dual se refiere únicamente a actos inter vivos, quedando fuera los
+actos mortis causa.
+Para proteger al tercero adquirente, el art. 1320.2 dispone que la manifestación errónea o falsa
+del disponente sobre el carácter de la vivienda no perjudicará al adquirente de buena fe.
+La protección opera cualquiera que sea el régimen económico-matrimonial. Desde el punto de
+vista registral, será necesario que el disponente declare que la vivienda no es habitual o que
+conste el consentimiento del otro cónyuge o autorización judicial.
+La falta de consentimiento provoca nulidad radical si el acto es gratuito y anulabilidad durante
+cuatro años si es oneroso (art. 1322), admitiéndose confirmación posterior.
+9. EL AJUAR CONYUGAL
+El art. 1321 CC atribuye ex lege al cónyuge viudo las ropas, mobiliario y enseres que constituyan
+el ajuar de la vivienda habitual común, sin computarlo en su haber.
+Quedan excluidas las alhajas, objetos artísticos, históricos u otros de extraordinario valor. El ajuar
+comprende, por tanto, los bienes que integraban el entorno doméstico ordinario del matrimonio,
+con independencia de su titularidad previa.
+El supuesto parte necesariamente del fallecimiento de uno de los cónyuges y solo opera en caso
+de disolución del matrimonio por muerte, no en divorcio ni nulidad.
+Se trata de una atribución mortis causa de origen legal que no forma parte del caudal hereditario
+ni se computa a efectos sucesorios, sino que actúa como consecuencia de la liquidación del
+régimen económico-matrimonial.
+Doctrinalmente se denomina derecho de supervivencia o derecho de predetracción del cónyuge
+supérstite, siendo esta última expresión técnicamente más precisa.
+10. LAS LITIS EXPENSAS O GASTOS DE LITIGIO
+El art. 1318.3 CC regula las denominadas litis expensas, esto es, la cooperación interconyugal
+respecto de los gastos derivados de litigios que uno de los cónyuges deba sostener.
+La norma distingue dos supuestos. Cuando el litigio se dirige contra el otro cónyuge, debe estar
+exento de mala fe o temeridad procesal. Cuando el litigio se dirige contra un tercero, solo
+procederán las litis expensas si el proceso redunda en beneficio de la familia.
+El presupuesto esencial es que el cónyuge litigante carezca de bienes propios suficientes. En
+principio, los gastos pesan sobre sus bienes propios; solo si estos resultan insuficientes se activa
+el mecanismo legal.
+En tal caso, los gastos recaerán primero sobre el caudal común, si existe, y subsidiariamente
+sobre los bienes propios del otro cónyuge cuando la posición económica de este impida al
+primero obtener justicia gratuita conforme a la Ley de Enjuiciamiento Civil.
+Las litis expensas constituyen, por tanto, un derecho-deber conyugal aplicable cualquiera que
+sea el régimen económico-matrimonial, tanto en sistemas de comunidad como de separación.
+11. LA SANCIÓN DE LA FALTA DE CONSENTIMIENTO DE AMBOS CÓNYUGES
+El art. 1322 CC establece el régimen sancionador cuando la ley exige el consentimiento de
+ambos cónyuges para un acto de administración o disposición y este se realiza sin él.
+Si el acto no ha sido confirmado expresa o tácitamente, podrá ser anulado a instancia del
+cónyuge cuyo consentimiento se omitió o de sus herederos.
+La consecuencia varía según la naturaleza del acto. Si se trata de un acto a título gratuito sobre
+bienes comunes, la sanción es nulidad radical o absoluta, insubsanable e imprescriptible.
+Si el acto es a título oneroso, la sanción es anulabilidad durante cuatro años, computados desde
+la disolución del matrimonio o desde que se tuvo conocimiento suficiente del acto. En estos
+casos cabe confirmación expresa o tácita, pudiendo el consentimiento deducirse de las
+circunstancias, incluso de la pasividad o del silencio revelador.
+La norma es aplicable a todos los regímenes económicos, aunque su incidencia práctica es
+especialmente relevante en la sociedad de gananciales, donde la disposición de bienes comunes
+exige consentimiento conjunto.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+  "1": "El régimen económico-matrimonial engloba las normas que ordenan las consecuencias patrimoniales de la convivencia conyugal y su disolución, pudiendo derivar del pacto de los cónyuges o de regímenes supletorios previstos por el legislador.",
+
+  "2": "Los sistemas económico-matrimoniales se ordenan según predomine separación o comunidad de bienes, con variantes absolutas o mitigadas, reflejando opciones históricas y comparadas sobre la organización patrimonial del matrimonio.",
+
+  "2.1": "En la separación de bienes los patrimonios permanecen diferenciados y cada cónyuge conserva la titularidad y, en su caso, la administración y disposición de lo propio, operando como régimen supletorio en diversos países y territorios.",
+
+  "2.2": "En los sistemas de comunidad se forma una masa común, destacando la comunidad de ganancias o sociedad de gananciales —con bienes privativos y gananciales—, la comunidad universal y el régimen de participación como modelo mixto que liquida por ganancias.",
+
+  "3": "Tras 1981 el Código Civil fija en los arts. 1315 a 1324 disposiciones generales imperativas aplicables a cualquier régimen, destinadas a garantizar la igualdad conyugal y a actuar como marco y límite de la autonomía privada.",
+
+  "3.1": "Las disposiciones generales del régimen económico-matrimonial constituyen la base estructural común del sistema, operando con independencia del régimen elegido y asegurando el principio constitucional de igualdad entre cónyuges.",
+
+  "3.2": "La doctrina denomina a estas reglas «régimen matrimonial primario» para subrayar su carácter básico e inderogable, que precede y condiciona los regímenes concretos y cohesiona el sistema.",
+
+  "4": "El art. 1315 consagra la libertad de estipulación del régimen económico en capitulaciones, combinando primacía del pacto con previsión supletoria legal para los casos de falta o insuficiencia de acuerdo.",
+
+  "5": "La autonomía privada en materia económica matrimonial se limita por la igualdad conyugal: el art. 1328 declara nulas las estipulaciones que restrinjan la igualdad de derechos de cualquiera de los cónyuges.",
+
+  "6": "Las cargas del matrimonio obligan a ambos cónyuges a contribuir al sostenimiento de la familia, pudiendo pactarse la forma de contribución y, en defecto, aplicándose un criterio proporcional a los recursos, con posibilidad de medidas judiciales ante incumplimiento.",
+
+  "7": "La potestad doméstica habilita a cualquiera de los cónyuges para atender necesidades ordinarias de la familia y protege a terceros mediante responsabilidad que alcanza bienes comunes y del cónyuge deudor y, subsidiariamente, del otro, con regla adaptada a la separación.",
+
+  "8": "La vivienda habitual queda protegida por la exigencia de consentimiento de ambos para disponer de derechos sobre ella y los muebles de uso ordinario, con tutela del tercero de buena fe y un régimen sancionador que distingue nulidad o anulabilidad según el acto.",
+
+  "9": "El ajuar conyugal se atribuye ex lege al cónyuge viudo como derecho de predetracción sobre ropas, mobiliario y enseres de la vivienda habitual, excluyendo bienes de extraordinario valor y operando solo en disolución por muerte.",
+
+  "10": "Las litis expensas articulan la cooperación conyugal en gastos de litigio cuando el cónyuge litigante carece de bienes suficientes, exigiendo ausencia de mala fe en pleitos entre cónyuges o beneficio familiar frente a terceros, con imputación a caudal común o subsidiaria al otro.",
+
+  "11": "La falta del consentimiento legalmente exigido para administrar o disponer permite la anulación a instancia del cónyuge omitido o sus herederos, con nulidad radical en actos gratuitos sobre bienes comunes y anulabilidad en actos oneroso con plazo y posibilidad de confirmación."
+  
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1
+
+// [1]
+Q: ¿Qué se entiende técnicamente por régimen económico-matrimonial y qué función cumple dentro del matrimonio?
+A) El conjunto de normas que regulan exclusivamente la capacidad jurídica de los cónyuges.
+B) El sistema de reglas que ordena las consecuencias patrimoniales de la convivencia matrimonial y de su eventual disolución.
+C) Un acuerdo accesorio sin relevancia jurídica si no se pacta expresamente.
+OK: B
+EXP: El régimen económico-matrimonial organiza la dimensión patrimonial del matrimonio durante su vigencia y en su liquidación, ya derive de la voluntad de los cónyuges o de la ley.
+
+// [2]
+Q: ¿Por qué el legislador establece regímenes económicos supletorios en defecto de pacto entre los cónyuges?
+A) Para imponer un modelo obligatorio que excluya la libertad de capitular.
+B) Para asegurar un marco patrimonial aplicable cuando no exista pacto, evitando vacíos normativos.
+C) Para convertir automáticamente todos los bienes en comunes.
+OK: B
+EXP: El régimen supletorio garantiza seguridad jurídica cuando los cónyuges no han estipulado nada, articulando previsión legal junto a la autonomía privada.
+
+// [3]
+Q: ¿Qué relevancia práctica adquiere la previsión patrimonial en supuestos de segundas nupcias o desigualdad económica?
+A) Se vuelve irrelevante porque el Código impone siempre la sociedad de gananciales.
+B) Cobra especial importancia por la necesidad de ordenar intereses económicos y proteger situaciones familiares previas.
+C) Solo es relevante si existen bienes inscritos en el Registro Mercantil.
+OK: B
+EXP: En segundas nupcias o en contextos de desigualdad económica suele incrementarse la preocupación por fijar reglas patrimoniales claras desde el inicio.
+
+#ID = 2.1
+
+// [4]
+Q: ¿Cuál es el rasgo estructural esencial de los sistemas de separación de bienes?
+A) La creación automática de una masa patrimonial común.
+B) La diferenciación de patrimonios, sin formación de comunidad entre los cónyuges.
+C) La atribución universal de los bienes al cónyuge con mayores ingresos.
+OK: B
+EXP: En los sistemas de separación cada cónyuge conserva la titularidad, administración y disposición de sus propios bienes.
+
+// [5]
+Q: ¿Qué diferencias existen entre separación absoluta y separación como régimen supletorio de segundo grado?
+A) La separación absoluta impide disponer libremente de los bienes propios.
+B) La separación absoluta reconoce plena autonomía patrimonial; en el Código Civil común opera supletoriamente en segundo grado.
+C) No existe diferencia jurídica relevante entre ambas.
+OK: B
+EXP: La separación absoluta implica plena facultad sobre los bienes propios; en el CC común la separación es régimen supletorio de segundo grado, no de primero.
+
+#ID = 2.2
+
+// [6]
+Q: ¿Qué caracteriza al sistema de comunidad de ganancias o sociedad de gananciales?
+A) La comunidad universal de todos los bienes presentes y futuros.
+B) La coexistencia de bienes privativos y una masa ganancial integrada por adquisiciones onerosas y rendimientos constantes matrimonio.
+C) La inexistencia de liquidación al disolverse el matrimonio.
+OK: B
+EXP: La sociedad de gananciales combina bienes privativos con una masa común formada por ganancias obtenidas durante el matrimonio.
+
+// [7]
+Q: ¿En qué consiste el régimen de participación en las ganancias y por qué se considera un modelo mixto?
+A) Funciona como comunidad universal durante el matrimonio.
+B) Opera con separación durante el matrimonio, pero al liquidarse permite participar en las ganancias del otro cónyuge.
+C) Elimina cualquier derecho económico tras la disolución.
+OK: B
+EXP: Es un modelo mixto porque combina separación patrimonial durante la vigencia con un derecho de participación en las ganancias al liquidarse.
+
+#ID = 3.1
+
+// [8]
+Q: ¿Qué función cumplen las disposiciones generales de los arts. 1315 a 1324 CC dentro del sistema económico-matrimonial?
+A) Regular exclusivamente la sociedad de gananciales.
+B) Establecer normas estructurales e imperativas aplicables cualquiera que sea el régimen elegido.
+C) Permitir la renuncia a la igualdad conyugal por pacto.
+OK: B
+EXP: Constituyen la base estructural común del sistema y se aplican con independencia del régimen económico concreto.
+
+// [9]
+Q: ¿Por qué estas normas se aplican con independencia del régimen económico elegido por los cónyuges?
+A) Porque son meramente supletorias.
+B) Porque garantizan el principio de igualdad conyugal y delimitan el marco común.
+C) Porque solo rigen en matrimonios civiles.
+OK: B
+EXP: Estas disposiciones aseguran la igualdad y cohesionan el sistema, actuando como fundamento común de cualquier régimen.
+
+#ID = 3.2
+
+// [10]
+Q: ¿Qué se entiende doctrinalmente por “régimen matrimonial primario”?
+A) El régimen aplicable únicamente a matrimonios celebrados antes de 1981.
+B) El conjunto básico e inderogable de normas estructurales que precede a los regímenes concretos.
+C) El régimen económico legal supletorio.
+OK: B
+EXP: La expresión alude al núcleo imperativo que sirve de fundamento común a todos los regímenes económico-matrimoniales.
+
+// [11]
+Q: ¿Por qué las normas del denominado régimen primario tienen carácter imperativo?
+A) Porque pueden ser libremente excluidas en capitulaciones.
+B) Porque garantizan principios estructurales como la igualdad y no pueden ser derogadas por pacto.
+C) Porque solo rigen si existe conflicto judicial.
+OK: B
+EXP: Son imperativas al asegurar la igualdad conyugal y actuar como límite a la autonomía de la voluntad.
+
+// [12]
+Q: ¿Cómo actúan estas disposiciones como límite a la autonomía de la voluntad en materia patrimonial matrimonial?
+A) Prohibiendo cualquier pacto económico entre cónyuges.
+B) Permitiendo pactos que vulneren derechos fundamentales.
+C) Delimitando el ámbito de los pactos e impidiendo estipulaciones contrarias a la igualdad y a las bases estructurales del sistema.
+OK: C
+EXP: La autonomía privada existe, pero dentro del marco fijado por normas estructurales que garantizan igualdad y coherencia del sistema.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 4
+
+// [13]
+Q: ¿Qué principio consagra el art. 1315 CC respecto al régimen económico del matrimonio?
+A) La imposición legal obligatoria de la sociedad de gananciales en todo caso.
+B) La libertad de los cónyuges para estipular en capitulaciones el régimen económico que estimen conveniente dentro de los límites legales.
+C) La prohibición de modificar el régimen económico una vez celebrado el matrimonio.
+OK: B
+EXP: El art. 1315 CC proclama la autonomía de la voluntad en la configuración del régimen económico, permitiendo a los cónyuges pactarlo en capitulaciones con los límites del Código.
+
+// [14]
+Q: ¿Qué límites establece el Código Civil a la libertad de configuración del régimen económico?
+A) Únicamente los derivados de la voluntad de uno de los cónyuges.
+B) Las normas imperativas del Código, especialmente las que garantizan la igualdad conyugal.
+C) Ninguno, salvo los pactos inscritos en el Registro Civil.
+OK: B
+EXP: La libertad de configuración no es absoluta; encuentra su límite en las disposiciones imperativas del Código, en particular en la igualdad jurídica entre los cónyuges.
+
+// [15]
+Q: ¿Cómo se articula el sistema español entre autonomía de la voluntad y régimen legal supletorio?
+A) La ley impone siempre el régimen legal sin posibilidad de pacto.
+B) Se prioriza el pacto en capitulaciones y, en su defecto o insuficiencia, rige el régimen legal supletorio.
+C) El régimen supletorio solo opera si existe conflicto judicial.
+OK: B
+EXP: El modelo combina libertad de estipulación con previsión legal supletoria, aplicable cuando los cónyuges no han pactado régimen económico.
+
+#ID = 5
+
+// [16]
+Q: ¿Por qué el art. 1328 CC constituye una proyección patrimonial del principio constitucional de igualdad?
+A) Porque permite pactar libremente cualquier desigualdad económica.
+B) Porque declara nulas las estipulaciones que limiten la igualdad de derechos entre los cónyuges.
+C) Porque regula exclusivamente la igualdad en materia sucesoria.
+OK: B
+EXP: El art. 1328 CC traslada al ámbito patrimonial el principio del art. 32.1 CE, impidiendo pactos que vulneren la igualdad jurídica entre los esposos.
+
+// [17]
+Q: ¿Qué consecuencias jurídicas produce una estipulación que limite la igualdad de derechos entre los cónyuges?
+A) Produce anulabilidad durante cuatro años.
+B) Produce nulidad radical por infringir una norma imperativa.
+C) Es válida si ambos cónyuges consienten expresamente.
+OK: B
+EXP: Toda cláusula que limite la igualdad conyugal es nula por contravenir una norma imperativa que actúa como límite infranqueable a la autonomía privada.
+
+#ID = 6
+
+// [18]
+Q: ¿Qué se entiende por cargas del matrimonio a efectos del art. 1318 CC?
+A) Únicamente las deudas personales de cada cónyuge.
+B) El conjunto de gastos necesarios para el sostenimiento de la familia conforme a sus circunstancias.
+C) Solo los gastos derivados de la adquisición de bienes comunes.
+OK: B
+EXP: Las cargas comprenden los gastos ordinarios de la vida familiar, como educación, asistencia y mantenimiento del hogar.
+
+// [19]
+Q: ¿Cómo se determina la contribución de cada cónyuge a las cargas en defecto de pacto?
+A) De forma igualitaria en todo caso.
+B) Proporcionalmente a los recursos económicos de cada uno.
+C) Exclusivamente según quien ostente mayores ingresos laborales.
+OK: B
+EXP: En ausencia de convenio, la contribución se fija conforme a la capacidad económica de cada cónyuge, no necesariamente por partes iguales.
+
+// [20]
+Q: ¿Qué medidas puede adoptar el juez si uno de los cónyuges incumple su deber de contribuir?
+A) Disolver automáticamente el régimen económico.
+B) Ordenar medidas cautelares y anticipos para asegurar el cumplimiento.
+C) Declarar la nulidad del matrimonio.
+OK: B
+EXP: El art. 1318.2 CC permite al juez adoptar medidas cautelares y ordenar anticipos para garantizar el levantamiento de las cargas.
+
+// [21]
+Q: ¿Por qué la obligación de contribuir a las cargas opera cualquiera que sea el régimen económico-matrimonial?
+A) Porque es una norma supletoria limitada a la sociedad de gananciales.
+B) Porque constituye un deber conyugal estructural aplicable en todo régimen.
+C) Porque solo rige en caso de separación de bienes.
+OK: B
+EXP: La obligación de contribuir a las cargas es una regla básica del sistema, independiente del régimen económico concreto elegido.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 7
+
+// [22]
+Q: ¿Qué finalidad cumple la potestad doméstica en el sistema actual del Código Civil?
+A) Permitir que solo uno de los cónyuges administre el patrimonio familiar.
+B) Habilitar a cualquiera de los cónyuges para realizar actos dirigidos a cubrir las necesidades ordinarias de la familia.
+C) Sustituir el régimen económico pactado por los cónyuges.
+OK: B
+EXP: El art. 1319 CC permite a cualquiera de los cónyuges atender las necesidades ordinarias de la familia, como manifestación del principio de igualdad y de la funcionalidad del hogar.
+
+
+// [23]
+Q: ¿Qué alcance interno y externo tiene la potestad doméstica respecto de las deudas contraídas para necesidades ordinarias?
+A) Internamente obliga solo al cónyuge que contrata; externamente responde únicamente su patrimonio privativo.
+B) Internamente legitima a ambos para comprometer bienes familiares; externamente genera responsabilidad frente a terceros conforme al art. 1319 CC.
+C) Internamente requiere autorización judicial previa; externamente carece de eficacia frente a terceros.
+OK: B
+EXP: Desde la perspectiva interna, ambos pueden atender necesidades familiares; externamente, los bienes comunes y los del cónyuge contratante responden solidariamente, con responsabilidad subsidiaria del otro.
+
+
+// [24]
+Q: ¿Cómo se articula la responsabilidad patrimonial en régimen de separación de bienes frente a terceros?
+A) Responden exclusivamente los bienes comunes.
+B) Responden primero los bienes del cónyuge contratante y, subsidiariamente, los del otro.
+C) Responden siempre por mitad los patrimonios de ambos cónyuges.
+OK: B
+EXP: En separación de bienes no existe masa común; por ello, responden prioritariamente los bienes del cónyuge que contrata y, subsidiariamente, los del otro conforme al art. 1319 CC.
+
+
+// [25]
+Q: ¿Por qué la regulación de la potestad doméstica tiene carácter imperativo?
+A) Porque solo rige si así lo pactan expresamente los cónyuges.
+B) Porque protege intereses familiares y de terceros, aplicándose cualquiera que sea el régimen económico.
+C) Porque depende de la voluntad unilateral del cónyuge económicamente más fuerte.
+OK: B
+EXP: La norma es imperativa al garantizar la satisfacción de necesidades familiares y la seguridad del tráfico jurídico, con independencia del régimen económico vigente.
+
+#ID = 8
+
+// [26]
+Q: ¿Qué actos requieren el consentimiento de ambos cónyuges respecto de la vivienda habitual?
+A) Únicamente la venta del inmueble.
+B) Todo acto de disposición inter vivos sobre derechos relativos a la vivienda habitual y sus muebles de uso ordinario.
+C) Solo la constitución de hipoteca cuando exista sociedad de gananciales.
+OK: B
+EXP: El art. 1320 CC exige consentimiento dual para disponer de derechos sobre la vivienda habitual, sea cual sea su titularidad y el régimen económico.
+
+
+// [27]
+Q: ¿Por qué la protección de la vivienda habitual opera con independencia de su titularidad dominical?
+A) Porque la titularidad es irrelevante en todo régimen patrimonial.
+B) Porque se protege la función familiar de la vivienda por encima de la propiedad individual.
+C) Porque la vivienda pasa automáticamente a ser bien común.
+OK: B
+EXP: El sistema tutela la vivienda como núcleo de la vida familiar, primando su función social frente a la titularidad exclusiva de uno de los cónyuges.
+
+
+// [28]
+Q: ¿Qué efectos produce la falta de consentimiento en actos gratuitos sobre la vivienda habitual?
+A) Anulabilidad durante cuatro años.
+B) Nulidad radical o absoluta.
+C) Validez si el adquirente es de buena fe.
+OK: B
+EXP: Cuando el acto es gratuito y falta el consentimiento exigido, la sanción es nulidad radical, insubsanable e imprescriptible conforme al art. 1322 CC.
+
+
+// [29]
+Q: ¿En qué se diferencia la nulidad radical de la anulabilidad en caso de disposición onerosa sin consentimiento?
+A) La nulidad radical es subsanable; la anulabilidad es imprescriptible.
+B) La nulidad radical es insubsanable e imprescriptible, mientras que la anulabilidad puede ejercitarse dentro de plazo y admite confirmación.
+C) Ambas producen los mismos efectos jurídicos.
+OK: B
+EXP: En actos onerosos sin consentimiento la sanción es anulabilidad durante cuatro años; la nulidad radical, propia de actos gratuitos, no admite confirmación ni prescribe.
+
+
+// [30]
+Q: ¿Qué mecanismos prevé el sistema para proteger al tercero adquirente de buena fe?
+A) La inoponibilidad absoluta del régimen matrimonial.
+B) La validez automática del acto sin necesidad de consentimiento.
+C) La protección del adquirente de buena fe cuando exista manifestación errónea sobre el carácter habitual de la vivienda.
+OK: C
+EXP: El art. 1320.2 CC protege al tercero de buena fe cuando el disponente declara erróneamente que la vivienda no es habitual, preservando la seguridad del tráfico.
+
+#ID = 9
+
+// [31]
+Q: ¿Qué bienes integran el ajuar conyugal conforme al art. 1321 CC?
+A) Todos los bienes muebles del matrimonio sin excepción.
+B) Las ropas, mobiliario y enseres de la vivienda habitual común, excluidos objetos de extraordinario valor.
+C) Solo los bienes adquiridos constante matrimonio.
+OK: B
+EXP: El ajuar comprende los bienes que integran el entorno doméstico ordinario, quedando fuera alhajas u objetos artísticos de valor relevante.
+
+
+// [32]
+Q: ¿Por qué el derecho al ajuar no forma parte del caudal hereditario?
+A) Porque es una atribución mortis causa de origen legal que no se computa en la herencia.
+B) Porque se transmite por testamento necesariamente.
+C) Porque depende exclusivamente del régimen de gananciales.
+OK: A
+EXP: El derecho al ajuar es una atribución legal ex lege al cónyuge supérstite que no se integra en el caudal hereditario ni se computa sucesoriamente.
+
+
+// [33]
+Q: ¿En qué consiste técnicamente el derecho de predetracción del cónyuge supérstite?
+A) En la posibilidad de elegir libremente cualquier bien de la herencia.
+B) En la atribución automática del ajuar doméstico al cónyuge viudo antes de la partición hereditaria.
+C) En una compensación económica periódica tras el fallecimiento.
+OK: B
+EXP: La predetracción supone que el cónyuge viudo adquiere ex lege el ajuar doméstico común antes de la distribución hereditaria, como consecuencia de la disolución por muerte.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 10
+
+// [34]
+Q: ¿Qué requisitos deben concurrir para que proceda la obligación de litis expensas?
+A) Que el litigio se dirija siempre contra el otro cónyuge y exista comunidad de bienes.
+B) Que el cónyuge litigante carezca de bienes suficientes y el proceso no sea temerario o redunde en beneficio familiar.
+C) Que el régimen económico sea necesariamente de gananciales.
+OK: B
+EXP: Las litis expensas exigen insuficiencia de bienes propios del litigante y que el proceso no sea temerario (si es contra el otro cónyuge) o beneficie a la familia (si es contra tercero).
+
+
+// [35]
+Q: ¿Cómo se articula la subsidiariedad en el pago de los gastos de litigio entre cónyuges?
+A) Responden siempre solidariamente ambos patrimonios privativos.
+B) Responden primero los bienes propios del litigante, luego el caudal común y, subsidiariamente, los bienes del otro cónyuge.
+C) Responde exclusivamente el patrimonio común.
+OK: B
+EXP: El art. 1318.3 CC establece una secuencia: bienes propios del litigante; si son insuficientes, el caudal común; y, en último término, bienes del otro cónyuge si procede.
+
+
+// [36]
+Q: ¿Por qué las litis expensas constituyen un derecho-deber aplicable en cualquier régimen económico?
+A) Porque solo operan en regímenes de comunidad.
+B) Porque derivan de la solidaridad conyugal y no dependen del régimen patrimonial vigente.
+C) Porque se configuran como una obligación contractual entre los cónyuges.
+OK: B
+EXP: Las litis expensas responden al deber de cooperación conyugal y se aplican con independencia de que exista comunidad o separación de bienes.
+
+#ID = 11
+
+// [37]
+Q: ¿Qué régimen establece el art. 1322 CC cuando se omite el consentimiento exigido por la ley?
+A) La nulidad automática de todo acto, sea gratuito u oneroso.
+B) Un sistema diferenciado según la naturaleza del acto, con nulidad o anulabilidad.
+C) La validez del acto si existe buena fe del disponente.
+OK: B
+EXP: El art. 1322 CC distingue: nulidad radical en actos gratuitos y anulabilidad en actos onerosos realizados sin el consentimiento exigido.
+
+
+// [38]
+Q: ¿Qué diferencia existe entre nulidad radical y anulabilidad en actos de disposición sin consentimiento?
+A) La nulidad radical es subsanable y la anulabilidad imprescriptible.
+B) La nulidad radical es insubsanable e imprescriptible; la anulabilidad es temporal y admite confirmación.
+C) Ambas producen idénticos efectos jurídicos.
+OK: B
+EXP: La nulidad radical no admite confirmación ni prescribe; la anulabilidad puede ejercitarse dentro de plazo y cabe confirmación expresa o tácita.
+
+
+// [39]
+Q: ¿Desde cuándo comienza a computarse el plazo de cuatro años en los supuestos de anulabilidad?
+A) Desde la celebración del acto de disposición.
+B) Desde la disolución del matrimonio o desde que el cónyuge conoció suficientemente el acto.
+C) Desde la inscripción registral del acto.
+OK: B
+EXP: El plazo de cuatro años se computa desde la disolución del matrimonio o desde el conocimiento suficiente del acto por el cónyuge cuyo consentimiento se omitió.
+
+
+// [40]
+Q: ¿En qué supuestos cabe la confirmación expresa o tácita del acto realizado sin consentimiento?
+A) Solo cuando el acto sea gratuito.
+B) Cuando se trate de actos anulables, pudiendo deducirse el consentimiento de la conducta o pasividad reveladora.
+C) Nunca, pues la falta de consentimiento produce nulidad absoluta.
+OK: B
+EXP: En actos anulables cabe confirmación expresa o tácita; el consentimiento puede deducirse de la conducta o del silencio significativo del cónyuge afectado.
+    `;
+
+
+    const BANCO_5 = ` 
+pega texto aqui
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
