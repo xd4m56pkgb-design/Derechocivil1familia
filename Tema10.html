@@ -1,0 +1,1917 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+}
+summary::-webkit-details-marker{ display:none }
+.inner{ padding:0 16px 16px }
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.sumTitle{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 10 – Derecho Civil 1 - Familia</h1>
+  <div class="small">LAS CAPITULACIONES MATRIMONIALES, by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LAS CAPITULACIONES MATRIMONIALES
+1.1. Noción inicial
+Las capitulaciones matrimoniales son el instrumento mediante el cual los cónyuges o futuros
+cónyuges establecen las normas patrimoniales aplicables a su matrimonio. El Código Civil no
+ofrece una definición conceptual, sino que indica su función: conforme al art. 1325, permiten
+estipular, modificar o sustituir el régimen económico del matrimonio.
+El precepto añade que pueden contener «cualesquiera otras disposiciones por razón del mismo»,
+expresión que debe entenderse referida al matrimonio y no al régimen económico. Por tanto, su
+objeto principal es la regulación del régimen económico-matrimonial, pero pueden incorporar
+otras disposiciones vinculadas al matrimonio, como donaciones propter nuptias u otros pactos
+conexos.
+Las capitulaciones constituyen, así, el cauce formal para articular la autonomía privada en materia
+patrimonial matrimonial, con un contenido que puede extenderse más allá del régimen
+económico estricto.
+1.2. Naturaleza contractual
+La doctrina mayoritaria atribuye a las capitulaciones naturaleza contractual, posición que se
+apoya en el tenor del art. 1335 y en la tradición codificadora que las encuadraba bajo el “contrato
+de bienes con ocasión del matrimonio”.
+Aunque algunos autores las califican como acto complejo por su posible contenido atípico, esta
+tesis no ofrece un marco normativo operativo. La consideración contractual resulta más
+coherente, pues permite aplicar las categorías generales del negocio jurídico y dota de
+sistematicidad a su régimen.
+En consecuencia, las capitulaciones deben entenderse como un negocio jurídico bilateral
+celebrado en atención al matrimonio y destinado a disciplinar sus efectos patrimoniales.
+2. EL CONTENIDO DE LAS CAPITULACIONES
+La redacción del art. 1325 consagra la distinción doctrinal entre contenido típico y contenido
+atípico.
+El contenido típico lo integran las estipulaciones relativas al régimen económico del matrimonio.
+El contenido atípico comprende cualesquiera otros pactos establecidos por razón del matrimonio.
+2.1. Contenido típico
+La materia típica de las capitulaciones es la fijación del régimen económico-matrimonial. Este
+puede establecerse antes o después del matrimonio, permitiendo tanto instituir un régimen nuevo
+como sustituir uno vigente.
+La libertad de configuración es amplia: los cónyuges pueden crear ex novo un sistema
+patrimonial, remitirse a uno regulado por la ley —nacional o extranjera— o modificar aspectos
+concretos del régimen elegido. Incluso pueden limitarse a excluir el régimen legal supletorio sin
+designar expresamente otro.
+Sin embargo, la práctica demuestra que lo habitual no es la creación de sistemas originales ni la
+modificación minuciosa de modelos legales, sino la remisión expresa a uno de los regímenes
+tipificados por la legislación aplicable. La exigencia de escritura pública y la intervención notarial
+refuerzan esta tendencia, garantizando asesoramiento técnico y reduciendo riesgos
+interpretativos.
+En definitiva, el contenido típico de las capitulaciones es la concreción del régimen económico
+que regirá la vida patrimonial del matrimonio, manifestación directa de la autonomía privada
+dentro de los límites legales.
+2.2. Contenido atípico
+Bajo esta denominación se comprenden las «cualesquiera otras disposiciones por razón del
+matrimonio» a las que se refiere el art. 1325, siempre que no tengan por objeto la determinación
+del régimen económico-matrimonial.
+El propio Código ofrece ejemplos relevantes. Así, determinadas donaciones por razón de
+matrimonio adquieren especial trascendencia cuando se instrumentan en capitulaciones (arts.
+1338 y 1341.2). Igualmente, los arts. 826 y 827 atribuyen efectos específicos a pactos o
+declaraciones sobre el tercio de mejora cuando se contienen en capitulaciones.
+No obstante, las disposiciones “por razón del matrimonio” no han de ser necesariamente
+patrimoniales. Las capitulaciones, como documento público, pueden servir también para el
+reconocimiento de un hijo prematrimonial (art. 120.1 CC), lo que demuestra que su contenido
+puede extenderse más allá de lo estrictamente económico.
+En consecuencia, el contenido atípico engloba todas aquellas estipulaciones vinculadas al
+matrimonio que, sin configurar el régimen económico, encuentran en las capitulaciones un cauce
+formal idóneo.
+2.3. La eventual inexistencia del contenido típico
+El art. 1325 permite que existan capitulaciones cuyo contenido se limite exclusivamente a
+disposiciones atípicas, sin fijar ni modificar el régimen económico del matrimonio.
+En tal supuesto, el régimen aplicable será el legal supletorio de primer grado —en el Código Civil,
+la sociedad de gananciales—.
+Esta posibilidad supone una alteración respecto al entendimiento tradicional anterior a la reforma
+de 1981, cuando se consideraba que el contenido atípico presuponía necesariamente la
+existencia del contenido típico. Hoy, en cambio, el legislador admite que las capitulaciones
+puedan existir aun cuando solo contengan estipulaciones accesorias o complementarias, sin
+regulación expresa del régimen económico.
+2.4. La prohibición de estipulaciones ilícitas
+La libertad de configuración reconocida a los cónyuges no es absoluta.
+El art. 1328 declara nula cualquier estipulación contraria a las leyes, a las buenas costumbres o
+limitativa de la igualdad de derechos que corresponda a cada cónyuge.
+De este modo, el principio de autonomía privada en materia patrimonial matrimonial queda
+subordinado al respeto de normas imperativas y, especialmente, al principio de igualdad
+conyugal. La nulidad actúa como límite estructural del contenido de las capitulaciones,
+impidiendo que se conviertan en instrumento de desigualdad o de vulneración del ordenamiento
+jurídico.
+3. EL MOMENTO TEMPORAL DEL OTORGAMIENTO
+3.1. La redacción originaria del Código: la inmutabilidad del régimen económico del
+matrimonio
+En la redacción originaria del Código Civil, el art. 1315 solo permitía otorgar capitulaciones antes
+de la celebración del matrimonio. Una vez iniciado el vínculo, los cónyuges no podían modificar
+su régimen económico.
+Este planteamiento respondía al denominado principio de inmutabilidad del régimen
+económico matrimonial, basado en la idea de evitar fraudes o perjuicios a terceros mediante
+alteraciones patrimoniales posteriores a la celebración del matrimonio. Se temía que, modificando
+las masas patrimoniales, pudieran eludirse responsabilidades derivadas de deudas.
+La única excepción se encontraba en el antiguo art. 1433, que permitía solicitar judicialmente la
+separación de bienes en supuestos tasados: condena con interdicción civil, declaración de
+ausencia o separación judicial. Fuera de estos casos excepcionales, el régimen era inalterable.
+3.2. Régimen vigente: la mutabilidad del régimen económico del matrimonio
+La Ley 14/1975 abandonó la inmutabilidad, permitiendo otorgar capitulaciones antes o después
+del matrimonio. La Ley 11/1981 consolidó esta orientación en el vigente art. 1326, que autoriza
+expresamente su otorgamiento en ambos momentos.
+Se impone así el principio de mutabilidad del régimen económico matrimonial. El art. 1325
+permite incluso “sustituir” el régimen vigente, lo que convierte la configuración patrimonial del
+matrimonio en una realidad esencialmente cambiante.
+Este giro legislativo ha sido valorado de forma diversa. Algunos autores advierten del riesgo de
+fraude frente a terceros; otros destacan el refuerzo de la autonomía privada y el acercamiento a
+sistemas forales más flexibles. Además, la admisión del divorcio y de la separación de hecho
+hace coherente la posibilidad de adaptar el régimen económico a la evolución real de la vida
+matrimonial y a sus crisis.
+En la actualidad, los cónyuges pueden otorgar cuantas capitulaciones deseen, antes o después
+del matrimonio, aunque en la práctica lo habitual es que no se produzcan modificaciones
+reiteradas, sino que el régimen permanezca estable una vez fijado.
+4. LOS REQUISITOS DE CAPACIDAD
+4.1. Los otorgantes de las capitulaciones
+Las capitulaciones matrimoniales pueden ser otorgadas no solo por los cónyuges o futuros
+cónyuges, sino también, eventualmente, por terceros. Por eso el art. 1325 habla de “los
+otorgantes” y el art. 1331 contempla expresamente la posible intervención de otras personas.
+No obstante, la presencia y el consentimiento de ambos cónyuges constituyen un presupuesto
+esencial. No pueden existir capitulaciones si no concurren ambos, y su intervención tiene
+carácter personalísimo, sin posibilidad de representación.
+La participación de terceros es meramente eventual y hoy poco frecuente. Su fundamento reside
+en la posibilidad de realizar atribuciones patrimoniales o pactos sucesorios en favor de los
+esposos.
+En cuanto a la capacidad, el Código no establece reglas especiales para los plenamente
+capaces. Salvo en los supuestos específicos del menor no emancipado y de las personas con
+discapacidad (que se regulan aparte), la capacidad de los otorgantes se rige por las reglas
+generales en materia contractual.
+4.2. Los menores no emancipados
+El art. 1329 permitía al menor no emancipado que pudiera casarse otorgar capitulaciones, pero
+con el concurso y consentimiento de sus padres o tutor, salvo que se limitara a pactar el régimen
+de separación o el de participación.
+Sin embargo, este precepto ha quedado sin aplicación práctica. Al haberse suprimido la
+posibilidad de que los menores no emancipados contraigan matrimonio (art. 46.1 CC),
+desaparece el presupuesto mismo de su otorgamiento de capitulaciones. Aunque no ha sido
+formalmente derogado, su contenido resulta hoy inaplicable.
+4.3. Las personas con discapacidad psíquica, intelectual o cognitiva
+El antiguo art. 1330 exigía que la persona incapacitada judicialmente otorgara capitulaciones con
+la asistencia de padres, tutor o curador.
+Tras la Ley 8/2021, que reforma el sistema de apoyos a las personas con discapacidad, dicho
+precepto ha sido suprimido. El nuevo modelo parte del reconocimiento del derecho universal a
+contraer matrimonio, con fundamento constitucional y en tratados internacionales.
+Quien puede contraer matrimonio puede otorgar capitulaciones en plena igualdad jurídica —
+habilis ad nuptias habilis ad pacta nuptialia—. El otorgamiento mantiene su carácter personalísimo
+y no requiere asistencia estructural por razón de discapacidad, en coherencia con el principio de
+capacidad jurídica plena y sistema de apoyos.
+5. LA FORMA DE LAS CAPITULACIONES
+El art. 1327 establece de manera expresa que para su validez las capitulaciones han de
+constar en escritura pública. No se trata de una mera formalidad probatoria, sino de un
+requisito esencial. Aunque el art. 1280.3.º también exige documento público para las
+capitulaciones y sus modificaciones, el art. 1327 concreta que debe tratarse específicamente de
+escritura pública, lo que refuerza su carácter solemne.
+De esta doble referencia normativa la doctrina deduce, de forma prácticamente unánime, que la
+escritura pública constituye un requisito constitutivo o ad solemnitatem. En consecuencia, las
+capitulaciones matrimoniales son un negocio jurídico solemne: si no se otorgan en escritura
+pública, carecen de validez tanto entre las partes como frente a terceros.
+No obstante, esta exigencia estricta debe entenderse referida al contenido típico, es decir, a las
+estipulaciones relativas al régimen económico del matrimonio. En relación con el contenido
+atípico, pueden admitirse declaraciones válidas en otros documentos públicos distintos de la
+escritura, como ocurre con el reconocimiento de un hijo o con la protocolización notarial de
+documentos relativos a la liquidación de la sociedad de gananciales.
+Así, la forma solemne es indispensable cuando se trata de configurar o modificar el régimen
+económico matrimonial, pero no necesariamente cuando se incorporan otras disposiciones “por
+razón del matrimonio”.
+6. LA MODIFICACIÓN DEL RÉGIMEN ECONÓMICO-MATRIMONIAL CONSTANTE
+MATRIMONIO
+Tras la celebración del matrimonio, los cónyuges pueden modificar en cualquier momento las
+reglas patrimoniales que rigen su unión. Esta modificación puede producirse otorgando nuevas
+capitulaciones (existiendo otras previas) o bien otorgando por primera vez capitulaciones para
+sustituir el régimen legal supletorio. En la práctica, el supuesto más frecuente es el paso del
+régimen de gananciales al de separación, generalmente para evitar el sistema de
+responsabilidad propio de los bienes gananciales.
+6.1. La modificación de las capitulaciones preexistentes
+El otorgamiento de nuevas capitulaciones no implica necesariamente cambiar el régimen
+económico-matrimonial, pues pueden limitarse al contenido atípico. Sin embargo, lo habitual es
+que afecten también al contenido típico, es decir, al régimen patrimonial.
+El Código se preocupa especialmente de proteger a los terceros otorgantes que intervinieron en
+capitulaciones anteriores. El art. 1331 exige que, si la modificación afecta a derechos concedidos
+por esas personas y estas viven, sea necesaria su asistencia y concurso. La norma no se refiere a
+los cónyuges —cuya intervención es siempre imprescindible— sino a esos terceros que realizaron
+atribuciones patrimoniales o pactos sucesorios.
+6.2. Otorgamiento de capitulaciones y cambio del régimen
+Cuando los cónyuges otorgan por primera vez capitulaciones para sustituir el régimen legal
+supletorio, no hay modificación de capitulaciones anteriores, pero sí modificación del régimen
+económico-matrimonial. En este caso rigen igualmente las exigencias de capacidad, forma e
+ineficacia ya estudiadas.
+6.3. La protección de los terceros
+La cuestión decisiva, desde la perspectiva externa, es si se ha producido una modificación del
+régimen económico-matrimonial, pues ello puede afectar a los derechos de los acreedores. Para
+evitar perjuicios, el art. 1317 establece una regla esencial: la modificación del régimen durante
+el matrimonio no perjudicará en ningún caso los derechos ya adquiridos por terceros.
+Esto significa que los acreedores mantienen las garantías existentes en el momento en que nació
+su derecho, aunque posteriormente los cónyuges cambien de régimen. Si el cambio se utiliza con
+finalidad fraudulenta, no procede en principio la nulidad del negocio, sino su rescindibilidad,
+conforme a las reglas generales, siendo la clave la inoponibilidad frente a terceros y no la
+invalidez del pacto entre los cónyuges.
+7. LA PUBLICIDAD DE LAS CAPITULACIONES
+La posibilidad de modificar el régimen económico-matrimonial exige mecanismos de publicidad,
+especialmente para proteger a terceros. Nuestro sistema solo contempla publicidad respecto del
+régimen pactado en capitulaciones, no de los regímenes legales supletorios.
+El eje central es el art. 1333 CC, que dispone que en la inscripción de matrimonio en el Registro
+Civil se hará mención, en su caso, de las capitulaciones otorgadas y de los pactos, resoluciones
+judiciales o hechos que modifiquen el régimen económico. Si tales pactos afectan a inmuebles,
+deberá tomarse razón en el Registro de la Propiedad. Además, el art. 1332 impone al notario la
+obligación de hacer constar por nota la modificación de capitulaciones anteriores.
+7.1. El Registro Civil
+Aunque el art. 1333 utiliza términos imperativos, el art. 266 del Reglamento del Registro Civil
+establece que la indicación del régimen económico solo se extenderá a petición del interesado.
+Por tanto, su constancia registral tiene carácter facultativo.
+Sin embargo, lo esencial es que las capitulaciones o sus modificaciones no inscritas en el
+Registro Civil no serán oponibles a terceros. La publicidad registral cumple así una función de
+garantía frente a quienes contratan confiando en la situación jurídica aparente.
+7.2. El Registro de la Propiedad
+Cuando las capitulaciones afectan a inmuebles, el art. 1333 exige su reflejo en el Registro de la
+Propiedad. Conforme a las reglas generales de la Ley Hipotecaria, los terceros de buena fe no
+pueden verse perjudicados por pactos matrimoniales no inscritos en dicho Registro, aunque
+consten en el Registro Civil.
+La inscripción inmobiliaria es, por tanto, determinante para la plena eficacia frente a terceros en
+materia de derechos reales sobre bienes inmuebles.
+7.3. El Registro Mercantil
+En el ámbito empresarial, el Reglamento del Registro Mercantil prevé que en la hoja del
+empresario individual se inscriban las capitulaciones matrimoniales, así como el consentimiento,
+oposición o revocación previstos en el Código de Comercio y las resoluciones judiciales relativas
+a crisis matrimoniales o incapacidad.
+La finalidad es clara: garantizar la seguridad del tráfico mercantil, permitiendo a terceros conocer
+el régimen económico que puede afectar a la responsabilidad patrimonial del empresario.
+8. LA INEFICACIA DE LAS CAPITULACIONES MATRIMONIALES
+El Código parte expresamente de la naturaleza contractual de las capitulaciones al establecer
+que su invalidez se rige por las reglas generales de los contratos. Además, el art. 1316 confirma
+que, tanto en caso de falta de capitulaciones como cuando estas sean ineficaces, rige el régimen
+legal supletorio (sociedad de gananciales en Derecho común).
+La ineficacia puede manifestarse como invalidez o como ineficacia en sentido estricto.
+8.1. La invalidez de las capitulaciones
+La nulidad procede en los supuestos siguientes:
+1) Falta de forma ad solemnitatem: si no constan en escritura pública (art.
+1327), carecen de validez.
+2) Estipulaciones contrarias a la ley, a las buenas costumbres o a la
+igualdad conyugal (art. 1328). Lo habitual será la nulidad parcial de cláusulas concretas,
+manteniéndose el resto del negocio.
+Serán anulables cuando exista vicio del consentimiento o cuando no se haya observado
+el complemento de capacidad exigido. No obstante, la intervención notarial reduce en la
+práctica la aparición de estos defectos.
+8.2. La ineficacia en sentido estricto
+El art. 1334 contempla un supuesto específico: las capitulaciones otorgadas bajo el presupuesto
+de un futuro matrimonio quedan sin efecto si este no se celebra en el plazo de un año. No son
+inválidas, pero pierden eficacia por faltar el matrimonio como presupuesto esencial.
+Además, pueden producirse otras causas típicas de ineficacia contractual:
+— Mutuo disenso, al amparo del principio de mutabilidad del régimen económico-matrimonial.
+— Sometimiento a condición o término, que puede determinar la vigencia temporal o
+condicionada del régimen pactado.
+— Rescisión por fraude de acreedores, aunque la jurisprudencia mayoritaria considera que no
+es necesario declarar la nulidad, pues la protección de los terceros se articula mediante la
+inoponibilidad de las capitulaciones (art. 1317), no mediante su ineficacia general.
+En definitiva, la ineficacia de las capitulaciones no supone un vacío normativo: el sistema
+reacciona reconduciendo la situación al régimen legal supletorio y preservando, en todo caso, los
+derechos de terceros.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+
+  "1": "Las capitulaciones matrimoniales son el instrumento formal por el que cónyuges o futuros cónyuges pueden estipular, modificar o sustituir el régimen económico del matrimonio y añadir otras disposiciones vinculadas al matrimonio.",
+
+  "1.1": "El Código Civil no define las capitulaciones, pero las concibe como cauce para configurar el régimen económico-matrimonial y para incorporar pactos conexos «por razón del matrimonio», no necesariamente limitados a lo económico.",
+
+  "1.2": "La doctrina mayoritaria entiende las capitulaciones como negocio jurídico bilateral de naturaleza contractual, celebrado en atención al matrimonio y destinado a disciplinar sus efectos patrimoniales, aplicando categorías generales del negocio jurídico.",
+
+  "2": "El contenido de las capitulaciones se divide en típico —estipulaciones sobre el régimen económico— y atípico —otros pactos por razón del matrimonio—, conforme a la distinción doctrinal asumida por el art. 1325.",
+
+  "2.1": "El contenido típico consiste en fijar o modificar el régimen económico-matrimonial, con amplia libertad de configuración, aunque en la práctica predomina la remisión a regímenes legales tipificados por seguridad e intervención notarial.",
+
+  "2.2": "El contenido atípico comprende disposiciones por razón del matrimonio distintas del régimen económico, incluyendo ejemplos legales como donaciones propter nuptias, pactos sobre el tercio de mejora o incluso el reconocimiento de un hijo prematrimonial.",
+
+  "2.3": "Pueden existir capitulaciones sin contenido típico, limitadas a disposiciones atípicas, en cuyo caso rige el régimen legal supletorio de primer grado, sin que sea imprescindible modificar o fijar régimen económico.",
+
+  "2.4": "La autonomía privada en capitulaciones queda limitada por la nulidad de estipulaciones contrarias a la ley, a las buenas costumbres o que restrinjan la igualdad conyugal, actuando como límite estructural del art. 1328.",
+
+  "3": "La evolución normativa ha pasado de la inmutabilidad originaria del régimen económico a la mutabilidad vigente, permitiendo otorgar capitulaciones antes o después del matrimonio y adaptar el régimen a la realidad conyugal.",
+
+  "3.1": "En la redacción originaria del Código solo cabían capitulaciones prematrimoniales, imponiéndose el principio de inmutabilidad para evitar fraudes a terceros, con excepciones tasadas de separación judicial de bienes.",
+
+  "3.2": "El régimen vigente consagra la mutabilidad: pueden otorgarse capitulaciones antes o después del matrimonio y sustituir el régimen en cualquier momento, reforzando autonomía privada y coherencia con la evolución de la vida matrimonial.",
+
+  "4": "Las capitulaciones exigen la presencia y consentimiento personalísimo de ambos cónyuges, pudiendo intervenir terceros de forma eventual, sin representación de los esposos y con capacidad regida por reglas generales salvo supuestos específicos.",
+
+  "4.1": "Ambos cónyuges deben concurrir necesariamente al otorgamiento de capitulaciones, siendo posible intervención de terceros para atribuciones patrimoniales o pactos sucesorios, aunque hoy sea poco frecuente.",
+
+  "4.2": "La regla del menor no emancipado para otorgar capitulaciones con consentimiento de padres o tutor carece hoy de aplicación práctica al haberse suprimido la posibilidad de matrimonio del menor no emancipado.",
+
+  "4.3": "Tras la Ley 8/2021, quien puede contraer matrimonio puede otorgar capitulaciones en igualdad jurídica, sin asistencia estructural por discapacidad, manteniéndose el carácter personalísimo del otorgamiento.",
+
+  "5": "La validez de las capitulaciones exige escritura pública como requisito constitutivo o ad solemnitatem, imprescindible para configurar o modificar el régimen económico, con mayor flexibilidad cuando solo se incorporan disposiciones atípicas.",
+
+  "6": "Durante el matrimonio los cónyuges pueden modificar el régimen económico mediante nuevas capitulaciones o capitulaciones por primera vez, siendo frecuente el paso de gananciales a separación para alterar el sistema de responsabilidad patrimonial.",
+
+  "6.1": "Si se modifican capitulaciones preexistentes y afectan a derechos concedidos por terceros intervinientes, su asistencia es necesaria conforme al art. 1331, protegiendo atribuciones anteriores.",
+
+  "6.2": "Cuando se otorgan capitulaciones por primera vez para sustituir el régimen supletorio no se modifican capitulaciones previas, pero sí cambia el régimen económico, rigiendo igualmente requisitos de capacidad, forma y eficacia frente a terceros.",
+
+  "6.3": "El cambio de régimen durante el matrimonio no perjudica derechos adquiridos por terceros, preservándose garantías de acreedores mediante inoponibilidad y, en su caso, rescisión por fraude, pero no necesariamente nulidad del pacto entre cónyuges.",
+
+  "7": "La publicidad de capitulaciones y cambios de régimen se articula mediante mención en Registro Civil y, si afectan a inmuebles, en Registro de la Propiedad, además de previsiones en Registro Mercantil para seguridad del tráfico.",
+
+  "7.1": "La constancia del régimen en el Registro Civil se practica a petición del interesado, pero la falta de inscripción impide la oponibilidad frente a terceros, cumpliendo la publicidad registral función de garantía.",
+
+  "7.2": "Si las capitulaciones inciden en inmuebles, su reflejo en el Registro de la Propiedad resulta determinante para la eficacia frente a terceros de buena fe en materia de derechos reales.",
+
+  "7.3": "En el tráfico mercantil pueden inscribirse capitulaciones y actos conexos en el Registro Mercantil del empresario individual para informar sobre régimen económico y responsabilidad patrimonial.",
+
+  "8": "Si las capitulaciones son inválidas o ineficaces, el sistema reconduce al régimen legal supletorio, distinguiendo invalidez por defectos esenciales e ineficacia por falta de presupuesto o causas propias del contrato.",
+
+  "8.1": "Son nulas por falta de escritura pública o por cláusulas contrarias a ley, buenas costumbres o igualdad conyugal, y pueden ser anulables por vicios del consentimiento o defectos de capacidad, aunque la intervención notarial reduce estos riesgos.",
+
+  "8.2": "Pueden quedar sin efecto si el matrimonio no se celebra en un año, y también por causas contractuales como mutuo disenso, condición o término, o rescisión por fraude de acreedores, protegiéndose a terceros principalmente por inoponibilidad del art. 1317."
+  
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID=1
+
+// [1]
+Q: Según el art. 1325 CC, la función propia de las capitulaciones matrimoniales dentro del sistema económico del matrimonio es:
+A) Establecer reglas personales de convivencia conyugal con eficacia general.
+B) Stipular, modificar o sustituir el régimen económico del matrimonio, pudiendo incluir otras disposiciones por razón del matrimonio.
+C) Sustituir automáticamente el régimen legal supletorio sin necesidad de forma pública.
+OK: B
+EXP: El art. 1325 CC configura las capitulaciones como instrumento para fijar o alterar el régimen económico-matrimonial, admitiendo además disposiciones vinculadas al matrimonio.
+
+// [2]
+Q: Se afirma que las capitulaciones son el cauce formal de la autonomía privada patrimonial porque:
+A) Permiten a los cónyuges autoorganizar su régimen económico dentro de los límites legales del Código Civil.
+B) Imponen siempre la separación de bienes salvo pacto en contrario.
+C) Eliminan la aplicación de normas imperativas en materia matrimonial.
+OK: A
+EXP: Las capitulaciones canalizan la autonomía privada al permitir pactar el régimen económico y otras disposiciones conexas, pero siempre sometidas a límites legales.
+
+// [3]
+Q: La tesis doctrinal mayoritaria sobre la naturaleza contractual de las capitulaciones se apoya en que:
+A) Son un negocio jurídico bilateral y el Código remite a reglas típicas de los contratos, dotando de sistematicidad su régimen.
+B) Son un acto unilateral del cónyuge con mayor aportación patrimonial.
+C) Solo producen efectos internos y nunca frente a terceros.
+OK: A
+EXP: Se consideran contrato por su bilateralidad y porque permite aplicar categorías generales del negocio jurídico, frente a la idea de “acto complejo” menos operativa.
+
+// [4]
+Q: Considerar las capitulaciones como negocio jurídico bilateral (y no como acto complejo) implica, sistemáticamente, que:
+A) Pueden otorgarse por representación si existe poder suficiente.
+B) Se les aplican con coherencia las reglas generales de validez e invalidez del negocio jurídico (capacidad, consentimiento, vicios, nulidad/anulabilidad).
+C) Su contenido queda limitado exclusivamente al régimen económico, excluyendo pactos accesorios.
+OK: B
+EXP: La calificación contractual permite encuadrarlas en el régimen general de los contratos y aplicar de forma ordenada sus categorías (capacidad, consentimiento, invalidez).
+
+#ID=2.1
+
+// [5]
+Q: En el marco del art. 1325 CC, el contenido típico de las capitulaciones matrimoniales consiste esencialmente en:
+A) La determinación, modificación o sustitución del régimen económico-matrimonial.
+B) El reconocimiento de hijos prematrimoniales como regla general obligatoria.
+C) La fijación de un régimen de guarda y custodia para futuros hijos.
+OK: A
+EXP: El contenido típico es el estrictamente económico: configurar el régimen patrimonial del matrimonio (crear, elegir, modificar o sustituir).
+
+// [6]
+Q: La libertad de configuración dentro del contenido típico alcanza, conforme al texto, a:
+A) Crear un sistema patrimonial ex novo, remitirse a un régimen legal (nacional o extranjero) o modificar aspectos concretos, incluso excluir el supletorio sin designar otro.
+B) Establecer cláusulas contrarias a normas imperativas si ambos consienten.
+C) Pactar la desigualdad jurídica entre los cónyuges como parte del régimen.
+OK: A
+EXP: La autonomía es amplia en el diseño del régimen, pero siempre dentro de límites legales; puede incluso excluirse el supletorio sin fijar expresamente otro.
+
+#ID=2.2
+
+// [7]
+Q: El contenido atípico en las capitulaciones matrimoniales se caracteriza por:
+A) Referirse a pactos establecidos por razón del matrimonio que no tienen por objeto determinar el régimen económico-matrimonial.
+B) Ser únicamente pactos sucesorios y nada más.
+C) Consistir siempre en cláusulas sobre la vivienda habitual.
+OK: A
+EXP: Es “atípico” todo pacto por razón del matrimonio distinto de la configuración del régimen económico, aunque conste en el mismo instrumento.
+
+// [8]
+Q: Que puedan incorporarse disposiciones no estrictamente patrimoniales en capitulaciones se explica porque:
+A) La expresión “por razón del mismo” se refiere al matrimonio y permite incluir pactos conexos, incluso como el reconocimiento de un hijo prematrimonial.
+B) El Código obliga a incluir siempre materias personales para que sean válidas.
+C) Solo son válidas si sustituyen la sociedad de gananciales.
+OK: A
+EXP: El texto destaca que el objeto puede extenderse más allá de lo económico: las capitulaciones son cauce formal idóneo para disposiciones vinculadas al matrimonio.
+
+#ID=2.3
+
+// [9]
+Q: Si las capitulaciones contienen únicamente disposiciones atípicas, el régimen económico aplicable será:
+A) El régimen legal supletorio de primer grado (en Derecho común, sociedad de gananciales).
+B) La separación de bienes por ministerio de la ley.
+C) El régimen de participación en ganancias con carácter automático.
+OK: A
+EXP: La ausencia de contenido típico no impide la existencia de capitulaciones, pero el régimen económico se reconduce al supletorio de primer grado.
+
+#ID=2.4
+
+// [10]
+Q: El art. 1328 CC limita la libertad de estipulación en capitulaciones al declarar nulas las estipulaciones:
+A) Contrarias a las leyes, a las buenas costumbres o limitativas de la igualdad de derechos de cada cónyuge.
+B) Que sean onerosas o impliquen cargas para alguno.
+C) Que se otorguen antes del matrimonio.
+OK: A
+EXP: El límite estructural es el respeto de normas imperativas, buenas costumbres e igualdad conyugal; la sanción es la nulidad.
+
+#ID=3.1
+
+// [11]
+Q: El principio de inmutabilidad del régimen económico matrimonial, en la redacción originaria del Código Civil, significaba que:
+A) Solo podía pactarse el régimen económico antes del matrimonio y, celebrado este, no podía modificarse por voluntad de los cónyuges.
+B) Los cónyuges podían cambiar libremente el régimen cada año.
+C) El régimen siempre era separación de bienes salvo pacto posterior.
+OK: A
+EXP: La inmutabilidad implicaba cierre del sistema tras el matrimonio: capitulaciones solo prematrimoniales y prohibición de cambio posterior, con excepciones tasadas.
+
+// [12]
+Q: La finalidad principal de la inmutabilidad histórica era:
+A) Evitar fraudes o perjuicios a terceros derivados de cambios patrimoniales posteriores que alterasen garantías frente a deudas.
+B) Favorecer la igualdad conyugal en todo caso.
+C) Obligar a la comunidad universal como modelo general.
+OK: A
+EXP: El objetivo era proteger a terceros y acreedores, impidiendo alteraciones del régimen que pudieran manipular masas patrimoniales y responsabilidades.
+
+#ID=3.2
+
+// [13]
+Q: Las reformas de 1975 y 1981 introdujeron un cambio estructural consistente en:
+A) La prohibición de capitulaciones después del matrimonio.
+B) El paso de la inmutabilidad a la mutabilidad: posibilidad de otorgar capitulaciones antes o después del matrimonio y sustituir el régimen vigente.
+C) La imposición obligatoria de la sociedad de gananciales en todo el territorio.
+OK: B
+EXP: Se abandona la inmutabilidad y se consagra la mutabilidad (art. 1326 vigente), permitiendo pactar y cambiar el régimen también durante el matrimonio.
+
+// [14]
+Q: La mutabilidad del régimen económico resulta coherente con el sistema actual de crisis matrimoniales porque:
+A) Permite adaptar el régimen a la evolución real de la vida conyugal y a sus crisis, haciendo flexible la organización patrimonial.
+B) Garantiza que nunca existan deudas durante el matrimonio.
+C) Impide que existan regímenes legales supletorios.
+OK: A
+EXP: En un contexto de separaciones, divorcio y cambios vitales, la mutabilidad facilita ajustar el marco patrimonial a la realidad del matrimonio.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID=4.1
+
+// [15]
+Q: En el sistema del Código Civil, pueden otorgar capitulaciones matrimoniales:
+A) Solo los cónyuges, y pueden hacerlo por representación mediante apoderado.
+B) Los cónyuges o futuros cónyuges, y eventualmente terceros; pero la intervención de ambos cónyuges es personalísima e imprescindible, sin representación.
+C) Cualquier familiar directo, aunque los cónyuges no comparezcan, si existe interés legítimo.
+OK: B
+EXP: Las capitulaciones pueden incluir a terceros, pero exigen siempre la presencia y consentimiento de ambos cónyuges, con intervención personalísima (no representable).
+
+// [16]
+Q: La intervención de terceros en las capitulaciones matrimoniales se justifica, principalmente, por:
+A) La posibilidad de realizar atribuciones patrimoniales o pactos sucesorios en favor de los esposos.
+B) La necesidad de controlar judicialmente la igualdad conyugal.
+C) La obligación legal de que los padres autoricen toda capitulación.
+OK: A
+EXP: El texto explica que la participación de terceros es eventual y hoy poco frecuente, ligada a atribuciones patrimoniales o pactos sucesorios.
+
+#ID=4.2
+
+// [17]
+Q: El art. 1329 CC ha quedado prácticamente sin aplicación porque:
+A) Se derogó expresamente con la reforma de 1981.
+B) Ya no existe en España el régimen de separación de bienes.
+C) Al suprimirse la posibilidad de matrimonio de menores no emancipados (art. 46.1 CC), desaparece el presupuesto para que otorguen capitulaciones.
+OK: C
+EXP: Si el menor no emancipado no puede casarse, no puede darse el supuesto de capitulaciones por quien “pudiera casarse”; por eso el precepto queda inoperante en la práctica.
+
+#ID=4.3
+
+// [18]
+Q: Tras la Ley 8/2021, el régimen de otorgamiento de capitulaciones por personas con discapacidad implica que:
+A) Solo pueden otorgarlas con asistencia obligatoria de tutor o curador, como regla general.
+B) Quien puede contraer matrimonio puede otorgar capitulaciones en plena igualdad jurídica, sin asistencia estructural por razón de discapacidad, manteniendo el carácter personalísimo.
+C) No pueden otorgar capitulaciones, aunque puedan casarse.
+OK: B
+EXP: El texto destaca el nuevo modelo de apoyos: capacidad jurídica plena, coherencia “habilis ad nuptias habilis ad pacta nuptialia”, y otorgamiento personalísimo.
+
+#ID=5
+
+// [19]
+Q: La escritura pública constituye un requisito constitutivo (ad solemnitatem) en las capitulaciones porque:
+A) Es una simple forma probatoria: sin ella valen entre partes pero no frente a terceros.
+B) El Código exige escritura pública para su validez (art. 1327), de modo que sin ella no hay validez ni entre partes ni frente a terceros.
+C) Solo se exige si el régimen elegido es gananciales.
+OK: B
+EXP: El art. 1327 impone escritura pública como requisito esencial: las capitulaciones son negocio solemne y sin escritura carecen de validez.
+
+// [20]
+Q: Según el texto, la exigencia formal se diferencia entre contenido típico y atípico porque:
+A) La escritura pública es indispensable para configurar o modificar el régimen económico (contenido típico), mientras que ciertas disposiciones atípicas pueden admitirse en otros documentos públicos.
+B) El contenido típico puede otorgarse en documento privado y el atípico exige escritura pública.
+C) Ninguno de los dos requiere forma pública si hay consentimiento.
+OK: A
+EXP: La solemnidad se vincula especialmente al contenido típico (régimen económico); para contenido atípico pueden existir otras vías documentales públicas en algunos supuestos (p. ej., reconocimiento de hijo).
+
+// [21]
+Q: La ausencia de escritura pública en el otorgamiento de capitulaciones produce, conforme al art. 1327 CC, que:
+A) Sean válidas pero anulables durante cuatro años.
+B) Carezcan de validez, y el sistema reconduce la situación al régimen legal supletorio.
+C) Sean plenamente eficaces si se inscriben en el Registro Civil.
+OK: B
+EXP: Sin escritura pública no hay capitulaciones válidas; en defecto o ineficacia rige el régimen legal supletorio (en Derecho común, gananciales).
+`;
+
+
+    const BANCO_3 = ` 
+#ID=6.1
+
+// [22]
+Q: El otorgamiento de nuevas capitulaciones cuando ya existían otras previas implica que:
+A) Siempre se produce un cambio del régimen económico-matrimonial vigente.
+B) Puede limitarse al contenido atípico, aunque lo habitual es que afecte también al contenido típico y, por tanto, al régimen patrimonial.
+C) Quedan automáticamente anuladas todas las estipulaciones anteriores sin excepción.
+OK: B
+EXP: Nuevas capitulaciones no implican necesariamente cambio de régimen, pero en la práctica suelen afectar al contenido típico; pueden también limitarse al contenido atípico.
+
+// [23]
+Q: El art. 1331 CC protege a los terceros intervinientes en capitulaciones anteriores exigiendo que:
+A) Se notifique siempre judicialmente cualquier modificación del régimen.
+B) Si la modificación afecta a derechos concedidos por esos terceros y estos viven, sea necesaria su asistencia y concurso.
+C) La modificación sea aprobada por el Registro Civil.
+OK: B
+EXP: Cuando la modificación afecta a derechos concedidos por terceros otorgantes anteriores, el art. 1331 exige su intervención si viven, reforzando su protección.
+
+#ID=6.2
+
+// [24]
+Q: El otorgamiento de capitulaciones por primera vez durante el matrimonio para sustituir el régimen legal supletorio se caracteriza porque:
+A) No requiere escritura pública si ambos cónyuges están de acuerdo.
+B) No modifica capitulaciones anteriores, pero sí el régimen económico-matrimonial, quedando sujeto a las reglas generales de capacidad, forma e ineficacia.
+C) Solo puede realizarse con autorización judicial previa.
+OK: B
+EXP: No hay modificación de capitulaciones previas, pero sí del régimen; se aplican las exigencias generales ya estudiadas (capacidad, forma y régimen de ineficacia).
+
+#ID=6.3
+
+// [25]
+Q: El principio establecido por el art. 1317 CC en materia de modificación del régimen económico-matrimonial es que:
+A) Toda modificación posterior al matrimonio es nula frente a terceros.
+B) La modificación del régimen no perjudicará en ningún caso los derechos ya adquiridos por terceros.
+C) Los acreedores deben consentir expresamente el cambio de régimen.
+OK: B
+EXP: El art. 1317 consagra que la modificación constante matrimonio no perjudica los derechos previamente adquiridos por terceros.
+
+// [26]
+Q: La razón por la que la modificación del régimen económico no perjudica a los acreedores anteriores es que:
+A) Los acreedores asumen siempre el riesgo de cambios patrimoniales.
+B) El sistema preserva las garantías existentes al tiempo del nacimiento del crédito, manteniendo inalterados sus derechos frente al cambio.
+C) El cambio de régimen tiene efectos retroactivos.
+OK: B
+EXP: Los acreedores conservan las garantías vigentes cuando nació su derecho; el cambio posterior no altera esa posición jurídica consolidada.
+
+// [27]
+Q: En caso de modificación del régimen con finalidad fraudulenta, la diferencia entre nulidad del pacto e inoponibilidad frente a terceros radica en que:
+A) La nulidad elimina el pacto entre cónyuges, mientras que la inoponibilidad permite su eficacia interna pero impide perjudicar a terceros.
+B) La inoponibilidad supone que el pacto es inexistente para todos.
+C) Ambas figuras producen exactamente los mismos efectos.
+OK: A
+EXP: El sistema prioriza la inoponibilidad frente a terceros (art. 1317) sin declarar necesariamente la nulidad del pacto entre los cónyuges, preservando la eficacia interna.
+`;
+
+
+    const BANCO_4 = ` 
+#ID=7.1
+
+// [28]
+Q: La inscripción (mención) de las capitulaciones en el Registro Civil cumple principalmente la función de:
+A) Convertir las capitulaciones en un acto jurisdiccional con fuerza de sentencia.
+B) Dar publicidad al régimen pactado para hacerlo oponible frente a terceros que contratan confiando en la apariencia registral.
+C) Sustituir la exigencia de escritura pública por una formalidad registral.
+OK: B
+EXP: La publicidad registral del Registro Civil sirve como garantía frente a terceros: lo no inscrito no es oponible, aunque el pacto sea válido entre cónyuges.
+
+// [29]
+Q: La falta de inscripción de las capitulaciones o de sus modificaciones en el Registro Civil produce, frente a terceros, que:
+A) El pacto sea nulo de pleno derecho entre los cónyuges.
+B) El pacto sea inoponible a terceros, que pueden actuar como si rigiera la situación jurídica aparente.
+C) El régimen pactado se imponga igualmente a todos por su validez interna.
+OK: B
+EXP: La consecuencia típica es la inoponibilidad: entre partes puede valer, pero no perjudica a terceros que no tenían por qué conocerlo sin publicidad registral.
+
+#ID=7.2
+
+// [30]
+Q: Cuando las capitulaciones afectan a bienes inmuebles, la inscripción en el Registro de la Propiedad es necesaria porque:
+A) Solo así se perfecciona el negocio matrimonial.
+B) La eficacia frente a terceros en materia inmobiliaria se rige por la publicidad registral inmobiliaria, determinante para no perjudicar a terceros de buena fe.
+C) Sustituye a la mención en el Registro Civil.
+OK: B
+EXP: En inmuebles manda el Registro de la Propiedad: los terceros de buena fe quedan protegidos frente a pactos matrimoniales no inscritos en dicho Registro.
+
+// [31]
+Q: La relación entre publicidad registral inmobiliaria y protección del tercero de buena fe implica que:
+A) Un pacto inscrito en el Registro Civil perjudica siempre al tercero aunque no conste en el Registro de la Propiedad.
+B) El tercero de buena fe no puede verse perjudicado por pactos matrimoniales no inscritos en el Registro de la Propiedad, aunque consten en el Registro Civil.
+C) El tercero de buena fe queda protegido solo si existe sentencia judicial.
+OK: B
+EXP: La clave es la publicidad inmobiliaria: para derechos reales sobre inmuebles, la inscripción en el Registro de la Propiedad resulta decisiva para la oponibilidad frente a terceros.
+
+#ID=7.3
+
+// [32]
+Q: La inscripción de capitulaciones en el Registro Mercantil respecto del empresario individual tiene como finalidad:
+A) Dotar a las capitulaciones de validez constitutiva.
+B) Garantizar la seguridad del tráfico mercantil permitiendo conocer el régimen económico que puede incidir en la responsabilidad patrimonial del empresario.
+C) Sustituir la inscripción en el Registro Civil.
+OK: B
+EXP: En el tráfico mercantil interesa saber qué régimen puede afectar a la responsabilidad patrimonial del empresario; por eso se prevé su constancia en la hoja registral.
+
+#ID=8.1
+
+// [33]
+Q: Procede la nulidad de las capitulaciones matrimoniales, entre otros supuestos, cuando:
+A) Se otorgan en documento privado, o incluyen estipulaciones contrarias a la ley, a las buenas costumbres o limitativas de la igualdad conyugal.
+B) No se inscriben en el Registro Civil dentro de los 30 días siguientes.
+C) Uno de los cónyuges cambia de domicilio tras el matrimonio.
+OK: A
+EXP: La nulidad aparece por falta de forma ad solemnitatem (sin escritura pública) y por cláusulas ilícitas (contrarias a ley, buenas costumbres o igualdad conyugal).
+
+// [34]
+Q: La diferencia entre nulidad parcial y nulidad total en capitulaciones es que:
+A) La nulidad parcial afecta a cláusulas concretas manteniéndose el resto del negocio, mientras que la nulidad total elimina el negocio entero.
+B) La nulidad parcial solo existe si hay inscripción registral.
+C) La nulidad total solo puede declararse si lo pide el notario.
+OK: A
+EXP: Lo habitual en cláusulas ilícitas es nulidad parcial: cae la estipulación inválida y se conserva el resto si es posible, conforme a la lógica de conservación del negocio.
+
+// [35]
+Q: Serán anulables las capitulaciones matrimoniales cuando:
+A) Falte inscripción en el Registro Mercantil.
+B) Exista vicio del consentimiento o no se observe el complemento de capacidad exigido.
+C) Se pacte cualquier régimen distinto de la sociedad de gananciales.
+OK: B
+EXP: La anulabilidad se conecta con vicios del consentimiento y defectos de capacidad (cuando faltan complementos exigidos), no con la simple elección del régimen.
+
+// [36]
+Q: La intervención notarial reduce la aparición de vicios de consentimiento en capitulaciones porque:
+A) Sustituye la voluntad de los cónyuges por la del notario.
+B) Aporta asesoramiento técnico y control formal, disminuyendo errores, ambigüedades y decisiones no informadas.
+C) Impide cualquier modificación posterior del régimen.
+OK: B
+EXP: El notario refuerza la información y claridad del pacto y reduce riesgos interpretativos; por eso en la práctica bajan vicios y defectos de consentimiento.
+
+#ID=8.2
+
+// [37]
+Q: Si se otorgan capitulaciones bajo el presupuesto de un futuro matrimonio y este no se celebra en el plazo de un año, el efecto es que:
+A) Son nulas desde su origen.
+B) Quedan sin efecto por perder eficacia al faltar el matrimonio como presupuesto esencial.
+C) Se transforman automáticamente en donación irrevocable.
+OK: B
+EXP: No es nulidad: es ineficacia sobrevenida por faltar el presupuesto (el matrimonio) dentro del plazo legal del art. 1334 CC.
+
+// [38]
+Q: El mutuo disenso en el marco del principio de mutabilidad del régimen económico-matrimonial opera como:
+A) Una imposibilidad absoluta de cambiar el régimen durante el matrimonio.
+B) Un acuerdo de los cónyuges para dejar sin efecto o sustituir lo pactado, coherente con la posibilidad de otorgar nuevas capitulaciones.
+C) Una sanción automática por fraude.
+OK: B
+EXP: Si el régimen es mutable, también cabe que, por acuerdo, se modifique o deje sin efecto lo pactado, respetando forma y límites legales.
+
+// [39]
+Q: La rescisión por fraude de acreedores en materia de capitulaciones se entiende, esencialmente, como:
+A) Nulidad automática de las capitulaciones en todo caso.
+B) Un mecanismo para proteger a los acreedores cuando el cambio de régimen se utiliza de forma fraudulenta, articulado en la práctica mediante la inoponibilidad frente a terceros.
+C) Una mera sanción administrativa.
+OK: B
+EXP: Ante fraude, la clave es que el cambio no perjudique a terceros (art. 1317) y se active la protección del acreedor; no necesariamente se declara la nulidad del pacto interno.
+
+// [40]
+Q: Cuando las capitulaciones resultan ineficaces o inválidas, el régimen aplicable es:
+A) El que determine unilateralmente el cónyuge con más patrimonio.
+B) El régimen legal supletorio correspondiente, siendo en Derecho común la sociedad de gananciales.
+C) Siempre el régimen de separación de bienes.
+OK: B
+EXP: El sistema no deja vacío: si no hay capitulaciones válidas/eficaces, rige el régimen legal supletorio (en el CC común, gananciales), preservando además los derechos de terceros.
+`;
+
+
+
+    const BANCO_5 = ` 
+pega texto aqui
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
