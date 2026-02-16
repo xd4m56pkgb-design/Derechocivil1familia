@@ -1,0 +1,1838 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+}
+summary::-webkit-details-marker{ display:none }
+.inner{ padding:0 16px 16px }
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.sumTitle{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 7 – Derecho Civil 1 - Familia</h1>
+  <div class="small">LA DISOLUCIÓN DEL MATRIMONIO:EL DIVORCIO, by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LA DISOLUCIÓN DEL MATRIMONIO.
+El Código Civil dedica el capítulo VIII a la disolución del matrimonio, estableciendo en el art. 85
+que el matrimonio se disuelve, cualquiera que sea su forma y tiempo de celebración, por la
+muerte, la declaración de fallecimiento o el divorcio. La disolución supone la pérdida de
+eficacia de un matrimonio que hasta ese momento era plenamente válido.
+El término disolución se utiliza también respecto de los regímenes económico-matrimoniales, y en
+ambos casos implica una ineficacia sobrevenida. A diferencia de la nulidad, que actúa por vicios
+originarios y produce efectos retroactivos (ex tunc), la disolución opera hacia el futuro,
+extinguiendo los efectos desde que concurre la causa legalmente prevista.
+La precisión introducida por la Ley 30/1981 —“sea cual fuere la forma y el tiempo de su
+celebración”— garantiza que la disolución por divorcio afecta tanto a matrimonios civiles como
+religiosos, y tanto a los celebrados antes como después de la entrada en vigor de la ley.
+2. LA MUERTE.
+La muerte de uno de los cónyuges comporta automáticamente la disolución del matrimonio, pues
+la existencia de ambos constituye un presupuesto esencial de la institución matrimonial.
+Desaparecido uno de sus miembros, cesa el vínculo jurídico.
+Disuelto el matrimonio por fallecimiento, el cónyuge viudo recupera de inmediato la libertad para
+contraer nuevo matrimonio. La Ley 30/1981 derogó la antigua prohibición que impedía a la viuda
+volver a casarse durante trescientos un días o antes del parto si estaba encinta, norma que
+respondía a problemas históricos de determinación de la filiación.
+La supresión de esta limitación se enmarca en el principio de igualdad entre hombres y mujeres,
+sin perjuicio de que la antigua regla estuviera vinculada a circunstancias biológicas específicas
+que hoy se consideran superadas por el sistema jurídico vigente.
+3. LA DECLARACIÓN DE FALLECIMIENTO.
+La declaración de fallecimiento supone que al ausente se le tiene por muerto, aunque no exista
+certeza absoluta sobre su fallecimiento. Se trata de una presunción iuris tantum, que admite
+prueba en contrario: mientras no reaparezca o no se acredite su existencia, se le considera
+fallecido a todos los efectos jurídicos.
+Conforme al art. 85 CC, la declaración de fallecimiento es causa de disolución del matrimonio,
+equiparándose a la muerte real del cónyuge. La ineficacia del vínculo opera desde la firmeza de la
+declaración, con efectos hacia el futuro.
+3.1. El matrimonio del declarado fallecido.
+Hasta la Ley 30/1981, el art. 195.3 CC impedía al cónyuge presente contraer nuevo matrimonio
+pese a la declaración de fallecimiento, lo que generaba la paradoja de un cónyuge oficialmente
+viudo pero sin libertad matrimonial.
+La reforma de 1981 suprimió esa incoherencia al establecer expresamente que el matrimonio se
+disuelve también por la declaración de fallecimiento. En consecuencia, una vez firme la
+declaración, el cónyuge presente puede contraer nuevo matrimonio sin requisito adicional alguno.
+Esta solución resulta plenamente coherente con el sistema actual, especialmente tras la
+implantación del divorcio no causal, pues carecería de sentido mantener artificialmente un vínculo
+matrimonial cuando el propio ordenamiento permite su disolución por mera voluntad.
+3.2. La reaparición del declarado fallecido.
+Dado que la declaración de fallecimiento es una presunción, cabe la eventual reaparición del
+declarado fallecido. El art. 197 CC regula principalmente sus efectos patrimoniales, estableciendo
+que el reaparecido recupera sus bienes, aunque sin efectos retroactivos respecto de los actos
+válidamente realizados por quienes los hubieran adquirido durante su ausencia.
+En el plano personal, puede recuperar su posición en determinadas relaciones jurídicas, como la
+patria potestad sobre hijos menores.
+Sin embargo, no recupera automáticamente la condición de cónyuge. El matrimonio quedó
+disuelto por efecto de la declaración de fallecimiento y no revive con la reaparición. Si el cónyuge
+presente contrajo nuevo matrimonio, este será plenamente válido. Incluso si no lo hubiera hecho,
+el vínculo anterior no renace, siendo necesaria la celebración de un nuevo matrimonio si ambos
+desean reanudar la convivencia conyugal.
+4. EL DIVORCIO CONFORME A LA REGULACIÓN ESTABLECIDA POR LA LEY 15/2005
+El divorcio consiste en la disolución del matrimonio válido y eficaz a instancia de los cónyuges,
+provocando su ineficacia sobrevenida. A diferencia de la nulidad, no cuestiona la validez
+originaria del vínculo, sino que extingue sus efectos desde la resolución que lo declara.
+En España, la admisión del divorcio ha estado históricamente vinculada a intensos debates
+sociales, especialmente por la profunda tradición católica del país. Tras la transición democrática,
+la Ley 30/1981 introdujo el divorcio en el ordenamiento civil, aunque bajo un sistema causalista.
+Posteriormente, la Ley 15/2005 supuso una transformación radical al suprimir las causas
+legales de separación y divorcio, instaurando un modelo basado esencialmente en la voluntad
+de los cónyuges.
+4.1. El establecimiento del divorcio
+Históricamente, el Derecho español no admitió el divorcio como causa de disolución del
+matrimonio. La Ley de Matrimonio Civil de 1870 utilizaba el término “divorcio” para referirse a la
+separación, no a la ruptura del vínculo. La regulación canónica del matrimonio, que proclamaba
+su indisolubilidad, marcó durante siglos el sistema jurídico español.
+La Constitución de 1931 reconoció por primera vez el divorcio con rango constitucional,
+permitiendo la disolución por mutuo disenso o por petición de uno de los cónyuges con justa
+causa, desarrollado por la Ley de Divorcio de 1932. Sin embargo, esta normativa fue suspendida
+en 1938 y definitivamente derogada en 1939, restableciéndose el principio de indisolubilidad
+durante el régimen franquista.
+La Constitución de 1978 no impuso expresamente el divorcio, pero en su art. 32.2 remitió al
+legislador la regulación de las causas de separación y disolución. En este contexto, la Ley
+30/1981 introdujo el divorcio en el Código Civil, marcando un cambio estructural en el sistema
+matrimonial español.
+La Ley 15/2005 profundizó esta evolución al abandonar definitivamente el modelo causalista,
+configurando el divorcio como un derecho basado en la libertad individual, eliminando la
+necesidad de alegar causa y reforzando la idea de que la continuidad del vínculo matrimonial
+depende esencialmente de la voluntad de los cónyuges.
+4.2. CARACTERÍSTICAS DEL DIVORCIO EN EL SISTEMA ESPAÑOL
+La configuración del divorcio depende de las opciones legislativas adoptadas en cada
+ordenamiento. En Derecho comparado pueden distinguirse, en primer lugar, el divorcio
+consensual puro, basado exclusivamente en la voluntad concorde de los cónyuges sin
+intervención decisoria del Estado, y el divorcio judicial, que exige procedimiento y resolución
+formal. Dentro de este último pueden diferenciarse modelos como el divorcio-sanción, el divorcio-
+remedio o el consensual judicializado.
+En España, el sistema instaurado por la Ley 30/1981 fue claramente de divorcio judicial, pues la
+disolución requería sentencia firme, conforme al art. 89 CC. La mera voluntad de los cónyuges no
+bastaba. Sin embargo, la Ley 15/2005 amplió el ámbito de la autonomía privada y reformó el art.
+89, estableciendo que los efectos del divorcio se producen desde la firmeza de la sentencia o
+decreto, o desde la manifestación del consentimiento en escritura pública conforme al art. 87,
+con eficacia frente a terceros desde su inscripción en el Registro Civil.
+No existe en nuestro sistema el divorcio de hecho: la disolución requiere necesariamente
+sentencia, decreto o escritura pública, con carácter constitutivo. Tras la Ley 15/2015, de
+jurisdicción voluntaria, el divorcio de mutuo acuerdo puede formalizarse ante el letrado de la
+Administración de Justicia o ante notario, siempre que concurran los requisitos legales,
+excluyéndose la intervención de funcionarios consulares para autorizar escrituras de divorcio.
+La LO 1/2025 ha reducido aún más la función jurisdiccional, introduciendo la exigencia de
+actividad negociadora previa como requisito de procedibilidad. Las partes pueden acudir a los
+Métodos Alternativos de Solución de Controversias (MASC), incluida la mediación regulada por la
+Ley 5/2012, pudiendo elevar a escritura pública el acuerdo alcanzado. No obstante, los
+supuestos de violencia de género o violencia sexual quedan excluidos de esta exigencia.
+4.3. LA SOLICITUD DE DIVORCIO
+La innovación esencial de la Ley 15/2005 radica en el abandono del sistema causalista. Bajo la
+Ley 30/1981 era necesario acreditar alguna de las causas legales de divorcio; hoy, conforme al
+art. 86 CC, se decretará el divorcio a petición de uno solo de los cónyuges, de ambos o de uno
+con el consentimiento del otro, cuando concurran los requisitos del art. 81.
+En consecuencia, no es preciso alegar ni probar causa alguna. Basta el transcurso de tres meses
+desde la celebración del matrimonio y la presentación de la propuesta de medidas o del convenio
+regulador. La autoridad competente deberá decretar el divorcio si concurren tales requisitos.
+Tras la LO 1/2025, para solicitar judicialmente el divorcio es imprescindible acreditar el
+cumplimiento del requisito de procedibilidad consistente en la actividad negociadora previa o, en
+su caso, justificar su imposibilidad. La mediación constituye uno de los instrumentos habilitados,
+pudiendo el acuerdo alcanzado elevarse a escritura pública si cumple los requisitos legales.
+En definitiva, el sistema español actual configura el divorcio como un mecanismo basado en la
+libertad individual y la autonomía de la voluntad, sometido a control formal y garantista, pero
+desprovisto de exigencia causal.
+5. LA ACCIÓN DE DIVORCIO
+Tras la Ley 15/2005, la acción de divorcio corresponde a ambos cónyuges, ya actúen
+conjuntamente o por separado, conforme a la nueva redacción del art. 86 CC. Desaparecidas las
+restricciones excepcionales que contemplaba la Ley 30/1981, la legitimación activa se configura
+hoy con carácter amplio y simétrico.
+La acción de divorcio tiene naturaleza personalísima, pues se extingue por la muerte de
+cualquiera de los cónyuges (art. 88.1), sin transmisión a los herederos. A estos efectos, se
+equiparan la muerte y la declaración de fallecimiento. Además, una vez transcurridos tres meses
+desde la celebración del matrimonio, puede ejercitarse en cualquier momento.
+La jurisprudencia ha precisado que, cuando uno de los cónyuges no pueda actuar por sí mismo
+por razón de discapacidad, su representante legal puede ejercitar la acción si se acredita el
+interés de la persona afectada (STC 311/2000; STS 625/2011). Más recientemente, la STS
+767/2024 ha reforzado el principio de autonomía personal, admitiendo que una persona con
+discapacidad cognitiva grave pueda interponer por sí misma la demanda si manifiesta de forma
+clara, persistente e inequívoca su voluntad de divorciarse.
+El art. 88 CC dispone asimismo que la acción se extingue por la reconciliación, que deberá ser
+expresa cuando se produzca tras la interposición de la demanda. Ello exige su comunicación al
+órgano judicial, pues de lo contrario el proceso y las medidas provisionales continuarían su curso.
+La reconciliación puede operar incluso en fase de recurso, conforme al art. 19 LEC.
+Finalmente, la acción de divorcio no está sujeta a plazos de prescripción ni de caducidad, dada
+su naturaleza y la libertad reconocida a los cónyuges para instarla cuando lo estimen oportuno.
+6. EL RÉGIMEN PROCESAL DE LA SEPARACIÓN O DIVORCIO DE MUTUO ACUERDO EN LA
+LEY DE ENJUICIAMIENTO CIVIL DE 2000
+La Ley de Enjuiciamiento Civil de 2000 derogó la regulación procedimental contenida en las
+disposiciones adicionales de la Ley 30/1981 y sistematizó la materia en el Título I del Libro IV,
+dedicado a los procesos sobre capacidad, filiación, matrimonio y menores. En él se establecen
+reglas generales comunes y, posteriormente, reglas específicas para los procesos matrimoniales
+(arts. 769 y ss.), modificadas en parte por la Ley 15/2015, de Jurisdicción Voluntaria.
+Con carácter previo a la interposición de la demanda contenciosa, se exige la actividad
+negociadora previa, orientada a fomentar soluciones consensuadas mediante métodos
+alternativos de resolución de conflictos, como la mediación, reduciendo así la litigiosidad.
+Las demandas se tramitan por los trámites del juicio verbal, siendo obligatoria la intervención
+de abogado y procurador. Cuando existan hijos menores no emancipados, hijos mayores con
+discapacidad con medidas de apoyo atribuidas a sus progenitores, o personas en situación de
+ausencia legal, es preceptiva la intervención del Ministerio Fiscal. Asimismo, deberá oírse a los
+menores con suficiente juicio y, en todo caso, a los mayores de doce años.
+En los supuestos de separación o divorcio de mutuo acuerdo, el art. 777 LEC establece un
+procedimiento simplificado. Los cónyuges deben presentar junto con la demanda el convenio
+regulador, pudiendo actuar con una sola defensa y representación. Ratificada la solicitud por
+ambos por separado, el juez dictará sentencia —o el letrado de la Administración de Justicia
+decreto, cuando proceda— concediendo o denegando la separación o el divorcio y
+pronunciándose sobre el convenio. Si existen hijos menores, es necesario el informe del
+Ministerio Fiscal sobre las medidas que les afecten.
+Si el letrado de la Administración de Justicia aprecia que el convenio puede resultar dañoso o
+gravemente perjudicial para uno de los cónyuges o para los hijos mayores o emancipados
+afectados, solo el juez podrá aprobarlo. De este modo, el sistema combina la facilitación del
+acuerdo con un control judicial mínimo orientado a la protección de los intereses familiares más
+vulnerables.
+7. LA DISOLUCIÓN POR DIVORCIO
+7.1. La sentencia, decreto o escritura de divorcio
+Tradicionalmente, el art. 89 establecía que la disolución del matrimonio por divorcio solo podía
+tener lugar por sentencia judicial firme, lo que excluía cualquier forma de divorcio puramente
+fáctico o privado. La declaración judicial constituía el presupuesto indispensable, y sus efectos se
+producían ex nunc, es decir, desde la firmeza, sin retroactividad.
+La reforma introducida por la Ley de Jurisdicción Voluntaria amplía los instrumentos formales,
+permitiendo que los efectos de la disolución se produzcan desde la firmeza de la sentencia o
+decreto, o desde la manifestación del consentimiento en escritura pública conforme al art. 87. Sin
+embargo, la inscripción en el Registro Civil es necesaria para que el divorcio despliegue efectos
+frente a terceros de buena fe.
+Aunque doctrinalmente se discutió si la sentencia tenía carácter constitutivo y si el juez disponía
+de facultades discrecionales, el sistema vigente confirma que la autoridad competente se limita a
+comprobar la concurrencia de los requisitos legales y la voluntad de las partes, sin margen para
+valorar la oportunidad del divorcio.
+7.2. Los efectos del divorcio
+El efecto esencial del divorcio es la disolución definitiva del vínculo matrimonial. Desde ese
+momento, los cónyuges pasan a ser ex cónyuges y desaparecen los deberes del art. 68:
+convivencia, fidelidad, socorro mutuo y corresponsabilidad doméstica.
+Se extinguen igualmente los derechos sucesorios entre ellos, recuperan plena libertad
+matrimonial y, en su caso, queda disuelto el régimen económico matrimonial de comunidad de
+ganancias. No cabe que el órgano competente module estos efectos estructurales, pues vienen
+directamente impuestos por la ley.
+Respecto de los hijos, el divorcio es jurídicamente intrascendente en cuanto a las obligaciones
+parentales: la separación, nulidad o divorcio no eximen a los padres de sus deberes para con
+ellos. Frente a terceros, los efectos solo se despliegan plenamente desde la inscripción registral.
+7.3. La modificación del régimen económico matrimonial y la inscripción en el Registro Civil
+La disolución del matrimonio conlleva la alteración del régimen económico matrimonial. El art.
+1333 exige que en la inscripción del matrimonio consten las capitulaciones y las resoluciones que
+modifiquen dicho régimen. Si afectan a inmuebles, deberá tomarse razón en el Registro de la
+Propiedad.
+La inscripción en el Registro Civil es presupuesto necesario para que puedan practicarse las
+correspondientes inscripciones inmobiliarias cuando, por ejemplo, un bien ganancial pase a tener
+carácter privativo tras el divorcio. Sin esa constancia registral previa, no podrá accederse al
+Registro de la Propiedad.
+7.4. La reconciliación de los divorciados
+A diferencia de lo que ocurre en la separación, la reconciliación posterior al divorcio no produce
+efectos jurídicos restauradores del vínculo. El art. 88 dispone que la reconciliación no revive el
+matrimonio disuelto.
+Si los antiguos cónyuges desean restablecer el vínculo, deberán celebrar un nuevo matrimonio.
+La mera reanudación de la convivencia solo generará, en su caso, una situación de hecho sin
+efectos matrimoniales plenos.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+  
+  
+
+  "1": "La disolución del matrimonio supone la pérdida de eficacia sobrevenida de un vínculo válido por muerte, declaración de fallecimiento o divorcio, produciendo efectos hacia el futuro y afectando a matrimonios civiles y religiosos cualquiera que sea su fecha.",
+
+  "2": "La muerte de uno de los cónyuges disuelve automáticamente el matrimonio por desaparición de un presupuesto esencial del vínculo, permitiendo al viudo contraer nuevo matrimonio sin limitaciones temporales.",
+
+  "3": "La declaración de fallecimiento, como presunción iuris tantum, equipara sus efectos a la muerte real y disuelve el matrimonio desde la firmeza de la resolución, con eficacia ex nunc.",
+
+  "3.1": "Tras la reforma de 1981, la declaración de fallecimiento permite al cónyuge presente contraer nuevo matrimonio, eliminando la anterior incoherencia que mantenía formalmente el vínculo.",
+
+  "3.2": "La reaparición del declarado fallecido no revive el matrimonio disuelto, aunque puede producir efectos patrimoniales y personales, siendo necesario un nuevo matrimonio si se desea restablecer el vínculo.",
+
+  "4": "El divorcio disuelve un matrimonio válido por voluntad de los cónyuges, sin cuestionar su validez originaria, configurándose tras la Ley 15/2005 como un derecho basado en la libertad individual y no en causas tasadas.",
+
+  "4.1": "La evolución histórica del divorcio en España culmina con el abandono del sistema causalista y la consolidación de un modelo fundado en la autonomía de la voluntad, iniciado en 1981 y profundizado en 2005.",
+
+  "4.2": "El divorcio español es constitutivo y requiere sentencia, decreto o escritura pública, produciendo efectos desde su firmeza o formalización y frente a terceros desde su inscripción registral, sin existir divorcio de hecho.",
+
+  "4.3": "La solicitud de divorcio no exige alegar causa, basta la voluntad de uno o ambos cónyuges y el cumplimiento de requisitos temporales y procesales, incluido el intento de actividad negociadora previa salvo excepciones legales.",
+
+  "5": "La acción de divorcio corresponde a cualquiera de los cónyuges, tiene carácter personalísimo, se extingue por muerte o reconciliación expresa y no está sujeta a plazos de prescripción o caducidad.",
+
+  "6": "El régimen procesal de la separación y divorcio de mutuo acuerdo combina simplificación procedimental y control judicial mínimo, exigiendo convenio regulador, intervención letrada y, cuando proceda, informe del Ministerio Fiscal.",
+
+  "7": "La disolución por divorcio requiere sentencia, decreto o escritura pública con eficacia constitutiva, produciendo efectos ex nunc y desplegando efectos frente a terceros desde su inscripción en el Registro Civil.",
+
+  "7.1": "La resolución o escritura de divorcio es presupuesto indispensable de la disolución y limita la función del órgano competente a verificar requisitos legales y voluntad de las partes.",
+
+  "7.2": "El divorcio extingue definitivamente el vínculo y los deberes conyugales, disuelve el régimen económico matrimonial y elimina derechos sucesorios, sin afectar a las obligaciones parentales respecto de los hijos.",
+
+  "7.3": "La disolución matrimonial exige inscripción registral para modificar el régimen económico y permitir la constancia en el Registro de la Propiedad de los cambios patrimoniales derivados del divorcio.",
+
+  "7.4": "La reconciliación tras el divorcio no revive el matrimonio disuelto, siendo necesaria la celebración de un nuevo matrimonio para restablecer el vínculo jurídico."
+
+  
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1
+
+// [1]
+Q: ¿Qué significa técnicamente que la disolución del matrimonio constituya una ineficacia sobrevenida del vínculo?
+A) Que el matrimonio adolecía de un defecto originario que impide considerarlo válido desde su celebración.
+B) Que un matrimonio inicialmente válido pierde eficacia desde que concurre una causa legal posterior.
+C) Que el matrimonio queda suspendido temporalmente sin afectar a su validez ni a su eficacia jurídica.
+OK: B
+EXP: La disolución presupone un matrimonio válido que pierde eficacia por una causa posterior (muerte, declaración de fallecimiento o divorcio). Es una ineficacia sobrevenida y no originaria.
+
+// [2]
+Q: ¿En qué se diferencia estructuralmente la disolución del matrimonio de la nulidad en cuanto a sus efectos temporales?
+A) La disolución produce efectos retroactivos, mientras que la nulidad opera únicamente hacia el futuro.
+B) Ambas figuras producen efectos ex nunc, pero la nulidad permite convalidación.
+C) La nulidad produce efectos ex tunc por vicio originario, mientras la disolución opera ex nunc.
+OK: C
+EXP: La nulidad actúa por vicios existentes desde la celebración y despliega efectos retroactivos (ex tunc). La disolución extingue el vínculo hacia el futuro (ex nunc).
+
+// [3]
+Q: ¿Qué alcance tuvo la precisión introducida por la Ley 30/1981 respecto a la forma y tiempo de celebración del matrimonio?
+A) Limitó la disolución por divorcio a matrimonios civiles celebrados tras la entrada en vigor de la ley.
+B) Garantizó que la disolución por divorcio afectara a todo matrimonio, cualquiera que fuera su forma y fecha de celebración.
+C) Impuso la revisión judicial obligatoria de los matrimonios religiosos celebrados antes de 1981.
+OK: B
+EXP: La expresión “sea cual fuere la forma y el tiempo de su celebración” asegura que la disolución alcanza tanto matrimonios civiles como religiosos y los celebrados antes o después de la ley.
+
+#ID = 2
+
+// [4]
+Q: ¿Por qué la muerte de uno de los cónyuges comporta automáticamente la disolución del matrimonio?
+A) Porque el vínculo matrimonial requiere la existencia simultánea de ambos cónyuges como presupuesto esencial.
+B) Porque la ley presume que el fallecimiento implica voluntad tácita de extinguir el matrimonio.
+C) Porque el Ministerio Fiscal debe declarar extinguida la relación conyugal.
+OK: A
+EXP: El matrimonio es una relación bilateral cuya subsistencia exige la existencia de ambos cónyuges. Desaparecido uno, cesa necesariamente el vínculo jurídico.
+
+// [5]
+Q: ¿Qué significado tuvo la derogación de la antigua prohibición de contraer nuevo matrimonio dentro de los 301 días?
+A) Eliminó una restricción vinculada a problemas históricos de filiación y reforzó el principio de igualdad.
+B) Introdujo un nuevo sistema de autorización judicial previa para la viuda.
+C) Sustituyó el plazo por una obligación de prueba genética obligatoria.
+OK: A
+EXP: La antigua limitación respondía a incertidumbres sobre filiación. Su derogación se enmarca en el principio de igualdad y en la superación de ese fundamento histórico.
+
+#ID = 3
+
+// [6]
+Q: ¿Qué naturaleza jurídica tiene la declaración de fallecimiento y qué tipo de presunción comporta?
+A) Es una presunción absoluta que no admite prueba en contrario.
+B) Es una presunción iuris tantum que admite prueba en contrario mediante reaparición o acreditación de existencia.
+C) Es una ficción legal irreversible equiparable a la muerte real.
+OK: B
+EXP: La declaración de fallecimiento constituye una presunción iuris tantum: se tiene por muerto al ausente mientras no se pruebe su existencia o reaparezca.
+
+// [7]
+Q: ¿Desde qué momento produce efectos disolutorios la declaración de fallecimiento?
+A) Desde la fecha presunta del fallecimiento fijada en la resolución.
+B) Desde la firmeza de la declaración judicial.
+C) Desde la inscripción en el Registro Civil.
+OK: B
+EXP: La disolución del matrimonio opera desde la firmeza de la declaración judicial, con efectos hacia el futuro, equiparándose a la muerte real.
+
+// [8]
+Q: ¿Por qué la reforma de 1981 eliminó la incoherencia existente en el régimen del cónyuge del declarado fallecido?
+A) Porque permitió que el cónyuge presente pudiera volver a casarse sin necesidad de autorización administrativa.
+B) Porque suprimió la exigencia de plazo mínimo de espera tras la declaración.
+C) Porque reconoció expresamente que la declaración de fallecimiento disuelve el matrimonio.
+OK: C
+EXP: Antes de 1981 el cónyuge no podía volver a casarse pese a la declaración. La reforma estableció que la declaración disuelve el matrimonio, eliminando esa paradoja.
+
+// [9]
+Q: ¿Qué efectos patrimoniales produce la reaparición del declarado fallecido?
+A) Recupera automáticamente todos los bienes transmitidos durante su ausencia, con efectos retroactivos plenos.
+B) Recupera sus bienes, pero sin afectar los actos válidamente realizados por terceros durante su ausencia.
+C) Solo puede reclamar indemnización al Estado por la declaración errónea.
+OK: B
+EXP: El reaparecido recupera sus bienes, pero se respetan los actos válidamente realizados por quienes los adquirieron durante su ausencia, sin retroactividad plena.
+
+// [10]
+Q: ¿Por qué el matrimonio disuelto por declaración de fallecimiento no revive tras la reaparición?
+A) Porque la disolución produjo efectos definitivos y el vínculo no se restablece automáticamente.
+B) Porque la reaparición convierte la declaración en nula de pleno derecho.
+C) Porque la reconciliación exige autorización judicial expresa.
+OK: A
+EXP: La disolución opera definitivamente desde la declaración firme. La eventual reanudación de la convivencia exige la celebración de un nuevo matrimonio.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 4
+
+// [11]
+Q: ¿En qué consiste técnicamente el divorcio como causa de disolución del matrimonio válido?
+A) En la declaración de que el matrimonio nunca produjo efectos por inexistencia de consentimiento.
+B) En la extinción sobrevenida de un vínculo matrimonial válido mediante resolución o escritura con efectos ex nunc.
+C) En la suspensión temporal de la convivencia sin afectar a la validez del vínculo.
+OK: B
+EXP: El divorcio no cuestiona la validez originaria del matrimonio, sino que extingue sus efectos desde la resolución que lo declara, produciendo una ineficacia sobrevenida y no retroactiva.
+
+// [12]
+Q: ¿Qué diferencia esencial existe entre divorcio y nulidad respecto a la validez originaria del vínculo?
+A) El divorcio presupone un matrimonio válido, mientras la nulidad declara que nunca existió válidamente.
+B) Ambos implican que el matrimonio fue inválido desde su celebración.
+C) La nulidad extingue el vínculo hacia el futuro y el divorcio con efectos retroactivos.
+OK: A
+EXP: La nulidad actúa por vicios originarios y produce efectos ex tunc; el divorcio parte de un matrimonio válido y lo disuelve con efectos hacia el futuro.
+
+// [13]
+Q: ¿Qué significado tuvo la Constitución de 1931 en la evolución histórica del divorcio en España?
+A) Reconoció por primera vez el divorcio con rango constitucional y permitió su desarrollo legislativo.
+B) Proclamó la indisolubilidad absoluta del matrimonio civil.
+C) Introdujo un sistema de divorcio exclusivamente religioso.
+OK: A
+EXP: La Constitución de 1931 admitió la disolución del matrimonio por mutuo disenso o por causa justa, marcando un hito histórico en la evolución del sistema matrimonial español.
+
+// [14]
+Q: ¿Qué transformación estructural introdujo la Ley 30/1981 en el sistema matrimonial español?
+A) Implantó un modelo de divorcio puramente privado sin intervención judicial.
+B) Introdujo el divorcio en el Código Civil bajo un sistema judicial y causalista.
+C) Suprimió la separación judicial como institución autónoma.
+OK: B
+EXP: La Ley 30/1981 incorporó el divorcio al ordenamiento civil español, configurándolo como divorcio judicial sujeto a causas tasadas.
+
+// [15]
+Q: ¿Por qué la Ley 15/2005 supuso el abandono definitivo del sistema causalista?
+A) Porque eliminó la necesidad de acreditar causa legal para obtener el divorcio.
+B) Porque sustituyó el divorcio por la separación de hecho.
+C) Porque condicionó el divorcio a la previa declaración de nulidad.
+OK: A
+EXP: La reforma de 2005 suprimió las causas legales de separación y divorcio, bastando la voluntad de uno o ambos cónyuges una vez cumplidos los requisitos formales.
+
+// [16]
+Q: ¿Qué papel desempeña la voluntad de los cónyuges en el modelo actual de divorcio?
+A) Constituye el presupuesto esencial para la disolución, sin necesidad de justificar causa.
+B) Es irrelevante, pues el juez decide discrecionalmente sobre la oportunidad del divorcio.
+C) Solo es relevante cuando existe acuerdo entre ambos.
+OK: A
+EXP: El sistema vigente se basa en la autonomía de la voluntad: basta la solicitud de uno o ambos cónyuges, cumplidos los requisitos legales, para que se decrete el divorcio.
+
+// [17]
+Q: ¿Por qué no existe en el sistema español el llamado “divorcio de hecho”?
+A) Porque la mera ruptura fáctica de la convivencia produce automáticamente la disolución.
+B) Porque la disolución requiere necesariamente sentencia, decreto o escritura pública con carácter constitutivo.
+C) Porque el divorcio solo puede obtenerse mediante procedimiento notarial.
+OK: B
+EXP: El divorcio exige una declaración formal (judicial o notarial/LAJ en su caso). La ruptura de hecho carece de efectos disolutorios por sí sola.
+
+// [18]
+Q: ¿Qué función cumple la inscripción registral en la eficacia del divorcio frente a terceros?
+A) Constituye el acto que crea el divorcio.
+B) Permite que el divorcio despliegue efectos frente a terceros de buena fe.
+C) Sustituye la necesidad de resolución judicial.
+OK: B
+EXP: Aunque los efectos entre cónyuges nacen desde la firmeza o escritura, la inscripción en el Registro Civil es necesaria para su oponibilidad frente a terceros.
+
+#ID = 5
+
+// [19]
+Q: ¿Quiénes ostentan legitimación activa para ejercitar la acción de divorcio tras la reforma de 2005?
+A) Únicamente el cónyuge perjudicado por incumplimiento grave de deberes conyugales.
+B) Ambos cónyuges conjuntamente o cualquiera de ellos individualmente.
+C) El Ministerio Fiscal cuando existan hijos menores.
+OK: B
+EXP: Tras la reforma de 2005, la acción corresponde a ambos cónyuges, ya conjunta o separadamente, sin necesidad de invocar causa.
+
+// [20]
+Q: ¿Por qué la acción de divorcio tiene naturaleza personalísima?
+A) Porque puede ejercitarse por cualquier interesado legítimo.
+B) Porque se transmite a los herederos en caso de fallecimiento.
+C) Porque solo puede ser ejercitada por el propio cónyuge y se extingue con su muerte.
+OK: C
+EXP: La acción es estrictamente personal: no se transmite mortis causa y se extingue por la muerte o declaración de fallecimiento de cualquiera de los cónyuges.
+
+// [21]
+Q: ¿Qué efectos produce la muerte o declaración de fallecimiento sobre la acción de divorcio en curso?
+A) Suspende el proceso hasta que comparezcan los herederos.
+B) Determina la extinción de la acción.
+C) Obliga al juez a dictar sentencia igualmente.
+OK: B
+EXP: La muerte o declaración de fallecimiento extingue la acción de divorcio, al tratarse de una acción personalísima no transmisible.
+
+// [22]
+Q: ¿En qué supuestos puede ejercitarse la acción de divorcio mediante representante legal?
+A) Nunca, por su carácter estrictamente personalísimo.
+B) Cuando el cónyuge tenga discapacidad y se acredite su interés en la disolución.
+C) Solo cuando exista sentencia penal previa.
+OK: B
+EXP: La jurisprudencia admite que, en caso de discapacidad, el representante pueda ejercitar la acción si responde al interés y voluntad de la persona afectada.
+
+// [23]
+Q: ¿Qué relevancia jurídica tiene la reconciliación una vez interpuesta la demanda de divorcio?
+A) Reactiva automáticamente el vínculo matrimonial aunque exista sentencia firme.
+B) Extingue la acción si se comunica expresamente al órgano judicial.
+C) Carece de cualquier efecto procesal.
+OK: B
+EXP: La reconciliación posterior a la demanda debe ser expresa y comunicada al órgano judicial, produciendo la extinción de la acción.
+
+// [24]
+Q: ¿Por qué la acción de divorcio no está sujeta a plazos de prescripción ni de caducidad?
+A) Porque el legislador considera imprescriptible todo derecho de familia.
+B) Porque se fundamenta en la libertad individual de los cónyuges para instarla cuando lo estimen oportuno.
+C) Porque depende exclusivamente de la voluntad del juez.
+OK: B
+EXP: El sistema actual reconoce a los cónyuges libertad para solicitar el divorcio una vez cumplidos los requisitos legales, sin someter la acción a plazo de prescripción o caducidad.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 6
+
+// [25]
+Q: ¿Cómo sistematiza la Ley de Enjuiciamiento Civil de 2000 los procesos de separación y divorcio?
+A) Los integra en el procedimiento ordinario común sin especialidades propias.
+B) Los ubica en el Título I del Libro IV como procesos especiales sobre matrimonio y menores.
+C) Los remite íntegramente a la jurisdicción voluntaria.
+OK: B
+EXP: La LEC 2000 sistematiza los procesos matrimoniales en el Libro IV, dedicado a procesos especiales sobre capacidad, filiación, matrimonio y menores, estableciendo reglas comunes y específicas.
+
+// [26]
+Q: ¿Qué finalidad persigue la exigencia de actividad negociadora previa como requisito de procedibilidad?
+A) Sustituir completamente el proceso judicial por la mediación obligatoria.
+B) Fomentar soluciones consensuadas y reducir la litigiosidad antes de acudir al juez.
+C) Imponer un trámite dilatorio obligatorio sin consecuencias jurídicas.
+OK: B
+EXP: La actividad negociadora previa busca incentivar acuerdos mediante MASC, como la mediación, reduciendo la conflictividad judicial sin eliminar el acceso a la jurisdicción.
+
+// [27]
+Q: ¿En qué supuestos es preceptiva la intervención del Ministerio Fiscal en los procesos matrimoniales?
+A) Siempre que uno de los cónyuges lo solicite expresamente.
+B) Cuando existan hijos menores no emancipados, mayores con medidas de apoyo o situaciones de ausencia legal.
+C) En todos los procedimientos de mutuo acuerdo sin excepción.
+OK: B
+EXP: La intervención del Ministerio Fiscal es obligatoria cuando están en juego intereses de menores o personas con medidas de apoyo, en garantía de su protección.
+
+// [28]
+Q: ¿Qué importancia tiene la audiencia de los menores en los procedimientos de divorcio?
+A) Es meramente simbólica y no tiene relevancia jurídica.
+B) Constituye un trámite obligatorio en todo caso, incluso para menores de corta edad.
+C) Garantiza su derecho a ser oídos cuando tengan suficiente juicio y, en todo caso, si son mayores de doce años.
+OK: C
+EXP: La audiencia del menor responde al principio de protección del interés superior del menor y es obligatoria cuando tenga suficiente juicio, y siempre a partir de los doce años.
+
+// [29]
+Q: ¿Qué caracteriza el procedimiento simplificado del art. 777 LEC para el divorcio de mutuo acuerdo?
+A) La inexistencia de control judicial sobre el convenio regulador.
+B) La exigencia de presentar demanda con convenio regulador y la posibilidad de actuar con una sola defensa.
+C) La tramitación mediante juicio ordinario con fase probatoria extensa.
+OK: B
+EXP: El art. 777 LEC prevé un procedimiento ágil: presentación conjunta con convenio regulador, ratificación separada y control judicial limitado.
+
+// [30]
+Q: ¿En qué casos el juez debe ejercer un control reforzado sobre el convenio regulador?
+A) Cuando aprecie que puede ser dañoso o gravemente perjudicial para uno de los cónyuges o los hijos.
+B) Siempre que el convenio no haya sido redactado por abogado.
+C) Únicamente cuando lo solicite el Ministerio Fiscal.
+OK: A
+EXP: Si el convenio resulta perjudicial para los hijos o gravemente dañoso para un cónyuge, el juez debe denegar su aprobación o exigir su modificación.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 7.1
+
+// [31]
+Q: ¿Por qué la sentencia, decreto o escritura pública de divorcio tienen carácter constitutivo?
+A) Porque reconocen una ruptura ya producida por la mera voluntad privada de los cónyuges.
+B) Porque crean jurídicamente la disolución del vínculo matrimonial mediante una resolución formal.
+C) Porque se limitan a certificar la existencia de una crisis matrimonial previa.
+OK: B
+EXP: El divorcio no produce efectos por la sola voluntad de las partes; requiere resolución o escritura formal que constituya jurídicamente la disolución del vínculo.
+
+// [32]
+Q: ¿Qué significa que los efectos del divorcio se produzcan ex nunc?
+A) Que se retrotraen al momento de celebración del matrimonio.
+B) Que despliegan efectos únicamente hacia el futuro desde la firmeza o manifestación del consentimiento.
+C) Que producen una nulidad sobrevenida del vínculo.
+OK: B
+EXP: El divorcio extingue un matrimonio válido desde la resolución firme; no tiene efectos retroactivos, sino eficacia hacia el futuro (ex nunc).
+
+// [33]
+Q: ¿Desde cuándo despliega efectos frente a terceros el divorcio formalmente acordado?
+A) Desde la mera firmeza de la sentencia entre las partes.
+B) Desde la inscripción en el Registro Civil.
+C) Desde la presentación del convenio regulador.
+OK: B
+EXP: Aunque entre las partes produce efectos desde la firmeza o escritura, frente a terceros requiere inscripción registral para plena eficacia.
+
+#ID = 7.2
+
+// [34]
+Q: ¿Qué consecuencias produce el divorcio respecto de los deberes conyugales del art. 68 CC?
+A) Los mantiene mientras subsistan obligaciones respecto de los hijos.
+B) Los suspende provisionalmente hasta la liquidación del régimen económico.
+C) Los extingue definitivamente al desaparecer el vínculo matrimonial.
+OK: C
+EXP: Disuelto el matrimonio, desaparecen los deberes de convivencia, fidelidad, socorro mutuo y corresponsabilidad doméstica.
+
+// [35]
+Q: ¿Qué efectos tiene el divorcio en el ámbito sucesorio entre los ex cónyuges?
+A) Mantiene los derechos legitimarios hasta que se practique la liquidación.
+B) Extingue los derechos sucesorios entre ellos desde la disolución.
+C) Los transforma en derechos condicionados a la buena fe.
+OK: B
+EXP: El divorcio extingue los derechos legitimarios y el llamamiento en sucesión intestada entre los antiguos cónyuges.
+
+// [36]
+Q: ¿Qué implica la recuperación de la libertad matrimonial tras el divorcio?
+A) La necesidad de autorización judicial previa para volver a contraer matrimonio.
+B) La plena capacidad para contraer nuevo matrimonio sin restricciones adicionales.
+C) La obligación de respetar un plazo mínimo de espera.
+OK: B
+EXP: La disolución libera completamente a los ex cónyuges, que pueden contraer nuevo matrimonio conforme al principio de libertad matrimonial.
+
+// [37]
+Q: ¿Cómo incide el divorcio en el régimen económico matrimonial de comunidad?
+A) Lo mantiene vigente hasta su liquidación judicial expresa.
+B) Produce automáticamente su disolución.
+C) Lo transforma automáticamente en régimen de separación de bienes.
+OK: B
+EXP: El divorcio determina la disolución del régimen económico matrimonial de comunidad, abriendo la fase de liquidación.
+
+#ID = 7.3
+
+// [38]
+Q: ¿Qué función cumple el art. 1333 CC tras la disolución del matrimonio por divorcio?
+A) Impone la liquidación notarial obligatoria del régimen económico.
+B) Exige que las resoluciones que modifiquen el régimen consten en la inscripción matrimonial.
+C) Permite modificar el régimen económico sin publicidad registral.
+OK: B
+EXP: El art. 1333 CC exige que las modificaciones del régimen económico consten en el Registro Civil para su coordinación con otros registros.
+
+// [39]
+Q: ¿Por qué es necesaria la inscripción en el Registro Civil para practicar inscripciones en el Registro de la Propiedad?
+A) Porque el Registro de la Propiedad no puede actuar sin constancia previa del cambio en el estado civil.
+B) Porque la sentencia de divorcio carece de eficacia jurídica directa.
+C) Porque sustituye la liquidación del régimen económico.
+OK: A
+EXP: La inscripción en el Registro Civil es presupuesto para reflejar en el Registro de la Propiedad los efectos patrimoniales derivados del divorcio.
+
+#ID = 7.4
+
+// [40]
+Q: ¿Por qué la reconciliación posterior al divorcio no produce la reviviscencia del vínculo matrimonial?
+A) Porque la ley prohíbe expresamente cualquier reanudación de la convivencia.
+B) Porque el divorcio tiene efectos definitivos y solo un nuevo matrimonio puede restablecer el vínculo.
+C) Porque requiere autorización judicial específica.
+OK: B
+EXP: El divorcio disuelve definitivamente el vínculo. La reconciliación no lo revive; si desean restablecerlo, deben celebrar un nuevo matrimonio.
+    `;
+
+
+    const BANCO_5 = ` 
+pega texto aqui
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
