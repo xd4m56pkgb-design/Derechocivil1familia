@@ -1,0 +1,1983 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 5. La nulidad del matrimonio</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+const PDF_TEXTO = `
+1. LAS CRISIS MATRIMONIALES: NULIDAD, SEPARACIÓN Y DIVORCIO
+
+La expresión crisis matrimoniales se utiliza en la doctrina para agrupar los supuestos en los que el matrimonio pierde eficacia y se quiebra la unidad de vida y convivencia que lo caracteriza. No es un término legal, sino sistemático.
+
+Su consolidación doctrinal se produce especialmente tras la admisión del divorcio, entendido como remedio jurídico frente a una ruptura previa de la convivencia, en un contexto histórico donde su introducción generó resistencia social.
+
+Dentro de esta categoría se incluyen tres figuras claramente diferenciadas: • Nulidad • Separación • Divorcio Aunque se estudian conjuntamente por razones sistemáticas, presentan profundas diferencias jurídicas. Por ello, su análisis exige examinar el régimen propio de cada una, así como los efectos comunes derivados de estas situaciones de ineficacia matrimonial.
+
+2. LA NULIDAD DEL MATRIMONIO
+
+La nulidad matrimonial constituye el supuesto de máxima ineficacia del matrimonio. Supone que el vínculo nunca fue válido jurídicamente, porque existía una causa invalidante desde el mismo momento de su celebración.
+
+Se asemeja, en su estructura conceptual, a la nulidad de los contratos: • Debe existir una causa coetánea a la celebración. • La declaración judicial produce efectos retroactivos (ex tunc).
+
+Esto significa que el matrimonio se considera inválido desde su origen, como si nunca hubiera existido válidamente, sin perjuicio de los efectos que la ley pueda reconocer en determinados supuestos (por ejemplo, protección de buena fe).
+
+En definitiva, la nulidad no disuelve un matrimonio válido, sino que declara que nunca existió jurídicamente de forma válida desde su inicio.
+
+3. LAS CAUSAS DE NULIDAD
+
+3.1. Planteamiento general
+
+El art. 73 CC recoge el elenco de causas de nulidad matrimonial y declara nulo el matrimonio, cualquiera que sea su forma de celebración, en los siguientes supuestos: 1) Falta de consentimiento matrimonial. 2) Celebración entre personas comprendidas en los arts. 46 y 47 CC, salvo dispensa conforme al art. 48. 3) Falta de intervención de la autoridad competente o de los testigos (redacción actualizada por la LO 1/2025). 4) Error en la identidad o en cualidades personales determinantes del consentimiento. 5) Coacción o miedo grave.
+
+El precepto carece de una sistemática clara, ya que agrupa causas de distinta naturaleza. Desde un punto de vista didáctico, pueden clasificarse en tres grandes bloques: • Defectos de forma (art. 73.3.º). • Inexistencia o vicios del consentimiento (art. 73.1.º, 4.º y 5.º). • Preexistencia de impedimentos (art. 73.2.º), sean no dispensables o no efectivamente dispensados.
+
+Esta clasificación permite comprender mejor la lógica interna de la nulidad matrimonial: o bien falta un requisito esencial del matrimonio, o bien existe una causa invalidante anterior o coetánea a su celebración.
+
+3.2. El defecto de forma
+
+El matrimonio es un acto esencialmente formal (art. 49 CC). Por ello, la ausencia de la forma legalmente exigida puede determinar su nulidad.
+
+El art. 73.3.º declara nulo el matrimonio celebrado sin la intervención de la autoridad competente (alcalde o concejal, letrado o letrada de la Administración de Justicia, notario o notaria, funcionario competente) o sin la presencia de testigos.
+
+Sin embargo, la nulidad por defecto de forma está notablemente restringida por el propio Código: • El art. 53 CC establece que la validez del matrimonio no queda afectada por la incompetencia o falta de nombramiento de la autoridad, siempre que: 1) Al menos uno de los cónyuges haya actuado de buena fe. 2) La autoridad ejerciera públicamente sus funciones.
+
+En estos casos, el matrimonio se mantiene válido pese a la irregularidad formal.
+
+Además, el art. 78 CC limita la declaración judicial de nulidad por defecto de forma cuando exista buena fe de al menos uno de los contrayentes, reforzando así la protección del vínculo y la seguridad jurídica.
+
+En consecuencia, aunque la forma es requisito esencial del matrimonio, el legislador ha configurado un sistema que favorece la conservación del vínculo cuando concurren buena fe y apariencia de legalidad.
+
+3.3. La ausencia de consentimiento
+
+La nulidad matrimonial puede fundarse en la ausencia de consentimiento, que puede presentarse en dos modalidades: inexistencia absoluta o consentimiento viciado.
+
+Existe inexistencia de consentimiento cuando falta la seriedad o conciencia en la emisión del consentimiento matrimonial. Ello sucede, por ejemplo, en casos de simulación absoluta (matrimonios iocandi causa), o cuando el contrayente se encuentra en situaciones físicas o psíquicas incompatibles con una voluntad consciente (enfermedad mental grave, embriaguez, deterioro cognitivo, etc.).
+
+Por su parte, el consentimiento puede estar viciado por error, coacción o miedo grave (art. 73.4.º y 5.º CC). El error ha de recaer sobre la identidad o sobre cualidades personales esenciales y preexistentes a la celebración del matrimonio. La jurisprudencia ha tratado supuestos relativos a error sobre cualidades personales, matrimonios simulados e incluso situaciones llamativas, aunque el error solo es relevante cuando afecta de forma determinante al consentimiento.
+
+Debe recordarse que el Código Civil no define fines esenciales del matrimonio cuya exclusión provoque nulidad. Solo regula deberes recíprocos cuyo incumplimiento posterior puede dar lugar a separación o divorcio, pero no a nulidad, ya que esta exige una causa existente en el momento de la celebración.
+
+Tanto la inexistencia como el consentimiento viciado generan nulidad; sin embargo, en los casos de vicios cabe la convalidación si se cumplen los requisitos legales. La jurisprudencia reciente ha reiterado que, salvo los supuestos expresamente previstos, la acción de nulidad no está sometida a un plazo general de caducidad.
+
+3.4. La existencia de impedimentos
+
+El art. 73.2.º CC declara nulo el matrimonio celebrado entre personas comprendidas en los arts. 46 y 47 CC. Se trata de los supuestos de impedimentos matrimoniales, ya analizados previamente.
+
+La existencia de un impedimento determina la nulidad del matrimonio, salvo que el impedimento sea dispensable y se haya obtenido dispensa efectiva conforme al art. 48 CC.
+
+Por tanto, la nulidad en estos casos deriva de la infracción de los límites legales a la aptitud matrimonial, siempre que no exista dispensa válida.
+
+3.5. La convalidación
+
+Aunque la nulidad matrimonial tiene carácter radical, el Código Civil admite ciertos supuestos de convalidación, en los que el matrimonio inicialmente inválido deviene válido.
+
+Los principales casos son: 1) Dispensa de impedimentos dispensables (art. 48 CC): si la dispensa se obtiene incluso después de celebrado el matrimonio, pero antes de que se inste judicialmente la nulidad, el matrimonio queda convalidado desde su celebración, con efectos retroactivos. 2) Matrimonio celebrado por menor no emancipado (art. 75.2 CC): si, al alcanzar la mayoría de edad, los cónyuges han convivido durante un año sin ejercitar la acción de nulidad, esta caduca y el matrimonio se considera válido desde su origen. 3) Vicios del consentimiento (art. 76.2 CC): si los cónyuges conviven durante un año después de desaparecer el error, la fuerza o el miedo, la acción caduca y el matrimonio queda convalidado.
+
+En estos supuestos, la ley opta por la conservación del vínculo cuando la conducta posterior de los cónyuges revela aceptación y consolidación de la relación matrimonial.
+
+4. LA ACCIÓN DE NULIDAD
+
+La acción de nulidad matrimonial tiene por objeto obtener la declaración judicial de ineficacia radical del matrimonio. El Código Civil regula fundamentalmente dos aspectos: la legitimación activa y, en determinados supuestos, el plazo de ejercicio. ⸻ Legitimación activa: regla general El art. 74 CC establece que la acción corresponde a: 1) Los cónyuges. 2) El Ministerio Fiscal. 3) Cualquier persona con interés directo y legítimo.
+
+Esta amplitud de legitimación ha llevado a calificar la acción como pública o semipública, pues permite la intervención de terceros con interés directo (parientes, hijos de anteriores matrimonios, acreedores, etc.).
+
+La intervención del Ministerio Fiscal es obligatoria en los procesos de nulidad matrimonial, conforme al art. 749 LEC, incluso cuando no haya promovido la acción.
+
+Supuesto especial: matrimonio del menor Cuando la causa de nulidad sea la falta de edad, el art. 75.1 CC dispone que, mientras el contrayente sea menor, solo podrán ejercitar la acción: 1) Sus padres. 2) Sus tutores o guardadores. 3) El Ministerio Fiscal.
+
+Al alcanzar la mayoría de edad, la acción solo podrá ejercitarla el propio contrayente menor (art. 75.2 CC).
+
+Supuestos de legitimación restringida En determinados casos la acción deja de tener carácter público y solo puede ejercitarla uno de los cónyuges: 1) En caso de falta de edad, una vez alcanzada la mayoría, solo el contrayente menor puede ejercitarla. 2) En los supuestos de error, coacción o miedo grave, únicamente el cónyuge que sufrió el vicio del consentimiento (art. 76.1 CC).
+
+Plazo de ejercicio En los supuestos de error, coacción, miedo grave o falta de edad, la acción está sujeta a un plazo de caducidad de un año, contado desde: 1) La mayoría de edad. 2) El cese del error, la coacción o el miedo.
+
+En cambio, la acción de nulidad en sentido estricto es imprescriptible, al no estar sometida a plazo legal de ejercicio.
+
+Requisitos procesales Tras la reforma introducida por la LO 1/2025, la demanda de nulidad exige acreditar el cumplimiento del requisito de procedibilidad, consistente en haber acudido previamente a un medio adecuado de solución de controversias o haber intentado la negociación previa, salvo supuestos exceptuados legalmente.
+
+La falta de acreditación impide la admisión de la demanda (arts. 403 y 399 LEC).
+
+Derecho aplicable El art. 107 CC dispone que la nulidad del matrimonio y sus efectos se determinarán conforme a la ley aplicable a su celebración.
+
+En cambio, la separación y el divorcio se rigen por las normas de la Unión Europea o por las normas españolas de Derecho internacional privado.
+
+En síntesis, la acción de nulidad presenta un régimen mixto: amplia legitimación en la regla general, restricciones en determinados supuestos y, como principio, imprescriptibilidad, salvo en los casos específicos de vicios del consentimiento o falta de edad.
+
+5. EL MATRIMONIO PUTATIVO
+
+5.1. Concepto y antecedentes
+
+El matrimonio putativo surge en el Derecho canónico medieval para proteger a los hijos nacidos de matrimonios celebrados válidamente en apariencia pero posteriormente declarados nulos, especialmente por impedimentos de parentesco difíciles de determinar en la época.
+
+Con posterioridad, la institución se amplía a cualquier causa de nulidad y también a la protección del cónyuge que hubiera actuado de buena fe. Esta formulación fue acogida por el Código Civil español, primero en su redacción originaria y después, con depuración técnica, en el vigente art. 79 CC tras la reforma de 1981.
+
+Actualmente, el art. 79 CC establece que la declaración de nulidad no invalida los efectos ya producidos respecto de los hijos y del contrayente o contrayentes de buena fe, presumiéndose esta buena fe.
+
+El matrimonio putativo es, por tanto, un matrimonio declarado nulo que mantiene determinados efectos en protección de los hijos y, en su caso, del cónyuge de buena fe.
+
+5.2. Presupuestos del matrimonio putativo
+
+A) La buena fe La buena fe se refiere a los cónyuges y ha de existir en el momento de la celebración del matrimonio. Se presume salvo prueba en contrario.
+
+No obstante, respecto de los hijos, la protección opera incluso aunque ambos cónyuges hayan actuado de mala fe. La buena fe es relevante para la conservación de efectos en favor del cónyuge, pero no condiciona la protección de los hijos.
+
+B) La apariencia matrimonial Es necesario que haya existido un matrimonio celebrado conforme a alguna forma legalmente prevista, al menos en apariencia.
+
+Debe haber consentimiento matrimonial y cumplimiento mínimo de las reglas formales. La unión de hecho no puede equipararse al matrimonio putativo.
+
+La institución se aplica cualquiera que sea la causa de nulidad, siempre que exista apariencia jurídica de matrimonio.
+
+C) La declaración de nulidad Para que opere el matrimonio putativo es imprescindible que exista declaración judicial de nulidad.
+
+Mientras no se declare la nulidad, el matrimonio produce efectos como válido.
+
+5.3. Efectos del matrimonio putativo
+
+Respecto de los hijos, la nulidad no altera la filiación ya determinada. Conservan todos los derechos derivados de ella: patria potestad, alimentos, apellidos y derechos sucesorios.
+
+Respecto del cónyuge de buena fe, se mantienen únicamente los efectos ya producidos hasta la declaración de nulidad. Sin embargo, desde la sentencia deja de existir vínculo matrimonial y no pueden reclamarse derechos futuros derivados del matrimonio, como alimentos o derechos sucesorios.
+
+6. EFICACIA CIVIL DE LA NULIDAD O INEFICACIA DEL MATRIMONIO CANÓNICO
+
+El Código Civil regula exclusivamente la eficacia civil de las resoluciones relativas al matrimonio canónico, conforme a nuestra tradición legislativa. 1) Fundamento normativo El art. 80 CC establece que: • Las resoluciones de los Tribunales eclesiásticos sobre nulidad. • Las decisiones pontificias sobre matrimonio rato y no consumado.
+
+Tendrán eficacia en el orden civil, siempre que: • Lo solicite alguna de las partes. • Se declaren ajustadas al Derecho del Estado mediante resolución del juez civil competente.
+
+No existe eficacia automática. 2) Procedimiento procesal Tras la Ley 1/2000 (LEC) y la reforma de la Ley 15/2015: • Se aplica el Título I del Libro IV LEC (procesos especiales). • El art. 778 LEC regula específicamente el reconocimiento de eficacia civil. • Se distingue según se soliciten o no medidas civiles (custodia, alimentos, vivienda, pensión compensatoria), que los tribunales eclesiásticos no pueden acordar.
+
+Además, la LO 1/2025 introduce exigencias de procedibilidad (proceso previo de negociación). 3) Derecho de la Unión Europea Resulta aplicable el Reglamento (UE) 2019/1111: • Establece normas uniformes sobre competencia, reconocimiento y ejecución en materia matrimonial. • Sustituye al Reglamento 2201/2003 (salvo supuestos transitorios). • Es directamente aplicable en los Estados miembros.
+
+Ello implica que resoluciones canónicas que hayan adquirido eficacia civil en España pueden circular en el ámbito de la UE. 4) Control judicial civil El juez civil realiza un control atenuado: • Verifica el ajuste a la legalidad estatal. • No revisa el fondo de la causa canónica. • No puede desautorizar el contenido doctrinal o religioso.
+
+No existe automatismo, pues ello vulneraría: • Art. 117.3 CE (potestad jurisdiccional). • Art. 2 LOPJ.
+
+El sistema es electivo: quien contrajo matrimonio canónico puede acudir a jurisdicción civil o eclesiástica. 5) Límites del reconocimiento El reconocimiento: • No permite revisar las causas canónicas. • No exige identidad literal entre causas civiles y canónicas. • No puede amparar pretensiones abusivas.
+
+La jurisprudencia ha afirmado que: • No puede utilizarse la nulidad canónica para eliminar pensiones compensatorias ya reconocidas. sola nulidad eclesiástica. • No puede privarse automáticamente a un cónyuge de derechos económicos por la 6) Incidencia de la Ley 15/2005 Al suprimirse las causas de separación y divorcio: • La homologación de causas canónicas pierde su antiguo sentido causal. • En principio, cualquier causa canónica de nulidad puede producir ineficacia civil.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+  "1": "Las crisis matrimoniales constituyen una categoría doctrinal que agrupa nulidad, separación y divorcio como supuestos de pérdida de eficacia del matrimonio, aunque cada figura posee régimen y efectos jurídicos propios.",
+
+  "2": "La nulidad matrimonial declara que el matrimonio nunca fue válido por existir una causa invalidante desde su celebración, produciendo efectos retroactivos (ex tunc) y negando su existencia jurídica originaria.",
+
+  "3": "El art. 73 CC recoge causas heterogéneas de nulidad que pueden sistematizarse en defectos de forma, ausencia o vicios del consentimiento e impedimentos matrimoniales preexistentes.",
+
+  "3.1": "Las causas de nulidad responden a la falta de un requisito esencial del matrimonio o a la existencia de una causa invalidante anterior o coetánea a su celebración.",
+
+  "3.2": "Aunque la forma es requisito esencial del matrimonio, el Código Civil favorece su conservación cuando concurren buena fe y apariencia de legalidad, limitando la nulidad por irregularidades formales.",
+
+  "3.3": "La nulidad puede fundarse en inexistencia absoluta de consentimiento o en consentimiento viciado por error, coacción o miedo grave, siempre que la causa exista en el momento de la celebración.",
+
+  "3.4": "La concurrencia de impedimentos matrimoniales determina nulidad salvo que sean dispensables y se haya obtenido dispensa válida conforme al art. 48 CC.",
+
+  "3.5": "Pese al carácter radical de la nulidad, el Código Civil admite supuestos de convalidación cuando la conducta posterior revela aceptación y consolidación del vínculo matrimonial.",
+
+  "4": "La acción de nulidad presenta amplia legitimación en la regla general, restricciones en supuestos específicos y carácter imprescriptible salvo en casos de vicios del consentimiento o falta de edad.",
+
+  "5": "El matrimonio putativo es un matrimonio declarado nulo que conserva determinados efectos en protección de los hijos y, en su caso, del cónyuge que actuó de buena fe.",
+
+  "5.1": "La institución, de origen canónico, protege los efectos ya producidos en favor de hijos y cónyuge de buena fe pese a la nulidad declarada.",
+
+  "5.2": "El matrimonio putativo exige buena fe —presumida salvo prueba en contrario—, apariencia jurídica de matrimonio y declaración judicial de nulidad.",
+
+  "5.3": "La nulidad no altera la filiación ni los derechos de los hijos y mantiene para el cónyuge de buena fe únicamente los efectos producidos hasta la sentencia.",
+
+  "6": "Las resoluciones canónicas producen efectos civiles solo tras control judicial de ajuste a la legalidad estatal, sin revisión del fondo y dentro de un sistema electivo y no automático."
+  // pega texto aqui
+  
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = `#ID = 1
+
+// [1]
+Q: ¿Qué naturaleza tiene la expresión “crisis matrimoniales” en el Derecho civil?
+A) Un concepto doctrinal utilizado para agrupar situaciones en las que el matrimonio pierde eficacia.
+B) Un término legal definido expresamente por el Código Civil.
+C) Una categoría procesal utilizada en el procedimiento de divorcio.
+OK: A
+EXP: La expresión no es un término legal, sino una categoría doctrinal empleada para sistematizar las situaciones de ruptura matrimonial.
+
+
+// [2]
+Q: ¿Qué situaciones pretende agrupar doctrinalmente la expresión “crisis matrimoniales”?
+A) Las situaciones en las que se producen conflictos económicos entre cónyuges.
+B) Los supuestos en los que el matrimonio pierde eficacia y se rompe la convivencia conyugal.
+C) Las situaciones en las que se modifica el régimen económico matrimonial.
+OK: B
+EXP: La categoría se utiliza para describir los supuestos en los que se quiebra la unidad de vida y convivencia matrimonial.
+
+
+// [3]
+Q: ¿En qué contexto histórico se consolidó doctrinalmente la noción de crisis matrimoniales?
+A) Tras la regulación del régimen económico matrimonial.
+B) Con la introducción del divorcio como respuesta jurídica a la ruptura de la convivencia.
+C) Con la reforma del Derecho de filiación.
+OK: B
+EXP: La admisión del divorcio favoreció el desarrollo doctrinal del concepto de crisis matrimonial.
+
+
+// [4]
+Q: ¿Cómo se entiende jurídicamente el divorcio dentro del concepto de crisis matrimoniales?
+A) Como una sanción jurídica al incumplimiento de los deberes matrimoniales.
+B) Como una medida administrativa de protección familiar.
+C) Como un remedio jurídico frente a una ruptura previa de la convivencia conyugal.
+OK: C
+EXP: El divorcio se concibe como una respuesta jurídica a una situación previa de ruptura matrimonial.
+
+
+// [5]
+Q: ¿Qué instituciones se integran tradicionalmente dentro de las crisis matrimoniales?
+A) Nulidad, separación y divorcio.
+B) Separación, reconciliación y liquidación del régimen económico.
+C) Divorcio, filiación y patria potestad.
+OK: A
+EXP: La doctrina agrupa bajo esta categoría las tres instituciones principales de ineficacia matrimonial.
+
+
+// [6]
+Q: ¿Qué característica presentan las figuras incluidas dentro de las crisis matrimoniales?
+A) Son instituciones con idéntico régimen jurídico.
+B) Son instituciones distintas que se estudian conjuntamente por razones sistemáticas.
+C) Son simples fases de un mismo procedimiento matrimonial.
+OK: B
+EXP: Aunque se estudian juntas, nulidad, separación y divorcio tienen naturaleza y efectos jurídicos distintos.
+
+
+// [7]
+Q: ¿Por qué es necesario analizar separadamente las figuras incluidas en las crisis matrimoniales?
+A) Porque cada una presenta un régimen jurídico propio y efectos específicos.
+B) Porque cada una pertenece a un orden jurisdiccional diferente.
+C) Porque cada una requiere un procedimiento legislativo distinto.
+OK: A
+EXP: Aunque se agrupan doctrinalmente, cada institución tiene regulación y efectos propios.
+
+
+#ID = 2
+
+// [8]
+Q: ¿Qué representa la nulidad matrimonial dentro de las crisis matrimoniales?
+A) El supuesto de máxima ineficacia del matrimonio.
+B) Una forma de suspensión temporal del vínculo matrimonial.
+C) Un mecanismo de modificación del régimen económico matrimonial.
+OK: A
+EXP: La nulidad implica que el matrimonio nunca fue válido jurídicamente.
+
+
+// [9]
+Q: ¿Qué significa jurídicamente la nulidad matrimonial?
+A) Que el matrimonio válido se disuelve por decisión judicial.
+B) Que el matrimonio queda suspendido hasta nueva resolución judicial.
+C) Que el matrimonio nunca fue válido jurídicamente desde su celebración.
+OK: C
+EXP: La nulidad implica que el vínculo no llegó a existir válidamente.
+
+
+// [10]
+Q: ¿Qué requisito debe existir para que proceda la nulidad matrimonial?
+A) Una ruptura prolongada de la convivencia conyugal.
+B) Una causa invalidante existente desde el momento de la celebración.
+C) Una solicitud conjunta de los cónyuges.
+OK: B
+EXP: La nulidad exige la existencia de una causa invalidante coetánea al matrimonio.
+
+
+// [11]
+Q: ¿Con qué institución del Derecho privado guarda analogía conceptual la nulidad matrimonial?
+A) Con la nulidad de los contratos.
+B) Con la resolución contractual.
+C) Con la rescisión contractual.
+OK: A
+EXP: La nulidad matrimonial se estructura de forma similar a la nulidad contractual.
+
+
+// [12]
+Q: ¿Qué significa que la causa de nulidad deba ser coetánea a la celebración del matrimonio?
+A) Que debe surgir después del matrimonio.
+B) Que debe existir en el momento mismo de la celebración.
+C) Que debe declararse en el momento de la demanda.
+OK: B
+EXP: La causa invalidante debe existir desde el inicio del vínculo matrimonial.
+
+
+// [13]
+Q: ¿Qué efecto produce la declaración judicial de nulidad matrimonial?
+A) Produce efectos retroactivos (ex tunc).
+B) Produce efectos solo desde la sentencia (ex nunc).
+C) Produce efectos exclusivamente patrimoniales.
+OK: A
+EXP: La nulidad retrotrae la situación al momento anterior a la celebración del matrimonio.
+
+
+// [14]
+Q: ¿Qué implica el efecto retroactivo de la nulidad matrimonial?
+A) Que el matrimonio se considera inexistente desde su origen.
+B) Que el matrimonio continúa produciendo efectos hacia el futuro.
+C) Que el matrimonio se transforma en separación legal.
+OK: A
+EXP: La nulidad implica que el matrimonio nunca existió válidamente.
+
+
+// [15]
+Q: ¿Puede la ley reconocer efectos jurídicos pese a la nulidad matrimonial?
+A) No, la nulidad elimina cualquier efecto jurídico.
+B) Sí, en determinados supuestos como la protección de la buena fe.
+C) Solo cuando lo soliciten ambos cónyuges.
+OK: B
+EXP: La ley puede reconocer ciertos efectos para proteger situaciones de buena fe.
+
+
+// [16]
+Q: ¿Cuál es la diferencia fundamental entre nulidad matrimonial y divorcio?
+A) La nulidad declara que el matrimonio nunca fue válido, mientras el divorcio disuelve uno válido.
+B) El divorcio solo produce efectos patrimoniales.
+C) La nulidad solo puede declararse de mutuo acuerdo.
+OK: A
+EXP: El divorcio disuelve un matrimonio válido; la nulidad declara su invalidez originaria.
+    `;
+
+
+    const BANCO_2 = `#ID = 3
+
+// [17]
+Q: ¿Dónde se establece en el Código Civil el elenco de causas de nulidad matrimonial?
+A) En el art. 73 CC, que recoge los supuestos en los que el matrimonio es nulo cualquiera que sea su forma de celebración.
+B) En el art. 66 CC, que regula los deberes personales derivados del matrimonio válido.
+C) En el art. 92 CC, que determina los efectos patrimoniales de la ruptura matrimonial.
+OK: A
+EXP: El art. 73 CC contiene la enumeración legal de las causas de nulidad matrimonial.
+
+
+// [18]
+Q: ¿Cuál de los siguientes supuestos constituye una causa legal de nulidad matrimonial según el Código Civil?
+A) El incumplimiento posterior de los deberes de convivencia entre los cónyuges.
+B) La falta de consentimiento matrimonial en el momento de la celebración.
+C) La imposibilidad sobrevenida de convivencia conyugal tras el matrimonio.
+OK: B
+EXP: La falta de consentimiento es una de las causas expresas de nulidad recogidas en el art. 73 CC.
+
+
+// [19]
+Q: ¿Cómo se caracteriza desde el punto de vista sistemático el art. 73 del Código Civil?
+A) Establece una clasificación exhaustiva entre nulidad absoluta y anulabilidad matrimonial.
+B) Presenta una estructura ordenada que distingue claramente los tipos de nulidad.
+C) Agrupa causas heterogéneas de nulidad sin una sistemática jurídica precisa.
+OK: C
+EXP: El art. 73 CC mezcla causas de distinta naturaleza, lo que explica la clasificación doctrinal posterior.
+
+
+// [20]
+Q: ¿Qué clasificación doctrinal permite ordenar las causas de nulidad matrimonial?
+A) Defectos de forma, inexistencia o vicios del consentimiento e impedimentos matrimoniales.
+B) Causas personales, patrimoniales y procesales de nulidad matrimonial.
+C) Supuestos de nulidad absoluta, nulidad relativa y anulabilidad matrimonial.
+OK: A
+EXP: La doctrina suele agrupar las causas de nulidad en tres bloques didácticos: forma, consentimiento e impedimentos.
+
+
+// [21]
+Q: ¿Cuál es la lógica jurídica que explica la nulidad matrimonial?
+A) La ruptura grave de la convivencia conyugal producida tras el matrimonio.
+B) La existencia de una causa invalidante previa o coetánea a la celebración matrimonial.
+C) La imposibilidad de cumplir las obligaciones derivadas del matrimonio.
+OK: B
+EXP: La nulidad exige una causa que afecte al matrimonio desde su origen.
+
+
+// [22]
+Q: ¿Qué carácter tiene el matrimonio desde la perspectiva formal del Código Civil?
+A) Constituye un acto esencialmente formal sometido a requisitos legales de celebración.
+B) Se configura como un negocio jurídico consensual sin exigencias formales específicas.
+C) Se celebra mediante acuerdo privado de los contrayentes sin intervención pública.
+OK: A
+EXP: El art. 49 CC establece el carácter formal del matrimonio.
+
+
+// [23]
+Q: ¿Qué supuesto puede determinar la nulidad matrimonial por defecto de forma?
+A) La falta de inscripción del matrimonio en el Registro Civil correspondiente.
+B) La ausencia de capitulaciones matrimoniales previas a la celebración.
+C) La falta de intervención de autoridad competente o de testigos en la celebración.
+OK: C
+EXP: El art. 73.3 CC considera nulo el matrimonio celebrado sin autoridad competente o testigos.
+
+
+// [24]
+Q: ¿Qué establece el art. 53 CC respecto a la incompetencia de la autoridad que celebra el matrimonio?
+A) La celebración es anulable cuando cualquiera de los cónyuges impugne el acto matrimonial.
+B) El matrimonio puede mantenerse válido si concurre buena fe y apariencia de ejercicio público del cargo.
+C) La incompetencia de la autoridad determina siempre la nulidad del matrimonio celebrado.
+OK: B
+EXP: El art. 53 CC protege la apariencia de legalidad cuando existe buena fe.
+
+
+// [25]
+Q: ¿Qué principio inspira las limitaciones legales a la nulidad matrimonial por defectos formales?
+A) El principio de autonomía privada en la celebración del matrimonio.
+B) El principio de seguridad jurídica y conservación del vínculo matrimonial.
+C) El principio de igualdad jurídica entre los contrayentes.
+OK: B
+EXP: El legislador busca preservar el vínculo cuando existe apariencia de legalidad.
+
+
+// [26]
+Q: ¿Qué modalidades puede presentar la ausencia de consentimiento matrimonial?
+A) Inexistencia absoluta del consentimiento o consentimiento jurídicamente viciado.
+B) Consentimiento expreso o consentimiento presunto de los contrayentes.
+C) Consentimiento contractual o consentimiento institucional matrimonial.
+OK: A
+EXP: La ausencia de consentimiento puede manifestarse como inexistencia o como vicio del consentimiento.
+
+
+// [27]
+Q: ¿En qué supuesto puede afirmarse que existe inexistencia de consentimiento matrimonial?
+A) Cuando el consentimiento se presta sin seriedad o sin conciencia real de contraer matrimonio.
+B) Cuando los cónyuges desconocen las consecuencias patrimoniales del vínculo matrimonial.
+C) Cuando el matrimonio se celebra sin convivencia efectiva entre los contrayentes.
+OK: A
+EXP: La inexistencia se produce cuando falta voluntad consciente de contraer matrimonio.
+
+
+// [28]
+Q: ¿Qué circunstancias pueden constituir vicios del consentimiento matrimonial?
+A) Dolo, lesión o fraude en la celebración del matrimonio.
+B) Error en la identidad o cualidades personales, coacción o miedo grave.
+C) Incumplimiento de los deberes de fidelidad o convivencia conyugal.
+OK: B
+EXP: El art. 73 CC contempla error relevante, coacción o miedo grave como vicios del consentimiento.
+
+
+// [29]
+Q: ¿Cuándo es jurídicamente relevante el error como causa de nulidad matrimonial?
+A) Cuando recae sobre circunstancias personales que resultan determinantes del consentimiento matrimonial.
+B) Cuando afecta a cualquier aspecto de la vida personal del otro cónyuge.
+C) Cuando produce dificultades en la convivencia posterior al matrimonio.
+OK: A
+EXP: El error debe recaer sobre identidad o cualidades esenciales determinantes del consentimiento.
+
+
+// [30]
+Q: ¿Qué requisito temporal exige la nulidad matrimonial por vicio del consentimiento?
+A) Que el vicio se manifieste durante la convivencia matrimonial.
+B) Que el vicio exista en el momento de la celebración del matrimonio.
+C) Que el vicio sea reconocido judicialmente por ambas partes.
+OK: B
+EXP: La nulidad requiere que la causa invalidante exista en el momento de la celebración.
+
+
+// [31]
+Q: ¿Qué efecto produce la existencia de impedimentos matrimoniales previstos en los arts. 46 y 47 CC?
+A) Determina la nulidad del matrimonio celebrado entre las personas afectadas.
+B) Produce la suspensión temporal de los efectos del matrimonio.
+C) Permite la revocación unilateral del consentimiento matrimonial.
+OK: A
+EXP: El art. 73.2 CC declara nulo el matrimonio celebrado entre personas comprendidas en esos impedimentos.
+
+
+// [32]
+Q: ¿Cuándo no se produce nulidad matrimonial pese a la existencia de impedimento?
+A) Cuando los contrayentes desconocían la existencia del impedimento.
+B) Cuando el impedimento es dispensable y se obtiene dispensa válida.
+C) Cuando el matrimonio ha sido inscrito en el Registro Civil.
+OK: B
+EXP: La dispensa de impedimentos dispensables evita la nulidad del matrimonio.
+
+// [33]
+Q: ¿Qué significa la convalidación en materia de nulidad matrimonial?
+A) Que el matrimonio inicialmente inválido puede adquirir validez en determinados supuestos previstos por la ley.
+B) Que el matrimonio se transforma automáticamente en separación legal.
+C) Que el vínculo matrimonial pierde eficacia jurídica sin necesidad de sentencia.
+OK: A
+EXP: La convalidación permite que un matrimonio inicialmente inválido devenga válido.
+
+
+// [34]
+Q: ¿Cuál de los siguientes supuestos puede producir la convalidación del matrimonio?
+A) La dispensa posterior de un impedimento dispensable antes de ejercitar la acción de nulidad.
+B) La falta de inscripción registral del matrimonio celebrado.
+C) El incumplimiento posterior de los deberes matrimoniales.
+OK: A
+EXP: El art. 48 CC permite la dispensa posterior de impedimentos dispensables.
+
+
+// [35]
+Q: ¿Qué fundamento inspira los supuestos legales de convalidación matrimonial?
+A) La protección del interés económico de los cónyuges.
+B) La simplificación de los procedimientos judiciales matrimoniales.
+C) La conservación del vínculo cuando la conducta posterior revela aceptación del matrimonio.
+OK: C
+EXP: El legislador favorece la estabilidad del vínculo cuando los cónyuges consolidan su relación.
+    `;
+
+
+    const BANCO_3 = `#ID = 4
+
+// [36]
+Q: ¿Cuál es el objeto de la acción de nulidad matrimonial en el Derecho civil español?
+A) Obtener la disolución del vínculo matrimonial mediante resolución judicial.
+B) Conseguir la declaración judicial de que el matrimonio es radicalmente ineficaz desde su origen.
+C) Determinar los efectos patrimoniales derivados de la ruptura matrimonial.
+OK: B
+EXP: La acción de nulidad persigue la declaración judicial de invalidez del matrimonio, lo que implica que el vínculo nunca fue válido jurídicamente.
+
+
+// [37]
+Q: ¿Quiénes están legitimados con carácter general para ejercitar la acción de nulidad matrimonial según el art. 74 CC?
+A) Los cónyuges, el Ministerio Fiscal y cualquier persona con interés directo y legítimo.
+B) Exclusivamente los cónyuges que hayan celebrado el matrimonio.
+C) Los cónyuges y los ascendientes directos de cualquiera de ellos.
+OK: A
+EXP: El art. 74 CC reconoce legitimación a los cónyuges, al Ministerio Fiscal y a cualquier persona con interés directo y legítimo.
+
+
+// [38]
+Q: ¿Qué carácter presenta la acción de nulidad matrimonial debido a la amplitud de su legitimación activa?
+A) Acción estrictamente privada entre los cónyuges.
+B) Acción pública o semipública por la posibilidad de intervención de terceros con interés legítimo.
+C) Acción administrativa sujeta al control del Registro Civil.
+OK: B
+EXP: La posibilidad de que terceros con interés directo ejerciten la acción ha llevado a calificarla como acción pública o semipública.
+
+
+// [39]
+Q: ¿Qué papel desempeña el Ministerio Fiscal en los procesos de nulidad matrimonial?
+A) Puede intervenir solo cuando promueve directamente la acción.
+B) Actúa como representante procesal de los cónyuges en el procedimiento.
+C) Debe intervenir obligatoriamente en el proceso aunque no haya promovido la acción.
+OK: C
+EXP: El art. 749 LEC establece la intervención obligatoria del Ministerio Fiscal en los procesos de nulidad matrimonial.
+
+
+// [40]
+Q: ¿Quiénes pueden ejercitar la acción de nulidad cuando el matrimonio se ha celebrado por un menor de edad mientras este sigue siendo menor?
+A) Los padres, los tutores o guardadores y el Ministerio Fiscal.
+B) Únicamente el propio contrayente menor y el Ministerio Fiscal.
+C) Cualquier persona con interés legítimo en la declaración de nulidad.
+OK: A
+EXP: Mientras el contrayente sea menor, el art. 75 CC atribuye la legitimación a padres, tutores o guardadores y al Ministerio Fiscal.
+
+
+// [41]
+Q: ¿Quién puede ejercitar la acción de nulidad por falta de edad una vez que el contrayente menor alcanza la mayoría de edad?
+A) Los padres o tutores del contrayente menor.
+B) Exclusivamente el propio contrayente que era menor.
+C) Cualquier persona con interés directo y legítimo.
+OK: B
+EXP: Una vez alcanzada la mayoría de edad, solo el contrayente que era menor puede ejercitar la acción.
+
+
+// [42]
+Q: ¿Cuál es el régimen general del plazo para ejercitar la acción de nulidad matrimonial?
+A) La acción es imprescriptible, salvo en determinados supuestos previstos por la ley.
+B) La acción debe ejercitarse en el plazo general de cinco años desde la celebración.
+C) La acción caduca siempre al año de celebrado el matrimonio.
+OK: A
+EXP: La regla general es la imprescriptibilidad de la acción de nulidad, con excepciones en determinados supuestos.
+
+
+// [43]
+Q: ¿Qué plazo establece el Código Civil para ejercitar la acción de nulidad en los supuestos de error, coacción, miedo grave o falta de edad?
+A) Un plazo de dos años desde la celebración del matrimonio.
+B) Un plazo de tres años desde la desaparición de la causa de nulidad.
+C) Un plazo de un año desde la mayoría de edad o desde el cese del vicio del consentimiento.
+OK: C
+EXP: En estos supuestos la acción está sujeta a un plazo de caducidad de un año desde la mayoría de edad o desde el cese del error, la coacción o el miedo.
+   `;
+
+
+    const BANCO_4 = `#ID = 5
+
+// [44]
+Q: ¿Cuál fue el origen histórico de la institución del matrimonio putativo?
+A) Surge en el Derecho romano clásico para proteger la dote de la esposa.
+B) Surge en el Derecho canónico medieval para proteger a los hijos de matrimonios aparentemente válidos y luego declarados nulos.
+C) Surge en la codificación liberal para proteger al cónyuge frente a la separación judicial.
+OK: B
+EXP: El matrimonio putativo nace en el Derecho canónico medieval como instrumento de protección de los hijos de matrimonios declarados nulos.
+
+
+// [45]
+Q: ¿Qué evolución experimentó posteriormente la institución del matrimonio putativo?
+A) Se amplió para proteger también al cónyuge que hubiera actuado de buena fe.
+B) Se limitó exclusivamente a los matrimonios canónicos.
+C) Se transformó en una modalidad de separación judicial.
+OK: A
+EXP: La institución se amplió después a la protección del cónyuge de buena fe, con independencia de la causa de nulidad.
+
+
+// [46]
+Q: ¿Dónde se regula actualmente el matrimonio putativo en el Derecho civil español?
+A) En el art. 73 CC.
+B) En el art. 79 CC.
+C) En el art. 96 CC.
+OK: B
+EXP: El art. 79 CC recoge la regulación vigente del matrimonio putativo tras la reforma de 1981.
+
+
+// [47]
+Q: ¿Qué se entiende jurídicamente por matrimonio putativo?
+A) Un matrimonio válido que produce efectos limitados por razón de incapacidad de uno de los cónyuges.
+B) Un matrimonio nulo que conserva íntegramente todos sus efectos civiles.
+C) Un matrimonio declarado nulo que mantiene determinados efectos respecto de hijos y cónyuge de buena fe.
+OK: C
+EXP: El matrimonio putativo es un matrimonio nulo que conserva determinados efectos ya producidos en favor de hijos y, en su caso, del cónyuge de buena fe.
+
+
+// [48]
+Q: ¿En qué momento debe existir la buena fe relevante para el matrimonio putativo?
+A) En el momento de la celebración del matrimonio.
+B) En el momento de dictarse la sentencia de nulidad.
+C) Durante toda la convivencia conyugal sin interrupción.
+OK: A
+EXP: La buena fe relevante es la concurrente en el momento de la celebración del matrimonio, y además se presume salvo prueba en contrario.
+
+
+// [49]
+Q: ¿Depende la protección de los hijos en el matrimonio putativo de la buena fe de los cónyuges?
+A) Sí, porque al menos uno de los cónyuges debe actuar necesariamente de buena fe.
+B) No, porque los hijos quedan protegidos incluso si ambos cónyuges actuaron de mala fe.
+C) Solo depende de la buena fe del progenitor que promueva la acción de nulidad.
+OK: B
+EXP: La buena fe es relevante para el cónyuge, pero no condiciona la protección de los hijos.
+
+
+// [50]
+Q: ¿Qué requisito de apariencia exige la institución del matrimonio putativo?
+A) La existencia de convivencia estable y pública entre los contrayentes.
+B) La existencia de una unión afectiva prolongada susceptible de reconocimiento registral.
+C) La celebración de un matrimonio conforme, al menos en apariencia, a una forma legalmente prevista.
+OK: C
+EXP: Debe existir apariencia jurídica de matrimonio, con consentimiento y un mínimo cumplimiento formal.
+
+
+// [51]
+Q: ¿Por qué no pueden equipararse las uniones de hecho al matrimonio putativo?
+A) Porque carecen de apariencia jurídica de matrimonio celebrado conforme a una forma legal.
+B) Porque toda unión de hecho exige previa inscripción registral para producir efectos civiles.
+C) Porque el Código Civil prohíbe expresamente toda protección de las uniones de hecho.
+OK: A
+EXP: El matrimonio putativo exige apariencia jurídica de matrimonio; la unión de hecho no cumple ese presupuesto.
+
+
+// [52]
+Q: ¿Qué requisito resulta imprescindible para que opere el matrimonio putativo?
+A) La convivencia matrimonial durante al menos un año.
+B) La declaración judicial de nulidad del matrimonio.
+C) La inscripción de la sentencia en el Registro Civil antes de su firmeza.
+OK: B
+EXP: Mientras no exista declaración judicial de nulidad, el matrimonio produce efectos como si fuera válido.
+
+
+// [53]
+Q: ¿Qué efectos produce el matrimonio putativo respecto de los hijos?
+A) Mantiene la filiación ya determinada y conserva los derechos derivados de ella.
+B) Limita los efectos sucesorios a los nacidos antes de la demanda de nulidad.
+C) Sustituye la filiación matrimonial por una filiación equiparada a la no matrimonial.
+OK: A
+EXP: La nulidad no altera la filiación ni los derechos derivados de ella: patria potestad, alimentos, apellidos y derechos sucesorios.
+
+
+// [54]
+Q: ¿Qué alcance tienen los efectos del matrimonio putativo respecto del cónyuge de buena fe?
+A) Conserva únicamente los efectos ya producidos hasta la declaración de nulidad, pero no derechos futuros derivados del matrimonio.
+B) Conserva todos los derechos matrimoniales, incluso los que se produzcan después de la sentencia de nulidad.
+C) Solo conserva los efectos patrimoniales, pero no los personales ni sucesorios ya producidos.
+OK: A
+EXP: El cónyuge de buena fe mantiene los efectos producidos hasta la sentencia, pero desde la nulidad desaparece el vínculo y no nacen derechos futuros.
+    `;
+
+
+    const BANCO_5 = `#ID = 6
+
+// [55]
+Q: ¿Qué resoluciones pueden producir eficacia civil en el ordenamiento español conforme al art. 80 CC?
+A) Las resoluciones de nulidad de los tribunales eclesiásticos y las decisiones pontificias sobre matrimonio rato y no consumado.
+B) Únicamente las sentencias de nulidad dictadas por los tribunales civiles españoles.
+C) Cualquier resolución dictada por autoridades religiosas con competencia matrimonial.
+OK: A
+EXP: El art. 80 CC reconoce la posible eficacia civil de las resoluciones de nulidad de tribunales eclesiásticos y de las decisiones pontificias sobre matrimonio rato y no consumado.
+
+
+// [56]
+Q: ¿Qué requisito es necesario para que una resolución eclesiástica produzca efectos civiles en España?
+A) Su inscripción automática en el Registro Civil tras dictarse la resolución canónica.
+B) La solicitud de alguna de las partes y la declaración judicial de su ajuste al Derecho del Estado.
+C) La homologación previa por el Tribunal Supremo como órgano superior de la jurisdicción civil.
+OK: B
+EXP: La eficacia civil requiere solicitud de parte y resolución del juez civil que declare su conformidad con el Derecho estatal.
+
+
+// [57]
+Q: ¿Qué procedimiento regula el reconocimiento de eficacia civil de resoluciones eclesiásticas en materia matrimonial?
+A) El procedimiento ordinario de declaración de derechos regulado en la Ley de Enjuiciamiento Civil.
+B) El procedimiento previsto en el art. 778 LEC dentro de los procesos especiales del Libro IV.
+C) El procedimiento de jurisdicción voluntaria previsto en la Ley 15/2015.
+OK: B
+EXP: El art. 778 LEC regula específicamente el reconocimiento de eficacia civil de resoluciones eclesiásticas.
+
+
+// [58]
+Q: ¿Qué alcance tiene el control que ejerce el juez civil al reconocer eficacia civil a una resolución eclesiástica?
+A) Un control pleno sobre los hechos y fundamentos jurídicos de la causa canónica.
+B) Un control limitado destinado a verificar el ajuste de la resolución al Derecho del Estado.
+C) Un control exclusivamente formal relativo a la autenticidad del documento eclesiástico.
+OK: B
+EXP: El juez civil realiza un control limitado o atenuado que verifica la conformidad con el Derecho estatal sin revisar el fondo de la causa.
+
+
+// [59]
+Q: ¿Qué límite se ha establecido jurisprudencialmente respecto a la eficacia civil de la nulidad canónica?
+A) No puede utilizarse para eliminar derechos económicos previamente reconocidos en el orden civil.
+B) No puede aplicarse cuando el matrimonio se celebró fuera del territorio español.
+C) No puede producir efectos si el matrimonio ha sido inscrito en el Registro Civil.
+OK: A
+EXP: La jurisprudencia ha afirmado que la nulidad canónica no puede utilizarse para suprimir derechos económicos como la pensión compensatoria.
+
+
+// [60]
+Q: ¿Qué función cumple el Reglamento (UE) 2019/1111 en relación con las resoluciones matrimoniales?
+A) Establece normas uniformes sobre competencia, reconocimiento y ejecución en materia matrimonial dentro de la Unión Europea.
+B) Regula exclusivamente los efectos patrimoniales derivados del matrimonio en los Estados miembros.
+C) Determina las causas de nulidad matrimonial aplicables en todos los Estados de la Unión Europea.
+OK: A
+EXP: El Reglamento (UE) 2019/1111 establece un sistema común de competencia y reconocimiento de resoluciones matrimoniales en la UE.
+
+
+// [61]
+Q: ¿Qué consecuencia tuvo la reforma introducida por la Ley 15/2005 respecto a la eficacia civil de la nulidad canónica?
+A) Eliminó la posibilidad de reconocimiento civil de las resoluciones eclesiásticas.
+B) Hizo necesario que las causas canónicas coincidieran exactamente con las causas civiles de nulidad.
+C) Redujo la relevancia de la comparación entre causas civiles y canónicas al suprimirse el sistema causal de separación y divorcio.
+OK: C
+EXP: Tras la supresión del sistema causal de separación y divorcio, la homologación de causas canónicas pierde importancia en el reconocimiento civil.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
