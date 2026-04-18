@@ -1,0 +1,1723 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 22. La adopción </h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LA ADOPCIÓN
+
+Desde antiguo, la adopción supone integrar en una familia a quien no pertenece a ella por consanguinidad, creando una relación de parentesco fundada en el propio acto adoptivo. El art. 108.1 del Código Civil establece que la filiación puede tener lugar por naturaleza y por adopción, y añade que la filiación matrimonial, la no matrimonial y la adoptiva producen los mismos efectos.
+
+La legislación española vigente se caracteriza así por una tendencia a equiparar la filiación adoptiva con la filiación por naturaleza, sobre la base de que, una vez constituida la adopción, no existe razón suficiente para diferenciar entre hijos consanguíneos e hijos adoptivos, especialmente cuando la adopción responde a la inexistencia de filiación biológica.
+
+1.1. Los criterios normativos actualmente imperantes: la Ley 21/1987
+
+Según el propio legislador, el régimen instaurado por la Ley de 1970 resultaba excesivamente permisivo y generaba consecuencias consideradas inaceptables, lo que llevó a la Ley 21/1987 a modificar tanto los criterios normativos como la propia configuración de la adopción. Desde entonces, la adopción pasó a depender en gran medida de una dimensión administrativa y de la intervención de entidades públicas o privadas colaboradoras en su fase de iniciativa. El texto apunta, no obstante, dudas sobre los resultados de este modelo, en la medida en que habría retrasado la adopción y la integración de menores susceptibles de adopción en familias interesadas, aunque deja expresamente al margen un examen profundo de ese debate para centrarse en la sistematización del Derecho vigente.
+
+1.2. La adopción internacional: la Ley 54/2007
+
+La Ley 54/2007, de 28 de diciembre, de adopción internacional, tiene como objeto principal establecer las normas de Derecho internacional privado en esta materia. Su relevancia se proyecta sobre el Código Civil mediante la nueva redacción del apartado 5 del art. 9, que dispone que la adopción internacional se rige por la Ley de Adopción Internacional y que las adopciones constituidas por autoridades extranjeras producirán efectos en España conforme a dicha ley.
+
+1.3. La Ley 26/2015, de 28 de julio, de modificación del sistema de protección a la infancia y ala
+
+adolescencia La aprobación de la LPIA ha tenido una incidencia destacada en esta materia, como muestra el hecho de que su artículo tercero modifique numerosos preceptos de la Ley 54/2007, de adopción internacional.
+
+2. PRESUPUESTOS O REQUISITOS DE LA ADOPCIÓN
+
+El primer presupuesto de la adopción es la situación de desamparo del menor, entendida como una circunstancia de hecho derivada de la falta de ejercicio o del ejercicio incorrecto de las funciones de guarda por parte de padres o tutores, que priva al menor de la asistencia moral o material necesaria, aunque también cabe que los padres atiendan a sus hijos y decidan entregarlos en adopción por motivos particulares. En los supuestos de desamparo, las entidades públicas de protección de menores asumen por ministerio de la ley su tutela automática y deben adoptar las medidas de protección oportunas, pudiendo constituir acogimiento familiar o residencial, temporal o permanente, e incluso guarda con fines de adopción.
+
+La irrevocabilidad de la adopción explica que el art. 175.4 establezca que nadie puede ser adoptado por más de una persona, salvo que la adopción se realice conjunta o sucesivamente por ambos cónyuges o por una pareja unida por relación de afectividad análoga a la conyugal.
+
+También se permite que el matrimonio o la constitución posterior de la pareja posibiliten la adopción de los hijos del consorte o conviviente, y que, en caso de muerte del adoptante o de exclusión prevista legalmente, pueda producirse una nueva adopción. Aunque el sistema parte de la regla del adoptante individual, mantiene la adopción conjunta por parejas matrimoniales o de hecho, dentro de una línea de equiparación normativa entre matrimonio y uniones more uxorio.
+
+2.1. Requisitos de los adoptantes
+
+Presupuesta la plena capacidad de obrar, el Código Civil exige al adoptante haber cumplido veinticinco años. Si existen dos adoptantes, basta con que uno haya alcanzado esa edad.
+
+Además, debe mediar entre adoptante y adoptado una diferencia mínima de dieciséis años y, como regla general, una diferencia máxima de cuarenta y cinco, aunque esta última puede superarse en determinados casos, especialmente cuando se trate de grupos de hermanos o de menores con necesidades especiales. La LPIA introdujo también la posibilidad de adopción conjunta pese a la separación, divorcio o ruptura previa de la pareja, siempre que el adoptando hubiera convivido efectivamente con ambos durante al menos los dos años anteriores a la propuesta de adopción.
+
+La regulación actual permite la adopción por matrimonios o por parejas unidas por análoga relación de afectividad sin referencia al sexo de sus integrantes, lo que cierra la polémica sobre la adopción por parejas homosexuales, y la legislación posterior ha reforzado la plena equiparación jurídica entre matrimonio y pareja estable a efectos de capacidad para adoptar. Desde el punto de vista cronológico, el adoptante debe reunir la edad mínima legal, respetar la diferencia mínima de edad con el adoptado y no superar, por regla general, la diferencia máxima introducida por la ley.
+
+Estas exigencias cronológicas no excluyen otros requisitos. No pueden adoptar los menores de edad, estén o no emancipados, ni quienes no puedan ser tutores conforme al Código Civil.
+
+Tampoco pueden ser adoptantes las personas jurídicas, ya que la posición de adoptante solo puede corresponder a una persona humana.
+
+2.2. El adoptado
+
+La Ley 21/1987 estableció como principio que solo pueden ser adoptados los menores no emancipados, criterio que mantiene la Ley 26/2015. Excepcionalmente, cabe la adopción de un mayor de edad o de un menor emancipado cuando, inmediatamente antes de la emancipación, hubiera existido acogimiento con los futuros adoptantes o convivencia estable con ellos durante al menos un año. Fuera de esa excepción, el adoptado solo necesita haber nacido, tener capacidad jurídica y no haber llegado todavía a la emancipación.
+
+Queda excluida la posibilidad de adoptar a los nascituri o de celebrar pactos válidos sobre su futura adopción. El sistema pretende impedir estas situaciones y, en particular, refuerza esa idea al disponer que el asentimiento de la madre no puede prestarse hasta transcurridas seis semanas desde el parto.
+
+2.3. Las prohibiciones
+
+El art. 175.3 prohíbe la adopción de los descendientes, de los parientes en segundo grado de la línea colateral por consanguinidad o afinidad y del pupilo por su tutor mientras no haya sido aprobada definitivamente la cuenta general justificada de la tutela. La razón de las prohibiciones basadas en el parentesco es que la filiación adoptiva presupone crear parentesco donde no existe, mientras que la prohibición relativa al tutor y al pupilo busca proteger los intereses del tutelado, aplazando la eventual adopción hasta que queden definitivamente aprobadas las cuentas de la tutela.
+
+El art. 175.4 reitera que nadie puede ser adoptado por más de una persona, salvo en los supuestos de adopción conjunta o sucesiva por cónyuges o por parejas unidas por relación de afectividad análoga a la conyugal. También admite la adopción del hijo del cónyuge o del conviviente constituida la pareja, así como una nueva adopción en caso de muerte del adoptante o de exclusión legal. No obstante, el texto subraya que esa posibilidad debe valorarse con prudencia, porque una futura crisis de la pareja no afecta a la adopción, que es irrevocable y mantiene todos sus efectos en el tiempo.
+
+3. EL PROCEDIMIENTO DE ADOPCIÓN
+
+3.1. La propuesta de la entidad pública
+
+El inicio del expediente de adopción exige, con carácter general, una propuesta previa de la entidad pública a favor del adoptante o adoptantes que hayan sido declarados idóneos para el ejercicio de la patria potestad, pudiendo esa declaración ser anterior a la propuesta. La entidad pública ocupa una posición central en el sistema adoptivo instaurado por la Ley 21/1987, dentro de un modelo fuertemente administrativizado, cuya aplicación práctica se traduce en la competencia territorial de las Comunidades Autónomas para desarrollar los aspectos reglamentarios y en la existencia de listas de adoptantes previamente calificados como idóneos.
+
+La LPIA incorpora al Código Civil unas condiciones básicas comunes sobre la declaración de idoneidad, materia que hasta entonces había quedado remitida a normativas autonómicas no siempre coincidentes. El art. 176.3 entiende por idoneidad la capacidad, aptitud y motivación adecuadas para ejercer la responsabilidad parental conforme a las necesidades del menor y a las peculiaridades y consecuencias de la adopción, excluyendo de esa declaración a quienes estén privados o suspendidos en el ejercicio de la patria potestad o tengan confiada la guarda de su hijo a la entidad pública. La idoneidad requiere una valoración psicosocial sobre la situación personal, familiar, relacional y social de los adoptantes, su capacidad para crear vínculos estables y seguros, sus habilidades educativas y su aptitud para atender al menor, y se formaliza mediante resolución. Los candidatos deben asistir a sesiones informativas y de preparación, y en la declaración debe constar además si aceptarían una adopción en la que el menor mantenga relación con su familia de origen. La entidad pública puede también delegar la guarda del menor en situación de desamparo a personas declaradas idóneas y asignadas para su adopción, constituyéndose así la delegación de guarda con fines de adopción.
+
+3.2. La solicitud privada de adopción
+
+Excepcionalmente, el expediente de adopción puede iniciarse sin propuesta de la entidad pública cuando concurre alguna de las circunstancias legalmente tasadas. Ello sucede si el adoptando es huérfano y pariente del adoptante en tercer grado por consanguinidad o afinidad, si es hijo del cónyuge o de la persona unida al adoptante por relación de afectividad análoga a la conyugal, si lleva más de un año en guarda con fines de adopción o bajo tutela del adoptante, o si es mayor de edad o menor emancipado.
+
+En los tres primeros casos, la adopción puede constituirse incluso aunque el adoptante haya fallecido, siempre que hubiera prestado ya su consentimiento ante el juez o en documento público o testamento, retrotrayéndose los efectos de la resolución judicial a la fecha de ese consentimiento. El texto destaca además la relevancia práctica de la adopción del hijo del cónyuge, especialmente en matrimonios del mismo sexo, aunque señala que esta vía perdió parte de su centralidad tras la reforma de la Ley 14/2006, que permitió a las esposas prestar consentimiento para la determinación de la filiación del menor.
+
+3.3. El proceso de jurisdicción voluntaria
+
+Tras la Ley 15/2015, el expediente de adopción pasa a regularse en la Ley de Jurisdicción Voluntaria, correspondiendo al juez de primera instancia de la sede de la entidad pública o, en su defecto, del domicilio del adoptante, dictar el auto con intervención del Ministerio Fiscal. Desde el punto de vista sustantivo, el art. 177 del Código Civil distingue entre consentimiento, asentimiento y audiencia de las personas relacionadas con la adopción.
+
+Deben consentir la adopción, en presencia del juez, el adoptante o adoptantes y el adoptando mayor de doce años. Deben asentir el cónyuge o la persona unida al adoptante por relación análoga, salvo separación, divorcio o ruptura fehaciente, excepto si la adopción es conjunta, y también los progenitores del adoptando no emancipado, salvo que estén privados de la patria potestad por sentencia firme o incursos en causa legal para ello. Ese asentimiento no es necesario cuando quienes deban prestarlo estén imposibilitados, ni cuando los progenitores tengan suspendida la patria potestad y hayan transcurrido dos años desde la notificación de la declaración de desamparo sin oposición eficaz. En todo caso, el asentimiento de la madre no puede prestarse hasta seis semanas después del parto, y en las adopciones con propuesta previa no cabe que el asentimiento de los progenitores se refiera a adoptantes determinados.
+
+Deben ser oídos por el juez los progenitores que no hayan sido privados de la patria potestad cuando su asentimiento no sea necesario, el tutor y, en su caso, la familia acogedora y los guardadores, así como el adoptando menor de doce años según su edad y madurez. El texto subraya que, si los padres conservan la patria potestad y no concurre causa legal de privación, su asentimiento es imprescindible y su oposición impide la adopción; en cambio, si están incursos en causa de privación, solo deben ser oídos y su oposición no vincula al juez.
+
+La diferencia entre estas tres categorías es esencial. El consentimiento es un requisito constitutivo de la adopción, de modo que su ausencia o nulidad impide su existencia, y además debe prestarse personalmente antes de la decisión judicial. El asentimiento es una declaración favorable de determinadas personas ajenas a la relación adoptiva estricta, exigida solo en ciertos supuestos, mientras que la audiencia es un trámite obligatorio destinado a ilustrar al juez, pero sin eficacia vinculante. Todos los consentimientos y asentimientos deben otorgarse libremente, por escrito, en la forma legal exigida y previa información de sus consecuencias.
+
+3.4. La constitución de la adopción
+
+La adopción se constituye por resolución judicial, que ha de atender siempre al interés del adoptando y a la idoneidad del adoptante o adoptantes para el ejercicio de la patria potestad.
+
+Mientras no exista auto judicial favorable, la adopción no se ha producido jurídicamente. De ahí que buena parte de la doctrina destaque el carácter constitutivo de la resolución judicial y considere que, tras la Ley 21/1987, la adopción ha dejado de ser un simple negocio jurídico de Derecho de familia para configurarse de manera decisiva a través de la autoridad judicial.
+
+Sin embargo, el texto rechaza que el acto judicial pueda entenderse aisladamente como único elemento relevante, porque la adopción sigue descansando también en el consentimiento del adoptante y del adoptando mayor de doce años, junto con los asentimientos legalmente exigibles. Sin esas voluntades, ningún juez puede constituir válidamente la adopción, aunque, al mismo tiempo, sin resolución judicial tampoco puede entenderse perfeccionada. Una vez dictado el auto, este debe inscribirse en el Registro Civil al margen de la inscripción de nacimiento del hijo adoptivo, produciendo desde entonces el cierre registral frente a terceros, que no deberían poder conocer por esa vía la existencia de la adopción.
+
+4. IRREVOCABILIDAD DE LA ADOPCIÓN
+
+La adopción se caracteriza por su irrevocabilidad, como proclama el art. 180.1, porque la trascendencia del cambio de integración familiar que comporta exige dotar a la filiación adoptiva de la máxima estabilidad y sustraerla a cambios de voluntad o de ánimo de los interesados, especialmente del adoptante. Por ello, la posterior determinación de la filiación por naturaleza del adoptado no afecta a la adopción, de modo que quien ha sido adoptado mantiene su condición de hijo adoptivo aunque llegue a conocerse después su filiación biológica. La ley pretende así asegurar la continuidad de la filiación adoptiva y evitar conflictos posteriores sobre la persona del adoptado, que queda integrado familiarmente en la línea del adoptante como si fuera descendiente consanguíneo.
+
+Como consecuencia de ello, se extinguen los vínculos jurídicos entre el adoptado y su familia biológica, sin que quepa posteriormente combatir la adopción ya declarada para recuperar efectos sucesorios o familiares respecto de esa familia de origen. Solo de manera excepcional, durante los dos años siguientes al auto judicial, la adopción válidamente constituida puede ser contradicha y quedar extinguida si el padre o la madre no prestaron el asentimiento exigido, siempre que esa falta de intervención se haya producido sin culpa suya, que la extinción no perjudique gravemente al menor y que, si el adoptado es mayor de edad, este preste su consentimiento expreso. Ese plazo tiene carácter de caducidad y se computa desde la firmeza del auto judicial, precisamente para evitar una situación de interinidad permanente en la adopción.
+
+Distinta de la extinción es la exclusión del adoptante cuando incurra en causa de privación de la patria potestad, supuesto en el que el juez puede privarle de las funciones tuitivas y de los derechos legales correspondientes. Alcanzada la plena capacidad, esa exclusión solo puede ser solicitada por el propio adoptado dentro de los dos años siguientes, y las restricciones dejan de surtir efecto si así lo determina después el propio hijo ya capaz. En todo caso, la extinción de la adopción no implica pérdida de la nacionalidad ni de la vecindad civil adquiridas, ni afecta a los efectos patrimoniales ya producidos.
+
+En el ámbito de la adopción internacional, las autoridades españolas deben comprobar que la adopción constituida por autoridad extranjera extinga los vínculos jurídicos sustanciales con la familia anterior, genere una filiación equivalente a la filiación por naturaleza y sea irrevocable por los adoptantes. Si la ley extranjera permite al adoptante revocar la adopción, resulta indispensable que este renuncie a esa facultad antes del traslado del menor a España, formalizando la renuncia en documento público o mediante comparecencia ante el encargado del Registro Civil.
+
+5. EFECTOS DE LA ADOPCIÓN
+
+5.1. Relaciones entre adoptante y adoptado
+
+La adopción produce entre adoptante y adoptado una relación de filiación en condiciones de igualdad con la filiación por naturaleza, sea o no matrimonial. De ello resulta que el adoptante ejerce la patria potestad sobre el hijo adoptivo en los mismos términos que respecto de un hijo consanguíneo y le transmite sus apellidos conforme a las reglas generales. Del mismo modo, entre adoptante y adoptado rige la obligación legal de alimentos entre parientes y, en el ámbito sucesorio, el hijo adoptivo ocupa en la herencia del adoptante los mismos derechos que tendría si hubiera sido engendrado por él, tanto en la legítima como en la sucesión intestada, correspondiendo igualmente al adoptante los mismos derechos en la eventual herencia del hijo adoptivo.
+
+5.2. El adoptado y su familia de origen
+
+La integración del adoptado en la familia del adoptante implica como regla su desvinculación jurídica de la familia de origen, ya que sería incompatible mantener simultáneamente deberes familiares y derechos sucesorios plenos en ambas familias. Por ello, el art. 178 establece que la adopción extingue los vínculos jurídicos entre el adoptado y su familia de origen. Sin embargo, esa ruptura no opera de manera absoluta, pues la ley prevé excepciones en las que subsisten vínculos con la familia de uno de los progenitores. Ello ocurre cuando el adoptado es hijo del cónyuge o de la persona unida al adoptante por relación análoga a la conyugal, incluso si este ha fallecido, y también cuando solo uno de los progenitores haya sido legalmente determinado, siempre que lo soliciten el adoptante, el adoptado mayor de doce años y el progenitor cuyo vínculo deba subsistir.
+
+La norma añade además que esta extinción de vínculos no afecta a los impedimentos matrimoniales, de modo que siguen operando entre el adoptado y su familia de origen. Junto a ello, la LPIA introduce la posibilidad de mantener alguna forma de relación o contacto entre el menor adoptado, determinados miembros de su familia de origen y la familia adoptiva cuando así lo aconseje el interés del menor, atendiendo a su situación familiar, edad u otras circunstancias significativas. El juez puede acordar ese mantenimiento al constituir la adopción, fijando su periodicidad, duración y condiciones, a propuesta de la entidad pública o del Ministerio Fiscal y con el consentimiento de la familia adoptiva y del adoptando si tiene suficiente madurez, y siempre si es mayor de doce años. La medida puede desarrollarse con intermediación de la entidad pública o de entidades acreditadas, puede ser modificada o finalizada por el juez en atención al interés superior del menor y está sometida a seguimiento mediante informes periódicos. También pueden solicitar su suspensión o supresión la entidad pública, la familia adoptiva, la familia de origen y el menor con suficiente madurez, y en todo caso si es mayor de doce años.
+
+5.3. Los orígenes biológicos de las personas adoptadas
+
+Aunque la adopción sea irrevocable y la determinación de la filiación biológica no la altere, la legislación ha reconocido a las personas adoptadas el derecho a conocer sus orígenes biológicos. Tras la reforma de 2015, las entidades públicas deben asegurar la conservación durante al menos cincuenta años de la información disponible sobre los orígenes del menor, especialmente la relativa a la identidad de sus progenitores y a la historia médica del menor y de su familia, con la finalidad de hacer posible el ejercicio de ese derecho. Las personas adoptadas, una vez alcanzada la mayoría de edad o durante su minoría a través de sus representantes legales, pueden acceder a esos datos, y las entidades públicas deben prestar el asesoramiento y la ayuda necesarios, previa notificación a las personas afectadas. Además, cualquier entidad pública o privada está obligada a facilitar a las entidades públicas y al Ministerio Fiscal los informes y antecedentes necesarios sobre el menor y su familia de origen cuando sean requeridos.
+
+El texto destaca que esta apertura al conocimiento de los orígenes biológicos responde a una demanda social discutida, pues junto al derecho del hijo a conocer su identidad biológica concurren el derecho de los progenitores a mantener oculta su identidad y a proteger su intimidad personal y familiar. Por ello se presenta la mediación como una vía especialmente adecuada en este ámbito, dada la complejidad y delicadeza de los intereses en conflicto.
+
+6. LA ADOPCIÓN INTERNACIONAL
+
+La adopción internacional surge en un contexto en el que, en los países del entorno geográfico y cultural de referencia, la escasez de menores susceptibles de adopción, vinculada al descenso de la natalidad, llevó a muchas parejas y, en menor medida, a personas individuales, a buscar hijos adoptivos en países de muy diversas zonas del mundo, especialmente en Asia, Europa del Este, Iberoamérica y África. Ese escenario, especialmente problemático en algunos casos, motivó la aprobación de la Ley 54/2007, de adopción internacional, presentada como una norma orientada a ordenar la materia, aunque el texto subraya tanto su difícil aplicación práctica como la conveniencia de remitir su tratamiento técnico al Derecho internacional privado.
+
+La valoración del texto sobre los resultados de la Ley 54/2007 es claramente negativa, pues sostiene que su éxito ha sido inexistente y que, al igual que otras normas semejantes en países occidentales, ha provocado un efecto de cierre de las adopciones en numerosos Estados de origen. Según esa interpretación, la ley habría contribuido a una caída muy intensa de las adopciones internacionales, hasta el punto de que entre 2009 y 2014 se habría pasado de 3006 a 798, lo que representa un descenso muy acusado. El texto considera por ello que la continuidad de la adopción internacional ha quedado gravemente afectada y que la disminución experimentada a lo largo de los años resulta especialmente alarmante.
+
+El Anexo I refuerza esa idea general de retroceso. Las cifras totales pasan de 1669 adopciones en 2012 a 531 en 2017, y continúan descendiendo hasta 171 en 2021, con un leve repunte posterior hasta 179 en 2022 y 183 en 2023. Por continentes, Asia y Europa del Este concentraban inicialmente los volúmenes más altos, pero experimentan también una caída muy intensa; África desciende de forma especialmente brusca; y América Latina mantiene cifras más reducidas, igualmente decrecientes en el conjunto del periodo, aunque con una ligera recuperación final. El balance global que se desprende del texto y del anexo es, por tanto, el de una contracción muy profunda y sostenida de la adopción internacional, solo corregida muy modestamente en los últimos años.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1": "La adopción crea una filiación jurídica basada en el acto adoptivo e integrada en el sistema de igualdad de efectos entre filiación matrimonial, no matrimonial y adoptiva, conforme a la tendencia de equiparación con la filiación por naturaleza.",
+"1.1": "La Ley 21/1987 redefinió la adopción frente al modelo de 1970, reforzando su dimensión administrativa y la intervención de entidades públicas o colaboradoras, aunque el texto cuestiona que ello haya favorecido la integración temprana de los menores en familias adoptantes.",
+"1.2": "La Ley 54/2007 regula la adopción internacional desde la perspectiva del Derecho internacional privado y determina que tanto la adopción internacional como los efectos en España de las constituidas por autoridades extranjeras se rijan por esa ley especial.",
+"1.3": "La Ley 26/2015 incide de forma relevante en la materia adoptiva al modificar numerosos preceptos de la Ley de adopción internacional.",
+"2": "La adopción exige como presupuesto principal la situación de desamparo del menor, que activa la tutela automática de la entidad pública y la adopción de medidas de protección, dentro de un sistema en el que la irrevocabilidad justifica la regla de unicidad del vínculo adoptivo salvo en supuestos de adopción conjunta o sucesiva por pareja.",
+"2.1": "Los adoptantes deben tener plena capacidad de obrar, una edad mínima de veinticinco años, una diferencia mínima de dieciséis años con el adoptado y, como regla, una diferencia máxima de cuarenta y cinco, admitiéndose modulaciones en ciertos casos y manteniéndose la plena equiparación entre matrimonio y pareja estable, con independencia del sexo de sus integrantes.",
+"2.2": "Como regla solo pueden ser adoptados los menores no emancipados, aunque excepcionalmente cabe adoptar a mayores de edad o menores emancipados si existió acogimiento o convivencia estable previa, quedando excluidos los nasciturus y cualquier pacto anticipado sobre su adopción.",
+"2.3": "La ley prohíbe adoptar a descendientes, a determinados parientes colaterales y al pupilo por su tutor hasta la aprobación de cuentas, porque la adopción debe crear parentesco donde no existe y proteger al tutelado frente a posibles conflictos de interés, sin perjuicio de la regla de que nadie puede ser adoptado por más de una persona salvo supuestos legalmente exceptuados.",
+"3": "El procedimiento de adopción combina una fuerte intervención pública y judicial, de modo que la adopción solo se perfecciona mediante resolución judicial, pero sobre la base previa de las declaraciones de voluntad y controles legalmente exigidos.",
+"3.1": "La propuesta de la entidad pública es la vía ordinaria de inicio del expediente y presupone una previa declaración de idoneidad, entendida como aptitud integral para ejercer responsablemente la función parental, apreciada mediante valoración psicosocial y dentro de criterios básicos comunes reforzados por la LPIA.",
+"3.2": "La solicitud privada de adopción solo procede en supuestos tasados, como el parentesco huérfano en tercer grado, la adopción del hijo del cónyuge o pareja, la guarda o tutela prolongada y la adopción de mayores o emancipados, pudiendo incluso producir efectos pese al fallecimiento del adoptante si este consintió válidamente antes.",
+"3.3": "En la jurisdicción voluntaria de adopción, el consentimiento del adoptante y del adoptando mayor de doce años es constitutivo, el asentimiento de ciertas personas es exigible solo en casos previstos y la audiencia cumple una función informativa no vinculante para el juez.",
+"3.4": "La adopción se constituye por auto judicial atendiendo al interés del adoptando y a la idoneidad del adoptante, pero la resolución judicial no basta por sí sola, pues necesita apoyarse en los consentimientos y asentimientos legalmente requeridos y culmina con su inscripción registral.",
+"4": "La adopción es irrevocable para asegurar la estabilidad de la filiación adoptiva, de manera que la posterior determinación de la filiación biológica no la altera y el adoptado queda integrado definitivamente en la familia del adoptante.",
+"5": "Los efectos de la adopción consisten en equiparar plenamente la filiación adoptiva a la biológica, reorganizando tanto las relaciones personales y sucesorias del adoptado como su posición respecto de la familia de origen.",
+"5.1": "Entre adoptante y adoptado nace una relación de filiación plena que atribuye patria potestad, apellidos, deberes de alimentos y derechos hereditarios en condiciones idénticas a las de la filiación por naturaleza.",
+"5.2": "La adopción extingue como regla los vínculos jurídicos con la familia de origen, aunque subsisten excepcionalmente en ciertos supuestos y, además, puede mantenerse una relación controlada con miembros de esa familia si el interés del menor así lo exige y el juez lo acuerda.",
+"5.3": "El ordenamiento reconoce al adoptado el derecho a conocer sus orígenes biológicos, imponiendo a las entidades públicas la conservación prolongada de la información relevante y la asistencia necesaria para su acceso, en un ámbito donde confluyen ese derecho con la intimidad de los progenitores y donde la mediación adquiere especial relevancia.",
+"6": "La adopción internacional responde a la escasez de menores adoptables en los países desarrollados, pero el texto valora negativamente la Ley 54/2007 al entender que su aplicación ha coincidido con una contracción muy intensa y sostenida de las adopciones internacionales, solo levemente corregida en los últimos años."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1
+
+// [1]
+Q: ¿Qué idea expresa mejor la configuración jurídica actual de la adopción en relación con la filiación en el Código Civil?
+A) La adopción constituye una filiación excepcional con efectos parcialmente distintos de la filiación no matrimonial.
+B) La adopción produce una integración familiar limitada, subordinada a la persistencia preferente de la filiación biológica.
+C) La adopción origina una filiación jurídicamente equiparada a la filiación por naturaleza en cuanto a sus efectos.
+OK: C
+EXP: La idea nuclear del epígrafe es la equiparación de efectos entre filiación adoptiva y filiación por naturaleza.
+
+#ID = 1.1
+
+// [2]
+Q: ¿Qué transformación principal introduce la Ley 21/1987 en la configuración de la adopción?
+A) Refuerza la dimensión administrativa de la adopción y la intervención de entidades públicas o colaboradoras en su fase inicial.
+B) Sustituye la adopción plena por una adopción revocable dependiente de la voluntad posterior del adoptante.
+C) Elimina el control institucional sobre la adopción y devuelve la iniciativa exclusivamente a la familia biológica.
+OK: A
+EXP: El texto destaca que la Ley 21/1987 modifica el modelo anterior y desplaza la adopción hacia una lógica más administrativizada.
+
+#ID = 1.2
+
+// [3]
+Q: ¿Cuál es la función esencial que el texto atribuye a la Ley 54/2007 en materia de adopción internacional?
+A) Unificar la edad mínima del adoptante en todos los supuestos de adopción interna e internacional.
+B) Establecer las normas de Derecho internacional privado aplicables a la adopción internacional y a sus efectos en España.
+C) Convertir toda adopción extranjera en automáticamente equivalente a una adopción interna sin remisión legal específica.
+OK: B
+EXP: La Ley 54/2007 ordena la adopción internacional desde la perspectiva del Derecho internacional privado y rige los efectos en España de adopciones extranjeras.
+
+#ID = 1.3
+
+// [4]
+Q: ¿Qué relevancia tiene la Ley 26/2015 para la regulación de la adopción internacional según el texto?
+A) Introduce un régimen autónomo completo que sustituye íntegramente a la Ley 54/2007.
+B) Limita la adopción internacional a supuestos de parentesco previo entre adoptante y adoptado.
+C) Incide de forma relevante en la materia al modificar numerosos preceptos de la Ley 54/2007.
+OK: C
+EXP: El contenido esencial del subepígrafe es la incidencia modificativa de la LPIA sobre la Ley de adopción internacional.
+
+#ID = 2
+
+// [5]
+Q: ¿Qué función cumple la situación de desamparo del menor en los presupuestos de la adopción?
+A) Actúa solo como criterio orientativo para preferir la adopción frente a cualquier otra medida asistencial.
+B) Opera como causa que atribuye automáticamente al adoptante la patria potestad antes del procedimiento judicial.
+C) Constituye el presupuesto que legitima la intervención protectora de la entidad pública, incluida la tutela automática y medidas previas a la adopción.
+OK: C
+EXP: El desamparo activa la tutela automática de la entidad pública y permite articular medidas de protección, incluso la guarda con fines de adopción.
+
+// [6]
+Q: ¿Cómo se articula en la adopción la regla de que nadie puede ser adoptado por más de una persona?
+A) Como regla general de adoptante individual, con excepción de la adopción conjunta o sucesiva por cónyuges o parejas análogas.
+B) Como prohibición absoluta, salvo en los casos de parentesco biológico ya existente entre adoptantes y adoptado.
+C) Como preferencia legal por la adopción siempre conjunta, quedando la adopción individual relegada a supuestos residuales.
+OK: A
+EXP: El sistema parte del adoptante individual, pero admite excepciones para parejas matrimoniales o de hecho.
+
+#ID = 2.1
+
+// [7]
+Q: ¿Qué combina el régimen de requisitos cronológicos de los adoptantes en la adopción?
+A) Una edad mínima de mayoría de edad simple y una diferencia máxima abierta según la discreción judicial.
+B) Una edad mínima del adoptante y una diferencia de edad mínima y máxima con el adoptado, con excepciones legalmente previstas.
+C) Una edad mínima del adoptado y una identidad generacional aproximada entre adoptante y adoptado.
+OK: B
+EXP: El texto exige veinticinco años al adoptante y fija una diferencia mínima de dieciséis años y máxima general de cuarenta y cinco.
+
+// [8]
+Q: ¿Qué revela la regulación actual sobre la capacidad para adoptar de matrimonios y parejas unidas por análoga relación de afectividad?
+A) Que la adopción conjunta sigue reservada a los matrimonios, aunque las parejas de hecho puedan intervenir en la guarda previa.
+B) Que la capacidad para adoptar depende de la diferencia de sexo entre los integrantes de la pareja.
+C) Que existe una equiparación jurídica entre matrimonio y pareja estable a efectos de adopción, sin referencia al sexo de sus integrantes.
+OK: C
+EXP: El texto destaca la equiparación entre matrimonio y pareja estable y la superación de la polémica sobre parejas homosexuales.
+
+// [9]
+Q: ¿Qué consecuencia se desprende de que la adopción requiera plena capacidad de obrar y otras aptitudes personales del adoptante?
+A) Quedan excluidos de la condición de adoptante los menores de edad, quienes no puedan ser tutores y las personas jurídicas.
+B) Basta con la aptitud económica del adoptante, aunque carezca de capacidad para ejercer funciones tutelares.
+C) Pueden adoptar tanto personas humanas como personas jurídicas si la entidad pública las considera idóneas.
+OK: A
+EXP: La posición de adoptante solo corresponde a una persona humana con capacidad adecuada, no a menores, incapaces para tutelar o personas jurídicas.
+
+#ID = 2.2
+
+// [10]
+Q: ¿Cuál es la regla general sobre la condición del adoptado en el régimen de la adopción?
+A) Puede ser adoptada cualquier persona nacida, salvo prohibición expresa por parentesco.
+B) Solo pueden ser adoptados los menores no emancipados, con una excepción para mayores o emancipados vinculados previamente a los futuros adoptantes.
+C) Solo pueden ser adoptados los menores en situación de desamparo declarada administrativamente.
+OK: B
+EXP: La regla general recae sobre menores no emancipados, con excepción para ciertos mayores o emancipados con acogimiento o convivencia previa.
+
+// [11]
+Q: ¿Qué finalidad expresa la exclusión de los nascituri de la adopción y el aplazamiento del asentimiento materno hasta seis semanas después del parto?
+A) Facilitar que la futura madre pueda designar anticipadamente a los adoptantes concretos.
+B) Permitir que la adopción nazca condicionada al resultado del parto y a la viabilidad del nacido.
+C) Evitar pactos anticipados sobre la entrega en adopción y reforzar que la decisión se adopte una vez producido el nacimiento.
+OK: C
+EXP: El sistema excluye la adopción del nasciturus y retrasa el asentimiento de la madre para impedir compromisos previos incompatibles con la protección legal.
+
+#ID = 2.3
+
+// [12]
+Q: ¿Qué justifica las prohibiciones de adopción respecto de descendientes, ciertos parientes colaterales y pupilos por su tutor?
+A) La necesidad de que la adopción cree parentesco donde no existe y de proteger al tutelado frente a conflictos de interés del tutor.
+B) La voluntad legal de limitar la adopción a menores extranjeros carentes de vínculos familiares en España.
+C) La exigencia de que toda adopción rompa cualquier relación previa de convivencia entre adoptante y adoptado.
+OK: A
+EXP: Las prohibiciones responden a la lógica de la filiación adoptiva y, en el caso del tutor, a la protección del pupilo hasta la rendición de cuentas.
+
+// [13]
+Q: ¿Qué alcance tiene la posibilidad de nueva adopción o de adopción del hijo del cónyuge o conviviente en el régimen de prohibiciones de la adopción?
+A) Permite revisar libremente la adopción cuando una crisis de pareja aconseje reorganizar la filiación del menor.
+B) Admite excepciones específicas a la regla general sin alterar la irrevocabilidad de la adopción ya constituida.
+C) Convierte la adopción en un vínculo provisional sujeto a la evolución futura de la convivencia de la pareja.
+OK: B
+EXP: El texto admite esas posibilidades como excepciones tasadas, pero subraya que la adopción sigue siendo irrevocable y no queda afectada por crisis posteriores.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 3
+
+// [14]
+Q: ¿Qué rasgo define con mayor precisión el procedimiento de adopción en el régimen general de inicio del expediente?
+A) La adopción puede iniciarse libremente por el adoptante si acredita medios económicos suficientes.
+B) La adopción se abre de oficio por el juez siempre que exista un menor en situación de desamparo.
+C) La adopción requiere con carácter general una propuesta previa de la entidad pública a favor de quien haya sido declarado idóneo.
+OK: C
+EXP: La propuesta de la entidad pública es la vía ordinaria de inicio y se apoya en la previa declaración de idoneidad.
+
+#ID = 3.1
+
+// [15]
+Q: ¿Qué contenido integra la declaración de idoneidad en el procedimiento de adopción?
+A) Una valoración de capacidad, aptitud y motivación para ejercer responsablemente la función parental conforme a las necesidades del menor.
+B) Una mera comprobación formal de edad, estado civil y nivel patrimonial del adoptante.
+C) Una autorización judicial anticipada que sustituye definitivamente al auto constitutivo de la adopción.
+OK: A
+EXP: La idoneidad no se reduce a datos formales, sino que exige valorar aptitudes personales y parentales para atender al menor.
+
+// [16]
+Q: ¿Qué significado tiene la delegación de guarda con fines de adopción dentro de la intervención de la entidad pública?
+A) Supone la constitución definitiva de la adopción por decisión administrativa.
+B) Permite encomendar la guarda del menor a personas ya declaradas idóneas y asignadas para su adopción.
+C) Equivale a una tutela privada irrevocable que desplaza toda actuación posterior del juez.
+OK: B
+EXP: La delegación de guarda con fines de adopción anticipa la convivencia protegida, pero no sustituye la adopción judicial.
+
+#ID = 3.2
+
+// [17]
+Q: ¿Cuándo puede promoverse la solicitud privada de adopción sin propuesta de la entidad pública?
+A) Cuando el adoptante haya convivido con cualquier menor durante seis meses y exista informe favorable.
+B) Cuando el adoptando sea extranjero y el adoptante preste caución bastante ante el juez.
+C) Cuando concurra alguno de los supuestos legalmente tasados, como parentesco concreto, adopción del hijo del cónyuge o guarda prolongada.
+OK: C
+EXP: La solicitud privada es excepcional y solo procede en los casos cerrados previstos legalmente.
+
+// [18]
+Q: ¿Qué presupuesto permite que la adopción produzca efectos pese al fallecimiento del adoptante en ciertos supuestos de solicitud privada?
+A) Que el adoptante hubiera prestado ya válidamente su consentimiento antes de morir.
+B) Que la entidad pública hubiera iniciado la propuesta aunque no existiera consentimiento previo.
+C) Que el adoptando manifieste por sí solo su conformidad tras la muerte del adoptante.
+OK: A
+EXP: El texto exige consentimiento ya prestado ante el juez o en forma legal equivalente para retrotraer los efectos.
+
+#ID = 3.3
+
+// [19]
+Q: ¿Qué diferencia fundamental existe entre consentimiento, asentimiento y audiencia en el proceso de jurisdicción voluntaria de adopción?
+A) El consentimiento y la audiencia son equivalentes, mientras que el asentimiento solo tiene valor moral.
+B) El consentimiento es constitutivo, el asentimiento se exige solo en ciertos casos y la audiencia no vincula al juez.
+C) El asentimiento constituye por sí solo la adopción, mientras que el consentimiento y la audiencia son accesorios.
+OK: B
+EXP: El texto distingue con claridad entre requisito constitutivo, conformidad exigible en supuestos concretos y simple trámite de información judicial.
+
+// [20]
+Q: ¿Qué relevancia tiene el asentimiento de los progenitores en la adopción cuando conservan la patria potestad y no concurre causa legal de privación?
+A) Su asentimiento es imprescindible y su oposición impide la adopción.
+B) Su intervención se reduce a una audiencia no vinculante para el juez.
+C) Su falta puede suplirse automáticamente por la entidad pública sin más requisitos.
+OK: A
+EXP: Si conservan la patria potestad y no hay causa legal de privación, el asentimiento parental resulta necesario.
+
+// [21]
+Q: ¿Qué exigencia formal rige para los consentimientos y asentimientos en la adopción?
+A) Pueden deducirse de actos concluyentes si revelan voluntad suficiente de integración familiar.
+B) Basta su manifestación verbal ante la entidad pública aunque no conste documentalmente.
+C) Deben otorgarse libremente, por escrito, en forma legal y previa información de sus consecuencias.
+OK: C
+EXP: El texto exige libertad, forma escrita y conocimiento de consecuencias para la validez de estas declaraciones.
+
+#ID = 3.4
+
+// [22]
+Q: ¿Qué papel desempeña la resolución judicial en la constitución de la adopción?
+A) Tiene carácter constitutivo, de modo que sin auto judicial favorable la adopción no llega a producirse jurídicamente.
+B) Cumple una función meramente registral, pues la adopción nace ya completa con el consentimiento privado.
+C) Solo sirve para revisar la idoneidad administrativa, pero no para constituir la filiación adoptiva.
+OK: A
+EXP: La adopción requiere resolución judicial constitutiva; sin ella, no se perfecciona jurídicamente.
+
+// [23]
+Q: ¿Cómo se relacionan en la constitución de la adopción el auto judicial y las declaraciones de voluntad exigidas por la ley?
+A) El auto judicial basta por sí solo para crear la adopción aunque falten consentimientos o asentimientos.
+B) La adopción exige tanto la resolución judicial como los consentimientos y asentimientos legalmente requeridos.
+C) Las declaraciones de voluntad perfeccionan por sí solas la adopción, quedando el auto judicial como mera formalidad.
+OK: B
+EXP: El texto rechaza tanto el exclusivismo judicial como el puramente voluntarista: ambos elementos son necesarios.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 4
+
+// [24]
+Q: ¿Qué finalidad jurídica expresa la irrevocabilidad de la adopción en la filiación adoptiva?
+A) Permitir la revisión periódica del vínculo adoptivo según la evolución de las relaciones familiares.
+B) Subordinar la filiación adoptiva a la eventual aparición posterior de la filiación biológica.
+C) Garantizar la estabilidad de la integración familiar del adoptado y evitar que dependa de cambios de voluntad de los interesados.
+OK: C
+EXP: La irrevocabilidad protege la continuidad de la filiación adoptiva y la sustrae a decisiones cambiantes, especialmente del adoptante.
+
+// [25]
+Q: ¿Qué efecto produce sobre la adopción la posterior determinación de la filiación por naturaleza del adoptado?
+A) No altera la adopción ya constituida ni la condición de hijo adoptivo.
+B) Extingue automáticamente la adopción si la filiación biológica queda legalmente acreditada.
+C) Suspende los efectos familiares de la adopción hasta que el juez decida entre ambas filiaciones.
+OK: A
+EXP: El texto afirma que la determinación posterior de la filiación natural no afecta a la adopción.
+
+// [26]
+Q: ¿Cómo se configura la extinción excepcional de la adopción por falta de asentimiento de los progenitores?
+A) Como una facultad discrecional del adoptado para revisar la adopción en cualquier momento.
+B) Como una posibilidad excepcional sujeta a plazo de caducidad de dos años desde la firmeza del auto y a requisitos de protección del menor.
+C) Como una acción imprescriptible de nulidad cuando los progenitores aleguen desconocimiento de la adopción.
+OK: B
+EXP: La extinción excepcional exige falta de asentimiento sin culpa de los progenitores, ausencia de grave perjuicio al menor y plazo de caducidad.
+
+// [27]
+Q: ¿Qué diferencia existe entre la extinción de la adopción y la exclusión del adoptante por causa de privación de la patria potestad?
+A) La exclusión del adoptante suprime la adopción misma, mientras que la extinción solo limita derechos accesorios.
+B) La extinción y la exclusión son equivalentes y producen siempre los mismos efectos jurídicos.
+C) La exclusión priva al adoptante de funciones y derechos sin deshacer necesariamente la adopción, a diferencia de la extinción del vínculo.
+OK: C
+EXP: El texto distingue claramente entre extinguir la adopción y excluir al adoptante de funciones tuitivas y derechos legales.
+
+// [28]
+Q: ¿Qué exigencia impone el régimen español a la adopción internacional cuando la ley extranjera permite al adoptante revocar la adopción?
+A) Exige que el adoptante renuncie previamente a la facultad de revocación antes del traslado del menor a España.
+B) Permite la entrada en España de la adopción revocable si la autoridad extranjera garantiza control judicial posterior.
+C) Sustituye la adopción extranjera revocable por una tutela automática acordada por la entidad pública española.
+OK: A
+EXP: Para que la adopción extranjera sea eficaz, debe quedar asegurada su irrevocabilidad mediante renuncia formal previa del adoptante.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 5
+
+// [29]
+Q: ¿Qué principio general define los efectos de la adopción en el sistema de filiación?
+A) La adopción crea una filiación subordinada a la biológica en materia personal y sucesoria.
+B) La adopción produce efectos limitados a la convivencia familiar, pero no a la posición sucesoria.
+C) La adopción equipara la filiación adoptiva a la filiación por naturaleza en el plano jurídico.
+OK: C
+EXP: El epígrafe parte de la igualdad de la filiación adoptiva con la filiación por naturaleza como criterio rector de sus efectos.
+
+#ID = 5.1
+
+// [30]
+Q: ¿Qué consecuencia jurídica expresa mejor las relaciones entre adoptante y adoptado en la adopción?
+A) El adoptante asume patria potestad, apellidos, deberes alimenticios y relaciones sucesorias en términos equivalentes a la filiación por naturaleza.
+B) El adoptante solo adquiere deberes de guarda y alimentos, pero no derechos sucesorios recíprocos.
+C) El adoptado queda integrado familiarmente, aunque con una posición hereditaria inferior a la del hijo consanguíneo.
+OK: A
+EXP: La adopción produce una filiación plena, con efectos personales y sucesorios equiparados a los de la filiación biológica.
+
+#ID = 5.2
+
+// [31]
+Q: ¿Cómo se configura como regla general la relación entre el adoptado y su familia de origen tras la adopción?
+A) Se mantienen simultáneamente los vínculos familiares y sucesorios con ambas familias para proteger la identidad del adoptado.
+B) Se extinguen los vínculos jurídicos con la familia de origen, salvo excepciones legalmente previstas.
+C) Se suspenden provisionalmente los vínculos con la familia de origen hasta que el adoptado alcance la mayoría de edad.
+OK: B
+EXP: La regla general es la extinción de los vínculos jurídicos con la familia de origen, aunque la ley admite excepciones tasadas.
+
+// [32]
+Q: ¿Qué función cumple el mantenimiento de relaciones o contactos con la familia de origen en la adopción según la LPIA?
+A) Opera automáticamente en toda adopción para preservar la doble integración familiar del menor.
+B) Sustituye la extinción de vínculos jurídicos por una convivencia jurídica entre ambas familias.
+C) Puede acordarse judicialmente si lo exige el interés del menor, con condiciones, seguimiento y posibilidad de revisión.
+OK: C
+EXP: El mantenimiento de contactos no es general ni automático, sino una medida excepcional vinculada al interés del menor y sometida a control judicial.
+
+#ID = 5.3
+
+// [33]
+Q: ¿Qué contenido esencial tiene el derecho de las personas adoptadas a conocer sus orígenes biológicos?
+A) Comprende el acceso a datos conservados sobre identidad de progenitores e historia médica, con apoyo institucional para hacerlo efectivo.
+B) Se limita a conocer la existencia de la adopción, sin acceso a información relativa a la familia de origen.
+C) Solo puede ejercerse cuando los progenitores biológicos consienten expresamente la revelación de su identidad.
+OK: A
+EXP: La ley reconoce un derecho de acceso a los datos sobre orígenes biológicos y obliga a las entidades públicas a conservarlos y facilitar asistencia.
+
+// [34]
+Q: ¿Qué tensión jurídica destaca el texto en relación con los orígenes biológicos de las personas adoptadas?
+A) La oposición entre el derecho del adoptante a ocultar la adopción y el derecho del adoptado a impugnarla.
+B) La concurrencia entre el derecho del adoptado a conocer su identidad biológica y el derecho de los progenitores a preservar su intimidad.
+C) El conflicto entre la patria potestad del adoptante y la capacidad registral de la entidad pública para revelar datos.
+OK: B
+EXP: El texto subraya el conflicto entre conocimiento de los orígenes e intimidad de los progenitores, y por eso presenta la mediación como vía adecuada.
+    `;
+
+
+    const BANCO_5 = ` 
+#ID = 6
+
+// [35]
+Q: ¿Qué factor explica en el texto el auge de la adopción internacional en los países del entorno desarrollado?
+A) La ampliación de los supuestos legales de adopción por personas jurídicas en el extranjero.
+B) La preferencia normativa por la adopción transfronteriza frente a la adopción interna.
+C) La escasez de menores susceptibles de adopción, vinculada al descenso de la natalidad, que impulsó la búsqueda de hijos adoptivos fuera del país.
+OK: C
+EXP: El texto sitúa el origen del fenómeno en la falta de menores adoptables en los países desarrollados y en la consiguiente búsqueda internacional.
+
+// [36]
+Q: ¿Cómo valora el texto la función práctica de la Ley 54/2007 en la adopción internacional?
+A) Como una norma de resultados negativos, asociada a un efecto de cierre y a un fuerte descenso de las adopciones internacionales.
+B) Como una reforma que consolidó el crecimiento sostenido de las adopciones internacionales desde su entrada en vigor.
+C) Como una disposición centrada exclusivamente en ampliar las competencias del Registro Civil en materia internacional.
+OK: A
+EXP: La valoración del texto es abiertamente crítica, pues vincula la ley con un retroceso intenso de la adopción internacional.
+
+// [37]
+Q: ¿Qué conclusión principal se desprende del Anexo I sobre la evolución de la adopción internacional?
+A) Que el descenso afectó solo a Asia, manteniéndose estables el resto de áreas geográficas.
+B) Que la adopción internacional experimentó una contracción profunda y sostenida, con solo una recuperación final muy limitada.
+C) Que las cifras cayeron hasta 2017, pero después recuperaron de forma intensa los niveles iniciales.
+OK: B
+EXP: El anexo confirma una caída prolongada en el conjunto del periodo, apenas corregida por un repunte modesto en los últimos años.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
