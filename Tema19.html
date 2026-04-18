@@ -1,0 +1,1883 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 19. La determinación de la filiación</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. INTRODUCCIÓN
+
+1.1. La determinación de la filiación
+
+A efectos legales, la filiación relevante es la que ha quedado legalmente determinada. Su determinación produce, con carácter general, efectos retroactivos al momento del nacimiento, siempre que esa retroactividad sea compatible con su naturaleza y la ley no disponga otra cosa.
+
+No obstante, para proteger a terceros, conservan su validez los actos realizados antes de la determinación de la filiación en nombre del hijo menor por su representante legal o, si se trata de mayores con discapacidad con medidas de apoyo previstas, los efectuados conforme a ellas.
+
+Tras la Constitución de 1978, el ordenamiento no distingue entre filiación matrimonial y no matrimonial en cuanto a sus efectos, pues una diferencia de ese tipo sería inconstitucional. Sin embargo, sí se mantiene la distinción respecto de las formas de determinación de una y otra, al considerarse que el matrimonio aporta en principio certeza sobre la paternidad, lo que justifica que los mecanismos de determinación, prueba, reclamación e impugnación se articulen de modo diferente según el carácter matrimonial o no matrimonial de la filiación.
+
+También se menciona la iniciativa de crear un Certificado de filiación europeo, que no sustituiría a los documentos nacionales ni obligaría a modificar la legislación interna de los Estados, pero sí implicaría que estos deban admitir la filiación cuando haya sido legalmente determinada en otro país de la Unión Europea.
+
+1.2. Determinación de la filiación materna o de la filiación del progenitor gestante
+
+En el sistema normativo español, la filiación materna se determina por el parto, aunque el Código Civil no haya contenido históricamente una regla expresa en ese sentido y haya sido la legislación sobre reproducción asistida la que lo haya formulado de manera formal por primera vez. Esa ausencia se explica porque, antes del desarrollo de la reproducción humana asistida, resultaba natural identificar a la madre gestante con la madre genética, de modo que no era necesario fijar expresamente un criterio legal.
+
+La necesidad de precisar ese criterio surge cuando la maternidad gestante y la genética pueden separarse, lo que obliga a resolver posibles conflictos entre ambas. Por ello, la filiación materna queda determinada por el hecho de haber dado a luz y por la identificación del nacido como el hijo cuya filiación se pretende establecer. De ahí que se prevea la posibilidad de impugnar la filiación cuando se justifique la suposición del parto o no sea cierta la identidad del hijo.
+
+La Ley 4/2023 ha sustituido en esta materia las referencias a madre y padre por las de progenitor gestante y no gestante. Esta modificación no es solo terminológica, sino que permite que las parejas de mujeres y las parejas de hombres en las que uno de sus miembros trans tenga capacidad de gestar puedan determinar la filiación en los mismos términos que las parejas heterosexuales.
+
+Para la determinación de la filiación materna resulta indiferente que esta sea matrimonial o no matrimonial, aunque esa diferencia sigue siendo relevante en relación con la filiación paterna por el juego de las presunciones de paternidad del marido. Finalmente, se anticipa que, tanto en la adopción como en la reproducción asistida, puede quedar legalmente determinada la filiación mediante la maternidad de dos mujeres.
+
+2. LAS NORMAS Y PRESUNCIONES RELATIVAS A LA FILIACIÓN MATRIMONIAL
+
+El Código Civil inicia la regulación de la determinación de la filiación matrimonial estableciendo que esta queda legalmente fijada por la inscripción del nacimiento junto con la del matrimonio de los padres o por sentencia firme. Sin embargo, el elemento central de esta materia no radica tanto en esa formulación general como en las presunciones y reglas referidas a la paternidad del marido de la madre que ha dado a luz.
+
+2.1. La presunción de paternidad y la eventual concepción prematrimonial del hijo
+
+La presunción de paternidad del marido constituye una regla clásica del Derecho de familia, basada en la idea de que, constante matrimonio, lo normal es que la paternidad corresponda al marido. Esta regla se mantiene en el Derecho vigente al presumirse hijos del marido los nacidos después de la celebración del matrimonio y antes de los trescientos días siguientes a su disolución o a la separación legal o de hecho de los cónyuges.
+
+El sistema actual no excluye la filiación matrimonial por el solo hecho de que la concepción haya sido anterior al matrimonio. Si el hijo nace dentro de los ciento ochenta días siguientes a la celebración del matrimonio, el marido puede destruir la presunción mediante declaración auténtica en contrario dentro de los seis meses siguientes al conocimiento del parto. Pero también puede no hacerlo y asumir la condición de padre del hijo concebido antes del matrimonio.
+
+El Código parte así de que el nacimiento dentro de esos ciento ochenta días revela normalmente una concepción anterior al matrimonio, manteniendo los periodos mínimo y máximo de gestación en los parámetros tradicionales de ciento ochenta y trescientos días. Aun así, favorece el carácter matrimonial del hijo concebido antes del matrimonio, atendiendo a la realidad de matrimonios celebrados cuando la mujer ya está embarazada.
+
+La posibilidad de destruir la presunción desaparece cuando el marido ha reconocido expresa o tácitamente la paternidad. También queda limitada cuando conocía el embarazo antes de casarse, pues en ese caso el Código entiende que el matrimonio refuerza la atribución de paternidad al varón que, conociendo esa situación, contrae matrimonio con la mujer embarazada.
+
+Por ello, si no conocía el embarazo, basta su sola declaración para impugnar la presunción, mientras que, si lo conocía, la declaración debe hacerse con el consentimiento de ambos cónyuges.
+
+En todo caso, la presunción de paternidad del marido tiene carácter iuris tantum, de modo que despliega eficacia mientras no se pruebe en contrario que el marido no es el padre del hijo.
+
+2.2. El supuesto del art. 118: la inexistencia de presunción de paternidad
+
+Cuando falta la presunción de paternidad por causa de separación legal o de hecho, el Código permite que la filiación se inscriba como matrimonial si concurre el consentimiento de ambos cónyuges. La finalidad de esta norma es admitir el carácter matrimonial del hijo aunque ya no opere la presunción de paternidad, pero solo en los supuestos de separación, no en los de disolución del matrimonio.
+
+Si el matrimonio se ha disuelto, no basta el consentimiento de ambos para atribuir carácter matrimonial al hijo, sino que será preciso acudir a las correspondientes acciones de filiación. Por eso, el precepto se refiere al caso del hijo nacido una vez transcurridos los trescientos días desde la separación, sea esta legal o de hecho, circunstancia que condiciona el cómputo del plazo.
+
+En el fondo, la norma permite que los cónyuges separados determinen por sí mismos, mediante su consentimiento, el carácter matrimonial del hijo nacido cuando ya no rige la presunción. Ese consentimiento actúa materialmente como reconocimiento del hecho de la generación. Aunque el Código solo exige que concurra el consentimiento de ambos y no dice expresamente que deba prestarse conjuntamente, la peculiaridad del supuesto aconseja entender que esa manifestación debe realizarse de forma conjunta.
+
+2.3. La filiación matrimonial del hijo nacido con anterioridad al matrimonio
+
+No puede considerarse matrimonial al hijo nacido antes del matrimonio de sus progenitores, porque si estos no estaban casados en el momento del nacimiento, el hijo debe ser tenido por no matrimonial. Sin embargo, el Derecho ha conocido desde antiguo mecanismos que permitían atribuir después carácter matrimonial a esos hijos mediante el posterior matrimonio de sus progenitores, atendiendo al beneficio del hijo.
+
+Aunque la igualdad entre hijos matrimoniales y no matrimoniales ha reducido la importancia práctica de esta cuestión, la reforma de 1981 mantuvo un mecanismo de matrimonialización de los hijos extramatrimoniales cuando sus progenitores celebran posteriormente matrimonio entre sí. En ese caso, la filiación pasa a tener carácter matrimonial desde la fecha del matrimonio, siempre que la filiación hubiera quedado previamente determinada conforme a las reglas de la filiación extramatrimonial.
+
+Ello significa que los progenitores deben estar legalmente identificados como tales, ya que al no ser cónyuges en el momento del nacimiento la filiación solo pudo haberse determinado por las reglas propias de la filiación no matrimonial. No existe aquí ningún plazo para la celebración del matrimonio, de modo que este puede producirse muchos años después del nacimiento del hijo y aun así transformar en matrimonial la filiación previamente determinada.
+
+Ese efecto alcanza incluso al supuesto de que el hijo haya fallecido antes del matrimonio, pues aprovecha también a sus descendientes. No se trata de una presunción, sino de una regla que atribuye efectos concretos al matrimonio posterior de quienes, antes de ser cónyuges, habían procreado un hijo extramatrimonial.
+
+3. LA DETERMINACIÓN DE LA FILIACIÓN EXTRAMATRIMONIAL
+
+La filiación extramatrimonial se determina legalmente por los medios recogidos en el art. 120 del Código Civil. Entre ellos se incluyen la declaración conforme realizada por el padre o progenitor no gestante en el momento de la inscripción del nacimiento, el reconocimiento ante el encargado del Registro Civil, en testamento o en otro documento público, la resolución dictada en expediente tramitado conforme a la legislación registral, la sentencia firme y, respecto de la madre o progenitor gestante, la constancia de su filiación en la inscripción de nacimiento practicada dentro de plazo conforme a la Ley del Registro Civil.
+
+Aunque el precepto afirme que la filiación extramatrimonial queda determinada legalmente, esa expresión no significa que la ley la establezca de forma directa por sí sola, sino que exige la realización de algún acto jurídico por los progenitores o la tramitación de un expediente o proceso dirigido a fijarla. Por ello, a diferencia de la filiación matrimonial, la filiación extramatrimonial no resulta nunca directamente de la ley, sino que requiere siempre un mecanismo específico de determinación.
+
+Entre todos esos procedimientos, el reconocimiento ocupa el lugar más importante, hasta el punto de que el legislador dedica a su regulación la mayor parte de las normas sobre determinación de la filiación extramatrimonial. Por eso, su estudio debe hacerse separadamente, dejando para después la consideración de los demás medios de determinación.
+
+4. EL RECONOCIMIENTO DE LA FILIACIÓN EXTRAMATRIMONIAL
+
+4.1. Concepto y naturaleza: el reconocimiento como acto jurídico
+
+El reconocimiento tiene por objeto la admisión de la relación biológica entre quien lo realiza y la persona a la que se refiere. Se trata de un acto jurídico del progenitor que reconoce, cuyos efectos vienen fijados por la ley, sin que el reconocedor pueda determinar su alcance. Por ello, no existe en él base negocial, sino una declaración de voluntad a la que el ordenamiento atribuye directamente sus consecuencias.
+
+4.2. Características del acto de reconocimiento
+
+El reconocimiento es un acto voluntario, pues depende de la decisión espontánea del progenitor.
+
+Es también irrevocable, de manera que, una vez emitido en forma legal, el reconocedor ya no puede decidir sobre sus efectos. Tiene carácter solemne, porque debe realizarse en alguna de las formas legalmente previstas. Es además personalísimo, ya que ha de ser efectuado por el propio progenitor, aunque excepcionalmente otra persona pueda limitarse a transmitir una voluntad ya formada. Finalmente, debe ser expreso e incondicional, pues solo puede consistir en una declaración clara de la relación biológica, sin quedar sometido a condición o término. Aunque normalmente reconocerá el padre, también puede hacerlo la madre.
+
+4.3. Sujeto activo: el progenitor
+
+La validez del reconocimiento depende de la capacidad del progenitor que lo otorga. Si quien reconoce es menor no emancipado, se requiere aprobación judicial con audiencia del Ministerio Fiscal. En el caso de personas mayores de edad con medidas de apoyo, habrá que estar a lo que disponga la resolución judicial o la escritura pública que las haya establecido y, si nada se hubiera previsto y no existieran medidas voluntarias, deberá revisarse ese sistema de apoyo para completarlo a tal fin.
+
+La legislación registral exige además, cuando el reconocimiento de la filiación no matrimonial se realiza mediante declaración del padre o progenitor no gestante ante el encargado del Registro Civil, el consentimiento expreso de la madre o persona trans gestante y, si el reconocido es menor, de su representante legal, o del propio reconocido si es mayor de edad.
+
+También se alude a los reconocimientos de complacencia, en los que un varón reconoce a sabiendas a un menor que no es biológicamente suyo con la finalidad de formar una familia. Tales reconocimientos son válidos si cumplen los requisitos legales, pero suscitan el problema de su posible impugnación posterior por falta de verdad biológica.
+
+4.4. Hijos susceptibles de reconocimiento
+
+Tras la reforma de 1981, el reconocimiento puede recaer sobre cualquier hijo extramatrimonial, sin las antiguas restricciones derivadas de la clasificación entre hijos. Además, su carácter intemporal permite que se refiera tanto a hijos menores como a hijos de edad avanzada e incluso fallecidos, lo que justifica la existencia de reglas especiales según la situación del reconocido.
+
+En el caso del hijo menor de edad, la eficacia del reconocimiento exige el consentimiento expreso de su representante legal o, en su defecto, aprobación judicial con audiencia del Ministerio Fiscal y del progenitor legalmente conocido. No obstante, ese consentimiento o aprobación no son necesarios cuando el reconocimiento se hace en testamento o dentro del plazo para practicar la inscripción del nacimiento. En tales casos, la inscripción puede ser suspendida a simple petición de la madre o progenitor gestante durante el año siguiente al nacimiento y, si el padre o progenitor no gestante solicita su confirmación, será precisa la aprobación judicial. Además, el reconocimiento posterior a la inscripción de nacimiento puede hacerse en cualquier tiempo conforme a las formas civiles aplicables.
+
+Respecto del hijo mayor de edad, el reconocimiento no produce efectos sin su consentimiento expreso o tácito. La norma responde a la idea de que quien tiene plena capacidad debe poder aceptar o rechazar un reconocimiento tardío. En el caso de persona mayor de edad con discapacidad, ese consentimiento deberá prestarse con los apoyos que precise y conforme, en su caso, a las medidas de apoyo previamente establecidas.
+
+En relación con el hijo incestuoso, si ya está determinada legalmente la filiación respecto de uno de los progenitores y el otro es hermano o consanguíneo en línea recta, la segunda filiación solo podrá determinarse previa autorización judicial, con audiencia del Ministerio Fiscal, cuando convenga al menor o incapaz. Al alcanzar la plena capacidad, el hijo podrá invalidar esa segunda determinación si no la hubiera consentido.
+
+Si el hijo ya ha fallecido, el reconocimiento solo surtirá efecto si lo consienten sus descendientes por sí o por medio de sus representantes legales.
+
+En cuanto al nasciturus, la posibilidad de reconocimiento requiere matices. El reconocimiento unilateral del progenitor masculino no resulta admisible, porque la identificación del concebido solo puede hacerse a través de la madre gestante y el Código impide que un reconocimiento separado manifieste la identidad del otro progenitor si esta no está ya legalmente determinada.
+
+En cambio, no existe obstáculo para el reconocimiento conjunto de ambos progenitores, aunque su reflejo registral presenta dificultades al no existir todavía inscripción de nacimiento.
+
+4.5. Las formas de reconocimiento
+
+La filiación extramatrimonial puede determinarse por reconocimiento ante el encargado del Registro Civil, en testamento o en otro documento público. Estas formas responden a la solemnidad exigida por la trascendencia del acto y a la necesidad de evitar controversias posteriores sobre su existencia. La irrevocabilidad del reconocimiento queda confirmada incluso cuando se realiza en testamento, pues no pierde eficacia aunque este sea revocado o resulten ineficaces las demás disposiciones testamentarias.
+
+La eficacia del reconocimiento ante el Registro Civil es la misma tanto si se efectúa dentro del plazo de inscripción del nacimiento como si se realiza después, ya que la ley permite hacerlo en cualquier tiempo con arreglo a las formas civiles aplicables. En todo caso, para que produzca efectos deben concurrir todas las condiciones de validez y eficacia establecidas por la legislación civil.
+
+La exigencia de forma solemne no significa que otras manifestaciones no formales carezcan por completo de relevancia, sino que reciben un tratamiento distinto. El reconocimiento solemne determina por sí mismo la filiación extramatrimonial, mientras que otras manifestaciones realizadas en forma no prevista legalmente solo constituyen prueba valorable conforme a las reglas generales y pueden servir de base para una declaración judicial de filiación.
+
+Frente a esta exigencia formal, la legislación registral introdujo un sistema más simple para la determinación de la filiación en los nacimientos producidos en establecimientos sanitarios, mediante la remisión electrónica al Registro Civil del formulario oficial cumplimentado y firmado por quienes deben comunicar el nacimiento, en el que constan la identidad de los declarantes, el nombre del nacido, el orden de los apellidos y la filiación paterna.
+
+5. LOS RESTANTES MEDIOS DE DETERMINACIÓN DE LA FILIACIÓN EXTRAMATRIMONIAL
+
+Además del reconocimiento, la filiación extramatrimonial puede quedar determinada por expediente tramitado conforme a la legislación del Registro Civil, por sentencia firme y, respecto de la madre o progenitor gestante, por la constancia de la filiación en la inscripción de nacimiento. Se trata, por tanto, de mecanismos distintos del reconocimiento en sentido estricto, aunque igualmente aptos para fijar legalmente la filiación extramatrimonial.
+
+5.1. El llamado expediente gubernativo
+
+La filiación extramatrimonial puede determinarse por resolución recaída en expediente tramitado con arreglo a la legislación del Registro Civil. Este expediente solo opera cuando no existe oposición del Ministerio Fiscal ni de parte interesada debidamente notificada. Su función es permitir la inscripción de la filiación cuando concurre un escrito indubitado del padre o de la madre en el que se reconozca expresamente la filiación, cuando el hijo se encuentre en posesión continua del estado de hijo justificada por actos del progenitor o de su familia, o cuando, respecto de la madre o persona trans gestante, quede suficientemente probado el parto y la identidad del hijo.
+
+Si existe oposición, la inscripción ya no puede obtenerse por esta vía y habrá que acudir al procedimiento judicial correspondiente. Por ello, este expediente queda limitado a los supuestos en los que no exista verdadera controversia entre los interesados.
+
+5.2. La determinación de la filiación extramatrimonial por sentencia firme
+
+La filiación extramatrimonial puede también quedar determinada por sentencia firme, ya sea civil o penal, cuando esta ponga fin a un proceso cuyo objeto haya sido precisamente la determinación, reclamación o impugnación de la filiación. No obstante, el análisis detallado de este medio exige estudiar previamente las acciones de filiación, por lo que aquí solo se deja constancia de su existencia como vía legal de determinación.
+
+5.3. La determinación de la maternidad extramatrimonial o de la filiación del progenitor gestante
+
+La filiación extramatrimonial respecto de la madre o progenitor gestante queda determinada cuando su filiación consta en la inscripción de nacimiento practicada dentro de plazo conforme a la legislación registral. De las normas del Registro Civil se desprende que, salvo en supuestos excepcionales, en toda inscripción de nacimiento ocurrida en España debe hacerse constar necesariamente la filiación materna si en la declaración oficial figura el nombre de la madre, el parte médico identifica a la madre y existe coincidencia plena entre ambos documentos. En caso de discordancia, prevalece el parte facultativo, lo que obliga a comprobar debidamente la identidad de la madre.
+
+Cumplidos esos requisitos, no cabe excluir la constancia registral de la filiación materna ni ocultar la identidad de la madre biológica por decisión de esta, aunque posteriormente pueda procederse, si corresponde, a la rectificación registral por resolución judicial o a la cesión para adopción. Sí se prevé, sin embargo, que el acceso al conocimiento de esa filiación pueda quedar restringido cuando la madre lo solicite por motivos fundados y renuncie a ejercer los derechos derivados de dicha filiación.
+
+La regulación vigente refuerza así el conocimiento de los orígenes biológicos y el principio de igualdad entre los progenitores, al no admitir que la madre pueda sustraerse voluntariamente a la constancia de su filiación cuando esta ya ha quedado determinada legalmente.
+
+Por su parte, la filiación del padre o de la madre no gestante puede hacerse constar en el momento de la inscripción del hijo cuando exista matrimonio con la madre gestante y resulten aplicables las presunciones legales, o, aun faltando estas y también cuando la madre esté casada con otra mujer, si concurre el consentimiento de ambos cónyuges, incluso en caso de separación legal o de hecho. También puede constar cuando el padre o la madre no gestante manifieste su conformidad, siempre que no se contradigan las presunciones legales y no exista controversia, además de cumplirse las condiciones exigidas por la legislación civil. Si se comprueba que la madre está unida por vínculo matrimonial con persona distinta de la que figura en la declaración o resulta aplicable la presunción legal de paternidad, la inscripción de nacimiento se practicará inicialmente solo con la filiación materna y se abrirá después un expediente registral para determinar la filiación paterna.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1.1": "La filiación jurídicamente relevante es la legalmente determinada, produce en general efectos retroactivos al nacimiento, conserva los actos previos realizados en interés del hijo para proteger a terceros y, aunque ya no distingue entre filiación matrimonial y no matrimonial por sus efectos, mantiene diferencias en sus formas de determinación por la distinta certeza inicial sobre la paternidad.",
+"1.2": "La filiación materna o del progenitor gestante se determina por el parto y por la identificación del nacido, criterio que cobra importancia cuando pueden separarse gestación y genética; la reforma legal sustituye las categorías de madre y padre por progenitor gestante y no gestante y extiende estos criterios a nuevas realidades familiares sin que el carácter matrimonial altere la determinación de esa filiación.",
+"2": "La filiación matrimonial se fija legalmente por la inscripción del nacimiento junto con la del matrimonio de los padres o por sentencia firme, pero su régimen gira sobre todo en torno a las presunciones y reglas que atribuyen la paternidad al marido de la madre gestante.",
+"2.1": "La presunción de paternidad del marido atribuye carácter matrimonial al hijo nacido durante el matrimonio o dentro de los trescientos días posteriores a su disolución o separación, admite destruirla en ciertos casos de concepción prematrimonial mediante declaración en plazo y mantiene siempre naturaleza iuris tantum mientras no se pruebe lo contrario.",
+"2.2": "Cuando no opera la presunción de paternidad por separación legal o de hecho, la filiación puede inscribirse como matrimonial con el consentimiento de ambos cónyuges, consentimiento que actúa materialmente como reconocimiento de la generación y que no basta si el matrimonio ya se ha disuelto.",
+"2.3": "El hijo nacido antes del matrimonio no es inicialmente matrimonial, pero si su filiación extramatrimonial ya estaba determinada y los progenitores contraen después matrimonio entre sí, esa filiación pasa a ser matrimonial desde la fecha del matrimonio, incluso sin límite temporal y con efectos también favorables para los descendientes del hijo fallecido.",
+"3": "La filiación extramatrimonial no resulta directamente de la ley, sino que exige un acto o procedimiento específico de determinación, entre los que destacan la declaración en la inscripción, el reconocimiento, el expediente registral, la sentencia firme y, para el progenitor gestante, la constancia registral de su filiación.",
+"4": "El reconocimiento es el medio central de determinación de la filiación extramatrimonial, por lo que el legislador le dedica una regulación específica y separada de los demás mecanismos.",
+"4.1": "El reconocimiento es un acto jurídico por el que el progenitor admite la relación biológica con el hijo, produce efectos fijados directamente por la ley y carece de naturaleza negocial porque el reconocedor no puede modular sus consecuencias.",
+"4.2": "El reconocimiento es voluntario, irrevocable, solemne, personalísimo, expreso e incondicional, de modo que solo vale si el progenitor lo emite personalmente en forma legal y mediante una declaración clara no sometida a condiciones o plazos.",
+"4.3": "La validez del reconocimiento depende de la capacidad del progenitor y puede requerir aprobación judicial, apoyos o consentimientos adicionales según los casos; además, los reconocimientos de complacencia son válidos si cumplen los requisitos legales, aunque plantean el problema de su posterior impugnación por falta de verdad biológica.",
+"4.4": "El reconocimiento puede recaer sobre cualquier hijo extramatrimonial, incluso menor, mayor de edad, fallecido o, con matices, concebido no nacido, pero su eficacia queda sujeta a reglas especiales de consentimiento, aprobación judicial o autorización según la situación del reconocido y la necesidad de proteger su interés y su identidad jurídica.",
+"4.5": "El reconocimiento solo determina por sí mismo la filiación si se realiza en alguna de las formas solemnes legalmente previstas, como ante el Registro Civil, en testamento o en documento público, mientras que las manifestaciones no formales solo tienen valor probatorio y pueden servir de base para una posterior declaración judicial.",
+"5": "Junto al reconocimiento, la filiación extramatrimonial puede determinarse también por expediente registral, por sentencia firme y, respecto del progenitor gestante, por su constancia en la inscripción de nacimiento.",
+"5.1": "El expediente registral permite determinar la filiación extramatrimonial solo cuando no existe oposición del Ministerio Fiscal ni de interesados y concurren indicios especialmente cualificados de filiación, por lo que queda reservado a supuestos no controvertidos.",
+"5.2": "La sentencia firme, civil o penal, constituye un medio legal de determinación de la filiación extramatrimonial cuando resuelve un proceso sobre reclamación, impugnación o determinación de la filiación.",
+"5.3": "La filiación extramatrimonial del progenitor gestante queda determinada por su constancia en la inscripción de nacimiento cuando concurren los requisitos registrales de identificación, sin que pueda ocultarse voluntariamente esa filiación, mientras que la del progenitor no gestante puede hacerse constar en la inscripción si operan las presunciones legales o existe conformidad válida y ausencia de controversia, abriéndose expediente registral cuando esas circunstancias no estén claras."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1.1
+
+// [1]
+Q: ¿Qué criterio determina la relevancia jurídica de la filiación a efectos legales?
+A) La existencia de una relación biológica suficientemente acreditada aunque no conste formalmente.
+B) La convivencia estable entre el hijo y quienes actúan como progenitores.
+C) La previa determinación legal de la filiación conforme al ordenamiento.
+OK: C
+EXP: La filiación jurídicamente relevante es la que ha quedado legalmente determinada.
+
+// [2]
+Q: ¿Qué límite principal establece el ordenamiento a la retroactividad de los efectos de la determinación de la filiación?
+A) La protección de terceros y la validez de los actos realizados antes de la determinación en nombre del hijo.
+B) La necesidad de que exista siempre una resolución judicial firme previa.
+C) La exigencia de que la filiación sea exclusivamente matrimonial.
+OK: A
+EXP: Aunque la determinación produce en general efectos retroactivos al nacimiento, se salvaguardan los actos previos realizados válidamente para proteger a terceros.
+
+// [3]
+Q: ¿En qué aspecto mantiene el ordenamiento una diferencia entre filiación matrimonial y no matrimonial tras la Constitución de 1978?
+A) En los efectos jurídicos que produce cada una sobre el hijo.
+B) En las formas de determinación, prueba, reclamación e impugnación de la filiación.
+C) En la atribución automática de una posición jurídica superior a la filiación matrimonial.
+OK: B
+EXP: La diferencia no afecta a los efectos, sino a los mecanismos jurídicos de determinación y controversia, por la distinta certeza inicial sobre la paternidad.
+
+// [4]
+Q: ¿Qué alcance tendría la iniciativa de un Certificado de filiación europeo según el texto?
+A) Sustituiría los documentos nacionales de filiación y unificaría íntegramente el Derecho interno de los Estados.
+B) Obliga a cada Estado a modificar su legislación interna para ajustarla a un modelo único europeo.
+C) Implicaría la admisión de una filiación ya determinada legalmente en otro Estado de la Unión Europea sin sustituir los documentos nacionales.
+OK: C
+EXP: El certificado no reemplazaría los documentos nacionales ni impondría reformas internas, pero favorecería el reconocimiento de la filiación ya determinada en otro país de la UE.
+
+#ID = 1.2
+
+// [5]
+Q: ¿Cuál es el criterio de determinación de la filiación materna o de la filiación del progenitor gestante en el sistema español?
+A) El parto, unido a la identificación del nacido como hijo cuya filiación se pretende determinar.
+B) La coincidencia necesaria entre maternidad genética y maternidad jurídica.
+C) La declaración de voluntad emitida tras el nacimiento con independencia del parto.
+OK: A
+EXP: La filiación materna o del progenitor gestante queda determinada por haber dado a luz y por la identificación del nacido.
+
+// [6]
+Q: ¿Por qué se hizo necesaria una formulación legal expresa del criterio de determinación de la filiación materna?
+A) Porque el Código Civil siempre negó valor jurídico al parto como hecho determinante.
+B) Porque la reproducción asistida permitió separar maternidad gestante y maternidad genética, generando posibles conflictos.
+C) Porque el matrimonio dejó de ser válido como base de toda filiación.
+OK: B
+EXP: La necesidad surge cuando la gestación y la genética pueden no coincidir, lo que obliga a fijar un criterio legal claro.
+
+// [7]
+Q: ¿En qué supuestos admite el texto la impugnación de la filiación materna o del progenitor gestante?
+A) Cuando falte matrimonio entre los progenitores o no exista convivencia familiar.
+B) Cuando el nacido no haya sido inscrito en el Registro Civil dentro del plazo legal.
+C) Cuando se justifique la suposición del parto o no sea cierta la identidad del hijo.
+OK: C
+EXP: La impugnación procede si el parto fue supuesto o si no coincide la identidad del hijo con la filiación atribuida.
+
+// [8]
+Q: ¿Qué finalidad jurídica tiene la sustitución de las referencias a madre y padre por progenitor gestante y no gestante introducida por la Ley 4/2023?
+A) Permitir que determinadas parejas, incluidas parejas de mujeres y parejas de hombres con un miembro trans gestante, determinen la filiación en términos equivalentes a las parejas heterosexuales.
+B) Reservar la determinación de la filiación a quienes estén unidos por matrimonio.
+C) Suprimir toda relevancia del parto en la determinación de la filiación.
+OK: A
+EXP: El cambio no es solo terminológico, sino que amplía la posibilidad de determinación de la filiación en igualdad de términos.
+
+// [9]
+Q: ¿Qué relevancia mantiene la distinción entre filiación matrimonial y no matrimonial en relación con la filiación del progenitor no gestante?
+A) Ninguna, porque toda filiación se determina siempre por las mismas reglas.
+B) Solo afecta a la filiación materna, pero nunca a la del progenitor no gestante.
+C) Sigue siendo relevante por las presunciones de paternidad del marido.
+OK: C
+EXP: Aunque para la filiación materna es indiferente, la distinción conserva importancia respecto de la filiación del progenitor no gestante por el juego de esas presunciones.
+
+// [10]
+Q: ¿Qué posibilidad específica de determinación legal de la filiación anticipa el texto para la adopción y la reproducción asistida?
+A) La determinación de la filiación mediante la maternidad de dos mujeres.
+B) La imposibilidad de atribuir filiación si no existe vínculo biológico.
+C) La atribución necesaria de una filiación exclusivamente matrimonial.
+OK: A
+EXP: El texto señala expresamente que tanto en la adopción como en la reproducción asistida puede quedar determinada legalmente la filiación mediante la maternidad de dos mujeres.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 2.1
+
+// [11]
+Q: ¿Qué alcance tiene la presunción de paternidad del marido en la filiación matrimonial?
+A) Atribuye de forma definitiva e irreversible la paternidad al marido por el solo hecho del matrimonio.
+B) Solo opera respecto de los hijos concebidos después de la celebración del matrimonio.
+C) Presume como hijos del marido a los nacidos durante el matrimonio y dentro de los trescientos días siguientes a su disolución o separación.
+OK: C
+EXP: La regla atribuye inicialmente la paternidad al marido en ese marco temporal, aunque admite prueba en contrario.
+
+// [12]
+Q: ¿Qué tratamiento da el Código Civil al hijo concebido antes del matrimonio pero nacido dentro de él?
+A) No excluye su filiación matrimonial y permite al marido destruir la presunción en un supuesto temporal específico.
+B) Lo considera necesariamente no matrimonial por haberse producido la concepción antes del matrimonio.
+C) Exige siempre sentencia firme para que pueda atribuirse filiación matrimonial.
+OK: A
+EXP: El sistema admite la filiación matrimonial del concebido antes del matrimonio, aunque faculta al marido para destruir la presunción si el nacimiento se produce dentro de los ciento ochenta días siguientes.
+
+// [13]
+Q: ¿Qué significado atribuye el Código Civil al nacimiento del hijo dentro de los ciento ochenta días siguientes a la celebración del matrimonio?
+A) Que la filiación matrimonial queda excluida de pleno derecho.
+B) Que normalmente revela una concepción anterior al matrimonio.
+C) Que solo puede quedar determinada la filiación por reconocimiento expreso.
+OK: B
+EXP: El Código parte de que ese nacimiento suele indicar concepción prematrimonial, sin impedir por ello el carácter matrimonial de la filiación.
+
+// [14]
+Q: ¿Cuándo desaparece o se limita especialmente la facultad del marido para destruir la presunción de paternidad?
+A) Cuando ha reconocido expresa o tácitamente la paternidad o cuando conocía el embarazo antes de casarse.
+B) Cuando el hijo nace antes de los trescientos días desde la separación legal.
+C) Cuando la madre manifiesta unilateralmente que el marido no es el padre.
+OK: A
+EXP: El reconocimiento previo elimina esa posibilidad y el conocimiento del embarazo antes del matrimonio refuerza la atribución de paternidad.
+
+// [15]
+Q: ¿Qué diferencia establece el Código Civil para impugnar la presunción de paternidad según el marido conociera o no el embarazo antes del matrimonio?
+A) Si lo conocía, no puede impugnar nunca; si no lo conocía, necesita autorización judicial.
+B) Si no lo conocía, basta su declaración; si lo conocía, la declaración requiere el consentimiento de ambos cónyuges.
+C) Si lo conocía, basta su declaración; si no lo conocía, se exige el consentimiento de ambos cónyuges.
+OK: B
+EXP: El conocimiento previo del embarazo endurece la posibilidad de destruir la presunción y exige una declaración consensuada.
+
+// [16]
+Q: ¿Qué implica que la presunción de paternidad del marido tenga carácter iuris tantum?
+A) Que solo puede destruirse mediante sentencia penal firme.
+B) Que produce efectos únicamente si ambos cónyuges la aceptan expresamente.
+C) Que opera mientras no se pruebe en contrario que el marido no es el padre.
+OK: C
+EXP: La presunción no es absoluta, sino eficaz hasta que se acredite la inexistencia de la paternidad del marido.
+
+#ID = 2.2
+
+// [17]
+Q: ¿En qué supuesto permite el art. 118 del Código Civil inscribir como matrimonial una filiación sin que opere la presunción de paternidad?
+A) Cuando falta la presunción por separación legal o de hecho y ambos cónyuges consienten.
+B) Cuando el matrimonio ya se ha disuelto y ambos excónyuges prestan consentimiento.
+C) Cuando uno solo de los cónyuges reconoce al hijo ante el Registro Civil.
+OK: A
+EXP: El precepto habilita esta solución únicamente en casos de separación, no de disolución del matrimonio.
+
+// [18]
+Q: ¿Por qué el art. 118 del Código Civil no resulta aplicable cuando el matrimonio se ha disuelto?
+A) Porque tras la disolución toda filiación del hijo se presume automáticamente no matrimonial.
+B) Porque tras la disolución basta la voluntad unilateral de la madre para atribuir filiación matrimonial.
+C) Porque en ese caso no basta el consentimiento de ambos y deben ejercitarse las acciones de filiación correspondientes.
+OK: B
+EXP: El texto indica que, disuelto el matrimonio, el consentimiento de ambos no es suficiente y debe acudirse a las acciones de filiación.
+
+// [19]
+Q: ¿Qué función material cumple el consentimiento de ambos cónyuges en el supuesto del art. 118 del Código Civil?
+A) Sustituye a la inscripción del nacimiento como único título general de filiación matrimonial.
+B) Actúa materialmente como reconocimiento del hecho de la generación.
+C) Equivale a una presunción legal absoluta de convivencia conyugal.
+OK: B
+EXP: Aunque formalmente se exige consentimiento, en el fondo cumple la función de reconocer la generación del hijo.
+
+// [20]
+Q: ¿Cómo debe entenderse, según el texto, la prestación del consentimiento de ambos cónyuges en el art. 118 del Código Civil?
+A) Como una manifestación que, por la peculiaridad del supuesto, debe realizarse de forma conjunta.
+B) Como dos declaraciones separadas y necesariamente judiciales.
+C) Como una autorización tácita deducida del mero mantenimiento del vínculo matrimonial.
+OK: A
+EXP: Aunque el Código no lo diga expresamente, la lógica del supuesto aconseja exigir una manifestación conjunta.
+
+#ID = 2.3
+
+// [21]
+Q: ¿Qué carácter tiene inicialmente la filiación del hijo nacido antes del matrimonio de sus progenitores?
+A) Matrimonial desde el nacimiento si los progenitores se casan después.
+B) Matrimonial si ambos progenitores reconocen conjuntamente al hijo.
+C) No matrimonial, porque los progenitores no estaban casados en el momento del nacimiento.
+OK: C
+EXP: El dato decisivo es la inexistencia de matrimonio en el momento del nacimiento, lo que determina el carácter no matrimonial inicial.
+
+// [22]
+Q: ¿Qué efecto produce el matrimonio posterior entre los progenitores respecto de un hijo extramatrimonial cuya filiación ya estaba determinada?
+A) Transforma la filiación en matrimonial desde la fecha del matrimonio.
+B) Retrotrae automáticamente el carácter matrimonial al momento del nacimiento.
+C) Extingue la filiación anterior y obliga a una nueva determinación judicial.
+OK: A
+EXP: La reforma mantiene la matrimonialización de esa filiación, pero sus efectos se producen desde la celebración del matrimonio.
+
+// [23]
+Q: ¿Qué requisito previo exige la matrimonialización de la filiación del hijo nacido antes del matrimonio?
+A) Que el matrimonio se celebre dentro de los trescientos días siguientes al nacimiento.
+B) Que la filiación hubiera quedado previamente determinada conforme a las reglas de la filiación no matrimonial.
+C) Que el hijo preste consentimiento expreso si ya es mayor de edad.
+OK: B
+EXP: El mecanismo solo opera si antes ya constaba legalmente la filiación extramatrimonial de ambos progenitores.
+
+// [24]
+Q: ¿Qué relevancia tiene el plazo para la celebración del matrimonio posterior de los progenitores en la matrimonialización de la filiación?
+A) Debe celebrarse dentro de la minoría de edad del hijo.
+B) No existe plazo, por lo que el matrimonio puede celebrarse muchos años después del nacimiento.
+C) Debe celebrarse dentro de los ciento ochenta días siguientes al nacimiento.
+OK: C
+EXP: El texto subraya que no hay límite temporal para que el matrimonio posterior transforme en matrimonial la filiación ya determinada.
+
+// [25]
+Q: ¿A quién alcanza el efecto de matrimonialización cuando el hijo ha fallecido antes del matrimonio de sus progenitores?
+A) Solo a los progenitores, a efectos internos de su estado civil.
+B) También a los descendientes del hijo fallecido.
+C) Exclusivamente al cónyuge supérstite del hijo fallecido.
+OK: B
+EXP: El efecto no se frustra por la muerte del hijo, sino que aprovecha asimismo a sus descendientes.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 3
+
+// [26]
+Q: ¿Qué caracteriza a la determinación legal de la filiación extramatrimonial en el art. 120 del Código Civil?
+A) Que nace automáticamente de la ley por el solo hecho biológico de la generación.
+B) Que depende exclusivamente de la convivencia entre el hijo y sus progenitores.
+C) Que requiere alguno de los medios específicos de determinación previstos legalmente.
+OK: C
+EXP: La filiación extramatrimonial no resulta directamente de la ley, sino mediante actos, expedientes o procesos previstos en el art. 120.
+
+// [27]
+Q: ¿Qué función cumple la declaración conforme del padre o progenitor no gestante en el momento de la inscripción del nacimiento dentro de la filiación extramatrimonial?
+A) Actúa como uno de los medios legales de determinación de esa filiación.
+B) Sustituye necesariamente a cualquier intervención del Registro Civil.
+C) Solo tiene valor si va acompañada de una sentencia firme.
+OK: A
+EXP: El texto incluye expresamente esa declaración entre los medios legales de determinación de la filiación extramatrimonial.
+
+// [28]
+Q: ¿Qué relevancia tiene el reconocimiento en la determinación de la filiación extramatrimonial?
+A) Es un medio secundario frente a la sentencia firme y al expediente registral.
+B) Es el medio más importante y concentra la mayor parte de la regulación legal.
+C) Solo puede realizarse en testamento y no en documento público.
+OK: B
+EXP: El texto destaca que el reconocimiento ocupa el lugar central en esta materia y recibe la mayor atención normativa.
+
+// [29]
+Q: ¿Qué diferencia esencial existe entre la filiación matrimonial y la filiación extramatrimonial en relación con su determinación legal?
+A) La filiación extramatrimonial requiere siempre un mecanismo específico de determinación, a diferencia de la matrimonial.
+B) La filiación extramatrimonial se determina siempre por sentencia, mientras que la matrimonial nunca puede hacerlo.
+C) La filiación matrimonial y la extramatrimonial dependen en igual medida de un reconocimiento expreso.
+OK: A
+EXP: El texto subraya que la filiación extramatrimonial nunca deriva directamente de la ley, sino de un cauce específico.
+
+// [30]
+Q: ¿Qué medio de determinación de la filiación extramatrimonial se prevé específicamente respecto de la madre o progenitor gestante?
+A) El reconocimiento exclusivo en testamento.
+B) La declaración del otro progenitor ante documento público.
+C) La constancia de su filiación en la inscripción de nacimiento practicada dentro de plazo conforme a la legislación registral.
+OK: C
+EXP: Para la madre o progenitor gestante, el texto menciona expresamente la constancia en la inscripción de nacimiento dentro de plazo.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 4.1
+
+// [31]
+Q: ¿Qué naturaleza tiene el reconocimiento de la filiación extramatrimonial como acto jurídico?
+A) Un negocio jurídico cuyo contenido y efectos quedan libremente fijados por el reconocedor.
+B) Un acuerdo entre progenitor e hijo dirigido a constituir una relación jurídica nueva.
+C) Una declaración de voluntad del progenitor cuyos efectos vienen directamente determinados por la ley.
+OK: C
+EXP: El reconocimiento no tiene base negocial, sino que consiste en un acto jurídico cuyos efectos legales no puede modular el reconocedor.
+
+#ID = 4.2
+
+// [32]
+Q: ¿Qué significa que el reconocimiento de la filiación extramatrimonial sea un acto irrevocable?
+A) Que, una vez emitido válidamente en forma legal, el reconocedor ya no puede decidir sobre sus efectos.
+B) Que solo puede dejarse sin efecto mediante acuerdo entre los progenitores.
+C) Que puede retirarse libremente mientras no haya inscripción registral.
+OK: A
+EXP: La irrevocabilidad implica que el reconocedor no puede deshacer por su sola voluntad los efectos del acto ya válidamente realizado.
+
+// [33]
+Q: ¿Qué exige el carácter solemne del reconocimiento de la filiación extramatrimonial?
+A) Que intervenga siempre un órgano judicial antes de que despliegue efectos.
+B) Que el reconocimiento se realice en alguna de las formas legalmente previstas.
+C) Que la declaración del progenitor vaya acompañada necesariamente de prueba biológica.
+OK: B
+EXP: La solemnidad se traduce en la necesidad de emplear una de las formas establecidas por la ley.
+
+// [34]
+Q: ¿Qué implica que el reconocimiento de la filiación extramatrimonial sea personalísimo, expreso e incondicional?
+A) Que pueda formularse por representante con plena libertad para decidir su contenido.
+B) Que admita condiciones o términos si favorecen al reconocido.
+C) Que debe proceder del propio progenitor y consistir en una declaración clara no sometida a condición ni término.
+OK: C
+EXP: El acto ha de emanar del progenitor y expresar de modo directo la relación biológica, sin condicionamientos.
+
+#ID = 4.3
+
+// [35]
+Q: ¿Qué requisito de validez exige el reconocimiento de filiación extramatrimonial otorgado por un menor no emancipado?
+A) Aprobación judicial con audiencia del Ministerio Fiscal.
+B) Consentimiento del otro progenitor aunque su filiación no esté determinada.
+C) Ratificación notarial dentro del año siguiente.
+OK: A
+EXP: Cuando reconoce un menor no emancipado, la ley exige control judicial con intervención del Ministerio Fiscal.
+
+// [36]
+Q: ¿Qué criterio rige la capacidad para reconocer en el caso de personas mayores de edad con medidas de apoyo?
+A) La prohibición absoluta de reconocer mientras existan medidas de apoyo.
+B) Lo que dispongan la resolución judicial o la escritura pública y, en su defecto, la revisión del sistema de apoyo para completarlo.
+C) La sustitución automática de la voluntad de la persona por la de su curador.
+OK: B
+EXP: Debe atenderse al sistema de apoyos existente y, si fuera insuficiente, completarlo para hacer posible el acto.
+
+// [37]
+Q: ¿Qué particularidad presenta el reconocimiento de complacencia en la filiación extramatrimonial?
+A) Es nulo de pleno derecho por faltar la verdad biológica.
+B) Solo puede admitirse si media autorización judicial previa.
+C) Puede ser válido si cumple los requisitos legales, aunque plantea el problema de su eventual impugnación posterior.
+OK: C
+EXP: El texto admite su validez formal, pero subraya la dificultad que genera su posible impugnación por falta de correspondencia biológica.
+
+#ID = 4.4
+
+// [38]
+Q: ¿Qué alcance tiene, tras la reforma de 1981, la aptitud del hijo extramatrimonial para ser reconocido?
+A) Puede recaer sobre cualquier hijo extramatrimonial, incluso de edad avanzada o fallecido, sin las antiguas restricciones por categorías.
+B) Solo puede recaer sobre hijos menores de edad no emancipados.
+C) Queda limitada a los hijos nacidos después de la reforma.
+OK: A
+EXP: La reforma elimina las viejas restricciones clasificatorias y permite un reconocimiento de amplio alcance temporal y subjetivo.
+
+// [39]
+Q: ¿Qué regla general rige la eficacia del reconocimiento respecto del hijo mayor de edad?
+A) Produce efectos automáticamente desde su otorgamiento.
+B) No produce efectos sin su consentimiento expreso o tácito.
+C) Requiere siempre aprobación judicial con audiencia del Ministerio Fiscal.
+OK: B
+EXP: La norma protege la autonomía del mayor de edad permitiéndole aceptar o rechazar un reconocimiento tardío.
+
+// [40]
+Q: ¿Qué requisito especial establece el Código Civil para la segunda filiación en el caso del hijo incestuoso?
+A) Que ambos progenitores la acepten en documento público.
+B) Que se determine exclusivamente por sentencia firme.
+C) Que exista previa autorización judicial con audiencia del Ministerio Fiscal cuando convenga al menor o incapaz.
+OK: C
+EXP: La segunda filiación en ese supuesto queda sometida a control judicial reforzado en atención al interés del hijo.
+
+// [41]
+Q: ¿Qué condición exige el reconocimiento del hijo ya fallecido para que produzca efectos?
+A) El consentimiento de sus descendientes por sí o por medio de sus representantes legales.
+B) La previa determinación judicial de la paternidad o maternidad.
+C) La conformidad del Ministerio Fiscal.
+OK: A
+EXP: El reconocimiento del fallecido solo despliega efectos si consienten quienes le suceden en esa posición familiar.
+
+// [42]
+Q: ¿Qué solución admite el texto respecto del reconocimiento del nasciturus?
+A) El reconocimiento unilateral del progenitor masculino sin ninguna otra exigencia.
+B) El reconocimiento conjunto de ambos progenitores, aunque su reflejo registral presente dificultades.
+C) La imposibilidad total de cualquier reconocimiento antes del nacimiento.
+OK: B
+EXP: Se rechaza el reconocimiento unilateral masculino, pero se admite el reconocimiento conjunto pese a sus problemas registrales.
+
+#ID = 4.5
+
+// [43]
+Q: ¿Cuáles son las formas solemnes de reconocimiento de la filiación extramatrimonial previstas por el Código Civil?
+A) La declaración verbal ante testigos, la posesión de estado y la comunicación sanitaria.
+B) La comparecencia judicial, la inscripción escolar y la declaración administrativa.
+C) El reconocimiento ante el encargado del Registro Civil, en testamento o en otro documento público.
+OK: C
+EXP: Esas son las formas civiles expresamente admitidas para dotar al reconocimiento de eficacia determinante.
+
+// [44]
+Q: ¿Qué efecto tiene la revocación del testamento sobre el reconocimiento de filiación extramatrimonial hecho en él?
+A) No priva de eficacia al reconocimiento, que sigue siendo irrevocable.
+B) Deja sin efecto el reconocimiento junto con las demás disposiciones testamentarias.
+C) Suspende su eficacia hasta que exista confirmación registral.
+OK: A
+EXP: La irrevocabilidad del reconocimiento se mantiene aunque el testamento se revoque o fallen otras disposiciones testamentarias.
+
+// [45]
+Q: ¿Qué diferencia establece el texto entre el reconocimiento solemne y las manifestaciones no formales sobre la filiación extramatrimonial?
+A) Ninguna, porque ambas determinan por sí mismas la filiación.
+B) Las manifestaciones no formales sustituyen al reconocimiento solemne cuando hay buena fe.
+C) El reconocimiento solemne determina por sí mismo la filiación, mientras que las manifestaciones no formales solo tienen valor probatorio.
+OK: C
+EXP: La forma legal produce determinación directa de la filiación; las manifestaciones informales solo pueden servir como prueba para un eventual proceso judicial.
+
+// [46]
+Q: ¿Qué finalidad cumple el sistema registral simplificado para nacimientos producidos en establecimientos sanitarios?
+A) Facilitar la determinación de la filiación mediante la remisión electrónica al Registro Civil del formulario oficial cumplimentado y firmado.
+B) Sustituir todas las formas civiles de reconocimiento por una comunicación médica automática.
+C) Eliminar la necesidad de identificar a los declarantes y el orden de los apellidos del nacido.
+OK: A
+EXP: La legislación registral introduce una vía más simple de comunicación del nacimiento y de los datos relevantes para su constancia registral.
+    `;
+
+
+    const BANCO_5 = ` 
+#ID = 5
+
+// [47]
+Q: ¿Qué caracteriza a los restantes medios de determinación de la filiación extramatrimonial distintos del reconocimiento?
+A) Que solo tienen eficacia probatoria y nunca permiten fijar legalmente la filiación.
+B) Que sustituyen por completo al reconocimiento como técnica principal de determinación.
+C) Que son mecanismos diversos del reconocimiento en sentido estricto, pero igualmente aptos para determinar legalmente la filiación extramatrimonial.
+OK: C
+EXP: El texto presenta estos medios como vías distintas del reconocimiento, aunque plenamente idóneas para fijar legalmente la filiación.
+
+#ID = 5.1
+
+// [48]
+Q: ¿En qué supuesto puede operar el llamado expediente gubernativo para determinar la filiación extramatrimonial?
+A) Cuando no existe oposición del Ministerio Fiscal ni de parte interesada debidamente notificada.
+B) Cuando la controversia sobre la filiación exige valoración judicial contradictoria.
+C) Cuando el progenitor niega expresamente la filiación pero existen indicios biológicos.
+OK: A
+EXP: El expediente solo funciona en ausencia de oposición, pues está pensado para supuestos sin verdadera controversia.
+
+// [49]
+Q: ¿Qué función cumple el llamado expediente gubernativo en la determinación de la filiación extramatrimonial?
+A) Sustituir en todo caso al proceso judicial de filiación.
+B) Permitir la inscripción de la filiación en ciertos supuestos tasados, como escrito indubitado, posesión de estado o prueba del parto e identidad del hijo.
+C) Autorizar la impugnación de cualquier filiación previamente inscrita.
+OK: B
+EXP: El expediente sirve para inscribir la filiación cuando concurren determinados presupuestos legales que permiten su constatación sin litigio.
+
+// [50]
+Q: ¿Qué consecuencia produce la oposición en el llamado expediente gubernativo sobre la filiación extramatrimonial?
+A) La suspensión temporal del expediente hasta nueva comparecencia de las partes.
+B) La conversión automática del expediente en procedimiento judicial.
+C) La imposibilidad de obtener la inscripción por esa vía, debiendo acudirse al procedimiento judicial correspondiente.
+OK: C
+EXP: La existencia de oposición excluye el uso del expediente y obliga a plantear la cuestión ante los tribunales.
+
+#ID = 5.2
+
+// [51]
+Q: ¿Cuándo puede determinarse la filiación extramatrimonial por sentencia firme?
+A) Cuando la sentencia civil o penal pone fin a un proceso cuyo objeto es la determinación, reclamación o impugnación de la filiación.
+B) Solo cuando exista previamente reconocimiento formal del progenitor.
+C) Únicamente si el proceso judicial se ha tramitado ante la jurisdicción penal.
+OK: A
+EXP: La sentencia firme puede fijar la filiación si resuelve un proceso que versa precisamente sobre esa cuestión.
+
+#ID = 5.3
+
+// [52]
+Q: ¿Cuándo queda determinada la filiación extramatrimonial respecto de la madre o progenitor gestante?
+A) Cuando exista resolución judicial que declare el parto.
+B) Cuando su filiación conste en la inscripción de nacimiento practicada dentro de plazo conforme a la legislación registral.
+C) Cuando la madre solicite expresamente que se le atribuya la filiación con posterioridad al nacimiento.
+OK: B
+EXP: El texto vincula esta determinación a la constancia registral de la filiación en una inscripción de nacimiento practicada en plazo.
+
+// [53]
+Q: ¿Qué criterio rige en el Registro Civil si existe discordancia entre la declaración oficial y el parte médico sobre la identidad de la madre o progenitor gestante?
+A) Prevalece siempre la declaración oficial por proceder de los interesados.
+B) Prevalece el parte facultativo, lo que obliga a comprobar debidamente la identidad de la madre.
+C) Se omite toda filiación materna hasta que exista sentencia firme.
+OK: C
+EXP: El texto indica que, en caso de discordancia, prevalece el parte facultativo y debe verificarse correctamente la identidad.
+
+// [54]
+Q: ¿Puede la madre biológica excluir por su sola decisión la constancia registral de la filiación materna cuando ya concurren los requisitos legales?
+A) No, aunque pueda restringirse el acceso al conocimiento de esa filiación en ciertos supuestos y sin perjuicio de posteriores actuaciones legales.
+B) Sí, porque la voluntad de la madre biológica prevalece siempre sobre la constancia registral.
+C) Sí, siempre que manifieste su renuncia antes de cerrarse la inscripción.
+OK: A
+EXP: La regulación vigente no admite la ocultación voluntaria de esa filiación una vez determinada legalmente, aunque sí prevé restricciones de acceso en ciertos casos.
+
+// [55]
+Q: ¿Qué principio refuerza la regulación vigente al no permitir que la madre se sustraiga voluntariamente a la constancia de su filiación ya determinada?
+A) El principio de libre disposición de la filiación por los progenitores.
+B) El conocimiento de los orígenes biológicos y la igualdad entre los progenitores.
+C) La preferencia absoluta de la filiación matrimonial sobre la extramatrimonial.
+OK: B
+EXP: El texto destaca expresamente esos dos ejes como fundamento de la regulación actual.
+
+// [56]
+Q: ¿Qué sucede en la inscripción de nacimiento si se comprueba que la madre está casada con persona distinta de la que figura en la declaración o resulta aplicable la presunción legal de paternidad?
+A) Se inscriben desde el primer momento ambas filiaciones conforme a la declaración presentada.
+B) Se paraliza toda inscripción hasta que los cónyuges formulen declaración conjunta.
+C) La inscripción se practica inicialmente solo con la filiación materna y después se abre un expediente registral para determinar la filiación paterna.
+OK: C
+EXP: En ese supuesto, la legislación registral impone una inscripción inicial limitada a la filiación materna y remite la determinación paterna a un expediente posterior.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
