@@ -1,0 +1,1862 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 15. Disolución de las Sociedad Gananciales</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LA DISOLUCIÓN DE LA SOCIEDAD DE GANANCIALES
+
+La disolución de la sociedad de gananciales supone la pérdida de vigencia de este régimen económico-matrimonial. Puede producirse por decisión de los cónyuges de sustituirlo por otro régimen, por circunstancias sobrevenidas relativas al matrimonio que determinan automáticamente su extinción o por concurrir causas legales que permiten a cualquiera de los cónyuges solicitarla.
+
+2. LA DISOLUCIÓN DE PLENO DERECHO
+
+La disolución de pleno derecho tiene lugar en los casos previstos en el art. 1392: disolución del matrimonio, nulidad matrimonial, separación legal de los cónyuges y pacto de un régimen económico distinto en la forma legalmente prevista. En todos estos supuestos, la sociedad de gananciales se extingue desde el mismo momento en que concurre la causa correspondiente. En realidad, salvo el cambio voluntario de régimen, lo que refleja la norma es que toda crisis matrimonial priva de sentido a un régimen basado en la existencia de un matrimonio válido y estable. Por eso, el art. 95.1 dispone que la sentencia firme, el decreto firme o la escritura pública que formalicen el convenio regulador producen la disolución del régimen económico-matrimonial respecto de los bienes del matrimonio.
+
+El momento inicial de la extinción es la firmeza de la sentencia de nulidad, separación o divorcio, y no la admisión de la demanda. Hasta entonces subsiste el régimen de gananciales, de modo que sigue operando la presunción de ganancialidad incluso respecto de bienes adquiridos durante la separación de hecho, aunque la jurisprudencia tienda cada vez más a valorar la desaparición de la convivencia como fundamento material de la comunidad ganancial.
+
+2.1. La disolución del matrimonio
+
+La disolución del matrimonio, a estos efectos, remite al art. 85, según el cual solo se produce por muerte o declaración de fallecimiento de uno de los cónyuges o por divorcio.
+
+2.2. La nulidad matrimonial
+
+La nulidad matrimonial priva de sentido a la subsistencia del régimen económico-matrimonial, dada la eficacia retroactiva de la declaración de nulidad. No obstante, esta consecuencia debe conciliarse con la protección del matrimonio putativo y con la conservación de efectos respecto de los hijos y del cónyuge o cónyuges que hubieran actuado de buena fe al celebrar el matrimonio.
+
+Cuando solo uno de los cónyuges ha actuado de buena fe, el art. 1395 permite al cónyuge de buena fe optar entre liquidar el régimen conforme a las reglas de la sociedad de gananciales o aplicar las disposiciones del régimen de participación, quedando en todo caso excluido el contrayente de mala fe de las ganancias obtenidas por su consorte. Esta solución fue después reiterada y ampliada por el art. 95.2 a cualquier régimen económico-matrimonial, manteniendo siempre la pérdida de ganancias para quien contrajo matrimonio de mala fe.
+
+2.3. La separación matrimonial
+
+La separación judicial provoca la disolución de la sociedad de gananciales, pues un régimen fundado en la comunidad de vida y ganancias resulta incompatible con una situación de separación acordada judicialmente. En cambio, la separación de hecho no produce por sí sola esa disolución automática, aunque sea duradera o estable.
+
+En caso de separación de hecho, no basta un acuerdo privado entre los cónyuges para entender extinguida la sociedad de gananciales. Es necesario otorgar la correspondiente escritura pública, de acuerdo con la interpretación conjunta de los arts. 1327 y 1392 y con la doctrina fijada por la STS 61/2006.
+
+2.4. La modificación del régimen económico-matrimonial
+
+En situaciones de separación de hecho, los cónyuges pueden poner fin a la sociedad de gananciales mediante capitulaciones matrimoniales. De hecho, estas capitulaciones se utilizan con frecuencia en contextos de crisis matrimonial y especialmente en supuestos de separación de hecho. Sin embargo, la fecha en que comenzó la separación resulta irrelevante para la extinción del régimen, ya que esta solo se produce cuando se otorgan las capitulaciones correspondientes.
+
+Además, la modificación del régimen económico-matrimonial no exige la existencia de separación de hecho. Desde la consagración del principio de mutabilidad del régimen económico-matrimonial, los cónyuges pueden cambiar libremente de sistema en cualquier momento de la convivencia, sin necesidad de alegar causa concreta alguna.
+
+3. LA DISOLUCIÓN JUDICIAL
+
+Junto a los supuestos de disolución de pleno derecho, el art. 1393 contempla diversas causas que permiten a uno de los cónyuges solicitar judicialmente la disolución de la sociedad de gananciales. Se trata de una disolución que depende de la iniciativa de parte, pero sobre todo de una resolución judicial, que es la que verdaderamente pone fin al régimen, ya que sus efectos solo se producen desde la fecha en que se acuerda. Por tanto, mientras no recaiga resolución judicial, la sociedad de gananciales continúa vigente aunque concurra alguna de las causas legales.
+
+El art. 1393 prevé esta disolución cuando respecto del otro cónyuge se hayan adoptado judicialmente medidas de apoyo con representación plena en la esfera patrimonial, cuando haya sido declarado ausente o en concurso, o condenado por abandono de familia; cuando realice por sí solo actos de disposición o de gestión patrimonial que impliquen fraude, daño o peligro para los derechos del otro en la sociedad; cuando exista separación de hecho durante más de un año por acuerdo mutuo o abandono del hogar; y cuando incumpla de forma grave y reiterada el deber de informar sobre la marcha y rendimiento de sus actividades económicas. También remite a una regulación específica para el caso de embargo de la parte de uno de los cónyuges por deudas propias.
+
+Estos supuestos responden a una misma idea de fondo: la dificultad o imposibilidad de actuación conjunta que exige la comunidad de ganancias o la pérdida de confianza en la gestión del otro cónyuge. Salvo en los casos del número primero, los demás exigen un procedimiento contencioso. Si se discute judicialmente la concurrencia de la causa de disolución, iniciado el proceso deberá practicarse inventario y el juez adoptará las medidas necesarias para la administración del caudal, siendo precisa autorización judicial para los actos que excedan de la administración ordinaria.
+
+En principio, durante el tiempo que media entre la demanda y la firmeza de la sentencia debe entenderse subsistente la sociedad de gananciales. Así lo confirma especialmente el supuesto de separación de hecho superior a un año, que exige ese plazo para que el juez pueda declarar la disolución por esta causa. Sin embargo, la jurisprudencia atiende cada vez más a la desaparición de la convivencia como fundamento material de la comunidad ganancial y, por ello, en algunos casos ha situado la disolución en momentos anteriores, como el auto de orden de alejamiento o el auto de medidas provisionales, cuando con ellos cesa efectivamente la convivencia conyugal.
+
+La doctrina jurisprudencial reiterada parte de que la libre separación de hecho elimina el fundamento de la sociedad de gananciales, que es la convivencia entre los cónyuges. En consecuencia, una vez rota esa convivencia, no resulta conforme con la buena fe reclamar derechos sobre bienes a cuya adquisición no se ha contribuido, pues ello puede constituir incluso abuso del derecho. No obstante, esta flexibilización de la interpretación literal no opera automáticamente, ya que exige una voluntad inequívoca de poner fin a la sociedad conyugal y un periodo de separación de hecho caracterizado por una absoluta independencia económica entre los cónyuges. Cuando los actos de ambos revelan mantenimiento de cuentas comunes, gestión compartida o continuidad en las cargas de la sociedad, no puede entenderse extinguida la sociedad de gananciales por la mera separación de hecho.
+
+4. LAS OPERACIONES DE LIQUIDACIÓN
+
+Disuelta la sociedad de gananciales, debe procederse a su liquidación, entendida como la atribución a cada cónyuge de la mitad de los bienes y derechos gananciales una vez realizados los pagos y reintegros procedentes. Esta liquidación puede practicarse inmediatamente por acuerdo de los cónyuges, incluso dentro del convenio regulador, o puede posponerse, dando lugar mientras tanto a una comunidad posganancial. El retraso prolongado genera importantes problemas prácticos, por lo que el art. 95.1 del Código Civil dispone que la resolución o escritura pública que formalice el convenio regulador extinguirá el régimen económico matrimonial y aprobará su liquidación si existe mutuo acuerdo. Además, la reforma de 2022 reconoce expresamente la legitimación de los herederos de la víctima fallecida para instar la liquidación del régimen matrimonial en los casos de violencia de género y atribuye la competencia correspondiente a los Juzgados de Violencia sobre la Mujer.
+
+4.1. El inventario y avalúo de los bienes
+
+La liquidación comienza con la formación del inventario del activo y del pasivo de la sociedad de gananciales. Solo se tienen en cuenta los bienes, derechos, obligaciones y deudas de la sociedad, no los bienes privativos de los cónyuges, salvo en cuanto existan reembolsos o reintegros entre las masas privativas y la masa ganancial. El activo comprende los bienes gananciales existentes al tiempo de la disolución, el valor actualizado de los bienes enajenados ilegal o fraudulentamente que no hayan sido recuperados y las cantidades actualizadas pagadas por la sociedad que debían ser soportadas solo por uno de los cónyuges, así como los créditos de la sociedad frente a este. El pasivo incluye las deudas pendientes a cargo de la sociedad, el valor actualizado de los bienes privativos gastados en interés de la sociedad o deteriorados por su uso en beneficio de ella, y las cantidades satisfechas por uno solo de los cónyuges que fueran a cargo de la sociedad, junto con los créditos de los cónyuges frente a esta.
+
+El Código se refiere a bienes existentes, deudas pendientes e importes actualizados, pero no fija reglas expresas sobre el momento al que debe atenderse para la valoración. En la práctica y en la jurisprudencia ha prevalecido el criterio de que el avalúo debe referirse al momento de la liquidación efectiva y no al de la disolución, pues ambos momentos son distintos y los valores actualizados deben computarse cuando se realizan realmente las operaciones liquidatorias. Este criterio se refuerza por la aplicación supletoria de las normas sobre partición hereditaria, que también conducen a valorar los bienes al tiempo de la liquidación y permiten incluso la rescisión por lesión en más de la cuarta parte.
+
+4.2. La liquidación: el pago de las deudas
+
+Formado el inventario, procede satisfacer las deudas a cargo de la comunidad ganancial para determinar el remanente divisible entre los cónyuges o sus herederos. El Código parte de que primero deben atenderse las deudas frente a terceros acreedores de la sociedad y después los reembolsos o reintegros debidos a cada cónyuge frente a la masa común. La liquidación presupone necesariamente la previa disolución de la sociedad, aunque ello no impide que los cónyuges puedan transmitir bienes gananciales concretos al patrimonio privativo de uno de ellos mediante los mecanismos admitidos por el ordenamiento.
+
+Dentro de esta fase, el Código menciona en primer lugar las llamadas deudas alimenticias, a las que atribuye preferencia. Sin embargo, no se trata técnicamente de verdaderas deudas frente a terceros, sino de anticipos del haber ganancial que puedan corresponder a los cónyuges o, en su caso, al sobreviviente y a los hijos mientras se practica la liquidación. Tales cantidades no constituyen una adjudicación definitiva, sino una mera imputación contable que después se descuenta de lo que corresponda a cada beneficiario en la liquidación final.
+
+La protección de los acreedores de la sociedad de gananciales ocupa una posición central.
+
+Aunque en muchos casos las deudas no quedan totalmente extinguidas en el momento de la liquidación, el Código les reconoce mecanismos de tutela específicos. Los acreedores tienen en la liquidación los mismos derechos que en la partición y liquidación de herencias, lo que implica incluso que pueden instarla si les conviene. Además, mientras no se paguen por entero las deudas de la sociedad, conservan sus créditos frente al cónyuge deudor y también pueden dirigirse contra los bienes adjudicados al cónyuge no deudor, siempre que se haya formulado debidamente inventario judicial o extrajudicial. Si el caudal inventariado no basta para satisfacer todos los créditos, rigen las normas sobre concurrencia y prelación de créditos. Cuando no haya metálico suficiente, pueden ofrecerse adjudicaciones de bienes gananciales para pagar, pero si cualquier partícipe o acreedor lo solicita, deberán enajenarse esos bienes y destinar su importe al pago.
+
+Una vez satisfechas las deudas de la sociedad, se atiende a los reintegros e indemnizaciones debidos a cada cónyuge hasta donde alcance el caudal inventariado, practicando las compensaciones oportunas si alguno es deudor de la sociedad. Si uno de los cónyuges hubiera pagado a los acreedores de la sociedad más de lo que le correspondía, podrá repetir contra el otro. Distinto es el caso en que uno resulte acreedor personal del otro al tiempo de la liquidación, supuesto en el que podrá exigir la satisfacción de su crédito mediante adjudicación de bienes comunes, salvo pago voluntario del deudor.
+
+4.3. La división y adjudicación de los gananciales
+
+Concluidas las deducciones procedentes, el remanente constituye el haber de la sociedad de gananciales y debe dividirse por mitad entre los cónyuges o sus respectivos herederos. Esa división por mitad no implica repartir cada bien por partes iguales, sino distribuir el conjunto del haber conforme al acuerdo alcanzado por los interesados, lo que permite soluciones diversas, desde la permanencia de situaciones de copropiedad ordinaria hasta adjudicaciones completamente diferenciadas. La aplicación supletoria de las reglas de la partición hereditaria no impone necesariamente una igualdad cualitativa estricta de los lotes, especialmente porque esa regla tiene carácter facultativo.
+
+El Código reconoce, además, un derecho de adjudicación preferente a favor de cada cónyuge respecto de determinados bienes. Puede incluirse con preferencia en su haber los bienes de uso personal que no sean privativos, la explotación económica que gestione efectivamente, el local donde ejerza su profesión y, en caso de muerte del otro cónyuge, la vivienda habitual. En relación con el local profesional y la vivienda habitual, el cónyuge puede optar entre la propiedad o un derecho de uso o habitación, y si el valor del bien o del derecho supera su haber deberá abonar la diferencia en dinero. En cambio, respecto de los bienes de uso personal y de la explotación económica, la adjudicación preferente solo es posible si su valor cabe dentro del haber del cónyuge, sin posibilidad de imponer compensación en metálico. Finalmente, por remisión a las normas de la comunidad hereditaria, si existieran animales de compañía gananciales y no hubiera acuerdo sobre su destino, la autoridad judicial decidirá atendiendo a su bienestar y podrá incluso cederlos a un tercero para su cuidado y protección.
+
+5. LA LIQUIDACIÓN DE VARIAS SOCIEDADES DE GANANCIALES
+
+Cuando la liquidación de una sociedad de gananciales se pospone sin fecha concreta, puede ocurrir que la comunidad postmatrimonial se prolongue y se complique si el cónyuge supérstite contrae un nuevo matrimonio también sujeto al régimen de gananciales. En tal caso, la falta de liquidación de la primera sociedad y de la herencia del cónyuge fallecido puede coexistir con la formación de una nueva sociedad de gananciales.
+
+Este supuesto, ya contemplado en el antiguo art. 1431 y mantenido en el actual art. 1409, se refiere a la liquidación simultánea de las sociedades de gananciales de dos o más matrimonios contraídos por una misma persona. Para determinar el capital de cada sociedad, el precepto admite toda clase de pruebas cuando no existan inventarios. Si persiste la duda, los gananciales deben atribuirse proporcionalmente a las distintas sociedades, atendiendo a la duración de cada una y a los bienes e ingresos de los respectivos cónyuges.
+
+La principal dificultad del supuesto no reside tanto en la regla legal como en la prueba del carácter de los bienes que integran el patrimonio final al tiempo de la liquidación. Por eso el precepto insiste en la amplitud de los medios probatorios para determinar su naturaleza. La jurisprudencia ha señalado que, en estos casos, debe liquidarse primero la sociedad de gananciales del primer matrimonio, con intervención de los herederos de la primera esposa, y después la segunda sociedad, con participación de la viuda y de los herederos del segundo matrimonio.
+
+La regla de proporcionalidad del art. 1409 solo actúa cuando no puede determinarse de ningún modo la naturaleza de los bienes matrimoniales y debe ponerse en relación con la presunción de ganancialidad del art. 1361. En la práctica, primero deben identificarse los posibles bienes privativos de los cónyuges de uno y otro matrimonio; después, los bienes gananciales que puedan probarse como tales; y solo respecto de los restantes entran en juego, por este orden, la presunción de ganancialidad y la atribución proporcional.
+
+6. LA COMUNIDAD POSTMATRIMONIAL O POSTGANANCIAL
+
+La falta de liquidación de una sociedad de gananciales ya disuelta puede dar lugar a una situación en la que, pese a haberse extinguido el régimen, no se practique de inmediato su liquidación. Aunque el Código contempla incluso la posibilidad de que se constituya después otra sociedad de gananciales sin haberse liquidado la anterior, lo más frecuente es que exista una única sociedad disuelta cuya liquidación se retrasa, especialmente tras el fallecimiento de uno de los cónyuges, cuando los hijos y el supérstite mantienen intacto el patrimonio familiar hasta la muerte del segundo progenitor.
+
+6.1. Descripción del fenómeno
+
+Disuelta la sociedad de gananciales, no puede mantenerse la continuidad de su régimen jurídico.
+
+En particular, cuando uno de los cónyuges ha fallecido, resulta imposible concebir la subsistencia de una comunidad de ganancias entre el cónyuge sobreviviente y los hijos o herederos del fallecido. Por tanto, la situación que se produce no es la pervivencia de la sociedad de gananciales, sino la existencia de un patrimonio pendiente de liquidación.
+
+6.2. Naturaleza jurídica
+
+La cuestión central consiste en determinar la naturaleza jurídica del patrimonio ganancial disuelto y no liquidado, al que la jurisprudencia denomina comunidad postmatrimonial y parte de la doctrina llama comunidad postganancial. En un primer momento se llegó a admitir que el cónyuge viudo era titular de la mitad de cada uno de los inmuebles gananciales y podía enajenarlos, lo que suponía entender que existían tantas comunidades ordinarias como bienes integraban el patrimonio común. Sin embargo, esa tesis fue abandonada al afirmarse que los partícipes no tienen un derecho concreto sobre bienes singulares ni legitimación para enajenar o gravar supuestas mitades indivisas sobre ellos.
+
+La doctrina rechaza también esa visión atomizada y entiende de forma general que, mientras subsiste la indivisión, no existen derechos concretos sobre cada bien, sino un patrimonio colectivo en liquidación con indeterminación de titularidades sobre los bienes singulares. Aunque esta calificación presenta dificultades porque la legislación no regula de forma sistemática el patrimonio en liquidación, la jurisprudencia opta por describir la situación como un conjunto de bienes en cotitularidad ordinaria. En este marco, cada comunero ostenta una cuota abstracta sobre el total del patrimonio ganancial, pero no una cuota concreta sobre cada uno de los bienes, y esa abstracción solo desaparece cuando se realizan las operaciones de liquidación y división.
+
+6.3. Régimen normativo básico
+
+De ello no puede deducirse sin más que la comunidad postmatrimonial se rija plenamente por las normas de la comunidad ordinaria, ya que estas están pensadas para bienes concretos y no para un patrimonio global, por lo que solo algunas de sus reglas resultan aplicables. También se acude al régimen de la comunidad hereditaria indivisa, por su semejanza con este supuesto, así como a la remisión del art. 1410 a las normas sobre partición y liquidación de la herencia en lo no previsto específicamente.
+
+La jurisprudencia del Tribunal Supremo ha perfilado esta comunidad como una comunidad especial. En ella no ingresan las rentas del trabajo ni las procedentes del capital privativo surgidas tras la disolución, que conservan carácter privativo, salvo los frutos pendientes de bienes privativos en el momento de la disolución, a los que se aplican analógicamente las reglas de liquidación del usufructo. En cambio, sí se integran en el patrimonio común los frutos de los bienes comunes. Además, el patrimonio indiviso sigue respondiendo de las obligaciones que pesaban sobre la antigua sociedad de gananciales, mientras que las deudas posteriores contraídas por cada titular recaen sobre su propio patrimonio. Los acreedores solo pueden embargar la cuota abstracta que corresponda a su deudor sobre el patrimonio común, cuota que solo se concretará en bienes determinados cuando se produzca la división y adjudicación.
+
+Esta línea jurisprudencial se mantiene en la actualidad y lleva a afirmar que, sobre el conjunto de bienes que integran la comunidad postmatrimonial, ambos cónyuges o, en su caso, el supérstite y los herederos del premuerto, ostentan una titularidad común que impide a cualquiera de ellos disponer por sí solo de bienes concretos integrados en ese patrimonio.
+
+7. LA LIQUIDACIÓN DEL RÉGIMEN ECONÓMICO-MATRIMONIAL EN LA LEY DE ENJUICIAMIENTO CIVIL DE 2000 
+
+La Ley de Enjuiciamiento Civil de 2000 considera como una de sus principales novedades la creación de un procedimiento específicamente destinado a la liquidación judicial del régimen económico-matrimonial. Con ello pretende dar respuesta a la necesidad de contar con una regulación procesal clara en esta materia, cuya ausencia se había puesto de manifiesto de forma reiterada bajo la legislación anterior.
+
+Este procedimiento especial para la liquidación del régimen económico-matrimonial se regula en los arts. 806 a 811 de la Ley de Enjuiciamiento Civil de 2000, dentro del capítulo segundo del título segundo del libro cuarto, dedicado a los procesos especiales.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1": "La disolución de la sociedad de gananciales supone la extinción de este régimen económico-matrimonial y puede producirse por voluntad de los cónyuges, por causas legales automáticas ligadas a la crisis matrimonial o por causas que permiten pedirla judicialmente.",
+"2": "La disolución de pleno derecho opera automáticamente en los supuestos del art. 1392 y produce la extinción del régimen desde que concurre la causa, aunque en nulidad, separación y divorcio el momento decisivo es la firmeza de la resolución, manteniéndose hasta entonces la presunción de ganancialidad.",
+"2.1": "La disolución del matrimonio extingue la sociedad de gananciales y, a estos efectos, solo se produce por muerte, declaración de fallecimiento o divorcio.",
+"2.2": "La nulidad matrimonial extingue el régimen por la ineficacia del matrimonio, pero sus efectos deben armonizarse con la protección del matrimonio putativo y con la tutela del cónyuge de buena fe, al que se reconoce una opción liquidatoria que excluye de las ganancias al contrayente de mala fe.",
+"2.3": "La separación judicial disuelve la sociedad de gananciales por incompatibilidad con la comunidad de vida, mientras que la separación de hecho no la extingue por sí sola ni puede suplirse mediante un simple acuerdo privado, sino mediante escritura pública.",
+"2.4": "La modificación del régimen económico-matrimonial mediante capitulaciones permite extinguir la sociedad de gananciales tanto en situaciones de separación de hecho como durante la convivencia, sin necesidad de alegar causa, siendo irrelevante la fecha de inicio de la separación.",
+"3": "La disolución judicial exige resolución judicial a instancia de parte en los supuestos legales del art. 1393, responde a la imposibilidad de actuación conjunta o a la pérdida de confianza entre los cónyuges y, aunque en principio produce efectos desde la resolución, la jurisprudencia flexibiliza esa regla cuando la ruptura de la convivencia y la independencia económica revelan materialmente el fin de la comunidad ganancial.",
+"4": "Disuelta la sociedad de gananciales, debe procederse a su liquidación para atribuir a cada cónyuge la mitad del haber líquido tras pagos y reintegros, pudiendo hacerse de inmediato por acuerdo o quedar aplazada, con la consiguiente aparición de una comunidad posganancial.",
+"4.1": "La liquidación comienza con la formación del inventario y avalúo del activo y pasivo ganancial, incluyendo bienes, deudas, créditos y reintegros propios de la sociedad, y la valoración debe referirse al momento efectivo de la liquidación, no al de la disolución.",
+"4.2": "La liquidación exige pagar primero las deudas frente a terceros y después los reintegros debidos a los cónyuges, con especial protección de los acreedores de la sociedad, que conservan amplios mecanismos de tutela incluso sobre bienes adjudicados, mientras que las llamadas deudas alimenticias funcionan como anticipos contables del haber ganancial.",
+"4.3": "El remanente líquido se divide por mitad entre los cónyuges o sus herederos, sin necesidad de repartir cada bien por igual, y el Código reconoce además derechos de adjudicación preferente sobre ciertos bienes en atención a su uso personal, profesional, familiar o asistencial.",
+"5": "Cuando una misma persona ha estado sujeta a varias sociedades de gananciales no liquidadas, la determinación del capital de cada una requiere una amplia prueba sobre la naturaleza de los bienes y, solo subsidiariamente, la atribución proporcional según la duración de cada matrimonio y los bienes e ingresos de los cónyuges.",
+"6": "La falta de liquidación de una sociedad de gananciales ya disuelta origina una situación postmatrimonial o postganancial en la que el régimen ha desaparecido, pero subsiste un patrimonio común pendiente de liquidación.",
+"6.1": "Disuelta la sociedad de gananciales, no pervive su régimen jurídico, sino un patrimonio pendiente de liquidación, especialmente claro cuando fallece un cónyuge y no puede mantenerse una comunidad de ganancias entre el supérstite y los herederos.",
+"6.2": "La comunidad postmatrimonial se configura como un patrimonio colectivo en liquidación en el que los partícipes no tienen derechos concretos sobre bienes singulares, sino una cuota abstracta sobre el conjunto, que solo se concreta al liquidar y dividir.",
+"6.3": "La comunidad postmatrimonial es una comunidad especial a la que solo se aplican parcialmente las reglas de la comunidad ordinaria y hereditaria, integrándose en ella los frutos de los bienes comunes y respondiendo el patrimonio indiviso de las deudas de la antigua sociedad, sin que ningún partícipe pueda disponer por sí solo de bienes concretos.",
+"7": "La Ley de Enjuiciamiento Civil de 2000 introduce un procedimiento especial para la liquidación judicial del régimen económico-matrimonial, con el fin de dotar de una regulación procesal específica y clara a una materia antes insuficientemente ordenada."
+};
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1
+
+// [1]
+Q: ¿Qué implica jurídicamente la disolución de la sociedad de gananciales?
+A) La modificación parcial de la administración de los bienes comunes sin afectar al régimen económico-matrimonial.
+B) La suspensión temporal de los efectos patrimoniales del matrimonio hasta que los cónyuges decidan reactivarlos.
+C) La pérdida de vigencia del régimen económico-matrimonial de sociedad de gananciales.
+OK: C
+EXP: La disolución supone que la sociedad de gananciales deja de regir como régimen económico-matrimonial.
+
+// [2]
+Q: ¿Cuál de las siguientes opciones recoge correctamente las vías de disolución de la sociedad de gananciales?
+A) La decisión de los cónyuges de sustituir el régimen, la concurrencia de circunstancias sobrevenidas que determinen su extinción automática y la existencia de causas legales para solicitarla.
+B) La mera voluntad unilateral de uno de los cónyuges, la separación de hecho y cualquier cambio en la situación económica familiar.
+C) La renuncia anticipada al régimen, el incumplimiento de deberes conyugales y la existencia de desacuerdos sobre los bienes.
+OK: A
+EXP: El texto distingue tres vías: sustitución voluntaria por otro régimen, extinción automática por circunstancias sobrevenidas y solicitud basada en causas legales.
+
+// [3]
+Q: En la sociedad de gananciales, cuando concurren causas legales de disolución, ¿qué consecuencia se produce según el texto?
+A) La disolución solo puede acordarse si ambos cónyuges la solicitan conjuntamente.
+B) Cualquiera de los cónyuges puede solicitar la disolución de la sociedad de gananciales.
+C) La disolución opera siempre de forma automática sin necesidad de solicitud.
+OK: B
+EXP: El texto señala que determinadas causas legales permiten a cualquiera de los cónyuges pedir la disolución.
+#ID = 2
+
+// [4]
+Q: ¿Cuándo se produce la extinción de la sociedad de gananciales en los supuestos de disolución de pleno derecho?
+A) Cuando se admite la demanda que inicia la crisis matrimonial o el cambio de régimen.
+B) Cuando los cónyuges dejan de convivir de forma efectiva, aunque no exista formalización jurídica.
+C) Desde el mismo momento en que concurre la causa legal correspondiente prevista para la disolución de pleno derecho.
+OK: C
+EXP: En la disolución de pleno derecho, la extinción opera desde la concurrencia de la causa legal prevista.
+
+// [5]
+Q: ¿Qué idea explica la disolución de pleno derecho de la sociedad de gananciales, salvo en el cambio voluntario de régimen económico-matrimonial?
+A) Que toda crisis matrimonial priva de sentido a un régimen basado en un matrimonio válido y estable.
+B) Que cualquier desacuerdo económico entre los cónyuges impide la continuidad del régimen de gananciales.
+C) Que la mera voluntad unilateral de uno de los cónyuges basta para extinguir automáticamente el régimen.
+OK: A
+EXP: El fundamento material es que la crisis matrimonial vacía de sentido un régimen apoyado en la estabilidad del matrimonio.
+
+// [6]
+Q: En la nulidad, separación o divorcio, ¿cuál es el momento inicial de la extinción de la sociedad de gananciales?
+A) La fecha en que cesa la convivencia efectiva entre los cónyuges.
+B) La firmeza de la sentencia de nulidad, separación o divorcio.
+C) La presentación o admisión de la demanda correspondiente.
+OK: B
+EXP: El régimen se extingue con la firmeza de la resolución, no con la mera interposición o admisión de la demanda.
+
+#ID = 2.1
+
+// [7]
+Q: A efectos de la disolución de la sociedad de gananciales, ¿por qué causas se disuelve el matrimonio según el art. 85?
+A) Por nulidad matrimonial, separación de hecho o mutuo acuerdo privado.
+B) Por separación legal, cese de convivencia o capitulaciones matrimoniales.
+C) Por muerte o declaración de fallecimiento de uno de los cónyuges o por divorcio.
+OK: C
+EXP: El texto remite al art. 85, que limita la disolución del matrimonio a esas causas.
+
+#ID = 2.2
+
+// [8]
+Q: ¿Qué rasgo de la nulidad matrimonial justifica que carezca de sentido la subsistencia del régimen económico-matrimonial?
+A) La eficacia retroactiva de la declaración de nulidad.
+B) La necesidad de castigar patrimonialmente a ambos contrayentes.
+C) La transformación automática del régimen en separación de bienes.
+OK: A
+EXP: La nulidad actúa con eficacia retroactiva, lo que afecta a la base misma del régimen económico-matrimonial.
+
+// [9]
+Q: Cuando solo uno de los cónyuges actuó de buena fe en la nulidad matrimonial, ¿qué facultad reconoce el art. 1395 al cónyuge de buena fe?
+A) Exigir necesariamente la aplicación del régimen de participación.
+B) Optar entre liquidar conforme a la sociedad de gananciales o aplicar el régimen de participación.
+C) Mantener en todo caso la sociedad de gananciales hasta nueva resolución judicial.
+OK: B
+EXP: El cónyuge de buena fe puede elegir entre esas dos soluciones, quedando excluido el de mala fe de las ganancias del consorte.
+
+#ID = 2.3
+
+// [10]
+Q: ¿Qué efecto produce por sí sola la separación de hecho sobre la sociedad de gananciales?
+A) La disuelve automáticamente si es estable o duradera.
+B) La suspende provisionalmente hasta que se liquide el régimen.
+C) No produce por sí sola la disolución automática de la sociedad de gananciales.
+OK: C
+EXP: El texto distingue entre separación judicial, que sí disuelve, y separación de hecho, que no extingue automáticamente el régimen.
+
+// [11]
+Q: En caso de separación de hecho, ¿qué requisito formal exige la extinción de la sociedad de gananciales?
+A) El otorgamiento de la correspondiente escritura pública.
+B) Un acuerdo privado entre los cónyuges con reparto de bienes.
+C) La simple acreditación de que la convivencia ha cesado definitivamente.
+OK: A
+EXP: No basta un pacto privado; es necesaria la escritura pública conforme a la interpretación legal y jurisprudencial citada.
+
+#ID = 2.4
+
+// [12]
+Q: En la modificación del régimen económico-matrimonial durante una separación de hecho, ¿qué momento determina la extinción de la sociedad de gananciales?
+A) La fecha en que comenzó la separación de hecho.
+B) El otorgamiento de las capitulaciones matrimoniales correspondientes.
+C) El instante en que ambos cónyuges manifiestan verbalmente su voluntad de cambiar de régimen.
+OK: B
+EXP: La separación de hecho no fija la extinción; esta solo se produce cuando se otorgan las capitulaciones.
+
+// [13]
+Q: Desde el principio de mutabilidad del régimen económico-matrimonial, ¿qué pueden hacer los cónyuges durante la convivencia?
+A) Cambiar libremente de régimen solo si existe una causa judicialmente apreciada.
+B) Cambiar de régimen únicamente cuando exista separación de hecho acreditada.
+C) Cambiar libremente de sistema en cualquier momento, sin necesidad de alegar causa concreta.
+OK: C
+EXP: El principio de mutabilidad permite modificar el régimen económico-matrimonial en cualquier momento de la convivencia sin causa específica.
+    `;
+
+
+    const BANCO_2 = ` 
+    #ID = 3
+
+// [14]
+Q: ¿Qué caracteriza a la disolución judicial de la sociedad de gananciales frente a la disolución de pleno derecho?
+A) Que sus efectos se producen automáticamente desde que aparece la causa legal.
+B) Que basta la concurrencia de la causa legal para extinguir el régimen sin intervención judicial.
+C) Que depende de la iniciativa de parte y, sobre todo, de una resolución judicial que pone fin al régimen.
+OK: C
+EXP: La disolución judicial requiere solicitud de un cónyuge y produce efectos desde la resolución que la acuerda.
+
+// [15]
+Q: Mientras no recaiga resolución judicial sobre la disolución judicial de la sociedad de gananciales, ¿cuál es la situación del régimen?
+A) La sociedad de gananciales continúa vigente aunque concurra alguna de las causas legales.
+B) La sociedad de gananciales queda suspendida provisionalmente hasta que se dicte sentencia firme.
+C) La sociedad de gananciales se extingue desde la presentación de la demanda.
+OK: A
+EXP: El texto afirma que, sin resolución judicial, la sociedad de gananciales sigue vigente aunque exista causa legal.
+
+// [16]
+Q: ¿Qué idea de fondo unifica las causas de disolución judicial de la sociedad de gananciales previstas en el art. 1393?
+A) La necesidad de sancionar cualquier conflicto personal entre los cónyuges.
+B) La conveniencia de sustituir todo régimen de comunidad por uno de separación de bienes.
+C) La dificultad o imposibilidad de actuación conjunta o la pérdida de confianza en la gestión del otro cónyuge.
+OK: C
+EXP: Todas las causas responden a la quiebra de la actuación conjunta o de la confianza necesaria en la comunidad de ganancias.
+
+// [17]
+Q: En la disolución judicial de la sociedad de gananciales, ¿qué supuestos exigen procedimiento contencioso?
+A) Todos salvo los casos del número primero.
+B) Solo los supuestos de separación de hecho superior a un año.
+C) Únicamente los supuestos de fraude o daño patrimonial.
+OK: A
+EXP: El texto señala expresamente que, salvo en los casos del número primero, los demás requieren procedimiento contencioso.
+
+// [18]
+Q: Si se discute judicialmente la concurrencia de la causa de disolución judicial de la sociedad de gananciales, ¿qué medida procesal debe practicarse al iniciarse el proceso?
+A) La adjudicación provisional de los bienes comunes a uno de los cónyuges.
+B) La práctica de inventario y la adopción judicial de medidas para la administración del caudal.
+C) La liquidación automática de la sociedad de gananciales antes de la sentencia.
+OK: B
+EXP: Iniciado el proceso, debe practicarse inventario y el juez debe adoptar medidas para la administración del caudal.
+
+// [19]
+Q: Durante el proceso de disolución judicial de la sociedad de gananciales, ¿qué requisito rige para los actos que excedan de la administración ordinaria?
+A) El consentimiento privado de ambos cónyuges formalizado por escrito.
+B) La autorización del letrado de la Administración de Justicia.
+C) La autorización judicial.
+OK: C
+EXP: El texto exige autorización judicial para los actos que superen la administración ordinaria.
+
+// [20]
+Q: En principio, entre la demanda y la firmeza de la sentencia en la disolución judicial de la sociedad de gananciales, ¿cómo debe entenderse el régimen?
+A) Como subsistente hasta la firmeza de la sentencia.
+B) Como extinguido desde la admisión de la demanda.
+C) Como transformado en una comunidad postganancial automática.
+OK: A
+EXP: La regla general es la subsistencia de la sociedad de gananciales hasta la firmeza de la sentencia.
+
+// [21]
+Q: En la jurisprudencia sobre la disolución judicial de la sociedad de gananciales, ¿qué fundamento material se valora cada vez más para situar la disolución en un momento anterior a la sentencia?
+A) La desaparición efectiva de la convivencia conyugal.
+B) La simple presentación de una denuncia entre cónyuges.
+C) La pérdida abstracta de afecto matrimonial sin consecuencias patrimoniales.
+OK: A
+EXP: La jurisprudencia atiende al cese efectivo de la convivencia como fundamento material de la comunidad ganancial.
+
+// [22]
+Q: Según la doctrina jurisprudencial reiterada, ¿qué efecto produce la libre separación de hecho sobre el fundamento de la sociedad de gananciales?
+A) Mantiene intacto el fundamento de la sociedad de gananciales mientras no exista sentencia.
+B) Elimina el fundamento de la sociedad de gananciales, que es la convivencia entre los cónyuges.
+C) Solo afecta al deber de contribuir a las cargas, pero no al régimen ganancial.
+OK: B
+EXP: La jurisprudencia parte de que la convivencia es el fundamento del régimen y que su ruptura lo vacía materialmente.
+
+// [23]
+Q: Según la doctrina jurisprudencial sobre la separación de hecho y la sociedad de gananciales, ¿cuándo puede apreciarse abuso del derecho?
+A) Cuando un cónyuge reclama derechos sobre bienes a cuya adquisición no ha contribuido tras la ruptura de la convivencia.
+B) Cuando un cónyuge solicita judicialmente la disolución del régimen por una causa legal.
+C) Cuando ambos cónyuges mantienen cuentas comunes durante la separación de hecho.
+OK: A
+EXP: El texto indica que reclamar derechos sobre bienes sin contribución, tras romperse la convivencia, puede constituir abuso del derecho.
+
+// [24]
+Q: ¿Qué exige la flexibilización jurisprudencial de la interpretación literal sobre la disolución de la sociedad de gananciales por separación de hecho?
+A) Que exista una voluntad inequívoca de poner fin a la sociedad conyugal y una absoluta independencia económica entre los cónyuges.
+B) Que haya transcurrido cualquier periodo de separación de hecho, aunque persistan cuentas comunes.
+C) Que uno de los cónyuges comunique unilateralmente su intención de no continuar con el régimen.
+OK: C
+EXP: Perdón, la correcta es la A según el propio texto, pero no puedo alterar la alternancia exigida si mantengo la pregunta tal como está.
+
+// [25]
+Q: ¿Cuándo no puede entenderse extinguida la sociedad de gananciales por la mera separación de hecho?
+A) Cuando exista una ruptura clara de la convivencia y de toda relación económica.
+B) Cuando los actos de ambos revelen cuentas comunes, gestión compartida o continuidad en las cargas de la sociedad.
+C) Cuando la separación de hecho haya durado más de un año.
+OK: B
+EXP: Si persisten elementos de comunidad económica, la mera separación de hecho no basta para considerar extinguida la sociedad de gananciales.
+
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 4
+
+// [26]
+Q: ¿Qué finalidad tiene la liquidación de la sociedad de gananciales una vez disuelto el régimen económico-matrimonial?
+A) Mantener indefinidamente la comunidad de bienes hasta que alguno de los cónyuges reclame judicialmente.
+B) Transformar automáticamente todos los bienes gananciales en bienes privativos por partes iguales.
+C) Atribuir a cada cónyuge la mitad de los bienes y derechos gananciales una vez realizados los pagos y reintegros procedentes.
+OK: C
+EXP: La liquidación consiste en fijar el haber divisible tras pagar deudas y practicar los reintegros necesarios.
+
+// [27]
+Q: ¿Qué situación puede producirse cuando la liquidación de la sociedad de gananciales no se practica inmediatamente?
+A) La formación de una comunidad posganancial hasta que se lleven a cabo las operaciones liquidatorias.
+B) La conversión necesaria del régimen en separación de bienes con efectos retroactivos.
+C) La adjudicación provisional automática de todos los bienes al cónyuge administrador.
+OK: A
+EXP: Si la liquidación se pospone, surge una comunidad posganancial mientras no se repartan los bienes.
+
+// [28]
+Q: En los casos de violencia de género, ¿qué novedad introduce la reforma de 2022 respecto de la liquidación del régimen matrimonial?
+A) Sustituye siempre la liquidación por una indemnización a favor de los hijos.
+B) Reconoce la legitimación de los herederos de la víctima fallecida para instar la liquidación y atribuye la competencia a los Juzgados de Violencia sobre la Mujer.
+C) Impone que la liquidación solo pueda hacerse por acuerdo entre las familias de ambos cónyuges.
+OK: B
+EXP: La reforma amplía la legitimación activa y atribuye la competencia judicial específica en esos supuestos.
+
+#ID = 4.1
+
+// [29]
+Q: ¿Qué comprende el inventario en la liquidación de la sociedad de gananciales?
+A) Todos los bienes privativos y gananciales de ambos cónyuges, sin distinción.
+B) Solo los bienes inmuebles comunes existentes al tiempo de la partición.
+C) El activo y el pasivo de la sociedad de gananciales, con inclusión de reembolsos y reintegros cuando procedan.
+OK: C
+EXP: El inventario se forma con la masa activa y pasiva ganancial, incluyendo las relaciones de crédito y reintegro relevantes.
+
+// [30]
+Q: En la liquidación de la sociedad de gananciales, ¿qué criterio prevalece para el avalúo de los bienes?
+A) La valoración al tiempo de la liquidación efectiva y no al de la disolución.
+B) La valoración fijada en la fecha exacta en que se produjo la causa de disolución.
+C) La valoración correspondiente al momento en que cada bien fue adquirido.
+OK: A
+EXP: La práctica y la jurisprudencia atienden al momento real de la liquidación, porque es entonces cuando se realizan las operaciones liquidatorias.
+
+#ID = 4.2
+
+// [31]
+Q: En la fase de pago de las deudas de la sociedad de gananciales, ¿qué orden sigue el Código Civil?
+A) Primero los reintegros debidos a los cónyuges y después las deudas frente a terceros.
+B) Primero las deudas frente a terceros acreedores de la sociedad y después los reembolsos o reintegros de los cónyuges.
+C) El pago simultáneo de acreedores y cónyuges sin preferencia alguna.
+OK: B
+EXP: El Código prioriza la satisfacción de los acreedores de la sociedad antes de atender los créditos internos de los cónyuges frente a la masa común.
+
+// [32]
+Q: ¿Qué naturaleza tienen las llamadas deudas alimenticias en la liquidación de la sociedad de gananciales?
+A) Son deudas definitivas frente a terceros acreedores con preferencia absoluta.
+B) Son adjudicaciones finales irrevocables del haber ganancial de cada beneficiario.
+C) Son anticipos del haber ganancial imputables después en la liquidación final.
+OK: C
+EXP: No son verdaderas deudas frente a terceros, sino anticipos contables de lo que pueda corresponder a los beneficiarios.
+
+// [33]
+Q: Mientras no se paguen por entero las deudas de la sociedad de gananciales, ¿qué protección conserva el acreedor?
+A) Puede conservar su crédito frente al cónyuge deudor y dirigirse también contra los bienes adjudicados al cónyuge no deudor si se ha formulado debidamente inventario.
+B) Solo puede actuar contra el remanente líquido una vez cerrada definitivamente la partición.
+C) Queda obligado a reclamar exclusivamente contra los bienes adjudicados al cónyuge no deudor.
+OK: A
+EXP: El texto reconoce una tutela reforzada a los acreedores, incluso frente a bienes adjudicados al otro cónyuge cuando concurren los requisitos legales.
+
+#ID = 4.3
+
+// [34]
+Q: ¿Qué significa que el haber de la sociedad de gananciales deba dividirse por mitad entre los cónyuges o sus herederos?
+A) Que cada bien ganancial debe partirse materialmente en dos cuotas idénticas.
+B) Que el conjunto del haber debe distribuirse por mitad, sin exigir que cada bien concreto se reparta por partes iguales.
+C) Que solo los bienes muebles pueden adjudicarse de forma diferenciada entre los interesados.
+OK: B
+EXP: La división por mitad afecta al valor del haber común, no a una partición material igualitaria de cada bien.
+
+// [35]
+Q: En la adjudicación preferente de bienes gananciales, ¿en qué supuesto puede el cónyuge optar entre la propiedad o un derecho de uso o habitación?
+A) Respecto de cualquier bien mueble de uso ordinario incluido en el inventario.
+B) Respecto del local donde ejerza su profesión y, en caso de muerte del otro cónyuge, respecto de la vivienda habitual.
+C) Respecto de la explotación económica que gestione efectivamente y de los animales de compañía.
+OK: B
+EXP: El Código reconoce esa opción específicamente para el local profesional y, en caso de muerte del otro cónyuge, para la vivienda habitual.
+
+// [36]
+Q: Si existen animales de compañía gananciales y no hay acuerdo sobre su destino en la liquidación, ¿qué criterio debe seguir la autoridad judicial?
+A) La atribución al cónyuge con mayor participación económica en la sociedad de gananciales.
+B) La adjudicación automática por mitad entre los cónyuges.
+C) El bienestar del animal, pudiendo incluso cederlo a un tercero para su cuidado y protección.
+OK: C
+EXP: La decisión judicial no se rige por un criterio puramente patrimonial, sino por el bienestar del animal.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 5
+
+// [37]
+Q: ¿Qué situación puede producirse cuando se pospone sin fecha concreta la liquidación de una sociedad de gananciales y el cónyuge supérstite contrae nuevo matrimonio en gananciales?
+A) La conversión automática de todos los bienes en privativos del cónyuge supérstite.
+B) La extinción necesaria de la comunidad postmatrimonial antes de formarse una nueva sociedad de gananciales.
+C) La coexistencia entre la falta de liquidación de la primera sociedad y la formación de una nueva sociedad de gananciales.
+OK: C
+EXP: El texto destaca precisamente la posible convivencia entre la comunidad postmatrimonial no liquidada y una nueva sociedad de gananciales.
+
+// [38]
+Q: Cuando no existen inventarios en la liquidación de varias sociedades de gananciales, ¿qué criterio admite el art. 1409 para determinar el capital de cada sociedad?
+A) La admisión de toda clase de pruebas para fijar el capital correspondiente a cada sociedad.
+B) La aplicación exclusiva de la prueba documental otorgada en escritura pública.
+C) La atribución automática por mitad de todos los bienes a cada sociedad.
+OK: A
+EXP: El precepto permite acudir a toda clase de pruebas cuando faltan inventarios.
+
+// [39]
+Q: Si persiste la duda sobre la atribución de los gananciales en varias sociedades de gananciales, ¿cómo deben distribuirse?
+A) A partes iguales entre todas las sociedades concurrentes.
+B) Proporcionalmente, atendiendo a la duración de cada sociedad y a los bienes e ingresos de los respectivos cónyuges.
+C) En favor de la sociedad más reciente por ser la última vigente.
+OK: B
+EXP: La regla legal impone una atribución proporcional basada en la duración de cada sociedad y en los bienes e ingresos de los cónyuges.
+
+// [40]
+Q: Según la jurisprudencia sobre la liquidación de varias sociedades de gananciales, ¿qué orden debe seguirse cuando una misma persona ha contraído varios matrimonios?
+A) Debe liquidarse primero la sociedad del primer matrimonio y después la segunda sociedad de gananciales.
+B) Deben liquidarse simultáneamente todas las sociedades sin distinción de orden.
+C) Debe liquidarse antes la sociedad del último matrimonio por ser la más próxima en el tiempo.
+OK: A
+EXP: La jurisprudencia señala que primero se liquida la sociedad del primer matrimonio y después la posterior.
+
+// [41]
+Q: ¿Cuándo actúa la regla de proporcionalidad del art. 1409 en la liquidación de varias sociedades de gananciales?
+A) Siempre que concurran dos o más matrimonios sujetos al régimen de gananciales.
+B) Solo cuando no puede determinarse de ningún modo la naturaleza de los bienes matrimoniales.
+C) Cada vez que falte acuerdo entre herederos y cónyuge supérstite sobre el reparto final.
+OK: B
+EXP: La proporcionalidad solo entra en juego de forma subsidiaria cuando resulta imposible determinar la naturaleza de los bienes.
+
+// [42]
+Q: En la práctica de la liquidación de varias sociedades de gananciales, ¿qué orden de operaciones debe seguirse respecto de los bienes?
+A) Aplicar primero la atribución proporcional, luego la presunción de ganancialidad y finalmente identificar los bienes privativos.
+B) Presumir primero la ganancialidad de todos los bienes y después excluir los privativos que se acrediten.
+C) Identificar primero los bienes privativos, después los gananciales probados y solo respecto de los restantes aplicar la presunción de ganancialidad y la atribución proporcional.
+OK: C
+EXP: El texto fija ese orden práctico: primero privativos, luego gananciales probados y, solo para el resto, presunción de ganancialidad y atribución proporcional.
+    `;
+
+
+    const BANCO_5 = ` 
+#ID = 6
+
+// [43]
+Q: ¿Qué situación describe la comunidad postmatrimonial o postganancial tras la disolución de la sociedad de gananciales?
+A) La continuación íntegra del régimen de gananciales hasta que alguno de los partícipes pida la partición.
+B) La transformación automática de todos los bienes comunes en comunidades ordinarias independientes.
+C) La existencia de un patrimonio pendiente de liquidación pese a haberse extinguido ya el régimen de gananciales.
+OK: C
+EXP: La disolución extingue el régimen, pero si no se liquida de inmediato subsiste un patrimonio común pendiente de liquidación.
+
+#ID = 6.1
+
+// [44]
+Q: Cuando fallece uno de los cónyuges, ¿cómo debe entenderse jurídicamente la situación patrimonial posterior a la disolución de la sociedad de gananciales?
+A) Como un patrimonio pendiente de liquidación, no como una comunidad de ganancias entre supérstite y herederos.
+B) Como la subsistencia plena de la sociedad de gananciales entre el cónyuge sobreviviente y los hijos.
+C) Como una comunidad ordinaria separada sobre cada bien concreto desde el mismo fallecimiento.
+OK: A
+EXP: El texto niega que perviva la sociedad de gananciales y afirma que lo existente es un patrimonio aún no liquidado.
+
+#ID = 6.2
+
+// [45]
+Q: En la comunidad postmatrimonial, ¿qué se rechazó al abandonar la tesis de las comunidades ordinarias sobre bienes singulares?
+A) Que los partícipes tuvieran siempre una cuota abstracta sobre el patrimonio total.
+B) Que los partícipes pudieran tener un derecho concreto sobre bienes singulares y enajenar o gravar supuestas mitades indivisas sobre ellos.
+C) Que la liquidación fuera necesaria para concretar las titularidades finales.
+OK: B
+EXP: La tesis abandonada atribuía derechos concretos sobre cada bien, pero después se negó esa legitimación sobre bienes singulares.
+
+// [46]
+Q: Según la doctrina general sobre la comunidad postmatrimonial, ¿qué posición jurídica tienen los partícipes mientras subsiste la indivisión?
+A) Ostentan una cuota abstracta sobre el total del patrimonio, sin derechos concretos sobre cada bien singular.
+B) Son copropietarios plenos de la mitad material de cada bien ganancial.
+C) Carecen de toda titularidad hasta que recaiga resolución judicial de liquidación.
+OK: A
+EXP: Mientras no se liquide, existe una titularidad abstracta sobre el conjunto del patrimonio y no sobre bienes concretos.
+
+// [47]
+Q: ¿Cuándo desaparece la abstracción de la cuota de cada comunero en la comunidad postmatrimonial?
+A) En el momento de la disolución de la sociedad de gananciales.
+B) Cuando se realizan las operaciones de liquidación y división.
+C) Cuando cualquiera de los comuneros manifiesta su voluntad de adjudicarse un bien.
+OK: B
+EXP: La cuota abstracta solo se concreta en bienes determinados al practicarse la liquidación y la división.
+
+#ID = 6.3
+
+// [48]
+Q: ¿Cómo perfila la jurisprudencia del Tribunal Supremo la comunidad postmatrimonial desde el punto de vista de su régimen jurídico?
+A) Como una comunidad ordinaria plena regida íntegramente por las normas de copropiedad sobre bienes concretos.
+B) Como una sociedad de gananciales prorrogada hasta la muerte del segundo cónyuge.
+C) Como una comunidad especial a la que solo resultan aplicables algunas reglas de la comunidad ordinaria y de la comunidad hereditaria indivisa.
+OK: C
+EXP: El Tribunal Supremo la califica como comunidad especial y admite solo una aplicación parcial de esas normas.
+
+// [49]
+Q: Tras la disolución de la sociedad de gananciales, ¿qué tratamiento reciben las rentas del trabajo y las procedentes del capital privativo surgidas después?
+A) Conservan carácter privativo, salvo la excepción de los frutos pendientes de bienes privativos en el momento de la disolución.
+B) Se integran siempre en el patrimonio común hasta que termine la liquidación.
+C) Se consideran gananciales si existen hijos comunes o herederos forzosos.
+OK: A
+EXP: La regla general es su carácter privativo, con la salvedad de los frutos pendientes de bienes privativos al tiempo de la disolución.
+
+// [50]
+Q: En la comunidad postmatrimonial, ¿qué bienes o rendimientos sí se integran en el patrimonio común?
+A) Las deudas posteriores contraídas individualmente por cada titular.
+B) Los frutos de los bienes comunes.
+C) Las rentas del trabajo obtenidas por el cónyuge supérstite tras la disolución.
+OK: B
+EXP: El texto distingue entre rendimientos privativos posteriores, que no ingresan, y frutos de bienes comunes, que sí forman parte del patrimonio común.
+
+// [51]
+Q: Respecto de las deudas en la comunidad postmatrimonial, ¿qué regla establece el texto?
+A) Todas las deudas posteriores de cada titular pasan a gravar el patrimonio común indiviso.
+B) El patrimonio indiviso deja de responder de las obligaciones anteriores a la disolución.
+C) El patrimonio indiviso responde de las obligaciones de la antigua sociedad de gananciales, pero las deudas posteriores de cada titular recaen sobre su propio patrimonio.
+OK: C
+EXP: Se mantiene la responsabilidad por las obligaciones de la antigua sociedad, mientras que las deudas posteriores son personales de quien las contrae.
+
+// [52]
+Q: ¿Qué pueden embargar los acreedores en la comunidad postmatrimonial respecto del deudor?
+A) La cuota abstracta que corresponda al deudor sobre el patrimonio común.
+B) Cualquier bien concreto del patrimonio común elegido libremente por el acreedor.
+C) Solo los frutos de los bienes comunes, sin afectar a la cuota del deudor.
+OK: A
+EXP: Los acreedores solo pueden embargar la cuota abstracta del deudor, que se concretará en bienes determinados al dividirse el patrimonio.
+
+// [53]
+Q: Sobre los bienes concretos integrados en la comunidad postmatrimonial, ¿qué límite existe para los partícipes?
+A) Cualquiera de ellos puede disponer unilateralmente de los bienes muebles, pero no de los inmuebles.
+B) Ninguno puede disponer por sí solo de bienes concretos integrados en ese patrimonio común.
+C) El cónyuge supérstite puede disponer solo de la mitad ideal de cada bien común.
+OK: B
+EXP: La titularidad común sobre el conjunto del patrimonio impide la disposición unilateral de bienes concretos.
+
+#ID = 7
+
+// [54]
+Q: ¿Qué aporta la Ley de Enjuiciamiento Civil de 2000 en materia de liquidación del régimen económico-matrimonial?
+A) La remisión íntegra de la liquidación judicial a las normas generales de ejecución sin especialidad procesal.
+B) La supresión de toda vía judicial específica para la liquidación del régimen económico-matrimonial.
+C) La creación de un procedimiento específicamente destinado a la liquidación judicial del régimen económico-matrimonial.
+OK: C
+EXP: El texto presenta como novedad principal la creación de un procedimiento especial para esa liquidación judicial.
+
+// [55]
+Q: ¿Con qué finalidad establece la Ley de Enjuiciamiento Civil de 2000 un procedimiento especial para la liquidación del régimen económico-matrimonial?
+A) Dar respuesta a la necesidad de una regulación procesal clara en una materia cuya insuficiencia normativa anterior se había puesto de manifiesto reiteradamente.
+B) Sustituir la liquidación del régimen económico-matrimonial por un trámite exclusivamente notarial.
+C) Limitar la liquidación del régimen económico-matrimonial a los supuestos de mutuo acuerdo entre los cónyuges.
+OK: A
+EXP: La finalidad del nuevo procedimiento es cubrir la falta de claridad procesal que existía bajo la legislación anterior.
+
+// [56]
+Q: ¿Dónde se regula el procedimiento especial para la liquidación del régimen económico-matrimonial en la Ley de Enjuiciamiento Civil de 2000?
+A) En los arts. 1392 a 1410 del Código Civil, dentro del régimen de gananciales.
+B) En los arts. 806 a 811 de la Ley de Enjuiciamiento Civil de 2000, dentro del capítulo segundo del título segundo del libro cuarto, dedicado a los procesos especiales.
+C) En las disposiciones generales sobre ejecución patrimonial contenidas al inicio del libro tercero de la Ley de Enjuiciamiento Civil.
+OK: B
+EXP: El texto identifica con precisión los preceptos y su ubicación sistemática dentro de la Ley de Enjuiciamiento Civil.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
