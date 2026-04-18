@@ -1,0 +1,2079 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 3. La celebración del matrimonio</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+const PDF_TEXTO = `
+1. INTRODUCCIÓN.
+
+1.1. Elementos y formas del matrimonio.
+
+La celebración matrimonial consiste en el acto formal mediante el cual los contrayentes manifiestan su voluntad de casarse. El matrimonio requiere forma, pero también exige consentimiento válido y cumplimiento de requisitos previos de capacidad. La normativa permite que cualquier español pueda contraer matrimonio dentro o fuera de España tanto en forma civil como religiosa. La forma religiosa produce efectos civiles si está legalmente reconocida. El matrimonio canónico tiene gran implantación social y ha influido históricamente en la regulación civil del matrimonio, contribuyendo a su desarrollo conceptual y normativo durante siglos.
+
+1.2. La LEY 35/1994: autorización del matrimonio civil por los alcaldes.
+
+Antes de esta ley, el matrimonio civil era principalmente una cuestión judicial, requiriendo expediente y autorización del juez, salvo casos excepcionales en los que intervenían alcaldes. La Ley 35/1994 amplía la competencia permitiendo a todos los alcaldes autorizar matrimonios civiles. La reforma sustituye en el Código Civil la referencia exclusiva al juez por la inclusión del alcalde y otros funcionarios. Esta modificación tiene relevancia política e institucional, al atribuir funciones históricamente reservadas a sacerdotes o jueces a representantes democráticos de la ciudadanía, reforzando el carácter civil y administrativo del matrimonio.
+
+1.3. La LEY 15/2015 de jurisdicción voluntaria.
+
+Esta ley supone una transformación profunda al sacar la tramitación del matrimonio del ámbito estrictamente judicial. La preparación del expediente matrimonial y parte de la tramitación pasan a considerarse actos de jurisdicción voluntaria, caracterizados por la ausencia de conflicto entre partes. Estas funciones pasan del juez al letrado de la Administración de Justicia, notarios o encargados del Registro Civil. El Código Civil, tras la reforma, establece que la comprobación de requisitos corresponde a estas autoridades, y que pueden celebrar el matrimonio jueces de paz, alcaldes, concejales delegados, letrados, notarios o funcionarios consulares en el extranjero. Se consolida así un modelo más flexible y desjudicializado de celebración matrimonial.
+
+2. LA APTITUD MATRIMONIAL, EN GENERAL
+
+2.1. La edad núbil.
+
+El Código Civil no fija una edad matrimonial de forma directa, sino que lo hace prohibiendo el matrimonio a los menores no emancipados. De esta forma, el sistema construye la capacidad matrimonial a partir de la capacidad civil general. Como la emancipación solo puede producirse desde los dieciséis años y la mayoría de edad se fija en los dieciocho, el modelo legal establece una regla clara: el matrimonio es, con carácter general, propio de la mayoría de edad, admitiendo de forma excepcional el matrimonio desde los dieciséis cuando exista emancipación. La norma refleja que el matrimonio exige no solo capacidad biológica, sino capacidad jurídica suficiente para asumir un vínculo con consecuencias personales y patrimoniales.
+
+2.2. Pubertad natural y abrogación de la antigua dispensa de edad.
+
+Hasta 2015 existía la posibilidad de autorizar judicialmente matrimonios desde los catorce años mediante dispensa. Este sistema respondía a una tradición jurídica muy antigua que vinculaba la capacidad matrimonial a la pubertad biológica, modelo presente en el Derecho romano y en el Derecho canónico. La reforma de la Ley de Jurisdicción Voluntaria rompe con ese planteamiento histórico y fija un límite absoluto: no puede existir matrimonio por debajo de los dieciséis años.
+
+Además, desaparece la emancipación por matrimonio. Con ello, el legislador sustituye definitivamente el criterio biológico por un criterio de protección jurídica del menor.
+
+2.3. La lucha contra los matrimonios forzados de los menores.
+
+El Derecho contemporáneo considera insuficiente cualquier criterio basado en la madurez física o sexual. El matrimonio exige edad mínima y consentimiento libre y pleno. Los tratados internacionales, las resoluciones de Naciones Unidas y la normativa europea establecen que prácticas culturales, religiosas o tradicionales no pueden justificar matrimonios de menores. En este contexto, el matrimonio forzado se considera una forma grave de violencia, especialmente contra mujeres y niñas. El ordenamiento español sigue esta línea y tipifica penalmente el matrimonio forzado, reforzando la protección de los derechos fundamentales.
+
+2.4. ¿Una edad matrimonial máxima?
+
+El aumento de la esperanza de vida ha generado un fenómeno nuevo: matrimonios en edades muy avanzadas, a veces con posibles componentes de interés económico, sucesorio o de nacionalidad. Esto ha provocado el debate sobre si debería existir una edad máxima para contraer matrimonio. El texto no propone una solución cerrada, pero apunta que la cuestión es compleja y que, probablemente, la vía más razonable sería reforzar los controles de capacidad en el expediente matrimonial antes que establecer una prohibición general por edad.
+
+2.5. Condiciones de orden psíquico.
+
+El sistema actual abandona la idea de excluir automáticamente a las personas con discapacidad psíquica del matrimonio. El elemento central pasa a ser la existencia real de consentimiento matrimonial. La ley prioriza la utilización de apoyos humanos, técnicos o materiales que permitan a la persona comprender y expresar su voluntad. Solo cuando, incluso con apoyos, exista una imposibilidad clara y sustancial de prestar consentimiento, se exige dictamen médico. El modelo se basa en la autonomía personal y en la protección del derecho a contraer matrimonio.
+
+2.6. La libertad de los contrayentes: la monogamia.
+
+La libertad matrimonial implica no estar unido por un matrimonio anterior vigente. Por ello, pueden contraer matrimonio quienes estén solteros, divorciados o viudos. El sistema español se basa en la monogamia, lo que significa que no puede existir simultáneamente más de un vínculo matrimonial. Este principio forma parte del modelo jurídico matrimonial occidental. Sin embargo, en contextos internacionales pueden surgir conflictos cuando se deben resolver efectos económicos derivados de sistemas jurídicos que permiten la pluralidad de vínculos matrimoniales.
+
+3. LAS PROHIBICIONES MATRIMONIALES
+
+Las prohibiciones matrimoniales hacen referencia a supuestos en los que una persona puede tener capacidad general para casarse, pero no puede hacerlo con determinadas personas concretas. El art. 47 del Código Civil establece que no pueden contraer matrimonio entre sí: 1) Los parientes en línea recta por consanguinidad o adopción. 2) Los colaterales por consanguinidad hasta el tercer grado. 3) Los condenados por haber participado en la muerte dolosa del cónyuge o persona unida por relación afectiva análoga.
+
+Estas prohibiciones no afectan a la capacidad matrimonial en abstracto, sino a la relación concreta entre determinadas personas. Es decir, estas personas pueden casarse con otras, pero no entre ellas. Tradicionalmente estos supuestos se denominaban impedimentos, término de origen canónico, aunque actualmente se habla más de prohibiciones matrimoniales u obstáculos al matrimonio.
+
+3.1. El parentesco consanguíneo y adoptivo
+
+La prohibición del matrimonio entre parientes cercanos responde a criterios culturales y jurídicos muy arraigados en la tradición civil y canónica. En épocas pasadas los grados de parentesco prohibidos eran más amplios que los actuales.
+
+Actualmente, el Código Civil establece que: 1) El parentesco en línea recta, tanto por consanguinidad como por adopción, impide el matrimonio sin límite de grados. 2) El parentesco colateral por consanguinidad impide el matrimonio hasta el tercer grado, como ocurre entre tíos y sobrinos, salvo que exista dispensa.
+
+El parentesco adoptivo produce los mismos efectos jurídicos que el biológico, siguiendo la idea de que la adopción reproduce jurídicamente la filiación natural. El texto sostiene que esta misma lógica debería aplicarse también al parentesco adoptivo en línea colateral, dada la equiparación existente en el ordenamiento jurídico.
+
+3.2. El parentesco por afinidad
+
+En versiones anteriores del Código Civil, el parentesco por afinidad también impedía el matrimonio. Esto implicaba que no se podía contraer matrimonio con familiares del cónyuge o excónyuge, como suegros, cuñados o hijos no comunes.
+
+Tras la reforma de 1981, este impedimento desaparece y el parentesco por afinidad deja de impedir el matrimonio, tanto en línea recta como en línea colateral.
+
+No obstante, el texto considera discutible esta decisión del legislador, especialmente en relación con la afinidad en línea recta. En cualquier caso, se aclara que la desaparición de la prohibición matrimonial no significa que el parentesco por afinidad haya perdido relevancia jurídica en otras materias del Derecho civil.
+
+3.3. El crimen
+
+El impedimento de crimen, regulado en el art. 47.3 del Código Civil, prohíbe el matrimonio entre quien ha participado en la muerte dolosa del cónyuge o pareja de la otra persona.
+
+Tradicionalmente se ha denominado impedimento de crimen o conyugicidio y se basa en principios morales y sociales que rechazan que quien provoca la muerte del consorte pueda casarse con la persona viuda.
+
+Este impedimento exige condena efectiva y afecta tanto a autores como a partícipes en el delito.
+
+Aunque hoy algunos lo consideran una figura histórica y el art. 48 permite su dispensa, el texto defiende su utilidad en un sistema donde existe el divorcio, ya que quien quiera cambiar de pareja puede hacerlo legalmente sin recurrir a conductas delictivas.
+
+4. LA DISPENSA DE IMPEDIMENTOS
+
+4.1. La muerte dolosa del cónyuge y el parentesco colateral
+
+Desde la reforma de 2015, el art. 48 del Código Civil permite que el juez dispense, por justa causa y a instancia de parte, los impedimentos de muerte dolosa del cónyuge o pareja y el parentesco colateral de tercer grado. La dispensa debe concederse mediante expediente de jurisdicción voluntaria.
+
+Solo el juez puede conceder la dispensa y se elimina la antigua dispensa por edad. La solicitud debe justificar la causa alegada y aportar la documentación necesaria, sin ser obligatoria la intervención de abogado o procurador. La decisión final corresponde al juez, que mantiene un cierto margen de valoración.
+
+4.2. La eficacia retroactiva de la dispensa
+
+Cuando la dispensa se concede, tiene efectos retroactivos al momento de celebración del matrimonio. Esto significa que el matrimonio queda convalidado desde su celebración, siempre que no se haya solicitado judicialmente su nulidad.
+
+5. EL CONSENTIMIENTO MATRIMONIAL
+
+El consentimiento es un elemento esencial del matrimonio. Tras la reforma de 1981, el Código Civil lo establece expresamente al afirmar que no existe matrimonio sin consentimiento matrimonial. Este consentimiento debe dirigirse a una unión estable entre dos personas que genera derechos y deberes recíprocos en igualdad, como respeto mutuo, ayuda, convivencia, fidelidad y apoyo mutuo.
+
+Si la voluntad no se dirige a crear esa unión matrimonial real, sino a conseguir otros fines, falta consentimiento matrimonial y el matrimonio puede ser nulo. Además, el consentimiento debe ser incondicional, ya que la ley considera inexistentes las condiciones, términos o modos que pretendan limitar el matrimonio. La persona es libre para casarse o no, pero no puede modificar jurídicamente el contenido del matrimonio.
+
+5.1. La ausencia de consentimiento
+
+Existe ausencia de consentimiento cuando hay simulación o reserva mental. Un ejemplo son los matrimonios de complacencia, en los que los contrayentes simulan el matrimonio para obtener ventajas legales como: 1) Obtener la nacionalidad. 2) Conseguir permiso de residencia. 3) Lograr reagrupación familiar.
+
+Estos matrimonios se consideran nulos porque no existe verdadera voluntad matrimonial. Esto no afecta a los matrimonios reales entre personas de distintos países, que están protegidos por el derecho a contraer matrimonio.
+
+5.2. Los vicios del consentimiento
+
+El consentimiento es inválido cuando está afectado por: 1) Error en la identidad o cualidades esenciales de la persona. 2) Coacción o miedo grave.
+
+Estos supuestos se conectan con las reglas generales del Derecho civil sobre vicios del consentimiento y constituyen causas de nulidad matrimonial.
+
+6. REQUISITOS FORMALES DEL MATRIMONIO CIVIL
+
+6.1. Procedimiento de autorización matrimonial conforme a lo dispuesto en el art. 58 LRC
+
+El matrimonio civil exige un procedimiento previo para comprobar que los contrayentes tienen capacidad matrimonial y que no existen impedimentos. Este procedimiento termina con una resolución que autoriza o deniega la celebración del matrimonio, debiendo motivarse la denegación indicando la falta de capacidad o el impedimento existente.
+
+La normativa establece que el matrimonio civil puede celebrarse ante: 1) Alcalde o concejal delegado. 2) Letrado de la Administración de Justicia. 3) Notario. 4) Funcionario diplomático o consular encargado del Registro Civil.
+
+Antes de la celebración, los contrayentes deben acreditar mediante expediente o acta que cumplen los requisitos legales. Además, se prevé la posibilidad de proporcionar apoyos a personas con discapacidad para garantizar el consentimiento. Solo si existe imposibilidad clara de prestar consentimiento incluso con apoyos se exigirá dictamen médico.
+
+6.2. Reglas de competencia
+
+La comprobación de la capacidad matrimonial y de la inexistencia de impedimentos corresponde al letrado de la Administración de Justicia, notario o encargado del Registro Civil del domicilio de uno de los contrayentes.
+
+Si los contrayentes residen en el extranjero, la competencia corresponde al funcionario diplomático o consular encargado del Registro Civil.
+
+6.3. La celebración
+
+La reforma introducida por la LO 1/2025 modifica las normas sobre celebración del matrimonio civil, eliminando la competencia del juez de paz, sustituyendo la referencia a secretario judicial por letrado de la Administración de Justicia e incorporando lenguaje inclusivo. Además, las referencias normativas a autoridades que autorizan el matrimonio deben entenderse actualmente referidas a notarios, encargados del Registro Civil o funcionarios diplomáticos o consulares, y, para la celebración, también a alcaldes o concejales delegados.
+
+La autoridad competente para celebrar el matrimonio civil puede ser: 1) Alcalde o concejal delegado. 2) Letrado de la Administración de Justicia o notario elegido por los contrayentes. 3) Funcionario diplomático o consular en el extranjero.
+
+La intervención de testigos se limita a dos, cuya firma constará en el acta o inscripción. Otros asistentes no tienen relevancia jurídica.
+
+El matrimonio puede celebrarse ante la misma autoridad que tramitó el expediente u otra distinta, según los casos, a elección de los contrayentes. Si el expediente lo tramita el Registro Civil, la celebración debe hacerse ante alcalde o concejal delegado.
+
+La validez del matrimonio no queda afectada por la falta de competencia de la autoridad si al menos uno de los cónyuges actuó de buena fe y la autoridad ejercía funciones públicas.
+
+La celebración exige una fórmula solemne: lectura de los arts. 66, 67 y 68 CC, pregunta expresa sobre el consentimiento matrimonial, declaración de la autoridad de que existe matrimonio y extensión del acta o inscripción correspondiente. Esto garantiza el sometimiento al régimen jurídico matrimonial, la prestación expresa del consentimiento y la constancia oficial del matrimonio.
+
+6.4. Las modificaciones introducidas por la nueva Ley de Registro Civil y por la LO 1/2025
+
+La Ley del Registro Civil de 2011, en vigor desde 2021 tras su reforma, introduce la desjudicialización del expediente matrimonial, eliminando la competencia de los jueces en esta materia. La celebración del matrimonio exige previamente la tramitación de un acta o expediente para acreditar la capacidad de los contrayentes y la inexistencia de impedimentos o su dispensa.
+
+La tramitación del acta corresponde al notario del domicilio de cualquiera de los contrayentes. La instrucción del expediente corresponde al letrado de la Administración de Justicia o al encargado del Registro Civil del domicilio de uno de los contrayentes.
+
+La reforma de 2025 establece que las referencias legales a jueces u otras autoridades para autorizar el matrimonio deben entenderse actualmente referidas a: 1) Notario. 2) Encargado del Registro Civil. 3) Funcionario diplomático o consular.
+
+Y para la celebración del matrimonio civil también: 4) Alcalde o concejal delegado.
+
+En los matrimonios celebrados en el extranjero se mantiene la competencia de los funcionarios consulares tanto para tramitar el expediente como para celebrar el matrimonio.
+
+7. LA INSCRIPCIÓN DEL MATRIMONIO CIVIL EN EL REGISTRO CIVIL
+
+7.1. Acta e inscripción
+
+Tras la celebración del matrimonio, la autoridad que lo haya autorizado debe extender el acta o autorizar la escritura pública, que debe firmarse por la autoridad, los contrayentes y dos testigos.
+
+Posteriormente, debe remitirse copia al Registro Civil competente para practicar la inscripción, previa calificación del encargado del Registro.
+
+Aunque el Código utiliza la expresión acta o inscripción, en muchos casos ambos conceptos coinciden, especialmente cuando el matrimonio se celebra en el propio Registro Civil, donde el acta equivale a la inscripción. Sin embargo, no todas las autoridades que celebran matrimonios pueden practicar la inscripción, como ocurre con los alcaldes, que solo extienden el acta.
+
+La normativa actual mantiene la obligación de remitir la documentación al Registro Civil para su inscripción, incluyendo las nuevas referencias a letrados de la Administración de Justicia, notarios y funcionarios públicos autorizantes.
+
+7.2. El valor de la inscripción
+
+La inscripción del matrimonio en el Registro Civil no tiene carácter constitutivo, sino declarativo, ya que el matrimonio produce efectos civiles desde su celebración si existen capacidad, consentimiento y cumplimiento de las formalidades legales.
+
+Sin embargo, la inscripción es necesaria para el pleno reconocimiento de esos efectos civiles, ya que permite acreditar de forma oficial el estado civil de los cónyuges. La inscripción funciona tanto como medio de prueba como título de legitimación del estado matrimonial.
+
+Respecto a terceros, el matrimonio no inscrito no perjudica los derechos adquiridos de buena fe.
+
+La jurisprudencia constitucional y ordinaria ha reiterado que la falta de inscripción no hace inexistente el matrimonio si este se acredita válidamente, rechazando dar a la inscripción un valor constitutivo. Este criterio se ha aplicado a matrimonios religiosos y a matrimonios celebrados en el extranjero no inscritos en el Registro Civil español.
+
+7.3. La inscripción del matrimonio conforme a la Ley 20/2011
+
+La Ley del Registro Civil de 2011 regula la inscripción del matrimonio para tres supuestos: matrimonio civil, matrimonio celebrado ante autoridad extranjera y matrimonio religioso. En todo caso, la inscripción acredita oficialmente la existencia del matrimonio, así como la fecha y el lugar de su celebración.
+
+Se mantiene el carácter declarativo de la inscripción, ya que solo tiene valor constitutivo cuando la ley lo establece expresamente. Como regla general, la inscripción cumple una función de publicidad de hechos personales jurídicamente relevantes.
+
+El matrimonio se inscribe en el registro individual de cada contrayente, dentro del nuevo modelo del Registro Civil basado en registros personales, normalmente abiertos con la inscripción de nacimiento y vinculados al código personal del DNI.
+
+Además, la ley establece la obligación de inscribir junto al matrimonio el régimen económico matrimonial, así como los pactos y resoluciones que lo modifiquen, eliminando la anterior discusión sobre si esta inscripción era voluntaria u obligatoria.
+
+8. FORMAS MATRIMONIALES ESPECIALES
+
+Las formas matrimoniales especiales son modalidades de celebración en las que se simplifican algunas formalidades ordinarias del matrimonio por razones prácticas o históricas, pero manteniendo siempre los elementos esenciales: capacidad, consentimiento y forma mínima exigida. Son figuras tradicionales, muchas de origen canónico, que el Derecho civil ha mantenido para supuestos excepcionales.
+
+8.1. El matrimonio por apoderado
+
+El matrimonio por apoderado permite que uno de los contrayentes preste el consentimiento mediante un poder especial otorgado en forma auténtica. El apoderado no es un verdadero representante, sino un mero transmisor formal del consentimiento previamente manifestado por el poderdante.
+
+Es imprescindible la presencia personal del otro contrayente y el poder debe identificar de forma concreta a la persona con la que se va a contraer matrimonio. No es posible que ambos contrayentes actúen por apoderado.
+
+Se trata de una figura excepcional en la práctica. Tras la reforma de la Ley de Jurisdicción Voluntaria, desaparece la exigencia de distinta residencia entre contrayentes.
+
+El poder se extingue por revocación del poderdante, renuncia del apoderado o muerte de cualquiera de ellos, debiendo comunicarse la revocación antes de la celebración del matrimonio.
+
+8.2. El matrimonio en peligro de muerte
+
+El matrimonio en peligro de muerte (in articulo mortis) es una forma matrimonial especial que permite celebrar el matrimonio cuando existe riesgo inminente de fallecimiento y no es posible seguir el procedimiento ordinario. Tiene origen canónico y busca garantizar el derecho a contraer matrimonio en situaciones extremas.
+
+Puede celebrarse ante: 1) Autoridades civiles competentes para el matrimonio civil (debiendo entenderse actualizadas las referencias a letrado de la Administración de Justicia). 2) El oficial o jefe superior inmediato en caso de militares en campaña. 3) El capitán o comandante en matrimonios celebrados a bordo de nave o aeronave.
+
+La especialidad principal es que no se exige expediente matrimonial previo. Sin embargo, sí se requiere: 1) Presencia de dos testigos mayores de edad (salvo imposibilidad acreditada). 2) Dictamen médico cuando el peligro de muerte derive de enfermedad o estado físico, sobre capacidad para prestar consentimiento y gravedad de la situación.
+
+La normativa actual elimina el antiguo carácter condicional del matrimonio en peligro de muerte.
+
+Si posteriormente aparece un impedimento, deberá instarse la nulidad conforme a las reglas generales.
+
+Para su validez siguen siendo imprescindibles los elementos esenciales del matrimonio, especialmente el consentimiento consciente y válido. Si el matrimonio fuera posteriormente declarado nulo, podrían mantenerse efectos como matrimonio putativo.
+
+Para su plena eficacia debe inscribirse en el Registro Civil. Si no existió expediente previo, deberá comprobarse posteriormente el cumplimiento de los requisitos legales antes de la inscripción.
+
+8.3. El matrimonio secreto
+
+El matrimonio secreto es una figura de origen canónico incorporada posteriormente al Derecho civil. Aunque no fue previsto en el Código Civil originario, fue introducido en 1906 y consolidado definitivamente tras la reforma de 1981. Se trata de una institución discutida doctrinalmente, ya que el matrimonio es un estado civil con relevancia social y normalmente sujeto a publicidad registral.
+
+El matrimonio secreto solo puede autorizarse por el Ministro de Justicia cuando exista causa grave suficientemente acreditada.
+
+Sus características principales son: 1) Tramitación reservada del expediente matrimonial, sin publicación de edictos ni proclamas. 2) Reconocimiento del matrimonio mediante inscripción en el libro especial del Registro Civil Central.
+
+Se mantiene la exigencia de expediente y de inscripción registral, pero ambos procedimientos carecen de publicidad, ya que tanto la tramitación como la inscripción tienen carácter secreto.
+
+Respecto a terceros, el matrimonio secreto no perjudica derechos adquiridos de buena fe hasta que se publique en el Registro Civil ordinario. Entre los cónyuges, sin embargo, el matrimonio es válido desde su celebración.
+
+La jurisprudencia ha aclarado que el secreto matrimonial no puede utilizarse para mantener beneficios económicos incompatibles con la existencia de un nuevo matrimonio, como ocurre con determinadas prestaciones de viudedad.
+
+8.4. La celebración del matrimonio en forma religiosa: la Iglesia Católica
+
+El principio constitucional de aconfesionalidad del Estado no impide la celebración de matrimonios en forma religiosa con efectos civiles. El Código Civil reconoce con carácter general la validez civil del matrimonio celebrado conforme a formas religiosas legalmente previstas, entre las que destaca el matrimonio canónico por su fuerte arraigo histórico y social en España.
+
+La reforma de 1981 evitó que el matrimonio religioso quedara limitado exclusivamente al matrimonio canónico, permitiendo la celebración de matrimonios conforme a otras confesiones religiosas, en coherencia con el principio de aconfesionalidad estatal.
+
+El consentimiento matrimonial puede prestarse conforme a las normas de confesiones religiosas inscritas, siempre que exista acuerdo con el Estado o habilitación legal.
+
+La regulación civil del matrimonio religioso se inspira en gran medida en la tradición del matrimonio canónico, que ha influido históricamente en la configuración jurídica del matrimonio civil, especialmente en el ámbito europeo.
+
+8.5. Otras confesiones religiosas
+
+La aprobación en 1992 de los Acuerdos de Cooperación del Estado con las confesiones evangélica, judía e islámica supuso una ampliación del sistema matrimonial español, permitiendo la celebración de matrimonios religiosos con efectos civiles fuera del ámbito católico.
+
+Además, la jurisprudencia ha reconocido el derecho de determinadas confesiones a su inscripción en el Registro de Entidades Religiosas, incluso sin acuerdo de cooperación, como ocurrió con la Iglesia de la Scientology en 2007.
+
+La Ley de Jurisdicción Voluntaria reformó el Código Civil para reconocer efectos civiles al matrimonio celebrado por confesiones con reconocimiento de notorio arraigo en España, equiparándolas en este aspecto a la religión católica.
+
+En estos casos, el matrimonio religioso exige: 1) Acta o expediente previo de capacidad matrimonial. 2) Entrega al ministro de culto de la documentación acreditativa de dicha capacidad. 3) Prestación del consentimiento ante ministro de culto y dos testigos mayores de edad, dentro del plazo de seis meses desde el acta previa.
+
+Tras la celebración, el ministro de culto debe: 1) Expedir certificación de la celebración con los datos del expediente previo. 2) Remitir la certificación al Registro Civil por medios electrónicos en el plazo de cinco días. 3) Practicar diligencia en las copias del acta previa, entregando una a los contrayentes y conservando otra.
+
+8.6. Los efectos civiles y la inscripción en el Registro Civil del matrimonio en forma religiosa
+
+El matrimonio celebrado conforme al Derecho canónico, a los acuerdos de cooperación con confesiones religiosas o por confesiones con notorio arraigo en España produce efectos civiles desde su celebración. Sin embargo, para el pleno reconocimiento de esos efectos es necesaria su inscripción en el Registro Civil, en igualdad con el matrimonio civil.
+
+La inscripción del matrimonio religioso celebrado en España se realiza mediante la presentación de la certificación expedida por la confesión religiosa correspondiente, que debe contener los datos exigidos por la legislación registral. La inscripción puede denegarse si de la documentación presentada o de los datos del Registro resulta que el matrimonio no cumple los requisitos legales de validez.
+
+Aunque la jurisprudencia constitucional ha afirmado que el matrimonio produce efectos desde su válida celebración, parte de la doctrina critica la minimización del valor de la inscripción registral, defendiendo su importancia como mecanismo de seguridad jurídica y de control público del estado civil.
+
+8.7. El rito matrimonial gitano
+
+El rito matrimonial gitano no está reconocido por el ordenamiento jurídico español como forma válida de celebración del matrimonio. El Tribunal Constitucional ha declarado que la negativa a reconocer efectos jurídicos a estas uniones no constituye discriminación étnica, ya que el sistema matrimonial español se basa en formas civiles neutrales y, en su caso, en formas religiosas reconocidas por razones religiosas, no étnicas.
+
+Sin embargo, el Tribunal Europeo de Derechos Humanos consideró discriminatoria la denegación de pensión de viudedad en un caso concreto, al apreciar una aplicación desigual del principio de igualdad respecto a otros supuestos en los que se habían reconocido efectos a matrimonios no inscritos. Como consecuencia, condenó al Estado español a indemnizar a la demandante.
+
+No obstante, esta sentencia no supone el reconocimiento jurídico general del matrimonio gitano, sino la resolución de un caso concreto basado en criterios de equidad y no discriminación.
+`.trim();
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+  
+   "1": "Introducción al matrimonio como institución jurídica: elementos esenciales y marco normativo de su celebración.",
+  "1.1": "El matrimonio exige consentimiento válido, capacidad y forma; puede celebrarse en forma civil o religiosa con efectos civiles si está reconocida.",
+  "1.2": "La Ley 35/1994 amplía la competencia para autorizar matrimonios civiles a todos los alcaldes, reforzando el carácter civil-administrativo de la institución.",
+  "1.3": "La Ley 15/2015 desjudicializa la tramitación matrimonial: expediente y funciones pasan a LAJ, notarios y encargados del Registro Civil, con más flexibilidad en la celebración.",
+
+  "2": "La aptitud matrimonial se construye sobre edad, capacidad psíquica y libertad real para consentir.",
+  "2.1": "La edad núbil resulta de prohibir el matrimonio a menores no emancipados: regla general 18 años y excepción desde 16 con emancipación.",
+  "2.2": "Se elimina la dispensa de edad y la emancipación por matrimonio: no puede haber matrimonio por debajo de 16 años.",
+  "2.3": "El matrimonio exige consentimiento libre y pleno; el matrimonio forzado de menores se aborda como violencia grave y se tipifica penalmente.",
+  "2.4": "No hay edad máxima: el debate se orienta a reforzar controles de capacidad en el expediente más que a prohibiciones generales por edad.",
+  "2.5": "La clave es la existencia real de consentimiento; se priorizan apoyos y solo ante imposibilidad sustancial incluso con apoyos se exige dictamen médico.",
+  "2.6": "La libertad matrimonial presupone no estar ligado por matrimonio previo vigente; el sistema español se asienta en la monogamia.",
+
+  "3": "Las prohibiciones matrimoniales limitan con quién se puede contraer, no la capacidad general para casarse (art. 47 CC).",
+  "3.1": "El parentesco en línea recta por consanguinidad o adopción impide siempre; el colateral por consanguinidad impide hasta 3º grado, con posible dispensa.",
+  "3.2": "Tras 1981, la afinidad deja de ser impedimento matrimonial, aunque conserva relevancia en otras materias civiles.",
+  "3.3": "El impedimento de crimen prohíbe casarse con quien participó en la muerte dolosa del cónyuge o pareja del otro, requiriendo condena y admitiendo dispensa.",
+
+  "4": "La dispensa permite levantar ciertos impedimentos en supuestos tasados y con control judicial (art. 48 CC).",
+  "4.1": "Desde 2015, solo el juez puede dispensar por justa causa el impedimento de crimen y el parentesco colateral de 3º grado mediante expediente de jurisdicción voluntaria.",
+  "4.2": "La dispensa produce eficacia retroactiva, convalidando el matrimonio desde su celebración si no se ha solicitado la nulidad.",
+
+  "5": "El consentimiento es elemento esencial: sin consentimiento matrimonial no hay matrimonio y no cabe someterlo a condiciones o términos.",
+  "5.1": "Hay ausencia de consentimiento cuando existe simulación o reserva mental (matrimonios de complacencia para ventajas legales), lo que determina nulidad.",
+  "5.2": "El consentimiento es inválido por error esencial o por coacción/miedo grave, como causas de nulidad.",
+
+  "6": "El matrimonio civil requiere expediente previo y una celebración solemne ante autoridad competente.",
+  "6.1": "El procedimiento del art. 58 LRC verifica capacidad e inexistencia de impedimentos y culmina en resolución motivada de autorización o denegación.",
+  "6.2": "La competencia para comprobar requisitos corresponde al LAJ, notario o encargado del Registro Civil del domicilio de uno de los contrayentes; en el extranjero, al cónsul/funcionario competente.",
+  "6.3": "La celebración exige autoridad competente, dos testigos, lectura de arts. 66–68 CC, consentimiento expreso, declaración de matrimonio y acta/inscripción; la falta de competencia no invalida si hay buena fe y ejercicio público.",
+  "6.4": "La LRC 20/2011 y la LO 1/2025 consolidan la desjudicialización y actualizan referencias a autoridades competentes (notarios/RC/consulares y, para celebrar, alcaldes o concejales).",
+
+  "7": "La inscripción registral acredita el estado civil matrimonial y da publicidad, sin ser constitutiva como regla general.",
+  "7.1": "Tras la celebración se extiende acta o escritura y se remite al Registro Civil para su inscripción tras calificación; no todas las autoridades celebrantes inscriben.",
+  "7.2": "La inscripción es declarativa: el matrimonio produce efectos desde la celebración válida, pero la inscripción facilita prueba y oponibilidad; a terceros no inscritos no perjudica derechos de buena fe.",
+  "7.3": "La Ley 20/2011 regula inscripción de matrimonios civiles, extranjeros y religiosos; se inscribe en el registro individual y se inscribe también el régimen económico matrimonial y sus modificaciones.",
+
+  "8": "Formas especiales simplifican formalidades por razones excepcionales, manteniendo capacidad, consentimiento y forma mínima.",
+  "8.1": "El matrimonio por apoderado requiere poder especial auténtico y apoderado como transmisor; el otro contrayente debe estar presente y no pueden actuar ambos por apoderado.",
+  "8.2": "El matrimonio in articulo mortis se celebra sin expediente previo, con testigos y, si procede, dictamen médico; después se comprueban requisitos para inscribir.",
+  "8.3": "El matrimonio secreto exige causa grave y autorización del Ministro de Justicia, con expediente e inscripción reservada en libro especial; no perjudica a terceros de buena fe hasta su publicación ordinaria.",
+  "8.4": "La forma religiosa católica produce efectos civiles en un Estado aconfesional, y el matrimonio canónico ha influido históricamente en la regulación civil.",
+  "8.5": "Otras confesiones con acuerdo o notorio arraigo pueden celebrar matrimonios con efectos civiles, exigiéndose acta previa, celebración ante ministro de culto y testigos e inscripción posterior.",
+  "8.6": "El matrimonio religioso produce efectos civiles desde su celebración válida, pero requiere inscripción para pleno reconocimiento; puede denegarse si faltan requisitos de validez.",
+  "8.7": "El rito matrimonial gitano no es forma matrimonial válida en España; el TEDH ha apreciado discriminación en un caso concreto sin reconocer validez general del rito."
+  
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = `
+    #ID = 1.1
+
+// [1]
+Q: ¿Qué exige jurídicamente la celebración matrimonial, además de la forma, para que el matrimonio sea válido?
+A) La intervención judicial previa en todo caso y la inscripción inmediata en el Registro Civil.
+B) La convivencia previa de los contrayentes y la existencia de una ceremonia pública.
+C) El consentimiento válido y el cumplimiento de los requisitos previos de capacidad.
+OK: C
+EXP: El texto destaca que la forma no basta por sí sola: también se requiere consentimiento válido y aptitud jurídica para contraer matrimonio.
+
+#ID = 1.2
+
+// [2]
+Q: ¿Cuál fue la principal novedad institucional introducida por la Ley 35/1994 en materia de matrimonio civil?
+A) La atribución general a los alcaldes de la competencia para autorizar matrimonios civiles.
+B) La supresión de toda intervención administrativa en la celebración del matrimonio.
+C) La reserva exclusiva de la autorización matrimonial a los jueces de primera instancia.
+OK: A
+EXP: La reforma amplió la competencia a todos los alcaldes, desplazando el monopolio práctico que antes tenía el juez.
+
+#ID = 1.3
+
+// [3]
+Q: ¿Qué transformación refleja la Ley 15/2015 de jurisdicción voluntaria en la tramitación del matrimonio?
+A) La vuelta del expediente matrimonial al ámbito exclusivamente judicial.
+B) La sustitución del expediente previo por un sistema basado solo en la voluntad de los contrayentes.
+C) La desjudicialización del expediente y la atribución de funciones a otras autoridades no judiciales.
+OK: B
+EXP: La ley saca la tramitación del ámbito estrictamente judicial y distribuye funciones entre letrados, notarios y encargados del Registro Civil.
+
+#ID = 2.1
+
+// [4]
+Q: ¿Cómo construye el Código Civil la capacidad matrimonial en relación con la edad núbil?
+A) Fijando expresamente una edad matrimonial máxima y otra mínima.
+B) Prohibiendo el matrimonio a los menores no emancipados, de modo que la aptitud deriva de la capacidad civil general.
+C) Permitiendo el matrimonio desde cualquier edad si existe madurez suficiente.
+OK: C
+EXP: El sistema no fija directamente una edad núbil, sino que parte de la prohibición a los menores no emancipados y remite a la capacidad civil general.
+
+#ID = 2.2
+
+// [5]
+Q: ¿Qué cambio de criterio introduce la reforma de 2015 al suprimir la antigua dispensa de edad?
+A) Sustituye el criterio de protección jurídica por un criterio basado en la pubertad natural.
+B) Reemplaza el criterio biológico tradicional por un límite jurídico absoluto de dieciséis años.
+C) Mantiene la autorización judicial desde los catorce años en supuestos excepcionales.
+OK: A
+EXP: La reforma rompe con el modelo apoyado en la pubertad biológica y establece que no cabe matrimonio por debajo de los dieciséis años.
+
+#ID = 2.3
+
+// [6]
+Q: ¿Cómo valora el Derecho contemporáneo el matrimonio forzado de menores?
+A) Como una práctica admisible cuando la tradición social la legitima.
+B) Como una forma grave de violencia incompatible con la exigencia de consentimiento libre y pleno.
+C) Como una cuestión exclusivamente civil sin relevancia penal.
+OK: B
+EXP: El texto lo presenta como una forma grave de violencia, especialmente contra mujeres y niñas, y señala su tipificación penal en el ordenamiento español.
+
+#ID = 2.4
+
+// [7]
+Q: Ante el debate sobre los matrimonios en edades muy avanzadas, ¿qué orientación considera más razonable el texto?
+A) Establecer una prohibición general por encima de una determinada edad.
+B) Remitir siempre la decisión a la libre voluntad de los contrayentes sin control alguno.
+C) Reforzar los controles de capacidad en el expediente matrimonial antes que fijar una edad máxima.
+OK: C
+EXP: El texto no propone una edad máxima, sino que apunta como vía preferible un mayor control de la capacidad en el expediente.
+
+#ID = 2.5
+
+// [8]
+Q: ¿Qué criterio centra hoy las condiciones de orden psíquico para contraer matrimonio?
+A) La existencia real de consentimiento, favoreciendo apoyos antes de excluir la capacidad matrimonial.
+B) La exclusión automática del matrimonio cuando exista cualquier discapacidad psíquica.
+C) La exigencia sistemática de dictamen médico con independencia de las circunstancias.
+OK: A
+EXP: El modelo actual prioriza la autonomía personal y solo exige dictamen médico cuando, incluso con apoyos, no pueda prestarse consentimiento.
+
+#ID = 2.6
+
+// [9]
+Q: ¿Qué implica jurídicamente la monogamia como manifestación de la libertad de los contrayentes?
+A) Que puede coexistir más de un vínculo matrimonial si existen efectos económicos separados.
+B) Que solo pueden casarse quienes nunca hayan estado casados anteriormente.
+C) Que no puede contraerse matrimonio mientras subsista un matrimonio anterior vigente.
+OK: B
+EXP: La monogamia exige la inexistencia de un vínculo matrimonial previo subsistente, por lo que pueden casarse solteros, divorciados o viudos.
+    `;
+
+
+    const BANCO_2 = `
+    #ID = 3
+
+// [10]
+Q: ¿Qué caracterizan jurídicamente las prohibiciones matrimoniales del art. 47 del Código Civil?
+A) Que suprimen de forma general la capacidad matrimonial de quienes incurren en ellas.
+B) Que convierten en anulable cualquier matrimonio celebrado sin expediente previo.
+C) Que impiden el matrimonio solo respecto de determinadas personas concretas, sin eliminar la capacidad general para casarse con otras.
+OK: C
+EXP: El texto subraya que estas prohibiciones no afectan a la capacidad matrimonial en abstracto, sino a la relación concreta entre ciertas personas.
+
+#ID = 3.1
+
+// [11]
+Q: ¿Qué alcance tiene en el Código Civil la prohibición matrimonial por parentesco en línea recta?
+A) Impide el matrimonio sin límite de grados tanto por consanguinidad como por adopción.
+B) Solo impide el matrimonio cuando el parentesco deriva de filiación biológica.
+C) Se limita a los dos primeros grados y puede dispensarse libremente.
+OK: A
+EXP: El texto indica que la línea recta impide el matrimonio sin límite de grados y equipara la adopción a la consanguinidad.
+
+
+// [12]
+Q: ¿Cómo trata el Código Civil el parentesco colateral por consanguinidad a efectos de matrimonio?
+A) Lo prohíbe en toda la línea colateral sin excepción posible.
+B) Lo impide hasta el tercer grado, con posibilidad de dispensa en ese supuesto.
+C) Solo lo considera relevante cuando existe convivencia familiar previa.
+OK: B
+EXP: El texto precisa que el parentesco colateral por consanguinidad impide el matrimonio hasta el tercer grado, como entre tíos y sobrinos, salvo dispensa.
+
+#ID = 3.2
+
+// [13]
+Q: ¿Qué efecto produjo la reforma de 1981 sobre el parentesco por afinidad como prohibición matrimonial?
+A) Mantuvo la prohibición solo para la afinidad en línea recta.
+B) Reforzó la prohibición para evitar matrimonios con familiares del excónyuge.
+C) Suprimió el impedimento matrimonial por afinidad tanto en línea recta como en línea colateral.
+OK: C
+EXP: Desde la reforma de 1981, la afinidad dejó de impedir el matrimonio en cualquiera de sus líneas.
+
+#ID = 3.3
+
+// [14]
+Q: ¿Qué exige el impedimento de crimen del art. 47.3 del Código Civil para impedir el matrimonio?
+A) Una condena efectiva por participación en la muerte dolosa del cónyuge o pareja de la otra persona.
+B) Una simple sospecha fundada de intervención en la muerte del consorte.
+C) Cualquier conducta culposa que haya contribuido indirectamente al fallecimiento.
+OK: A
+EXP: El texto exige condena efectiva y extiende el impedimento tanto a autores como a partícipes en la muerte dolosa.
+
+#ID = 4.1
+
+// [15]
+Q: ¿Qué impedimentos puede dispensar el juez, tras la reforma de 2015, conforme al art. 48 del Código Civil?
+A) La falta de edad mínima y cualquier parentesco en línea recta.
+B) La muerte dolosa del cónyuge o pareja y el parentesco colateral de tercer grado.
+C) Todos los impedimentos matrimoniales previstos en el art. 47 del Código Civil.
+OK: B
+EXP: El precepto permite dispensar solo esos dos supuestos y elimina la antigua dispensa por edad.
+
+#ID = 4.2
+
+// [16]
+Q: ¿Qué significa la eficacia retroactiva de la dispensa de impedimentos?
+A) Que la dispensa solo despliega efectos desde la resolución judicial hacia el futuro.
+B) Que la dispensa transforma automáticamente el matrimonio en inexistente.
+C) Que el matrimonio queda convalidado desde su celebración, salvo que ya se haya solicitado judicialmente su nulidad.
+OK: C
+EXP: La dispensa retroactúa al momento de celebración del matrimonio y lo convalida con ese límite.
+
+#ID = 5
+
+// [17]
+Q: ¿Cuándo falta el consentimiento matrimonial como elemento esencial del matrimonio?
+A) Cuando la voluntad no se dirige a constituir una verdadera unión matrimonial, sino a obtener fines distintos.
+B) Cuando los contrayentes no concretan previamente el reparto interno de deberes conyugales.
+C) Cuando el matrimonio no incorpora pactos expresos sobre convivencia y fidelidad.
+OK: A
+EXP: El texto explica que no hay consentimiento matrimonial real si la voluntad persigue fines ajenos a la unión matrimonial.
+
+
+// [18]
+Q: ¿Cómo considera la ley las condiciones, términos o modos que pretendan limitar el consentimiento matrimonial?
+A) Como cláusulas válidas si ambos contrayentes las aceptan libremente.
+B) Como elementos inexistentes, porque el consentimiento matrimonial debe ser incondicional.
+C) Como pactos eficaces solo cuando afectan a consecuencias patrimoniales del matrimonio.
+OK: B
+EXP: El texto afirma que el consentimiento matrimonial ha de ser incondicional y que tales limitaciones carecen de existencia jurídica.
+    `;
+
+
+    const BANCO_3 = `
+    #ID = 5.1
+
+// [19]
+Q: ¿Cuándo existe ausencia de consentimiento matrimonial en los matrimonios de complacencia?
+A) Cuando los contrayentes desean casarse y además obtener efectos favorables de residencia.
+B) Cuando el matrimonio se celebra entre personas de distinta nacionalidad.
+C) Cuando los contrayentes simulan el matrimonio o actúan con reserva mental para obtener ventajas legales ajenas a la verdadera unión matrimonial.
+OK: C
+EXP: El texto considera nulos estos matrimonios porque falta voluntad matrimonial real, aunque persigan beneficios legales.
+
+#ID = 5.2
+
+// [20]
+Q: ¿Qué relevancia tienen los vicios del consentimiento en el matrimonio?
+A) Determinan la invalidez del consentimiento cuando existe error sobre la persona o coacción o miedo grave.
+B) Solo afectan a la eficacia patrimonial del matrimonio, pero no a su validez.
+C) Se limitan a los supuestos de discrepancia sobre el régimen económico matrimonial.
+OK: A
+EXP: El texto los configura como causas de nulidad matrimonial conectadas con las reglas generales del Derecho civil.
+
+#ID = 6.1
+
+// [21]
+Q: ¿Cuál es la función del procedimiento de autorización matrimonial del art. 58 LRC en el matrimonio civil?
+A) Sustituir la celebración matrimonial por una simple declaración registral.
+B) Comprobar previamente la capacidad matrimonial y la inexistencia de impedimentos antes de autorizar o denegar la celebración.
+C) Permitir que los contrayentes elijan libremente cualquier forma sin control previo alguno.
+OK: B
+EXP: El procedimiento previo sirve para verificar los requisitos legales y concluye con resolución motivada de autorización o denegación.
+
+#ID = 6.1
+
+// [22]
+Q: ¿Qué criterio sigue el régimen del matrimonio civil respecto de las personas con discapacidad en el expediente previo?
+A) Exigir siempre dictamen médico antes de autorizar el matrimonio civil.
+B) Excluir la autorización matrimonial cuando exista cualquier discapacidad que afecte a la comunicación.
+C) Priorizar apoyos para garantizar el consentimiento y exigir dictamen médico solo si persiste una imposibilidad clara de consentir.
+OK: C
+EXP: El texto sitúa en primer plano los apoyos personales, técnicos o materiales y reserva el dictamen médico para casos límite.
+
+#ID = 6.2
+
+// [23]
+Q: ¿A quién corresponde, con carácter general, la competencia para comprobar la capacidad matrimonial y la inexistencia de impedimentos?
+A) Al letrado de la Administración de Justicia, al notario o al encargado del Registro Civil del domicilio de uno de los contrayentes.
+B) Al alcalde del municipio donde vaya a celebrarse necesariamente el matrimonio civil.
+C) Al juez de paz del lugar de residencia común de los contrayentes.
+OK: A
+EXP: La regla general de competencia se vincula al domicilio de uno de los contrayentes y no al lugar de celebración.
+
+#ID = 6.3
+
+// [24]
+Q: ¿Qué modificación introduce la LO 1/2025 en la celebración del matrimonio civil?
+A) Restablece la competencia del juez de paz para celebrar matrimonios civiles.
+B) Elimina la competencia del juez de paz y actualiza las referencias normativas al letrado de la Administración de Justicia y a otras autoridades competentes.
+C) Suprime la intervención de autoridades públicas y remite toda celebración al notario.
+OK: B
+EXP: La reforma elimina al juez de paz, actualiza denominaciones e integra las autoridades actualmente competentes.
+
+#ID = 6.3
+
+// [25]
+Q: ¿Qué exigencia formal integra la celebración válida del matrimonio civil?
+A) La presencia de un número indeterminado de asistentes con relevancia jurídica.
+B) La aprobación previa de capitulaciones matrimoniales ante notario.
+C) La lectura de los arts. 66, 67 y 68 CC, la pregunta sobre el consentimiento, la declaración de la autoridad y la extensión del acta o inscripción.
+OK: C
+EXP: El texto presenta esa secuencia solemne como garantía del consentimiento expreso y de la constancia oficial del matrimonio.
+
+#ID = 6.3
+
+// [26]
+Q: ¿Qué efecto produce la falta de competencia de la autoridad que celebra el matrimonio civil?
+A) No afecta a la validez si al menos uno de los cónyuges actuó de buena fe y la autoridad ejercía funciones públicas.
+B) Determina siempre la nulidad absoluta del matrimonio, aunque exista buena fe.
+C) Solo invalida el matrimonio cuando faltan testigos o inscripción posterior.
+OK: A
+EXP: El texto protege la validez del matrimonio en ese supuesto cuando concurren buena fe y ejercicio de funciones públicas.
+
+#ID = 6.4
+
+// [27]
+Q: ¿Qué orientación general reflejan la nueva Ley del Registro Civil y la LO 1/2025 en materia matrimonial?
+A) La recuperación del protagonismo judicial en la autorización y celebración del matrimonio.
+B) La consolidación de un modelo desjudicializado, con expediente o acta previa y atribución de funciones a notarios, encargados del Registro Civil, autoridades consulares y, para la celebración, también alcaldes o concejales delegados.
+C) La conversión del matrimonio civil en un acto exclusivamente registral sin intervención de autoridad celebrante.
+OK: B
+EXP: Ambas reformas refuerzan la desjudicialización del expediente y redistribuyen las competencias entre autoridades no judiciales.
+   `;
+
+
+    const BANCO_4 = `
+    #ID = 7.1
+
+// [28]
+Q: ¿Qué función cumple el acta en la inscripción del matrimonio civil cuando la autoridad celebrante no puede inscribir directamente en el Registro Civil?
+A) Sustituir definitivamente la inscripción registral y producir por sí sola plena constancia oficial del matrimonio.
+B) Permitir que el matrimonio quede plenamente inscrito sin intervención posterior del encargado del Registro Civil.
+C) Documentar la celebración para su remisión al Registro Civil competente, donde se practicará la inscripción previa calificación.
+OK: C
+EXP: El texto distingue entre extender el acta y practicar la inscripción, que corresponde al Registro Civil tras recibir la documentación.
+
+#ID = 7.1
+
+// [29]
+Q: ¿Qué diferencia subraya el texto entre acta e inscripción del matrimonio civil?
+A) Que no todas las autoridades que celebran matrimonios pueden practicar la inscripción, aunque sí extienden el acta.
+B) Que toda autoridad autorizante puede inscribir directamente el matrimonio en el Registro Civil.
+C) Que el acta solo existe en los matrimonios religiosos y la inscripción solo en los civiles.
+OK: A
+EXP: El texto pone como ejemplo a los alcaldes, que celebran y extienden acta, pero no practican la inscripción.
+
+#ID = 7.2
+
+// [30]
+Q: ¿Qué valor jurídico atribuye el ordenamiento a la inscripción del matrimonio en el Registro Civil?
+A) Un valor constitutivo, porque sin inscripción no nace el vínculo matrimonial.
+B) Un valor declarativo, porque el matrimonio produce efectos desde su celebración si concurren los requisitos legales.
+C) Un valor meramente estadístico, sin incidencia en la prueba del estado civil.
+OK: B
+EXP: El texto afirma que la inscripción no crea el matrimonio, sino que declara oficialmente una realidad ya existente.
+
+#ID = 7.2
+
+// [31]
+Q: ¿Qué eficacia tiene frente a terceros el matrimonio no inscrito en el Registro Civil?
+A) Perjudica siempre los derechos de terceros, aunque estos hayan actuado de buena fe.
+B) Carece de toda eficacia civil mientras no se inscriba en el Registro correspondiente.
+C) No perjudica los derechos adquiridos de buena fe por terceros.
+OK: C
+EXP: El texto precisa que la falta de inscripción no puede perjudicar los derechos de terceros adquiridos de buena fe.
+
+#ID = 7.3
+
+// [32]
+Q: ¿Cómo organiza la Ley 20/2011 la inscripción del matrimonio dentro del nuevo modelo del Registro Civil?
+A) La inserta en el registro individual de cada contrayente, dentro de un sistema de registros personales vinculado al código personal.
+B) La mantiene en libros separados exclusivamente dedicados a matrimonios y desligados del historial personal.
+C) La remite a un archivo especial independiente del registro de nacimiento de cada persona.
+OK: A
+EXP: La ley integra la inscripción matrimonial en el registro individual de cada contrayente dentro del modelo personal del Registro Civil.
+
+#ID = 7.3
+
+// [33]
+Q: ¿Qué novedad establece la Ley 20/2011 respecto del régimen económico matrimonial en el Registro Civil?
+A) Mantiene como potestativa la inscripción del régimen económico y de sus modificaciones.
+B) Impone la inscripción del régimen económico matrimonial, así como de los pactos y resoluciones que lo modifiquen.
+C) Limita la inscripción registral a los matrimonios sujetos al régimen de gananciales.
+OK: B
+EXP: El texto indica que la ley zanja la discusión anterior y convierte en obligatoria la inscripción del régimen económico y de sus cambios.
+    `;
+
+
+    const BANCO_5 = `
+    #ID = 8
+
+// [34]
+Q: ¿Qué caracteriza a las formas matrimoniales especiales dentro del sistema matrimonial civil?
+A) Que suprimen los requisitos esenciales del matrimonio por razones de urgencia o tradición.
+B) Que sustituyen el consentimiento matrimonial por formalidades documentales reforzadas.
+C) Que simplifican ciertas formalidades ordinarias en supuestos excepcionales, pero mantienen capacidad, consentimiento y forma mínima exigida.
+OK: C
+EXP: El texto define estas formas como modalidades excepcionales que alivian formalidades sin eliminar los elementos esenciales del matrimonio.
+
+#ID = 8.1
+
+// [35]
+Q: ¿Qué función jurídica desempeña el apoderado en el matrimonio por apoderado?
+A) Actúa como mero transmisor formal del consentimiento previamente emitido por el poderdante, sin sustituirlo como verdadero representante.
+B) Sustituye plenamente al contrayente ausente y decide por él la prestación del consentimiento matrimonial.
+C) Asume una función de testigo cualificado de la celebración sin intervenir en el consentimiento.
+OK: A
+EXP: El apoderado no forma su propia voluntad matrimonial, sino que transmite formalmente la ya manifestada por el poderdante.
+
+#ID = 8.1
+
+// [36]
+Q: ¿Qué límite estructural establece el régimen del matrimonio por apoderado?
+A) Que el poder especial solo puede otorgarse ante funcionario consular en el extranjero.
+B) Que no pueden actuar por apoderado ambos contrayentes al mismo tiempo.
+C) Que el matrimonio por apoderado solo es posible si los contrayentes residen en lugares distintos.
+OK: B
+EXP: El texto señala expresamente que uno de los contrayentes debe comparecer personalmente y que no cabe apoderamiento de ambos.
+
+#ID = 8.1
+
+// [37]
+Q: ¿Cuándo se extingue el poder en el matrimonio por apoderado?
+A) Únicamente cuando se celebra el matrimonio y se practica su inscripción registral.
+B) Solo por muerte del poderdante o por nulidad del expediente matrimonial.
+C) Por revocación del poderdante, renuncia del apoderado o muerte de cualquiera de ellos.
+OK: C
+EXP: El texto enumera esas tres causas de extinción y exige comunicar la revocación antes de la celebración.
+
+#ID = 8.2
+
+// [38]
+Q: ¿Cuál es la principal especialidad del matrimonio en peligro de muerte respecto del procedimiento ordinario?
+A) Que permite celebrar el matrimonio sin expediente matrimonial previo.
+B) Que excluye toda intervención de testigos por la urgencia de la situación.
+C) Que elimina la necesidad de consentimiento expreso de los contrayentes.
+OK: A
+EXP: La singularidad central de esta forma especial es la dispensa del expediente previo, aunque subsisten los elementos esenciales del matrimonio.
+
+#ID = 8.2
+
+// [39]
+Q: ¿Qué requisito adicional puede exigir el matrimonio en peligro de muerte cuando el riesgo deriva de enfermedad o estado físico?
+A) La autorización del Ministro de Justicia por causa grave.
+B) El dictamen médico sobre la capacidad para consentir y la gravedad de la situación.
+C) La presencia de cuatro testigos mayores de edad.
+OK: B
+EXP: En esos casos el texto exige dictamen médico para valorar tanto la aptitud para consentir como la entidad del peligro.
+
+#ID = 8.2
+
+// [40]
+Q: ¿Qué ocurre si después de un matrimonio en peligro de muerte aparece un impedimento matrimonial?
+A) El matrimonio queda automáticamente sin efectos por su carácter condicional.
+B) El matrimonio mantiene su validez definitiva sin posibilidad de revisión posterior.
+C) Debe promoverse la nulidad conforme a las reglas generales, pues desaparece el antiguo carácter condicional.
+OK: C
+EXP: La normativa actual elimina la condición resolutoria histórica y remite, en su caso, a la nulidad matrimonial ordinaria.
+
+#ID = 8.3
+
+// [41]
+Q: ¿Qué presupuesto exige el matrimonio secreto para su autorización?
+A) La autorización del Ministro de Justicia cuando exista causa grave suficientemente acreditada.
+B) La conformidad de los contrayentes con la no inscripción registral del matrimonio.
+C) La previa celebración religiosa del matrimonio con efectos civiles.
+OK: A
+EXP: El texto atribuye exclusivamente al Ministro de Justicia la autorización del matrimonio secreto por causa grave acreditada.
+
+#ID = 8.3
+
+// [42]
+Q: ¿Qué rasgo define la inscripción del matrimonio secreto?
+A) Que se omite totalmente cualquier inscripción registral para preservar la intimidad de los contrayentes.
+B) Que se practica en el libro especial del Registro Civil Central, manteniendo su carácter reservado.
+C) Que solo se anota provisionalmente hasta que los cónyuges soliciten publicidad ordinaria.
+OK: B
+EXP: El secreto matrimonial no elimina la inscripción, pero desplaza su publicidad al ámbito reservado del libro especial correspondiente.
+
+#ID = 8.3
+
+// [43]
+Q: ¿Qué eficacia tiene frente a terceros el matrimonio secreto mientras no se publique en el Registro Civil ordinario?
+A) Perjudica plenamente a terceros desde la fecha de celebración aunque hayan actuado de buena fe.
+B) No perjudica los derechos adquiridos de buena fe por terceros hasta su publicación ordinaria.
+C) Carece de validez también entre los cónyuges mientras no se haga pública su inscripción.
+OK: C
+EXP: El texto distingue entre la validez inter partes desde la celebración y la inoponibilidad frente a terceros de buena fe hasta la publicidad ordinaria.
+
+#ID = 8.4
+
+// [44]
+Q: ¿Cómo se concilia en el texto la aconfesionalidad del Estado con el matrimonio religioso de la Iglesia Católica?
+A) Excluyendo cualquier efecto civil del matrimonio celebrado en forma religiosa.
+B) Admitiendo matrimonios religiosos con efectos civiles cuando la forma esté legalmente prevista.
+C) Reservando los efectos civiles exclusivamente al matrimonio canónico por su tradición histórica.
+OK: A
+EXP: El principio de aconfesionalidad no impide reconocer efectos civiles a matrimonios religiosos legalmente admitidos, incluido el canónico.
+
+#ID = 8.4
+
+// [45]
+Q: ¿Qué alcance tuvo la reforma de 1981 respecto del matrimonio religioso?
+A) Restableció la exclusividad del matrimonio canónico dentro de las formas religiosas eficaces civilmente.
+B) Permitió que el matrimonio religioso no quedara limitado al canónico y abrió la posibilidad a otras confesiones.
+C) Suprimió todo valor normativo de la tradición canónica en la regulación civil del matrimonio.
+OK: B
+EXP: La reforma evitó la identificación exclusiva entre matrimonio religioso y matrimonio canónico, en coherencia con la aconfesionalidad estatal.
+
+#ID = 8.5
+
+// [46]
+Q: ¿Qué ampliación introdujeron los Acuerdos de Cooperación de 1992 en el sistema matrimonial español?
+A) Autorizaron solo matrimonios civiles complementarios para fieles de confesiones no católicas.
+B) Reconocieron efectos civiles al matrimonio religioso celebrado en confesiones evangélica, judía e islámica.
+C) Sustituyeron el expediente de capacidad por una certificación eclesiástica suficiente en toda confesión.
+OK: B
+EXP: El texto presenta esos acuerdos como una apertura del sistema matrimonial con efectos civiles fuera del ámbito católico.
+
+#ID = 8.5
+
+// [47]
+Q: ¿Qué exigencia previa mantiene el matrimonio religioso de confesiones con efectos civiles fuera del ámbito católico?
+A) La autorización directa del ministro de culto sin control previo de capacidad.
+B) La celebración dentro del año siguiente a una mera solicitud verbal de los contrayentes.
+C) La existencia de acta o expediente previo de capacidad matrimonial.
+OK: C
+EXP: El texto exige con claridad una comprobación previa de capacidad antes de la celebración religiosa con efectos civiles.
+
+#ID = 8.5
+
+// [48]
+Q: ¿Qué deber registral corresponde al ministro de culto tras la celebración del matrimonio religioso con efectos civiles?
+A) Expedir la certificación de la celebración y remitirla al Registro Civil por medios electrónicos dentro del plazo legal.
+B) Limitarse a conservar internamente el documento religioso sin comunicación al Registro Civil.
+C) Solicitar al alcalde la convalidación posterior del consentimiento matrimonial.
+OK: A
+EXP: El ministro de culto debe certificar la celebración, remitir la documentación al Registro Civil y practicar diligencia en las copias del acta previa.
+
+#ID = 8.6
+
+// [49]
+Q: ¿Cuándo produce efectos civiles el matrimonio celebrado en forma religiosa conforme al sistema reconocido por el ordenamiento?
+A) Solo desde su inscripción registral, que tiene carácter constitutivo en todos los casos.
+B) Desde su celebración válida, aunque la inscripción sea necesaria para el pleno reconocimiento de esos efectos.
+C) Únicamente desde que la confesión religiosa remite la certificación por medios electrónicos.
+OK: B
+EXP: El texto mantiene el criterio de que los efectos civiles nacen con la celebración válida, sin perjuicio de la relevancia posterior de la inscripción.
+
+#ID = 8.6
+
+// [50]
+Q: ¿En qué supuesto puede denegarse la inscripción en el Registro Civil del matrimonio celebrado en forma religiosa?
+A) Cuando la confesión religiosa carece de tradición histórica en España, aunque el matrimonio sea válido.
+B) Cuando la certificación se presente después de la celebración aunque no exista defecto alguno.
+C) Cuando de la documentación presentada o de los datos registrales resulte que el matrimonio no cumple los requisitos legales de validez.
+OK: C
+EXP: El encargado del Registro puede denegar la inscripción si aprecia, por la documentación o por los datos registrales, falta de validez legal.
+
+#ID = 8.7
+
+// [51]
+Q: ¿Qué posición mantiene el ordenamiento jurídico español sobre el rito matrimonial gitano como forma matrimonial?
+A) No lo reconoce como forma válida de celebración del matrimonio con efectos jurídicos generales.
+B) Lo equipara plenamente al matrimonio religioso con notorio arraigo.
+C) Lo reconoce automáticamente cuando existe convivencia prolongada y descendencia común.
+OK: A
+EXP: El texto afirma expresamente que el rito matrimonial gitano no está reconocido como forma válida de celebración matrimonial.
+
+#ID = 8.7
+
+// [52]
+Q: ¿Qué alcance tuvo la intervención del Tribunal Europeo de Derechos Humanos respecto del rito matrimonial gitano?
+A) Reconoció con carácter general el matrimonio gitano como forma válida en el sistema español.
+B) Consideró discriminatoria la denegación de pensión de viudedad en un caso concreto y condenó al Estado a indemnizar.
+C) Ordenó la reforma del Código Civil para incluir el rito gitano entre las formas matrimoniales reconocidas.
+OK: B
+EXP: La sentencia europea resolvió un caso concreto por razones de igualdad y no discriminación, sin imponer un reconocimiento general del matrimonio gitano.
+    `;
+    
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>

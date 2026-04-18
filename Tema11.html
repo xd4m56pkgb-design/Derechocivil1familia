@@ -1,0 +1,1681 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 11. Las donaciones por razón de matrimonio</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LAS DONACIONES POR RAZÓN DE MATRIMONIO
+
+1.1. Introducción
+
+En la mayoría de las sociedades es habitual facilitar y celebrar el matrimonio mediante la entrega de regalos a los futuros cónyuges por parte de familiares, amigos o entre los propios esposos.
+
+Estas prácticas, como la pedida o las listas de boda, siguen vigentes, aunque hoy es menos frecuente que tales donaciones consistan en bienes de gran valor como inmuebles.
+
+Jurídicamente, todas las donaciones realizadas con ocasión del matrimonio se califican como donaciones por razón de matrimonio, con independencia de su valor. Aunque históricamente estas donaciones tuvieron un amplio desarrollo y diversas modalidades, el análisis actual debe centrarse en su regulación conforme al Código Civil.
+
+1.2. La sistematización del Código Civil
+
+El Código Civil, en su redacción originaria, reguló las donaciones por razón de matrimonio en el capítulo siguiente al de las capitulaciones matrimoniales, integrando en él las donaciones esponsalicias y antenupciales, junto con la prohibición de las donaciones realizadas tras la celebración del matrimonio. La doctrina valoró positivamente la unificación de las distintas modalidades, al considerar excesiva su diferenciación histórica, pero criticó la inclusión conjunta de la prohibición de donaciones entre cónyuges durante el matrimonio por su falta de conexión con las donaciones antenupciales. Esta crítica fue asumida por el legislador en la Ley 11/1981, que separó claramente las donaciones antenupciales de las postnupciales. La regulación vigente se basa en dicha reforma, posteriormente ajustada de forma puntual, sin que las leyes posteriores hayan modificado sustancialmente esta materia.
+
+2. CONCEPTO
+
+El art. 1336 define las donaciones por razón de matrimonio como aquellas que cualquier persona realiza antes de su celebración, en consideración al mismo y en favor de uno o de los dos esposos, estableciendo así sus presupuestos esenciales. En primer lugar, deben efectuarse necesariamente con carácter antenupcial, lo que constituye una característica propia de la institución. Además, han de realizarse en contemplación de un matrimonio futuro o anunciado, cuya efectiva celebración condiciona su eficacia.
+
+El donatario puede ser uno solo de los esposos o ambos conjuntamente. En este último caso, el art. 1339 dispone que los bienes donados pertenecen a ambos en proindiviso ordinario y por partes iguales, salvo disposición en contrario del donante, como concreción de las reglas generales de la copropiedad. La posibilidad de que uno solo de los esposos sea donatario se relaciona con la previsión de que la donación pueda hacerla cualquier persona, lo que incluye a uno de los propios esposos en favor del otro.
+
+La delimitación de este concepto resulta relevante porque el legislador ha otorgado a estas donaciones un régimen más favorable que el de las donaciones ordinarias, flexibilizando ciertos aspectos de su regulación. Así, el art. 1337 establece que se rigen prioritariamente por sus normas específicas y, de forma supletoria, por las reglas generales de las donaciones. De este modo, resulta necesario identificar su régimen jurídico propio, especialmente en aquellos aspectos en que se aparta de las reglas comunes previstas en los arts. 618 y siguientes del Código Civil.
+
+3. RÉGIMEN JURÍDICO
+
+3.1. Las reglas relativas a la capacidad
+
+El art. 1338 establece una regla especial para el menor no emancipado que pudiera contraer matrimonio, permitiéndole realizar donaciones por razón de matrimonio con autorización de sus padres o tutor, lo que evidencia el trato favorable de esta institución. No obstante, esta previsión resulta hoy inaplicable al no existir supuestos de menores no emancipados con capacidad legal para casarse. Cuando el donante es un tercero, se aplican las reglas generales de capacidad, exigiéndose capacidad contractual y libre disposición de los bienes. También rigen las normas generales para la aceptación, bastando la capacidad natural de entender y querer, salvo en donaciones condicionales u onerosas.
+
+3.2. La aceptación de las donaciones por razón de matrimonio
+
+Tras la reforma de 1981 desaparece la regla que permitía la validez de estas donaciones sin aceptación, por lo que actualmente se aplican las normas generales. En consecuencia, la aceptación del donatario es necesaria en todo caso, sin que exista particularidad alguna respecto del régimen común.
+
+3.3. La forma
+
+Las donaciones por razón de matrimonio se someten igualmente a las reglas generales en materia de forma, según se trate de bienes muebles o inmuebles. En el caso de bienes inmuebles, es necesaria la escritura pública, si bien no es obligatorio que esta se integre en las capitulaciones matrimoniales, pudiendo formalizarse en escritura independiente. Por ello, estas donaciones pueden constar en capitulaciones, pero no tienen que formar parte de ellas necesariamente.
+
+3.4. La obligación de saneamiento
+
+El art. 1340 establece una especialidad en materia de saneamiento, limitando la obligación del donante a los supuestos en que haya actuado con mala fe, tanto por evicción como por vicios ocultos.
+
+4. DONACIÓN DE BIENES PRESENTES Y DE BIENES FUTUROS
+
+La regla general, aplicable tanto a las donaciones ordinarias como a las realizadas por razón de matrimonio, exige que los bienes donados sean presentes y formen parte del patrimonio del donante, conforme al principio de que no pueden donarse bienes futuros. Esta exigencia es reiterada expresamente en el ámbito de las donaciones por razón de matrimonio, al establecerse que los futuros esposos pueden donarse bienes presentes.
+
+No obstante, se admite una excepción en relación con los bienes futuros, permitiéndose su donación antes del matrimonio en capitulaciones matrimoniales, pero únicamente para el caso de muerte y dentro de los límites propios de la sucesión testada. Esta posibilidad no altera la regla general, sino que introduce un supuesto específico sujeto a condiciones estrictas.
+
+La denominada donación de bienes futuros presenta importantes limitaciones, ya que solo puede ser realizada por los propios contrayentes, debe formalizarse necesariamente en capitulaciones matrimoniales anteriores al matrimonio y su eficacia queda restringida al supuesto de fallecimiento de uno de los cónyuges. Estas características evidencian que no se trata de una verdadera donación en sentido estricto, sino de un pacto sucesorio entre los esposos integrado en el contenido de las capitulaciones matrimoniales.
+
+5. LA FALTA DE CELEBRACIÓN DEL MATRIMONIO: INEFICACIA DE LAS DONACIONES POR
+
+RAZÓN DE MATRIMONIO La validez y eficacia de las donaciones por razón de matrimonio dependen de la efectiva celebración del matrimonio proyectado, de modo que, si este no llega a celebrarse, dichas donaciones pierden su fundamento y sentido. Esta dependencia ha sido interpretada doctrinalmente de diversas formas, considerándose tradicionalmente como donaciones sometidas a condición suspensiva, aunque también se ha defendido que la falta de matrimonio actúa como condición resolutoria o que la celebración del matrimonio constituye una verdadera condicio iuris como presupuesto de validez.
+
+En su redacción originaria, el Código Civil configuró la falta de celebración del matrimonio como causa de revocación, opción criticada por su inadecuación técnica, ya que la revocación presupone un acto previamente válido, lo que no ocurre en este caso hasta que se celebra el matrimonio. La reforma introducida por la Ley 11/1981 modificó este planteamiento, estableciendo que las donaciones quedarán sin efecto si el matrimonio no se contrae en el plazo de un año.
+
+En consecuencia, la falta de celebración del matrimonio determina la ineficacia de las donaciones por razón de matrimonio, entendida como una ineficacia sobrevenida derivada del incumplimiento de la condicio iuris. Esta ineficacia no opera automáticamente, sino que requiere la reclamación del donante, y el plazo de un año desde la consumación de la donación se configura como un plazo de caducidad.
+
+6. LA REVOCACIÓN DE LAS DONACIONES POR RAZÓN DE MATRIMONIO
+
+El art. 1343 establece que las donaciones por razón de matrimonio son revocables por las causas comunes, con exclusión de la superveniencia o supervivencia de hijos. En consecuencia, pueden revocarse por incumplimiento de cargas o por ingratitud del donatario conforme a las reglas generales, siendo lógica la exclusión de los hijos dada la posible condición de donantes de los propios esposos. El precepto distingue además según que la donación haya sido realizada por los contrayentes o por terceros.
+
+6.1. Las donaciones realizadas por los esposos
+
+En las donaciones otorgadas entre los contrayentes, se amplían las causas de revocación. Se considera incumplimiento de cargas la nulidad del matrimonio cuando el donatario haya actuado de mala fe, y se equipara a la ingratitud tanto la concurrencia de causas de desheredación como la imputabilidad al donatario de la separación o el divorcio. De este modo, la responsabilidad del cónyuge donatario en la crisis matrimonial puede justificar la revocación, aunque esta previsión resulta difícil de encajar en el sistema vigente tras la reforma de 2005, que eliminó el carácter causal de la separación y el divorcio.
+
+6.2. Las donaciones hechas por terceros
+
+En las donaciones realizadas por terceros, el art. 1343 se centra en el incumplimiento de cargas, considerando como tal, además de las específicas, la anulación del matrimonio y la separación o divorcio imputables al cónyuge donatario. Esta regulación presenta dificultades en el sistema actual, al no poder atribuirse la responsabilidad de la ruptura matrimonial tras la reforma de 2005.
+
+No obstante, también resultan aplicables las causas generales de revocación por ingratitud, lo que permite la revocación si el donatario comete delitos contra el donante, le imputa delitos o le niega alimentos, incluso cuando el donante sea un tercero como un familiar, siendo en este ámbito la separación o el divorcio imputables al donatario considerados como incumplimiento de cargas y no como ingratitud.
+
+7. REFERENCIA A LAS DONACIONES INTERCONYUGALES CONSTANTE MATRIMONIO
+
+La referencia a la imputabilidad de la crisis matrimonial al donatario resulta hoy problemática, ya que, tras la desaparición del sistema causal de separación y divorcio, carece de sentido jurídico hablar de cónyuge responsable o de circunstancias imputables a uno de ellos. Ello pone de manifiesto la persistencia de esquemas normativos superados en la regulación vigente.
+
+En su redacción originaria, el Código Civil establecía la prohibición general de las donaciones entre cónyuges, salvo en el caso de regalos módicos en ocasiones familiares, siguiendo una tradición romanista. Esta prohibición se justificaba en la necesidad de evitar posibles abusos o influencias de un cónyuge sobre el otro, especialmente en un contexto de desigualdad jurídica en el que el marido concentraba las facultades de administración y disposición.
+
+Sin embargo, la consagración del principio de igualdad entre los cónyuges vació de fundamento esta prohibición, al reconocer a ambos la misma capacidad de actuación patrimonial. En coherencia con ello, la Ley 11/1981 adoptó un criterio permisivo, permitiendo a los cónyuges transmitirse bienes y celebrar entre sí toda clase de contratos, lo que implica la plena licitud de las donaciones entre ellos. Esta regulación se mantiene tras la reforma de 2005, que adapta la terminología a una formulación neutra.
+
+Por último, la jurisprudencia reciente ha precisado que determinadas operaciones entre cónyuges no constituyen donaciones, como ocurre cuando se aportan bienes privativos a la sociedad de gananciales, supuesto en el que el beneficiario no es el otro cónyuge, sino la propia sociedad conyugal.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1.1": "Las donaciones por razón de matrimonio son los regalos realizados con ocasión del matrimonio, que el Derecho califica unitariamente con independencia de su valor y cuya regulación actual se centra en el Código Civil pese a su desarrollo histórico.",
+"1.2": "El Código Civil sistematiza estas donaciones integrando las antenupciales y separándolas de las postnupciales tras la reforma de 1981, corrigiendo la anterior regulación que mezclaba instituciones heterogéneas.",
+"2": "Las donaciones por razón de matrimonio son las realizadas antes de la celebración del matrimonio en consideración al mismo y en favor de uno o ambos esposos, cuya eficacia depende de su celebración y que se rigen prioritariamente por normas especiales y supletoriamente por las generales.",
+"3.1": "El régimen de capacidad prevé una regla especial hoy inaplicable para menores no emancipados y, en lo demás, remite a las reglas generales de capacidad contractual y de aceptación, evidenciando el trato favorable de estas donaciones.",
+"3.2": "Tras la reforma de 1981, la aceptación del donatario es siempre necesaria en las donaciones por razón de matrimonio, desapareciendo la anterior excepción que las hacía válidas sin aceptación.",
+"3.3": "En materia de forma, las donaciones por razón de matrimonio se rigen por las reglas generales, exigiéndose escritura pública para inmuebles sin necesidad de integrarse en capitulaciones matrimoniales.",
+"3.4": "El donante solo responde por saneamiento en caso de mala fe, lo que constituye una especialidad frente al régimen general de las donaciones.",
+"4": "Las donaciones por razón de matrimonio deben recaer sobre bienes presentes, admitiéndose excepcionalmente la donación de bienes futuros solo entre contrayentes, en capitulaciones y para el caso de muerte, configurándose en realidad como pactos sucesorios.",
+"5": "La eficacia de estas donaciones depende de la celebración del matrimonio, de modo que su falta produce una ineficacia sobrevenida, no automática, basada en la condicio iuris y sujeta a un plazo de caducidad de un año.",
+"6": "Las donaciones por razón de matrimonio son revocables por causas comunes salvo por superveniencia de hijos, distinguiéndose entre donaciones de esposos y de terceros en la concreción de incumplimiento de cargas e ingratitud.",
+"6.1": "En las donaciones entre esposos, se consideran causas de revocación la nulidad matrimonial por mala fe, las causas de desheredación y la imputabilidad de la crisis matrimonial al donatario, aunque esta última resulta problemática tras la reforma de 2005.",
+"6.2": "En las donaciones de terceros, el incumplimiento de cargas incluye la nulidad, separación o divorcio imputables al donatario, coexistiendo con las causas generales de ingratitud, aunque la imputabilidad carece hoy de encaje en el sistema vigente.",
+"7": "Las donaciones entre cónyuges, inicialmente prohibidas para evitar abusos en un contexto de desigualdad, son hoy plenamente lícitas tras el reconocimiento de la igualdad y la reforma de 1981, precisando la jurisprudencia que ciertas aportaciones a la sociedad de gananciales no constituyen donación."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = `
+    #ID = 1.1
+
+// [1]
+Q: ¿Qué criterio utiliza el Derecho civil para calificar una donación como donación por razón de matrimonio?
+A) Que consista en bienes de elevado valor económico, especialmente inmuebles.
+B) Que haya sido realizada exclusivamente por familiares de los futuros cónyuges.
+C) Que se haya efectuado con ocasión del matrimonio, con independencia de su valor.
+OK: C
+EXP: La calificación jurídica depende de su conexión con el matrimonio, no del valor del bien ni de quién haga la donación.
+
+// [2]
+Q: ¿Cómo presenta la introducción la evolución social de las donaciones por razón de matrimonio?
+A) Como una práctica que subsiste, aunque hoy suele recaer menos en bienes de gran valor.
+B) Como una costumbre ya desaparecida en favor de negocios jurídicos estrictamente patrimoniales.
+C) Como una institución reservada en la actualidad a donaciones inmobiliarias entre esposos.
+OK: A
+EXP: El texto indica que estas prácticas siguen existiendo, pero que hoy es menos frecuente que incluyan bienes de gran valor.
+
+#ID = 1.2
+
+// [3]
+Q: ¿Qué valoración principal hizo la doctrina sobre la regulación originaria del Código Civil en materia de donaciones por razón de matrimonio?
+A) Que era incorrecta por mantener separadas demasiadas modalidades históricas.
+B) Que fue positiva por unificar modalidades antes excesivamente diferenciadas, aunque criticó la inclusión de la prohibición de donaciones entre cónyuges durante el matrimonio.
+C) Que resultaba satisfactoria precisamente por equiparar plenamente donaciones antenupciales y postnupciales.
+OK: B
+EXP: La doctrina aprobó la unificación de modalidades, pero rechazó que se incluyera junto a ellas la prohibición de donaciones entre cónyuges durante el matrimonio.
+
+// [4]
+Q: ¿Qué consecuencia sistemática tuvo la Ley 11/1981 sobre las donaciones por razón de matrimonio?
+A) Prohibió de forma general todas las donaciones vinculadas al matrimonio.
+B) Restableció la regulación histórica de las distintas clases tradicionales de donaciones esponsalicias.
+C) Separó claramente las donaciones antenupciales de las postnupciales.
+OK: C
+EXP: La reforma de 1981 asumió la crítica doctrinal y distinguió con claridad entre donaciones antenupciales y postnupciales.
+
+// [5]
+Q: ¿Cómo caracteriza el texto la regulación actualmente vigente sobre las donaciones por razón de matrimonio?
+A) Como una regulación basada en la reforma de 1981, luego retocada solo de manera puntual.
+B) Como una materia transformada de forma profunda por reformas legislativas posteriores.
+C) Como una regulación que ha perdido continuidad respecto del modelo fijado en el Código Civil.
+OK: A
+EXP: El texto afirma que la normativa vigente descansa en la reforma de 1981 y que las leyes posteriores no han alterado sustancialmente esta materia.
+#ID = 2
+
+// [6]
+Q: ¿Qué elemento temporal define a las donaciones por razón de matrimonio según el art. 1336 del Código Civil?
+A) Que puedan otorgarse indistintamente antes o después del matrimonio si guardan relación con la vida conyugal.
+B) Que deban realizarse tras la celebración del matrimonio para consolidar su eficacia jurídica.
+C) Que deban hacerse antes de la celebración del matrimonio como rasgo propio de la institución.
+OK: C
+EXP: El carácter antenupcial es uno de los presupuestos esenciales de las donaciones por razón de matrimonio.
+
+// [7]
+Q: ¿Qué relevancia tiene el matrimonio futuro en el concepto de donaciones por razón de matrimonio?
+A) La eficacia de la donación queda conectada a la efectiva celebración del matrimonio contemplado.
+B) El matrimonio futuro solo actúa como motivo social, sin incidencia en la eficacia de la donación.
+C) El matrimonio futuro únicamente determina quién puede ser donante, pero no afecta al negocio.
+OK: A
+EXP: La donación se hace en contemplación de un matrimonio futuro o anunciado, cuya celebración efectiva condiciona su eficacia.
+
+// [8]
+Q: ¿Quién puede ser donatario en las donaciones por razón de matrimonio?
+A) Exclusivamente los dos esposos de forma conjunta, por exigencia de la institución.
+B) Uno solo de los esposos o ambos conjuntamente, según resulte de la donación.
+C) Solo el esposo que no haya intervenido como donante en el negocio jurídico.
+OK: B
+EXP: El texto establece expresamente que el donatario puede ser uno de los esposos o ambos conjuntamente.
+
+// [9]
+Q: ¿Qué régimen atribuye el art. 1339 a los bienes donados conjuntamente a ambos esposos en las donaciones por razón de matrimonio?
+A) Su ingreso automático en una comunidad matrimonial especial distinta de la copropiedad común.
+B) Su pertenencia a ambos en proindiviso ordinario y por partes iguales, salvo disposición en contrario del donante.
+C) Su atribución íntegra al esposo que administre ordinariamente el patrimonio familiar.
+OK: C
+EXP: Cuando la donación se hace a ambos, los bienes pertenecen a ambos en proindiviso ordinario y por partes iguales, salvo voluntad distinta del donante.
+
+// [10]
+Q: ¿Qué alcance tiene la expresión “cualquier persona” como posible donante en las donaciones por razón de matrimonio?
+A) Incluye también a uno de los propios esposos cuando dona en favor del otro.
+B) Se limita a terceros ajenos al vínculo matrimonial y excluye a los futuros contrayentes.
+C) Solo comprende a familiares y allegados que intervengan en consideración al enlace.
+OK: A
+EXP: El texto aclara que la posibilidad de que done cualquier persona comprende también a uno de los propios esposos en favor del otro.
+
+// [11]
+Q: ¿Por qué resulta jurídicamente relevante delimitar el concepto de donaciones por razón de matrimonio?
+A) Porque su identificación permite aplicarles un régimen más favorable que el de las donaciones ordinarias.
+B) Porque solo mediante esa delimitación puede determinarse la validez general de toda donación civil.
+C) Porque la delimitación transforma estas donaciones en una modalidad de capitulación matrimonial.
+OK: B
+EXP: La relevancia está en que el legislador les atribuye un régimen más favorable y flexible que el de las donaciones ordinarias.
+
+// [12]
+Q: ¿Cómo articula el art. 1337 el régimen jurídico de las donaciones por razón de matrimonio?
+A) Somete estas donaciones exclusivamente a las reglas generales de los arts. 618 y siguientes del Código Civil.
+B) Establece que se rijan prioritariamente por sus normas específicas y, supletoriamente, por las reglas generales de las donaciones.
+C) Remite en primer término a las normas de la copropiedad y solo de forma residual a las donaciones.
+OK: C
+EXP: El régimen se construye con preferencia de sus normas especiales y aplicación supletoria de las reglas generales de las donaciones.
+    `;
+
+
+    const BANCO_2 = `
+    #ID = 3.1
+
+// [13]
+Q: ¿Qué especialidad establece el art. 1338 del Código Civil sobre la capacidad para donar por razón de matrimonio del menor no emancipado?
+A) Le permite donar por razón de matrimonio sin intervención ajena desde que exista proyecto matrimonial.
+B) Le impide en todo caso donar por razón de matrimonio por tratarse de un acto de disposición patrimonial.
+C) Le permite donar por razón de matrimonio con autorización de sus padres o tutor.
+OK: C
+EXP: El art. 1338 prevé esa autorización como regla especial, aunque el propio texto señala que hoy resulta inaplicable.
+
+// [14]
+Q: ¿Qué régimen de capacidad se aplica cuando el donante por razón de matrimonio es un tercero?
+A) Se aplican las reglas generales, exigiéndose capacidad contractual y libre disposición de los bienes.
+B) Basta con la mera capacidad natural de entender y querer, cualquiera que sea el contenido de la donación.
+C) Se exige exclusivamente la mayoría de edad, sin relevancia de la libre disposición de los bienes.
+OK: A
+EXP: Cuando dona un tercero, no rige una excepción especial, sino las normas generales sobre capacidad y disposición patrimonial.
+
+#ID = 3.2
+
+// [15]
+Q: ¿Qué régimen sigue actualmente la aceptación en las donaciones por razón de matrimonio tras la reforma de 1981?
+A) La aceptación solo es necesaria en las donaciones de bienes inmuebles.
+B) La aceptación del donatario es necesaria en todo caso conforme a las normas generales.
+C) La aceptación puede omitirse porque subsiste una excepción propia de las donaciones por razón de matrimonio.
+OK: B
+EXP: Tras desaparecer la regla especial anterior, la aceptación queda sometida plenamente al régimen común.
+
+#ID = 3.3
+
+// [16]
+Q: ¿Qué exigencia formal rige para las donaciones por razón de matrimonio de bienes inmuebles?
+A) Deben integrarse necesariamente en capitulaciones matrimoniales para que sean válidas.
+B) Pueden hacerse en documento privado si ambas partes son futuros esposos.
+C) Requieren escritura pública, aunque esta puede ser independiente de las capitulaciones matrimoniales.
+OK: C
+EXP: En inmuebles se aplica la regla general de escritura pública, sin necesidad de incorporarla a las capitulaciones.
+
+// [17]
+Q: ¿Qué relación existe entre las capitulaciones matrimoniales y la forma de las donaciones por razón de matrimonio?
+A) Las donaciones por razón de matrimonio pueden constar en capitulaciones, pero no necesariamente deben formar parte de ellas.
+B) Las capitulaciones matrimoniales sustituyen siempre cualquier otra forma documental en toda donación por razón de matrimonio.
+C) Las capitulaciones matrimoniales solo pueden recoger donaciones de bienes muebles, no de bienes inmuebles.
+OK: A
+EXP: El texto aclara que estas donaciones pueden incluirse en capitulaciones, pero también formalizarse en escritura separada.
+
+#ID = 3.4
+
+// [18]
+Q: ¿Cómo delimita el art. 1340 la obligación de saneamiento del donante en las donaciones por razón de matrimonio?
+A) La extiende automáticamente a toda evicción o vicio oculto con independencia de la conducta del donante.
+B) La limita a los supuestos en que el donante haya actuado con mala fe, tanto por evicción como por vicios ocultos.
+C) La excluye absolutamente porque toda donación por razón de matrimonio es un acto estrictamente gratuito.
+OK: B
+EXP: La especialidad consiste en restringir el saneamiento a los casos de mala fe del donante.
+    `;
+
+
+    const BANCO_3 = `
+    #ID = 4
+
+// [19]
+Q: ¿Cuál es la regla general sobre el objeto de la donación en la donación por razón de matrimonio y en la donación ordinaria?
+A) Que pueden donarse bienes futuros siempre que exista previsión de adquisición razonable.
+B) Que pueden donarse indistintamente bienes presentes o futuros si el negocio se formaliza por escrito.
+C) Que solo pueden donarse bienes presentes integrados en el patrimonio del donante.
+OK: C
+EXP: La regla general exige que los bienes sean presentes y pertenezcan al patrimonio del donante, excluyéndose la donación de bienes futuros.
+
+// [20]
+Q: ¿Qué alcance tiene la excepción admitida respecto de los bienes futuros en la donación por razón de matrimonio?
+A) Solo permite su atribución antes del matrimonio en capitulaciones matrimoniales, para el caso de muerte y dentro de los límites de la sucesión testada.
+B) Autoriza a cualquier donante a transmitir bienes futuros entre vivos cuando el matrimonio ya se haya celebrado.
+C) Convierte en general la posibilidad de donar bienes futuros entre los futuros esposos sin más restricciones.
+OK: A
+EXP: La excepción es muy concreta: exige capitulaciones anteriores al matrimonio, opera para el caso de muerte y queda sometida a los límites sucesorios.
+
+// [21]
+Q: ¿Cómo califica el texto la denominada donación de bienes futuros entre esposos en capitulaciones matrimoniales?
+A) Como una verdadera donación inter vivos con eficacia plena desde su otorgamiento.
+B) Como un pacto sucesorio entre los esposos integrado en el contenido de las capitulaciones matrimoniales.
+C) Como una modalidad ordinaria de copropiedad conyugal sobre bienes aún inexistentes.
+OK: B
+EXP: El texto subraya que, por sus rasgos y límites, no constituye una verdadera donación en sentido estricto, sino un pacto sucesorio.
+   `;
+
+
+    const BANCO_4 = `
+    #ID = 5
+
+// [22]
+Q: ¿De qué depende la validez y eficacia de la donación por razón de matrimonio?
+A) De que la donación haya sido aceptada en escritura pública antes de las capitulaciones.
+B) De que el donante manifieste después su voluntad de mantener la liberalidad.
+C) De la efectiva celebración del matrimonio proyectado.
+OK: C
+EXP: El texto afirma que la donación por razón de matrimonio solo mantiene su fundamento y eficacia si el matrimonio llega a celebrarse.
+
+// [23]
+Q: ¿Qué objeción técnica se formula a la configuración originaria del Código Civil sobre la falta de celebración del matrimonio como causa de revocación?
+A) Que la revocación presupone un acto previamente válido, lo que no encaja con una donación cuya eficacia depende de la celebración del matrimonio.
+B) Que la revocación solo puede aplicarse a donaciones onerosas y nunca a donaciones matrimoniales.
+C) Que la revocación exige siempre mala fe del donatario, lo que no concurre en la falta de matrimonio.
+OK: A
+EXP: La crítica consiste en que la revocación parte de un acto ya válido, mientras que aquí la eficacia depende de que el matrimonio llegue a celebrarse.
+
+// [24]
+Q: ¿Qué consecuencia introdujo la Ley 11/1981 para la donación por razón de matrimonio cuando el matrimonio no se contrae?
+A) Que la donación queda anulada de pleno derecho sin límite temporal alguno.
+B) Que la donación pasa a regirse por las reglas generales de la revocación por ingratitud.
+C) Que la donación queda sin efecto si el matrimonio no se celebra en el plazo de un año.
+OK: B
+EXP: La reforma de 1981 sustituyó la técnica de la revocación y dispuso que la donación quede sin efecto si no se contrae matrimonio en un año.
+
+// [25]
+Q: ¿Cómo califica el texto la ineficacia derivada de la falta de celebración del matrimonio en la donación por razón de matrimonio?
+A) Como una ineficacia sobrevenida derivada del incumplimiento de la condicio iuris.
+B) Como una nulidad radical originaria por inexistencia absoluta de consentimiento.
+C) Como una rescisión por lesión patrimonial sufrida por el donante.
+OK: C
+EXP: El texto la entiende como ineficacia sobrevenida producida por no cumplirse la condicio iuris de celebración del matrimonio.
+
+// [26]
+Q: ¿Opera automáticamente la ineficacia de la donación por razón de matrimonio cuando no se celebra el matrimonio?
+A) Sí, porque la donación desaparece por ministerio de la ley sin actuación de parte.
+B) No, porque requiere la reclamación del donante.
+C) Sí, pero solo cuando la donación recae sobre bienes inmuebles.
+OK: A
+EXP: El texto señala expresamente que la ineficacia no opera de modo automático, sino que exige reclamación del donante.
+
+// [27]
+Q: ¿Qué naturaleza tiene el plazo de un año desde la consumación de la donación en la ineficacia de la donación por razón de matrimonio?
+A) Un plazo ordinario de prescripción susceptible de interrupción.
+B) Un término de simple espera para que el donatario acepte la donación.
+C) Un plazo de caducidad.
+OK: B
+EXP: El texto indica de forma expresa que ese año se configura como plazo de caducidad.
+    `;
+
+
+    const BANCO_5 = `
+    #ID = 6
+
+// [28]
+Q: ¿Qué régimen general de revocación establece el art. 1343 para la donación por razón de matrimonio?
+A) La revocación solo procede por causas específicas de la donación por razón de matrimonio y nunca por causas comunes.
+B) La revocación procede por todas las causas comunes, incluida la superveniencia o supervivencia de hijos.
+C) La revocación procede por las causas comunes, salvo la superveniencia o supervivencia de hijos.
+OK: C
+EXP: El art. 1343 remite a las causas comunes de revocación, pero excluye expresamente la superveniencia o supervivencia de hijos.
+
+// [29]
+Q: ¿Qué sentido tiene en la donación por razón de matrimonio la exclusión de la superveniencia o supervivencia de hijos como causa de revocación?
+A) Resulta coherente con la posible condición de donantes de los propios esposos.
+B) Responde a que toda donación matrimonial tiene siempre naturaleza onerosa.
+C) Se justifica porque la donación por razón de matrimonio nunca puede ser revocada por causas familiares.
+OK: A
+EXP: El texto considera lógica esa exclusión por la posible condición de donantes de los propios esposos.
+
+#ID = 6.1
+
+// [30]
+Q: ¿Qué tratamiento recibe en la donación por razón de matrimonio entre esposos la nulidad del matrimonio con mala fe del donatario?
+A) Se considera causa autónoma de nulidad de la donación distinta de la revocación.
+B) Se considera incumplimiento de cargas a efectos de revocación.
+C) Se considera supuesto de ineficacia automática sin necesidad de acción revocatoria.
+OK: B
+EXP: En las donaciones entre contrayentes, la nulidad del matrimonio con mala fe del donatario se configura como incumplimiento de cargas.
+
+// [31]
+Q: ¿Qué hechos se equiparan a la ingratitud en la donación por razón de matrimonio realizada entre los contrayentes?
+A) Solo la concurrencia de causas de desheredación, excluyéndose la crisis matrimonial.
+B) Únicamente la separación o divorcio, aunque no sean imputables al donatario.
+C) La concurrencia de causas de desheredación y la imputabilidad al donatario de la separación o el divorcio.
+OK: C
+EXP: El texto amplía la ingratitud en este ámbito a ambos supuestos: causas de desheredación e imputabilidad al donatario de la separación o divorcio.
+
+// [32]
+Q: ¿Qué problema plantea en el sistema vigente la revocación de la donación por razón de matrimonio entre esposos basada en la imputabilidad de la separación o el divorcio?
+A) Que la reforma de 2005 eliminó el carácter causal de la separación y el divorcio.
+B) Que la reforma de 2005 prohibió toda revocación entre cónyuges.
+C) Que la reforma de 2005 convirtió la imputabilidad en una causa general de nulidad matrimonial.
+OK: A
+EXP: La dificultad radica en que, tras la reforma de 2005, la separación y el divorcio ya no descansan en un sistema causal.
+
+#ID = 6.2
+
+// [33]
+Q: ¿Cómo considera el art. 1343, en la donación por razón de matrimonio hecha por terceros, la anulación del matrimonio y la separación o divorcio imputables al cónyuge donatario?
+A) Como supuestos de ingratitud del donatario frente al tercero donante.
+B) Como incumplimiento de cargas a efectos de revocación.
+C) Como causas excluidas de toda revocación por no afectar al tercero donante.
+OK: B
+EXP: En las donaciones hechas por terceros, esos supuestos se encuadran como incumplimiento de cargas, no como ingratitud.
+
+// [34]
+Q: ¿Qué causas generales de revocación siguen siendo aplicables por ingratitud en la donación por razón de matrimonio hecha por terceros?
+A) La comisión de delitos contra el donante, la imputación de delitos al donante o la negativa de alimentos.
+B) Solo la negativa de alimentos, por ser la única compatible con un tercero donante.
+C) Únicamente la comisión de delitos contra el cónyuge del donatario.
+OK: A
+EXP: El texto mantiene la aplicación de las causas generales de ingratitud, incluso cuando el donante sea un tercero, como un familiar.
+#ID = 7
+
+// [35]
+Q: ¿Qué problema jurídico plantea hoy la referencia a la imputabilidad de la crisis matrimonial al donatario en materia de donación entre cónyuges?
+A) Que exige probar una culpa patrimonial específica del cónyuge donatario en toda transmisión gratuita.
+B) Que solo puede aplicarse a los matrimonios celebrados antes de la reforma de 1981.
+C) Que pierde sentido tras la desaparición del sistema causal de separación y divorcio.
+OK: C
+EXP: Si ya no existe un sistema causal, deja de tener sentido jurídico hablar de cónyuge responsable o de circunstancias imputables.
+
+// [36]
+Q: ¿Cómo configuraba originariamente el Código Civil la donación entre cónyuges constante matrimonio?
+A) Como una prohibición general, salvo los regalos módicos en ocasiones familiares.
+B) Como una facultad general limitada únicamente por las reglas de forma.
+C) Como un negocio plenamente libre entre cónyuges por razón del vínculo matrimonial.
+OK: A
+EXP: El régimen originario partía de la prohibición de donar entre cónyuges, con la única salvedad de los regalos módicos en ocasiones familiares.
+
+// [37]
+Q: ¿Cuál era la justificación de la prohibición originaria de la donación entre cónyuges constante matrimonio?
+A) Evitar la confusión entre bienes privativos y gananciales en toda economía matrimonial.
+B) Evitar abusos o influencias entre cónyuges en un contexto de desigualdad jurídica patrimonial.
+C) Impedir que los cónyuges alterasen voluntariamente su régimen económico matrimonial.
+OK: B
+EXP: La prohibición se apoyaba en el riesgo de abuso o influencia, especialmente porque existía una posición jurídica desigual entre marido y mujer.
+
+// [38]
+Q: ¿Qué efecto tuvo el principio de igualdad entre los cónyuges sobre la prohibición de la donación entre cónyuges?
+A) Reforzó la prohibición para proteger mejor el equilibrio patrimonial en el matrimonio.
+B) Mantuvo la prohibición, pero amplió la excepción de los regalos familiares.
+C) Vació de fundamento la prohibición al reconocer a ambos la misma capacidad patrimonial.
+OK: C
+EXP: Al reconocerse igual capacidad de actuación patrimonial a ambos cónyuges, desaparece la base justificativa de la antigua prohibición.
+
+// [39]
+Q: ¿Qué criterio adoptó la Ley 11/1981 respecto de la donación entre cónyuges constante matrimonio?
+A) Un criterio permisivo, al permitir a los cónyuges transmitirse bienes y celebrar entre sí toda clase de contratos.
+B) Un criterio restrictivo, al admitir solo las donaciones incluidas en capitulaciones matrimoniales.
+C) Un criterio mixto, al prohibir las donaciones y permitir únicamente los contratos onerosos.
+OK: A
+EXP: La reforma de 1981 permitió expresamente las transmisiones de bienes y toda clase de contratos entre cónyuges, lo que incluye las donaciones.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>

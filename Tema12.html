@@ -1,0 +1,1732 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 12. La sociedad de gananciales</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. LA SOCIEDAD DE GANANCIALES
+
+1.1. Concepto
+
+La sociedad de gananciales es un sistema de comunidad de ganancias ampliamente extendido en el Derecho común español, de profunda raigambre histórica, que opera como régimen económico-matrimonial legal supletorio de primer grado cuando no existen capitulaciones o estas son ineficaces, conforme al art. 1316 del Código Civil, precepto integrado en las disposiciones comunes y de carácter fundamental para los matrimonios sometidos al Derecho común, sin aplicación en los regidos por derechos forales o especiales.
+
+Según el art. 1344, mediante este régimen se hacen comunes para ambos cónyuges las ganancias o beneficios obtenidos indistintamente por cualquiera de ellos, atribuyéndose por mitad al disolverse la sociedad. Durante su vigencia no se produce reparto, siendo irrelevante que las ganancias procedan del trabajo de uno o ambos cónyuges o de los frutos de bienes comunes o privativos, pues en todo caso tienen carácter ganancial.
+
+1.2. Denominación y naturaleza jurídica
+
+El Código Civil mantiene la denominación de sociedad de gananciales, lo que ha llevado a parte de la doctrina a considerarla una sociedad en sentido técnico, apoyándose en la antigua remisión del art. 1395 a las normas del contrato de sociedad. Sin embargo, la posición mayoritaria entiende que, pese a dicha denominación, se trata de una comunidad de tipo germánico o en mano común, concebida como un modelo teórico histórico y no como una categoría normativa autónoma.
+
+La sociedad de gananciales constituye así una institución con regulación propia, detallada y suficiente, lo que hace innecesario acudir a regímenes supletorios externos y diluye en gran medida la relevancia de la discusión sobre su naturaleza jurídica. No obstante, en caso de necesidad, debe considerarse un subtipo de comunidad en mano común, especialmente tras la reforma de 1981, que eliminó la remisión al contrato de sociedad y reforzó la idea de comunidad de ganancias atribuibles por mitad al disolverse el régimen. La persistencia de su denominación responde a su tradición histórica.
+
+1.3. Nacimiento de la sociedad de gananciales
+
+El art. 1345 establece que la sociedad de gananciales nace en el momento de la celebración del matrimonio o posteriormente si así se pacta en capitulaciones. En defecto de estas, el régimen se aplica automáticamente desde el inicio del matrimonio, evidenciando que todo matrimonio debe quedar sometido a un régimen económico.
+
+Asimismo, puede iniciarse con posterioridad en virtud del principio de mutabilidad del régimen económico-matrimonial, mediante capitulaciones que sustituyan un régimen previo por el de gananciales.
+
+2. EL ACTIVO DE LA SOCIEDAD DE GANANCIALES
+
+2.1. La sistemática del Código
+
+Desde la reforma de 1981 se ha consolidado la expresión activo de la sociedad de gananciales para aludir, en términos contables, al conjunto de bienes de los cónyuges, distinguiéndose entre bienes privativos de cada uno y bienes comunes o gananciales, lo que permite hablar de patrimonio privativo y de patrimonio ganancial. La determinación del carácter privativo o ganancial de los bienes familiares tiene una importancia central en este régimen, y el Código regula esta materia en los arts. 1346 a 1361 con una sistemática discutible, aunque comprensible por la complejidad y matización del tema. Los primeros preceptos enumeran, por separado, los bienes privativos y los gananciales, mientras que los restantes abordan supuestos más complejos y algunas reglas generales de especial importancia, entre las que destaca la presunción de ganancialidad. Sin embargo, esta presunción no constituye por sí sola la clave del sistema, pues el legislador determina el carácter de los bienes de forma fundamentalmente casuística.
+
+2.2. La presunción de ganancialidad y la confesión de privatividad
+
+Ante la frecuente dificultad de probar si un bien es privativo o ganancial, el Código establece una regla general destinada a evitar los numerosos problemas que surgirían al tiempo de la disolución de la sociedad de gananciales. Esa regla consiste en la presunción de ganancialidad del art. 1361, según la cual se presumen gananciales los bienes existentes en el matrimonio mientras no se pruebe su pertenencia privativa a uno de los cónyuges. En relación con los inmuebles, el Reglamento Hipotecario dispone además que los adquiridos a título oneroso por uno solo de los cónyuges se inscribirán a nombre del adquirente con carácter presuntivamente ganancial cuando no se haga constar que adquiere para la sociedad de gananciales.
+
+La presunción establecida por el art. 1361 tiene gran importancia práctica y constituye una presunción iuris tantum, pero puede quedar desvirtuada entre los cónyuges por la llamada confesión de privatividad prevista en el art. 1324. Conforme a este precepto, para probar entre cónyuges que determinados bienes son propios de uno de ellos basta la confesión del otro, aunque esa declaración por sí sola no perjudica a herederos forzosos ni a acreedores, ya sean de la comunidad o de cualquiera de los cónyuges. De ello resulta que la confesión es eficaz en el ámbito interno de la relación conyugal, pero frente a terceros necesita apoyarse en otros medios probatorios para evitar posibles fraudes. Esta vía tiene especial trascendencia tras el fallecimiento del cónyuge confesante, pues el cónyuge favorecido por la confesión necesitará, para inscribir actos de disposición sobre tales bienes, el consentimiento de los herederos forzosos del confesante.
+
+2.3. La atribución de ganancialidad
+
+La primacía práctica de los bienes gananciales también se manifiesta en la atribución de ganancialidad regulada en el art. 1355, que permite a los cónyuges, de común acuerdo, atribuir carácter ganancial a los bienes adquiridos a título oneroso durante el matrimonio, cualquiera que sea la procedencia del precio o contraprestación y la forma en que se satisfaga. Además, cuando la adquisición se realiza conjuntamente y sin atribución de cuotas, se presume la voluntad favorable al carácter ganancial del bien.
+
+Aunque el precepto se refiere a supuestos en que un bien adquirido durante el matrimonio no tendría, conforme a las reglas generales, naturaleza ganancial, su regulación es coherente tanto con la libertad de contratación entre cónyuges como con la realidad ordinaria de muchas economías domésticas, en las que, una vez consolidada la convivencia, se prefiere abandonar el cálculo exacto de cuotas de privatividad en favor de la integración del bien en el patrimonio ganancial. Por ello, en la práctica resulta frecuente que los cónyuges adquieran para la sociedad de gananciales y que opere la atribución presunta de ganancialidad, sin perjuicio de la posible aplicación posterior del derecho de reembolso.
+
+3. EL ELENCO DE LOS BIENES PRIVATIVOS
+
+3.1. Concepto
+
+El art. 1346 del Código Civil establece la relación de bienes privativos de cada cónyuge, incluyendo bienes, animales y derechos que les pertenecieran al comenzar la sociedad de gananciales, lo que resulta coherente con el carácter de comunidad de ganancias del régimen.
+
+Estos bienes comprenden cualquier derecho o facultad patrimonial individualizable, con independencia de su naturaleza.
+
+También tienen carácter privativo los bienes adquiridos con posterioridad a la constitución de la sociedad a título gratuito, como los obtenidos por donación o herencia, dado que este tipo de adquisición no implica carga alguna para la sociedad de gananciales.
+
+Igualmente son privativos los bienes adquiridos a costa o en sustitución de otros bienes privativos, en aplicación del principio de subrogación real, que mantiene la naturaleza del patrimonio originario en las transformaciones que este experimente.
+
+3.2. Supuestos específicos de privatividad
+
+El carácter privativo se extiende a los bienes adquiridos mediante el ejercicio de un derecho de retracto perteneciente a uno solo de los cónyuges, ya que la adquisición tiene su causa en un derecho exclusivo. Incluso cuando el precio se satisface con bienes gananciales, el bien conserva su carácter privativo, si bien la sociedad tendrá derecho de crédito frente al cónyuge titular por el importe abonado.
+
+También son privativos los bienes y derechos inherentes a la persona o intransmisibles inter vivos, al tratarse de derechos personalísimos vinculados al titular. Del mismo modo, tienen carácter privativo las indemnizaciones por daños causados a la persona de uno de los cónyuges o a sus bienes privativos, manteniéndose en este último caso la subrogación del bien dañado.
+
+Asimismo, se consideran privativos por destino las ropas y objetos de uso personal que no tengan un valor extraordinario, incluso si se han adquirido con fondos comunes, sin que proceda derecho de reintegro a favor de la sociedad por tratarse de cargas familiares. En cambio, los instrumentos necesarios para el ejercicio de la profesión u oficio son también privativos por destino, pero si han sido adquiridos con dinero ganancial, la sociedad tiene derecho a ser reembolsada, especialmente para evitar que se carguen sobre el patrimonio común gastos excesivos vinculados a la actividad profesional.
+
+4. EL ELENCO DE LOS BIENES GANANCIALES
+
+4.1. Concepto
+
+El art. 1347 del Código Civil establece la relación de bienes gananciales, siguiendo un criterio basado en la obtención de beneficios durante la vigencia del matrimonio. En primer lugar, tienen carácter ganancial los bienes obtenidos por el trabajo o la industria de cualquiera de los cónyuges, de modo que todos los ingresos derivados de su actividad laboral o profesional se integran en el patrimonio común.
+
+Asimismo, son gananciales los frutos, rentas o intereses que produzcan tanto los bienes privativos como los gananciales, de manera que, aunque la titularidad de los bienes originarios se mantenga, todo lo que estos generen constante matrimonio se considera ganancia común atribuible por mitad a ambos cónyuges.
+
+También se consideran gananciales los bienes adquiridos a título oneroso a costa del caudal común, ya se realice la adquisición para la comunidad o para uno solo de los cónyuges, aplicándose aquí el principio de subrogación real, por el que los bienes adquiridos sustituyen al capital común empleado.
+
+4.2. Supuestos específicos de ganancialidad
+
+El carácter ganancial se extiende a los bienes adquiridos mediante el ejercicio de un derecho de retracto de naturaleza ganancial, incluso cuando se utilicen fondos privativos para su adquisición, en cuyo caso la sociedad será deudora del cónyuge por el valor satisfecho.
+
+Igualmente, son gananciales las empresas y establecimientos fundados durante la vigencia de la sociedad con bienes comunes, sin que esta naturaleza se altere por el hecho de que la titularidad formal corresponda a uno solo de los cónyuges o de que únicamente uno de ellos desarrolle la actividad. Cuando en su constitución concurran capital privativo y común, se aplicará el régimen correspondiente a dicha concurrencia.
+
+En relación con los bienes inmuebles, la normativa hipotecaria regula su inscripción atendiendo a su carácter ganancial o privativo, estableciendo criterios específicos según la forma de adquisición y la intervención de uno o ambos cónyuges, así como la posible existencia de una atribución expresa o presunta de ganancialidad.
+
+5. REGLAS PARTICULARES SOBRE EL CARÁCTER PRIVATIVO O GANANCIAL DE LOS BIENES
+
+5.1. Los créditos aplazados
+
+El art. 1348 establece que cuando un crédito o cantidad pertenece privativamente a uno de los cónyuges, las cantidades percibidas durante el matrimonio en concepto de pagos aplazados mantienen carácter privativo, al no poder considerarse rentas o intereses. Esta regla no altera el sistema general, sino que se integra en él al precisar la naturaleza de tales cobros.
+
+5.2. Los derechos de pensión y usufructo
+
+El art. 1349 dispone que el derecho de usufructo o de pensión pertenece privativamente al cónyuge titular, mientras que los frutos, pensiones o intereses devengados durante el matrimonio tienen carácter ganancial, en coherencia con la regla general sobre los rendimientos de los bienes. La jurisprudencia ha precisado que, en prestaciones vinculadas a ingresos laborales, el carácter ganancial o privativo depende del momento de percepción y de la distinción entre el derecho mismo, que es privativo por su carácter personal, y los rendimientos generados durante la vigencia de la sociedad, que son comunes.
+
+5.3. Las cabezas de ganado
+
+El art. 1350 establece que las cabezas de ganado que excedan, al disolverse la sociedad, del número aportado privativamente por cada cónyuge tendrán carácter ganancial.
+
+5.4. Ganancias procedentes del juego
+
+Según el art. 1351, las ganancias obtenidas por cualquiera de los cónyuges en el juego o por causas que eximan de restitución se integran en la sociedad de gananciales, al considerarse en sentido amplio fruto de la actividad o habilidad del cónyuge.
+
+5.5. Acciones y participaciones sociales
+
+El art. 1352 atribuye carácter privativo a las nuevas acciones o participaciones adquiridas en virtud de derechos derivados de títulos privativos, incluso si se adquieren con fondos gananciales, reconociéndose a la sociedad un derecho de reembolso por las cantidades empleadas.
+
+5.6. Donaciones o atribuciones sucesorias en favor de ambos cónyuges
+
+Cuando bienes son atribuidos conjuntamente a ambos cónyuges a título gratuito sin designación de partes, el art. 1353 establece que tendrán carácter ganancial si la liberalidad es aceptada por ambos y no se dispone lo contrario, aunque en otro caso cabría su consideración como bienes en proindiviso ordinario integrados en los patrimonios privativos.
+
+5.7. Adquisiciones mixtas
+
+El art. 1354 regula los supuestos en que se emplean fondos privativos y gananciales para adquirir un bien, estableciendo una copropiedad proporcional entre el patrimonio común y el cónyuge o cónyuges aportantes, sin perjuicio de las críticas doctrinales a esta solución frente a otras alternativas basadas en la atribución íntegra y el posterior reembolso. Este régimen se aplica también a empresas y a la vivienda y ajuar familiares.
+
+5.8. Bienes adquiridos mediante precio aplazado
+
+Cuando la adquisición se realiza antes del inicio de la sociedad, el bien es siempre privativo, aunque el precio se pague con fondos gananciales. Si la adquisición es posterior, el carácter del bien viene determinado por la naturaleza del primer desembolso, siendo ganancial o privativo según este, sin perjuicio de los reembolsos correspondientes. La adquisición de la vivienda y ajuar familiares queda sometida a la regla de las adquisiciones mixtas.
+
+5.9. Mejoras e incrementos patrimoniales
+
+Las mejoras o incrementos de valor siguen, con carácter general, la naturaleza del bien al que afectan, pero si se producen en bienes privativos mediante fondos comunes o el trabajo de los cónyuges, la sociedad no solo tiene derecho de reembolso, sino a participar en el aumento de valor generado, lo que refuerza la tendencia expansiva del patrimonio ganancial.
+
+6. LA OBLIGACIÓN DE REEMBOLSO
+
+6.1. La obligación de reembolso
+
+La composición patrimonial de la sociedad de gananciales implica que con frecuencia la calificación de un bien como ganancial o privativo no coincide con el origen de los fondos empleados para su adquisición. En estos casos, se mantiene la naturaleza del bien, pero surge la obligación de reembolsar las cantidades correspondientes al patrimonio que soportó el gasto.
+
+Así, cuando se adquiere un bien ganancial con dinero privativo, el cónyuge aportante tiene derecho a ser reintegrado, y del mismo modo la sociedad de gananciales tiene derecho de reembolso cuando se han empleado fondos comunes para bienes privativos. Esta regla general se recoge en el art. 1358, que establece que, con independencia de la procedencia del caudal, debe reintegrarse el valor satisfecho mediante su actualización al tiempo de la liquidación.
+
+El derecho de reembolso del dinero privativo invertido en bienes gananciales existe aunque no se haya formulado reserva expresa en el momento de la adquisición, siempre que tampoco se haya excluido expresamente. La atribución del carácter ganancial al bien no altera la naturaleza privativa del dinero empleado, generando un crédito por el valor satisfecho que será exigible en el momento de la liquidación si no se hubiera hecho efectivo con anterioridad.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1.1": "La sociedad de gananciales es el régimen económico-matrimonial supletorio en el Derecho común, que convierte en comunes las ganancias obtenidas por cualquiera de los cónyuges, atribuyéndolas por mitad al disolverse.",
+"1.2": "Pese a su denominación, la sociedad de gananciales no es una sociedad en sentido técnico, sino una comunidad en mano común con regulación propia y autónoma, cuya naturaleza jurídica tiene relevancia limitada.",
+"1.3": "La sociedad de gananciales nace con el matrimonio o posteriormente por capitulaciones, reflejando el principio de mutabilidad del régimen económico matrimonial.",
+"2.1": "El activo de la sociedad se compone de bienes privativos y gananciales, cuya determinación es esencial y se regula de forma casuística en el Código Civil mediante una sistemática compleja.",
+"2.2": "La presunción de ganancialidad establece que los bienes existentes en el matrimonio se consideran gananciales salvo prueba en contrario, pudiendo desvirtuarse entre cónyuges mediante la confesión de privatividad, aunque con límites frente a terceros.",
+"2.3": "La atribución de ganancialidad permite a los cónyuges otorgar carácter ganancial a bienes adquiridos durante el matrimonio por acuerdo o presunción, reforzando la primacía práctica del patrimonio común.",
+"3.1": "Son bienes privativos los que pertenecían a los cónyuges antes del matrimonio, los adquiridos a título gratuito y los obtenidos por subrogación real de otros bienes privativos.",
+"3.2": "También son privativos los bienes adquiridos por derechos exclusivos, los inherentes a la persona, las indemnizaciones personales y ciertos bienes por destino, con posibles derechos de reembolso según el origen de los fondos.",
+"4.1": "Son bienes gananciales los obtenidos por el trabajo de los cónyuges, los frutos de bienes privativos o comunes y los adquiridos a título oneroso con caudal común, conforme al principio de subrogación real.",
+"4.2": "Se consideran gananciales los bienes adquiridos por retracto ganancial, las empresas fundadas con fondos comunes y los inmuebles cuya inscripción responde a criterios legales sobre su naturaleza.",
+"5.1": "Los créditos privativos generan cobros aplazados que mantienen carácter privativo al no constituir rentas ni intereses, sin alterar las reglas generales del régimen.",
+"5.2": "El derecho de pensión o usufructo es privativo, pero sus rendimientos durante el matrimonio son gananciales, siendo determinante el momento de percepción y la distinción entre derecho y rendimientos.",
+"5.3": "El exceso de cabezas de ganado respecto de las aportadas privativamente se considera ganancial al disolverse la sociedad.",
+"5.4": "Las ganancias obtenidas en el juego se integran en el patrimonio ganancial al considerarse fruto de la actividad o habilidad del cónyuge.",
+"5.5": "Las acciones o participaciones adquiridas por derechos derivados de bienes privativos son también privativas, aunque se utilicen fondos comunes, generando derecho de reembolso.",
+"5.6": "Las donaciones o atribuciones sucesorias conjuntas se consideran gananciales salvo disposición contraria, aunque pueden configurarse como proindiviso privativo.",
+"5.7": "Las adquisiciones mixtas generan una copropiedad proporcional entre patrimonio ganancial y privativo en función de las aportaciones realizadas.",
+"5.8": "En las adquisiciones a plazos, el carácter del bien depende del momento de adquisición o del primer desembolso, con posibles reembolsos y reglas especiales para vivienda familiar.",
+"5.9": "Las mejoras siguen la naturaleza del bien, pero si incrementan bienes privativos con fondos comunes o trabajo de los cónyuges, la sociedad adquiere un crédito por el aumento de valor.",
+"6.1": "La obligación de reembolso surge cuando el origen de los fondos no coincide con la naturaleza del bien, generando un crédito actualizado exigible al liquidarse la sociedad, incluso sin reserva expresa."
+};
+
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = `
+    #ID = 1.1
+
+// [1]
+Q: ¿Qué caracteriza a la sociedad de gananciales como régimen económico-matrimonial en el Derecho común español?
+A) Que solo puede aplicarse si los cónyuges la pactan expresamente en capitulaciones matrimoniales.
+B) Que se aplica indistintamente a los matrimonios sometidos al Derecho común y a los derechos forales o especiales.
+C) Que actúa como régimen legal supletorio de primer grado cuando no existen capitulaciones o estas son ineficaces.
+OK: C
+EXP: La sociedad de gananciales opera de forma supletoria en el Derecho común cuando no hay capitulaciones eficaces.
+
+// [2]
+Q: En la sociedad de gananciales, ¿cuándo se atribuyen por mitad a ambos cónyuges las ganancias o beneficios comunes?
+A) Al disolverse la sociedad de gananciales.
+B) En el momento en que cada ganancia es obtenida por cualquiera de los cónyuges.
+C) Al celebrarse el matrimonio, con independencia de la subsistencia del régimen.
+OK: A
+EXP: Durante la vigencia del régimen no hay reparto, y la atribución por mitad se produce al disolverse.
+
+#ID = 1.2
+
+// [3]
+Q: ¿Cuál es la posición doctrinal mayoritaria sobre la naturaleza jurídica de la sociedad de gananciales?
+A) Que constituye una sociedad civil ordinaria sometida supletoriamente al contrato de sociedad.
+B) Que es una comunidad de tipo germánico o en mano común, más que una sociedad en sentido técnico.
+C) Que carece por completo de naturaleza comunitaria y solo puede entenderse como una masa patrimonial indivisa.
+OK: B
+EXP: La tesis dominante rechaza su consideración como sociedad técnica y la encuadra como comunidad en mano común.
+
+// [4]
+Q: ¿Qué consecuencia tiene que la sociedad de gananciales cuente con una regulación propia, detallada y suficiente?
+A) Que deba completarse necesariamente con las normas generales de la copropiedad romana.
+B) Que la cuestión sobre su naturaleza jurídica pase a ser el elemento central de su régimen legal.
+C) Que resulte innecesario acudir a regímenes supletorios externos para disciplinarla.
+OK: C
+EXP: Su regulación específica reduce la necesidad de integrar el régimen con modelos externos.
+
+#ID = 1.3
+
+// [5]
+Q: ¿Cuándo nace la sociedad de gananciales según el Código Civil?
+A) En la celebración del matrimonio o posteriormente mediante capitulaciones.
+B) Únicamente cuando los cónyuges sustituyen por capitulaciones un régimen previo.
+C) Solo tras transcurrir un tiempo de convivencia matrimonial bajo Derecho común.
+OK: A
+EXP: El régimen puede nacer desde la celebración del matrimonio o iniciarse después si así se pacta en capitulaciones.
+#ID = 2.1
+
+// [6]
+Q: ¿Qué relevancia tiene en el activo de la sociedad de gananciales la calificación de los bienes como privativos o gananciales?
+A) Que solo cumple una función descriptiva sin efectos relevantes en el régimen económico-matrimonial.
+B) Que opera exclusivamente respecto de los bienes inmuebles inscritos durante el matrimonio.
+C) Que constituye una cuestión central del régimen, aunque el Código la regule con una sistemática discutible por la complejidad de la materia.
+OK: C
+EXP: El texto destaca que determinar si un bien es privativo o ganancial es una cuestión central y técnicamente compleja.
+
+#ID = 2.2
+
+// [7]
+Q: ¿Qué establece la presunción de ganancialidad del art. 1361 en la sociedad de gananciales?
+A) Que los bienes existentes en el matrimonio se presumen gananciales mientras no se pruebe su pertenencia privativa a uno de los cónyuges.
+B) Que todos los bienes adquiridos por cualquier cónyuge son irrevocablemente gananciales desde su adquisición.
+C) Que solo los bienes inscritos a nombre de ambos cónyuges pueden considerarse gananciales.
+OK: A
+EXP: La presunción de ganancialidad atribuye carácter ganancial a los bienes existentes en el matrimonio salvo prueba en contrario.
+
+// [8]
+Q: ¿Cuál es el alcance de la confesión de privatividad del art. 1324 en la sociedad de gananciales?
+A) Que basta por sí sola frente a cualquier tercero para destruir definitivamente la presunción de ganancialidad.
+B) Que es eficaz entre los cónyuges para probar la privatividad, pero no perjudica por sí sola a herederos forzosos ni a acreedores.
+C) Que solo puede utilizarse respecto de bienes muebles, pero no respecto de bienes inmuebles.
+OK: B
+EXP: La confesión de privatividad despliega eficacia en la relación interna entre cónyuges, pero no basta por sí sola frente a terceros protegidos.
+
+#ID = 2.3
+
+// [9]
+Q: ¿Qué permite la atribución de ganancialidad del art. 1355 en la sociedad de gananciales?
+A) Que cualquier bien privativo anterior al matrimonio se transforme automáticamente en ganancial por el mero uso común.
+B) Que uno de los cónyuges atribuya unilateralmente carácter ganancial a un bien adquirido constante matrimonio.
+C) Que los cónyuges atribuyan de común acuerdo carácter ganancial a bienes adquiridos a título oneroso durante el matrimonio, cualquiera que sea la procedencia del precio.
+OK: C
+EXP: La atribución de ganancialidad exige acuerdo de ambos cónyuges y puede recaer sobre bienes adquiridos onerósamente durante el matrimonio.
+
+// [10]
+Q: ¿Qué sentido práctico tiene la atribución de ganancialidad en la sociedad de gananciales?
+A) Que responde a la preferencia práctica por integrar bienes en el patrimonio ganancial, relegando el cálculo exacto de cuotas privativas, sin excluir un posible derecho de reembolso.
+B) Que elimina de forma absoluta cualquier discusión posterior sobre la procedencia del precio y sobre eventuales compensaciones entre patrimonios.
+C) Que impide que los cónyuges celebren contratos entre sí sobre bienes adquiridos durante el matrimonio.
+OK: A
+EXP: El texto vincula esta figura a la práctica ordinaria de integrar bienes en el patrimonio ganancial, aunque pueda subsistir después el derecho de reembolso.
+    `;
+
+
+    const BANCO_2 = `
+    #ID = 3.1
+
+// [11]
+Q: ¿Qué criterio básico explica que los bienes pertenecientes a cada cónyuge al comenzar la sociedad de gananciales tengan carácter privativo?
+A) Que todos los bienes anteriores al matrimonio quedan excluidos por razón de su fecha, aunque produzcan rendimientos comunes.
+B) Que el Código Civil presume que todo bien anterior al matrimonio carece de relevancia patrimonial dentro del régimen.
+C) Que la sociedad de gananciales es una comunidad de ganancias y no una comunidad universal de todos los bienes de los cónyuges.
+OK: C
+EXP: El régimen solo hace comunes las ganancias, por lo que los bienes previos de cada cónyuge permanecen privativos.
+
+// [12]
+Q: ¿Por qué los bienes adquiridos a título gratuito durante la sociedad de gananciales tienen carácter privativo?
+A) Porque la adquisición gratuita no supone carga para la sociedad de gananciales y se vincula exclusivamente al cónyuge adquirente.
+B) Porque todo bien adquirido durante el matrimonio debe reputarse privativo salvo pacto en contrario.
+C) Porque las adquisiciones gratuitas solo producen efectos patrimoniales después de la disolución del régimen.
+OK: A
+EXP: La donación o la herencia no implican sacrificio económico para la sociedad, por lo que el bien queda como privativo.
+
+// [13]
+Q: ¿Qué función cumple el principio de subrogación real en los bienes privativos dentro de la sociedad de gananciales?
+A) Convertir en ganancial cualquier bien que sustituya materialmente a otro bien anterior.
+B) Mantener el carácter privativo del bien adquirido a costa o en sustitución de otro bien privativo.
+C) Permitir que los bienes privativos se integren automáticamente en el patrimonio común si cambian de forma.
+OK: B
+EXP: La subrogación real conserva la naturaleza privativa cuando un bien sustituye a otro del mismo patrimonio.
+
+#ID = 3.2
+
+// [14]
+Q: ¿Qué justifica que un bien adquirido mediante el ejercicio de un derecho de retracto perteneciente a un solo cónyuge sea privativo?
+A) Que el retracto solo puede ejercitarse sobre bienes ya integrados en el patrimonio ganancial.
+B) Que el precio satisfecho con dinero ganancial transforma necesariamente el bien en común.
+C) Que la causa de la adquisición radica en un derecho exclusivo de uno de los cónyuges, aunque proceda reembolso a favor de la sociedad.
+OK: C
+EXP: El bien es privativo porque nace del ejercicio de un derecho exclusivo, sin perjuicio del crédito de la sociedad si paga el precio.
+
+// [15]
+Q: ¿Qué fundamento tienen los bienes y derechos inherentes a la persona o intransmisibles inter vivos para ser considerados privativos?
+A) Que son derechos personalísimos vinculados al titular y, por ello, no se integran en el patrimonio común.
+B) Que solo pueden reputarse privativos cuando ambos cónyuges lo aceptan expresamente.
+C) Que se convierten en gananciales si generan cualquier utilidad económica durante el matrimonio.
+OK: A
+EXP: Su estrecha vinculación personal con un solo cónyuge impide que se comuniquen a la sociedad de gananciales.
+
+// [16]
+Q: ¿Qué criterio sigue el Código Civil respecto de las indemnizaciones por daños a la persona de uno de los cónyuges o a sus bienes privativos?
+A) Que siempre deben calificarse como gananciales por su contenido económico.
+B) Que tienen carácter privativo, manteniéndose en el caso de los bienes la vinculación con el patrimonio privativo afectado.
+C) Que solo son privativas las indemnizaciones por daños morales, pero no las relativas a bienes.
+OK: B
+EXP: La indemnización conserva carácter privativo, ya sea por afectar a la persona o por sustituir el valor de un bien privativo dañado.
+
+// [17]
+Q: ¿Qué diferencia existe entre las ropas y objetos de uso personal y los instrumentos necesarios para la profesión u oficio en la sociedad de gananciales?
+A) Que ambos grupos de bienes son siempre gananciales cuando se adquieren con fondos comunes.
+B) Que ambos grupos de bienes son privativos y en ninguno de los dos casos cabe reembolso a favor de la sociedad.
+C) Que ambos son privativos por destino, pero solo en los instrumentos profesionales puede surgir derecho de reembolso si se adquirieron con dinero ganancial.
+OK: C
+EXP: Las ropas y objetos de uso personal no generan reintegro, mientras que los instrumentos profesionales sí pueden originar reembolso a favor de la sociedad.
+    `;
+
+
+    const BANCO_3 = `
+    #ID = 4.1
+
+// [18]
+Q: ¿Qué criterio utiliza el art. 1347 del Código Civil para calificar como gananciales determinados bienes en la sociedad de gananciales?
+A) La pertenencia originaria del bien a uno de los cónyuges antes del matrimonio.
+B) La voluntad presunta de los cónyuges de compartir cualquier bien sin atender a su origen.
+C) La obtención de beneficios durante la vigencia del matrimonio.
+OK: C
+EXP: El precepto parte de que son gananciales los bienes vinculados a ganancias producidas constante matrimonio.
+
+// [19]
+Q: ¿Qué tratamiento reciben en la sociedad de gananciales los ingresos obtenidos por el trabajo o la industria de cualquiera de los cónyuges?
+A) Se integran en el patrimonio común como bienes gananciales.
+B) Se atribuyen privativamente al cónyuge que los ha generado por su actividad personal.
+C) Solo son gananciales si ambos cónyuges participan directamente en la actividad productiva.
+OK: A
+EXP: Los rendimientos derivados del trabajo o actividad profesional de cualquiera de los cónyuges son gananciales.
+
+// [20]
+Q: ¿Cómo se califican en la sociedad de gananciales los frutos, rentas o intereses producidos por bienes privativos o gananciales?
+A) Como bienes privativos cuando proceden de bienes originariamente privativos.
+B) Como bienes gananciales aunque procedan de bienes privativos o gananciales.
+C) Como bienes de naturaleza mixta según el porcentaje de aportación de cada cónyuge.
+OK: B
+EXP: El texto señala que todo lo generado constante matrimonio por bienes privativos o comunes tiene carácter ganancial.
+
+// [21]
+Q: ¿Qué consecuencia tiene el principio de subrogación real respecto de los bienes adquiridos a título oneroso a costa del caudal común?
+A) Que los bienes adquiridos sustituyen al capital común empleado y adquieren carácter ganancial.
+B) Que los bienes adquiridos conservan la naturaleza del patrimonio personal del cónyuge adquirente.
+C) Que los bienes adquiridos solo son gananciales si se inscriben a nombre de ambos cónyuges.
+OK: A
+EXP: Si la adquisición onerosa se hace con caudal común, el bien sustituye a ese capital y pasa a ser ganancial.
+
+#ID = 4.2
+
+// [22]
+Q: ¿Qué ocurre en la sociedad de gananciales cuando se adquiere un bien mediante el ejercicio de un derecho de retracto de naturaleza ganancial usando fondos privativos?
+A) El bien pasa a ser privativo por razón del origen del dinero empleado.
+B) El bien sigue siendo ganancial, naciendo un crédito a favor del cónyuge que aportó los fondos privativos.
+C) El bien queda excluido de toda calificación hasta la liquidación de la sociedad de gananciales.
+OK: B
+EXP: La naturaleza ganancial deriva del retracto, aunque la sociedad deba reembolsar lo satisfecho con dinero privativo.
+
+// [23]
+Q: ¿Cuál es la regla general sobre las empresas y establecimientos fundados durante la vigencia de la sociedad de gananciales con bienes comunes?
+A) Son gananciales aunque la titularidad formal o la actividad efectiva correspondan solo a uno de los cónyuges.
+B) Son privativos del cónyuge que figure externamente como titular del negocio.
+C) Son necesariamente privativos si únicamente uno de los cónyuges desarrolla la actividad empresarial.
+OK: A
+EXP: El uso de bienes comunes para su fundación determina su carácter ganancial, con independencia de la titularidad formal o de quién trabaje en la empresa.
+   `;
+
+
+    const BANCO_4 = `
+    #ID = 5.1
+
+// [24]
+Q: ¿Qué carácter tienen en la sociedad de gananciales las cantidades percibidas durante el matrimonio por pagos aplazados de un crédito privativo?
+A) Tienen carácter ganancial por haberse cobrado constante matrimonio.
+B) Tienen carácter mixto según la proporción entre tiempo de devengo y tiempo de cobro.
+C) Mantienen carácter privativo porque no pueden considerarse frutos, rentas ni intereses.
+OK: C
+EXP: El cobro aplazado de un crédito privativo conserva su naturaleza privativa, ya que no se califica como rendimiento.
+
+#ID = 5.2
+
+// [25]
+Q: ¿Cómo distingue el art. 1349 entre el derecho de pensión o usufructo y sus rendimientos en la sociedad de gananciales?
+A) El derecho pertenece privativamente al titular, pero los frutos, pensiones o intereses devengados durante el matrimonio son gananciales.
+B) Tanto el derecho como todos sus rendimientos tienen siempre carácter privativo por su vinculación personal.
+C) Tanto el derecho como los rendimientos son siempre gananciales si se perciben durante el matrimonio.
+OK: A
+EXP: El precepto separa el derecho mismo, que es privativo, de los rendimientos generados durante la vigencia del régimen, que son comunes.
+
+// [26]
+Q: En las prestaciones vinculadas a ingresos laborales, ¿de qué depende según la jurisprudencia el carácter ganancial o privativo en la sociedad de gananciales?
+A) Exclusivamente de la denominación formal que reciba la prestación.
+B) Del momento de percepción y de la distinción entre el derecho personal y los rendimientos generados durante la sociedad.
+C) Solo de que el pago se efectúe antes o después de la disolución del matrimonio, sin atender a la naturaleza del derecho.
+OK: B
+EXP: El texto destaca que importa tanto la dimensión personal del derecho como el momento en que se generan o perciben sus rendimientos.
+
+#ID = 5.3
+
+// [27]
+Q: ¿Qué criterio utiliza el art. 1350 para atribuir carácter ganancial a las cabezas de ganado?
+A) La procedencia común del alimento y mantenimiento del ganado durante el matrimonio.
+B) La inscripción conjunta del ganado a nombre de ambos cónyuges.
+C) El exceso existente al disolverse la sociedad respecto del número aportado privativamente por cada cónyuge.
+OK: C
+EXP: La ganancialidad recae sobre el incremento de cabezas de ganado respecto de las aportadas privativamente al inicio.
+
+#ID = 5.4
+
+// [28]
+Q: ¿Por qué se consideran gananciales las ganancias procedentes del juego en la sociedad de gananciales?
+A) Porque se entienden en sentido amplio como fruto de la actividad o habilidad del cónyuge que las obtiene.
+B) Porque todo ingreso aleatorio tiene automáticamente naturaleza privativa del jugador.
+C) Porque solo se integran en la sociedad cuando ambos cónyuges participan en el juego.
+OK: A
+EXP: El texto conecta estas ganancias con la idea amplia de beneficio obtenido por la actuación del cónyuge.
+
+#ID = 5.5
+
+// [29]
+Q: ¿Qué régimen tienen las nuevas acciones o participaciones sociales adquiridas en virtud de derechos derivados de títulos privativos?
+A) Son gananciales si se suscriben durante el matrimonio, cualquiera que sea el origen del derecho.
+B) Son privativas, aunque si se adquieren con fondos gananciales nace un derecho de reembolso a favor de la sociedad.
+C) Son siempre bienes mixtos por concurrir el título privativo y el eventual empleo de dinero común.
+OK: B
+EXP: El carácter privativo procede del título originario, sin perjuicio del crédito de la sociedad por lo aportado.
+
+#ID = 5.6
+
+// [30]
+Q: ¿Cuándo tienen carácter ganancial las donaciones o atribuciones sucesorias hechas conjuntamente a ambos cónyuges sin designación de partes?
+A) Cuando el bien se destina de hecho al uso familiar aunque solo uno de los cónyuges acepte la liberalidad.
+B) Cuando la liberalidad procede de un ascendiente común de ambos cónyuges.
+C) Cuando la liberalidad es aceptada por ambos y no se establece una disposición distinta.
+OK: C
+EXP: La atribución conjunta y gratuita se considera ganancial si concurren aceptación de ambos y ausencia de regla contraria.
+
+#ID = 5.7
+
+// [31]
+Q: ¿Qué solución adopta el art. 1354 para las adquisiciones mixtas en la sociedad de gananciales?
+A) Establece una copropiedad proporcional entre el patrimonio común y el cónyuge o cónyuges que aportan fondos privativos.
+B) Impone la atribución íntegra al patrimonio ganancial con exclusión de cualquier cuota privativa.
+C) Atribuye siempre el bien al cónyuge que haya realizado la aportación de mayor valor.
+OK: A
+EXP: El régimen legal opta por una titularidad proporcional conforme a la procedencia privativa y ganancial de los fondos.
+
+#ID = 5.8
+
+// [32]
+Q: ¿Qué regla determina el carácter de los bienes adquiridos mediante precio aplazado en la sociedad de gananciales?
+A) Siempre prevalece la naturaleza del último pago efectuado antes de la completa satisfacción del precio.
+B) Si la adquisición es posterior al inicio de la sociedad, el carácter del bien depende de la naturaleza del primer desembolso, salvo la especialidad de vivienda y ajuar familiares.
+C) Todo bien adquirido a plazos durante el matrimonio es necesariamente ganancial por la continuidad del pago.
+OK: B
+EXP: El texto distingue entre adquisiciones anteriores y posteriores al inicio de la sociedad, y en estas últimas atiende al primer desembolso.
+
+#ID = 5.9
+
+// [33]
+Q: ¿Qué efecto produce en la sociedad de gananciales la realización de mejoras en bienes privativos con fondos comunes o con el trabajo de los cónyuges?
+A) El bien mejorado se transforma automáticamente en ganancial por efecto de la inversión común.
+B) La sociedad solo puede reclamar el importe gastado, sin participar nunca en la plusvalía obtenida.
+C) La sociedad tiene derecho de reembolso y además a participar en el aumento de valor generado.
+OK: C
+EXP: La regla no altera en principio la naturaleza del bien, pero reconoce a la sociedad una participación en la plusvalía creada con aportación común.
+    `;
+
+
+    const BANCO_5 = `
+    #ID = 6.1
+
+// [34]
+Q: ¿Qué presupuesto da lugar a la obligación de reembolso en la sociedad de gananciales?
+A) Que la naturaleza del bien adquirido coincida siempre con la procedencia de los fondos empleados.
+B) Que todo desplazamiento patrimonial entre cónyuges modifique automáticamente la calificación del bien.
+C) Que la calificación del bien como privativo o ganancial no coincida con el origen de los fondos utilizados para su adquisición.
+OK: C
+EXP: La obligación de reembolso surge cuando la naturaleza del bien se mantiene, pero los fondos proceden de otro patrimonio.
+
+// [35]
+Q: ¿Qué efecto produce en la sociedad de gananciales el empleo de dinero privativo para adquirir un bien ganancial?
+A) Que nace un derecho de reembolso a favor del cónyuge aportante, sin alterarse el carácter ganancial del bien.
+B) Que el bien adquirido pasa necesariamente a ser privativo por razón del origen del dinero.
+C) Que la sociedad de gananciales queda exenta de toda compensación si el bien fue adquirido para ambos cónyuges.
+OK: A
+EXP: El bien conserva su naturaleza ganancial, pero el cónyuge que aportó dinero privativo tiene derecho a ser reintegrado.
+
+// [36]
+Q: ¿Cómo se determina en el art. 1358 el alcance del reembolso entre patrimonios en la sociedad de gananciales?
+A) Mediante la devolución nominal exacta de la suma entregada en el momento del gasto.
+B) Mediante una compensación fijada libremente por los cónyuges al tiempo de la disolución.
+C) Mediante el reintegro del valor satisfecho actualizado al tiempo de la liquidación, con independencia de la procedencia del caudal.
+OK: C
+EXP: El precepto impone reembolsar el valor actualizado al momento de la liquidación, no la mera cifra histórica.
+
+// [37]
+Q: ¿Qué relevancia tiene la reserva expresa para el derecho de reembolso del dinero privativo invertido en bienes gananciales?
+A) No es necesaria para que exista el derecho de reembolso, salvo que se haya excluido expresamente.
+B) Es siempre imprescindible para que pueda reconocerse cualquier crédito a favor del cónyuge aportante.
+C) Solo resulta exigible cuando el bien adquirido se destina al uso familiar.
+OK: A
+EXP: El texto afirma que el derecho de reembolso nace aunque no haya reserva expresa, salvo exclusión expresa en contrario.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
