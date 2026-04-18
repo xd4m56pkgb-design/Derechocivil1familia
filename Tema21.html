@@ -1,0 +1,1781 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 21. La reproducción asistida</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. PLANTEAMIENTO GENERAL
+
+Los avances científicos y tecnológicos de las últimas décadas, especialmente en Biomedicina y Biotecnología, han permitido el desarrollo de técnicas de reproducción distintas de las naturales para afrontar los problemas de infertilidad de la pareja humana. La intervención sobre estructuras biológicas humanas que tales técnicas implican ha evidenciado la necesidad de un marco jurídico capaz de resolver los problemas concretos que suscitan, favoreciendo la investigación científica y su progreso, pero sometiéndolos al mismo tiempo a límites fijados según las prioridades sociales.
+
+La admisión o rechazo de estas técnicas ha de regirse por una ética civil apoyada en el sentir mayoritario, en los contenidos constitucionales, en la racionalidad y en el servicio al interés general.
+
+La primera regulación española sobre la materia fue la Ley 35/1988, de Reproducción Asistida Humana, junto con la Ley 42/1988, relativa a la donación y utilización de embriones y fetos humanos o de sus células, tejidos u órganos. Ambas normas fueron impugnadas ante el Tribunal Constitucional, que confirmó sustancialmente su constitucionalidad, salvo pequeños apartados, consolidando así los criterios legislativos adoptados, muchos de los cuales continúan vigentes.
+
+Estas leyes han provocado un importante debate doctrinal y suscitan numerosas dudas sobre la oportunidad de algunas de sus soluciones. Desde la perspectiva civil, uno de los principales problemas jurídicos derivados de la reproducción asistida consiste en determinar la filiación del nacido, es decir, establecer de quién es hijo en sentido legal, ya que de ello depende la atribución de los derechos que puedan corresponderle.
+
+La intervención legislativa resulta necesaria porque estas técnicas obligan a afrontar situaciones no previstas antes por el sistema normativo. Mientras que la paternidad biológica continúa siendo exclusivamente genética, la maternidad biológica puede desdoblarse, pues puede coincidir en una sola mujer la aportación del óvulo y la gestación, o separarse entre una maternidad de gestación y una maternidad genética. Además, la maternidad y la paternidad pueden fundarse no en un vínculo biológico, sino en la voluntad o en el consentimiento prestado para el nacimiento del hijo, lo que obliga a valorar cuál de esas formas de vinculación resulta más profunda y humanizada en relación con el niño.
+
+El criterio básico debe ser que la situación jurídica del nacido mediante fecundación asistida sea, si no completamente idéntica, sí lo más próxima posible a la del nacido por procreación natural.
+
+Así lo exigen los principios constitucionales de no discriminación por razón de nacimiento y de dignidad de la persona, así como razones de justicia y equidad. En consecuencia, una vez producido el nacimiento y determinada la filiación, no deben existir diferencias en derechos y obligaciones por razón del tipo de filiación, ni por haberse originado antes o después de la muerte del progenitor, ni por su carácter matrimonial o no matrimonial.
+
+2. LA LEY 14/2006, SOBRE TÉCNICAS DE REPRODUCCIÓN HUMANA ASISTIDA
+
+La regulación básica vigente en España sobre reproducción asistida se contiene en la Ley 14/2006, de 26 de mayo, modificada en varias ocasiones. Esta norma se complementa con la Ley 14/2007, de Investigación Biomédica, con diversa normativa administrativa relativa, entre otras materias, al estudio de donantes y usuarios, a las exigencias de calidad y seguridad, y al régimen de autorizaciones, licencias, control e inspección de los centros, sin perjuicio de que determinadas conductas puedan además recibir sanción penal conforme al Código Penal.
+
+Desde la perspectiva del Derecho Civil, la Ley 14/2006 constituye por ahora el punto final de la evolución normativa en esta materia. Sin embargo, en lo que se refiere a la determinación de la filiación, que es la cuestión central en este ámbito, la ley introduce escasas novedades, pues en esta materia mantiene sustancialmente los criterios normativos ya establecidos por la anterior Ley 35/1988.
+
+Con posterioridad se han incorporado adaptaciones legales destinadas a resolver problemas concretos. Entre ellas destaca la exigencia de que la información y el consentimiento relativos a los actos de reproducción asistida se presten en formatos adecuados y accesibles para las personas con discapacidad, conforme al principio de diseño para todos, así como el recordatorio legal de la posibilidad de matrimonio entre dos mujeres, además de otras precisiones de detalle.
+
+Debe añadirse que en Cataluña existe legislación específica sobre la materia. No obstante, en el Derecho común el precepto básico en relación con la filiación sigue siendo el artículo 7 de la Ley 14/2006, según el cual la filiación de los nacidos mediante técnicas de reproducción asistida se rige por las leyes civiles, con las especificaciones establecidas en los artículos siguientes, y la inscripción en el Registro Civil no puede reflejar datos que permitan inferir el carácter de la generación.
+
+A partir de estas bases normativas han de desarrollarse los distintos aspectos relativos a la determinación de la filiación.
+
+3. FILIACIÓN RESPECTO DE LA MUJER USUARIA DE ESTAS TÉCNICAS
+
+Puede ser usuaria o receptora de las técnicas de reproducción asistida toda mujer mayor de edad y con plena capacidad de obrar que haya prestado de forma libre, consciente, expresa y por escrito su consentimiento. La Ley 14/2006 subraya como novedad que el acceso a estas técnicas es posible con independencia del estado civil y de la orientación sexual de la mujer, lo que confirma que su finalidad no es solo remediar la esterilidad, sino también facilitar la descendencia a quienes no pueden obtenerla por medios tradicionales.
+
+Estas técnicas solo pueden utilizarse cuando existan posibilidades razonables de éxito, no impliquen un riesgo grave para la salud física o psíquica de la mujer o de la futura descendencia y la mujer, siendo mayor de edad y con buen estado de salud psicofísica, las haya solicitado y aceptado libre y conscientemente. Esa aceptación debe constar en un consentimiento informado referido a las circunstancias concretas del caso, tras haber recibido información suficiente sobre las posibilidades de éxito, los riesgos del tratamiento y del embarazo, las consecuencias para la descendencia y los aspectos biológicos, jurídicos y éticos relacionados con estas técnicas. De forma expresa, además, debe informarse de los riesgos que puede implicar la maternidad a una edad clínicamente inadecuada.
+
+Prestado válidamente ese consentimiento, la filiación respecto del hijo nacido queda determinada a favor de la mujer usuaria sobre esa base, unida al hecho de ser la gestante y quien da a luz, igual que ocurre en la filiación natural. Aunque el Código Civil no contiene una regla expresa sobre determinación de la filiación materna, la Ley 35/1988 introdujo formalmente en nuestro ordenamiento el criterio de que la filiación materna viene determinada por el parto, criterio que en Cataluña también aparece expresamente recogido en su Código Civil.
+
+En consecuencia, aunque se haya utilizado el óvulo de una donante y, por ello, las pruebas genéticas revelen que la mujer usuaria no es la madre biológica, la filiación determinada en su favor no puede ser impugnada por esa razón, porque prevalecen el consentimiento previamente prestado y el hecho del parto.
+
+4. FILIACIÓN RESPECTO DEL/LA CÓNYUGE O PAREJA DE LA MUJER USUARIA (MATRIMONIO HETEROSEXUAL U HOMOSEXUAL, PAREJA HETEROSEXUAL U HOMOSEXUAL) 
+
+La mujer usuaria de las técnicas de reproducción asistida puede encontrarse sola, casada o integrada en una pareja de hecho, tanto con un varón como con otra mujer, y en cada supuesto la determinación de la filiación respecto de la persona vinculada con ella exige precisiones distintas.
+
+En todos los casos, la filiación de la mujer usuaria queda determinada por el parto, mientras que la del otro miembro de la pareja depende de la aportación genética, del consentimiento prestado o, en su caso, de la presunción legal de paternidad.
+
+Si la mujer usuaria está casada con un varón, la filiación respecto de este se determina con facilidad mediante la presunción de paternidad del marido. Si además ha aportado su propio material genético, la filiación se apoya también en la realidad biológica, pero, aunque no lo haya hecho, queda igualmente determinada por el consentimiento informado que debió prestar para la utilización de estas técnicas por su esposa. Solo si la mujer se sometiera a ellas sin dicho consentimiento podría el esposo destruir la presunción civil de paternidad.
+
+Si la mujer usuaria está casada con otra mujer, no puede operar la presunción de paternidad, por lo que la ley exige que la esposa manifieste su consentimiento para que la filiación se determine a su favor respecto del hijo nacido de su cónyuge. La reforma de 2015 flexibilizó este régimen al permitir que el consentimiento pueda prestarse después del nacimiento y en el formulario que se remite al Registro Civil, eliminando además la necesidad de acudir a la adopción del hijo de la consorte, que fue inicialmente la vía necesaria para atribuir esa filiación.
+
+Si la mujer usuaria convive con un varón sin estar casada, la ley permite determinar la filiación a favor de este cuando haya prestado previamente su consentimiento a la fecundación con material de donante en documento formalizado ante el centro o servicio autorizado, sin perjuicio de la posible reclamación judicial de paternidad. Si además hubiera aportado su propio material genético, la determinación sería aún más sencilla. El texto destaca, además, que no se exige convivencia more uxorio ni una relación afectiva análoga para que ese consentimiento sea eficaz.
+
+En cambio, cuando la mujer usuaria forma pareja no matrimonial con otra mujer, la ley estatal no prevé que el simple consentimiento previo permita determinar a favor de la no usuaria una filiación no matrimonial, a diferencia de lo que sucede en las parejas heterosexuales no casadas.
+
+Por ello, al exigirse matrimonio entre ambas, la posibilidad de reclamar esa filiación fuera del matrimonio resulta muy discutida, de modo que, en principio, la vía que quedaría sería la adopción. Frente a ello, la legislación catalana sí admite expresamente que los hijos nacidos por fecundación asistida sean también hijos del hombre o de la mujer que haya prestado su consentimiento expreso en documento adecuado.
+
+En definitiva, la filiación materna se determina por el parto y la filiación del otro progenitor o de la otra madre se apoya en la aportación genética, en el consentimiento o, en el caso del marido, en la presunción legal de paternidad. Cuando la pareja de la mujer usuaria es otra mujer, la filiación a su favor requiere matrimonio y consentimiento específico, sin que baste este último si no están casadas. En todo caso, aunque pudiera llegar a conocerse la identidad del donante de gametos o de óvulos, ello nunca determinaría por sí solo la filiación legal. Una vez fijada esta, sus efectos son iguales en todos los supuestos.
+
+5. USO DE MATERIAL DE DONANTE: EL PROBLEMA DEL ANONIMATO
+
+Uno de los pilares del sistema de reproducción asistida es el principio de anonimato del donante.
+
+La donación de semen u óvulos se configura como un contrato gratuito, aunque con posibilidad de ciertas compensaciones económicas, formalizado por escrito, con información previa suficiente y sometido a estricta confidencialidad, cuya garantía corresponde a los bancos de gametos y a los registros de donantes y de actividad de los centros autorizados.
+
+La revelación de la identidad del donante tiene carácter claramente excepcional y, aun cuando llegue a producirse en los supuestos legalmente previstos, nunca determina por sí misma la filiación. El donante no puede ser considerado legalmente padre o madre del nacido, aunque exista correspondencia genética, porque su intervención se limita a una donación gratuita de gametos o preembriones sin voluntad de asumir trascendencia filiativa. Con este refuerzo del anonimato, el legislador pretende favorecer la práctica de estas técnicas y facilitar que quienes lo deseen puedan superar la esterilidad y lograr descendencia.
+
+Sin embargo, este principio ha sido discutido doctrinalmente, e incluso algunos autores lo consideran inconstitucional, al entender que entra en tensión con el mandato constitucional de posibilitar la investigación de la paternidad. Esa tensión resulta aún más visible si se compara con la adopción, donde el ordenamiento reconoce precisamente el derecho a conocer la identidad biológica.
+
+Para conciliar ambas exigencias, la Ley 14/2006 reconoce a los nacidos el derecho a obtener información general sobre los donantes sin identificar su identidad, y solo permite revelar esta de forma excepcional cuando concurran circunstancias extraordinarias que supongan un peligro cierto para la vida o la salud del hijo o cuando así proceda conforme a las leyes procesales penales. Incluso en estos casos, la revelación debe ser indispensable para evitar el peligro o alcanzar el fin legal y tiene siempre carácter restringido, sin que pueda dar lugar a publicidad sobre la identidad del donante.
+
+6. LA FECUNDACIÓN ASISTIDA EN LOS SUPUESTOS DE INEXISTENCIA DE PAREJA: USO DE ESTAS TÉCNICAS POR MUJERES Y HOMBRES SOLOS 
+
+Inicialmente, el empleo de las técnicas de reproducción asistida aparecía vinculado a la esterilidad de la pareja, estuviera o no casada y formada originariamente por hombre y mujer, de modo que su finalidad fundamental era actuar médicamente ante la infertilidad humana para facilitar la procreación cuando otras terapias fueran inadecuadas o ineficaces. Sin embargo, la Ley 14/2006 adopta una formulación más amplia, al referirse con carácter general a las técnicas de reproducción humana asistida acreditadas científicamente y clínicamente indicadas, así como a la prevención y tratamiento de enfermedades de origen genético, con lo que la infertilidad deja de ser el objetivo principal y se abre paso a otros supuestos.
+
+Entre esos supuestos se encuentra el recurso a estas técnicas por parte de la mujer individualmente considerada, sin necesidad de contar con pareja masculina ni de acreditar una infertilidad de pareja. El propio tenor legal confirma que toda mujer puede ser usuaria o receptora de estas técnicas siempre que haya prestado su consentimiento escrito de forma libre, consciente y expresa. La utilización de la expresión toda mujer pone de manifiesto que no es necesario estar casada, convivir en pareja ni encontrarse en una determinada situación personal, bastando con ser mujer y cumplir las exigencias legales. Esta posibilidad queda además reforzada expresamente cuando la ley afirma que la mujer puede acceder a estas técnicas con independencia de su estado civil y de su orientación sexual.
+
+A partir de ahí, la doctrina ha planteado si, de forma paralela a la maternidad en solitario, cabría también admitir una paternidad en solitario, sobre la base del derecho del hombre al libre desarrollo de la personalidad y a la paternidad. Sin embargo, el obstáculo decisivo radica en que el varón, por razones fisiológicas, necesitaría recurrir a una gestación de sustitución, y el ordenamiento considera madre legal a la mujer que da a luz. Al rechazarse la gestación por sustitución, queda excluida la posibilidad de que el varón pueda ser padre solo, de manera que el sistema permite la maternidad en solitario, pero no la paternidad en solitario.
+
+7. LA FECUNDACIÓN POST MORTEM
+
+La fecundación post mortem se refiere al supuesto en que una mujer viva es inseminada con semen de un varón ya fallecido en el momento de practicarse la fecundación. Su admisibilidad ha sido muy discutida, pues para algunos autores resulta inconstitucional al suponer que el hijo nace y vive sin padre, cuando se considera preferible una familia estable integrada por padre y madre como marco adecuado para su desarrollo.
+
+La Ley 14/2006 regula expresamente esta materia en el artículo 9 y parte de un criterio general restrictivo, pues excluye su utilización con carácter general, aunque la admite excepcionalmente en determinadas condiciones. Como regla general, no puede determinarse legalmente la filiación ni producirse efectos jurídicos entre el hijo nacido mediante estas técnicas y el marido fallecido cuando, al tiempo de la muerte del varón, su material reproductor no se hallaba ya en el útero de la mujer. De este modo, el supuesto se aproxima al de los hijos póstumos, nacidos tras la muerte del padre pero concebidos antes de ella.
+
+No obstante, la ley permite excepcionalmente la fecundación post mortem dentro de los doce meses siguientes al fallecimiento, siempre que el marido hubiera prestado su consentimiento para que su material reproductor pudiera ser utilizado con esa finalidad. Ese consentimiento puede constar en el documento previsto para el uso de las técnicas, en escritura pública, en testamento o en documento de instrucciones previas, produce los efectos propios de la filiación matrimonial y puede ser revocado antes de la realización de la técnica. Además, se presume otorgado cuando el cónyuge supérstite ya estuviera sometido a un proceso de reproducción asistida iniciado para la transferencia de preembriones constituidos antes del fallecimiento del marido.
+
+La Ley 14/2006 amplió el plazo inicialmente previsto y flexibilizó las formas de prestar el consentimiento, admitiendo vías más amplias e incluso un supuesto de consentimiento presunto, con el fin de evitar problemas prácticos derivados de exigencias formales o de la paralización de procedimientos ya iniciados por la muerte del marido. Pese a ello, los tribunales han declarado en numerosas ocasiones que no cabe suplir judicialmente la voluntad de un incapaz en una cuestión de esta naturaleza.
+
+Estas mismas reglas resultan aplicables también a las parejas no casadas.
+
+8. LA GESTACIÓN SUBROGADA
+
+La gestación subrogada consiste en que una persona sola o una pareja encarga a una mujer que geste un hijo para entregarlo tras el nacimiento, renunciando ella a la filiación materna a favor de los comitentes. Esta posibilidad ha suscitado un debate muy intenso. Desde una posición crítica, se subraya el riesgo de instrumentalización de la mujer gestante, especialmente cuando media una motivación económica, así como la cosificación del niño y la mercantilización tanto del cuerpo de la mujer como de la filiación, todo ello contrario a la dignidad humana. En esa línea, se destaca también que la normativa europea sobre trata de seres humanos incluye la maternidad subrogada dentro de ese ámbito cuando existan coacción o engaño sobre las mujeres gestantes.
+
+Frente a ello, otros planteamientos insisten en que no toda gestación subrogada responde a fines mercantiles, pues también puede apoyarse en conductas de altruismo o solidaridad, y entienden que una solución permisiva podría resultar más razonable siempre que se excluyeran los contratos onerosos.
+
+Pese a esa discusión, el Derecho español no define la figura ni distingue entre sus diversas modalidades, sino que se limita a negar eficacia al contrato de gestación por sustitución. La ley declara nulo de pleno derecho el contrato, exista o no precio, cuando una mujer se compromete a gestar renunciando a la filiación materna en favor del contratante o de un tercero. En consecuencia, la filiación de los hijos nacidos mediante esta práctica se determina por el parto, de modo que la madre legal es siempre la gestante, sin perjuicio de la posible reclamación de la paternidad respecto del padre biológico conforme a las reglas generales. Así, aunque pudiera existir madre genética distinta de la gestante, la ley atribuye directamente la maternidad legal a quien ha dado a luz.
+
+La dificultad aparece porque otros países sí permiten esta práctica y ello ha dado lugar a contratos celebrados en el extranjero cuyos efectos se pretenden hacer valer en España. Cuando el nacimiento se produce en España, la certificación médica del parto sigue siendo decisiva para fijar la filiación materna, por lo que no puede atribuirse la maternidad a la madre comitente.
+
+Durante un tiempo, si españoles acudían a países donde la gestación subrogada estaba permitida y obtenían una resolución judicial firme extranjera que declaraba la filiación a su favor, los Registros Civiles españoles venían inscribiendo esa filiación, atendiendo a la protección del menor, de las partes y de la madre gestante. Sin embargo, el Tribunal Supremo ha reiterado en resoluciones recientes que el interés del menor no puede confundirse con el del padre comitente y ha mantenido la aplicación del criterio legal que atribuye la maternidad a la gestante.
+
+La jurisprudencia del Tribunal Supremo ha sostenido además que, si esas inscripciones obtenidas a partir de contratos de gestación por sustitución celebrados en el extranjero son impugnadas ante los tribunales españoles, es muy probable que sean anuladas. El Alto Tribunal considera que, aunque el interés superior del menor tiene valor primordial, debe ponderarse junto con otros bienes jurídicos, en particular la dignidad e integridad moral de la mujer gestante, la necesidad de evitar la explotación de mujeres vulnerables y la prohibición de la mercantilización de la gestación y de la filiación. La protección del menor no puede descansar en un contrato radicalmente prohibido en España, sino que debe reconducirse a las vías ordinarias del ordenamiento, como la determinación de la filiación biológica cuando proceda o la utilización de figuras como el acogimiento o la adopción para dar cobertura jurídica a una situación familiar de hecho.
+
+Esta situación ha desembocado en un sistema calificado como incoherente, porque la filiación derivada de una gestación subrogada celebrada en el extranjero puede subsistir si nadie la impugna, pero puede ser anulada si se cuestiona judicialmente, lo que genera inseguridad jurídica y desigualdad práctica entre quienes pueden acudir a otros países y quienes no disponen de medios para ello. En línea con la interpretación del Tribunal Supremo, una Instrucción de 2025 ha dejado sin efecto las anteriores directrices administrativas y ha establecido que en ningún caso podrán utilizarse como título apto para inscribir en el Registro Civil español el nacimiento y la filiación de menores nacidos mediante gestación subrogada ni certificaciones registrales extranjeras, ni simples declaraciones acompañadas de certificación médica, ni siquiera sentencias firmes extranjeras. Las solicitudes pendientes tampoco se practicarán y la determinación de la filiación deberá reconducirse en España a los medios ordinarios, esto es, a la filiación biológica respecto de alguno de los progenitores de intención, en su caso, y a la posterior filiación adoptiva cuando exista un núcleo familiar con garantías suficientes.
+
+La reciente jurisprudencia constitucional pone además de relieve los problemas concretos que estas situaciones generan. En un caso de un menor nacido en Ucrania mediante gestación por sustitución, inscrito inicialmente con filiación respecto del varón español y de la madre gestante ucraniana, la esposa del padre solicitó su adopción y esta fue concedida en primera instancia, aunque posteriormente revocada por la Audiencia Provincial a instancia del Ministerio Fiscal. El Tribunal Constitucional anuló esa revocación por entender insuficientemente justificada la valoración del interés del menor y por haberse introducido cuestiones no planteadas, con lo que declaró firme la adopción. El propio caso evidenciaba, además, una diferencia jurídica entre dos hermanos nacidos en condiciones sustancialmente iguales, pues respecto del segundo hijo la adopción por la esposa no fue recurrida y quedó firme desde el principio. El resultado final muestra las contradicciones del sistema vigente y la necesidad de una reforma que aporte coherencia y seguridad jurídica.
+`.trim();
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1": "Las técnicas de reproducción asistida surgen por el avance biomédico y biotecnológico para afrontar la infertilidad, pero exigen un marco jurídico que compatibilice investigación, progreso científico y límites fijados conforme a las prioridades sociales.",
+"2": "La Ley 14/2006 constituye la regulación básica vigente en España sobre reproducción humana asistida, complementada por otras normas biomédicas, administrativas y penales, y mantiene en materia de filiación los criterios esenciales ya establecidos por la legislación anterior.",
+"3": "La filiación de la mujer usuaria se determina por su consentimiento válido unido al parto, de modo que prevalece la maternidad legal de quien gesta y da a luz aunque no exista vínculo genético por haberse utilizado material de donante.",
+"4": "La filiación del cónyuge o pareja de la mujer usuaria depende, según los casos, de la presunción de paternidad, de la aportación genética o del consentimiento, con diferencias relevantes entre matrimonio heterosexual, matrimonio entre mujeres y parejas no matrimoniales.",
+"5": "El sistema se apoya en el anonimato del donante, cuya identidad solo puede revelarse de forma excepcional y restringida, sin que esa revelación llegue nunca a determinar por sí sola una relación de filiación legal.",
+"6": "La Ley 14/2006 permite que toda mujer acceda individualmente a estas técnicas con independencia de su estado civil u orientación sexual, pero excluye la paternidad en solitario del varón porque requeriría una gestación de sustitución, prohibida por el ordenamiento.",
+"7": "La fecundación post mortem solo se admite excepcionalmente dentro del plazo legal y si el fallecido consintió el uso de su material reproductor, produciendo entonces efectos filiativos, criterio aplicable también a las parejas no casadas.",
+"8": "La gestación subrogada es nula de pleno derecho en España, por lo que la maternidad legal se atribuye a la mujer gestante y la protección del menor debe articularse mediante las vías ordinarias de filiación biológica, acogimiento o adopción, pese a las contradicciones e inseguridad generadas por los supuestos internacionales."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1
+
+// [1]
+Q: ¿Cuál es la función principal del marco jurídico en materia de técnicas de reproducción asistida según el planteamiento general expuesto?
+A) Sustituir completamente los criterios científicos por decisiones exclusivamente políticas sobre reproducción humana.
+B) Garantizar la libre utilización de cualquier técnica reproductiva sin restricciones jurídicas ni valoración social.
+C) Resolver los problemas concretos que plantean estas técnicas, permitiendo el progreso científico pero sometiéndolo a límites acordes con las prioridades sociales.
+OK: C
+EXP: El texto presenta el Derecho como instrumento para encauzar los problemas jurídicos creados por estas técnicas, compatibilizando investigación y límites sociales.
+
+// [2]
+Q: ¿Con qué criterio debe decidirse la admisión o el rechazo de las técnicas de reproducción asistida en una sociedad democrática?
+A) Con una ética civil apoyada en el sentir mayoritario, los contenidos constitucionales, la racionalidad y el interés general.
+B) Con la preferencia de cada profesional sanitario, siempre que exista posibilidad técnica de intervención.
+C) Con la prioridad absoluta de cualquier deseo reproductivo individual, aunque contradiga límites colectivos.
+OK: A
+EXP: El texto afirma expresamente que la aceptación o rechazo de estas técnicas debe regirse por una ética civil vinculada a esos parámetros.
+
+// [3]
+Q: ¿Qué relevancia jurídica tuvo la primera regulación española sobre reproducción asistida y su control constitucional?
+A) Supuso la anulación completa del modelo legislativo por ser incompatible con la Constitución.
+B) Consolidó sustancialmente los criterios legislativos adoptados, al confirmarse su constitucionalidad salvo apartados menores.
+C) Produjo únicamente efectos simbólicos, sin influencia duradera sobre la regulación posterior.
+OK: B
+EXP: El Tribunal Constitucional confirmó en lo esencial esas leyes, lo que reforzó y consolidó muchos de sus criterios.
+
+// [4]
+Q: ¿Cuál es uno de los principales problemas civiles que suscita la reproducción asistida respecto del nacido?
+A) Determinar exclusivamente la nacionalidad del nacido por razón del lugar de tratamiento.
+B) Establecer la capacidad patrimonial del nacido desde el momento de la fecundación.
+C) Determinar la filiación legal del nacido, porque de ella depende la atribución de los derechos que puedan corresponderle.
+OK: C
+EXP: El texto identifica como cuestión central decidir de quién es hijo en sentido legal el nacido mediante estas técnicas.
+
+// [5]
+Q: ¿Qué criterio debe orientar la situación jurídica del nacido mediante fecundación asistida una vez producido el nacimiento y determinada la filiación?
+A) Que su situación sea lo más próxima posible a la del nacido por procreación natural, sin diferencias de derechos y obligaciones por el origen de la filiación.
+B) Que se establezca un régimen jurídico especial y diferenciado por la singularidad técnica de su nacimiento.
+C) Que los derechos del nacido dependan del carácter matrimonial de la filiación y del momento del fallecimiento del progenitor.
+OK: A
+EXP: El texto exige aproximar al máximo su estatuto al de la procreación natural y rechaza diferencias por tipo de filiación o por circunstancias del nacimiento.
+
+#ID = 2
+
+// [6]
+Q: ¿Qué posición ocupa la Ley 14/2006 en la regulación española de las técnicas de reproducción humana asistida?
+A) Constituye una norma secundaria limitada al funcionamiento administrativo de los centros sanitarios.
+B) Regula únicamente las sanciones penales derivadas del uso irregular de las técnicas reproductivas.
+C) Es la regulación básica vigente, complementada por otras normas sobre investigación biomédica, control administrativo y, en su caso, sanción penal.
+OK: C
+EXP: La Ley 14/2006 es la base normativa principal, aunque se completa con otras disposiciones en materias conexas.
+
+// [7]
+Q: ¿Cuál es la relevancia de la Ley 14/2006 desde la perspectiva del Derecho Civil en materia de reproducción asistida?
+A) Representa por ahora el punto final de la evolución normativa en esta materia, aunque en filiación mantiene sustancialmente los criterios anteriores.
+B) Supone una ruptura completa con la regulación precedente en todo lo relativo a la filiación del nacido.
+C) Desplaza las leyes civiles generales y establece un sistema autónomo e íntegro de filiación.
+OK: A
+EXP: El texto destaca que la ley cierra provisionalmente la evolución normativa, pero sin innovar de forma sustancial en la determinación de la filiación.
+
+// [8]
+Q: ¿Qué juicio merece la Ley 14/2006 respecto de la determinación de la filiación en reproducción asistida?
+A) Introduce un régimen completamente nuevo basado en criterios exclusivamente voluntarios.
+B) Aporta escasas novedades y conserva en lo esencial los criterios normativos ya establecidos por la Ley 35/1988.
+C) Elimina la relevancia civil de la filiación y la remite por entero al ámbito administrativo.
+OK: B
+EXP: En materia de filiación, la ley mantiene sustancialmente la línea normativa anterior y apenas introduce cambios relevantes.
+
+// [9]
+Q: ¿Qué finalidad tienen las adaptaciones legales posteriores incorporadas al régimen de reproducción asistida?
+A) Sustituir la regulación civil de la filiación por un modelo centrado exclusivamente en la accesibilidad documental.
+B) Resolver problemas concretos, como la accesibilidad de la información y del consentimiento para personas con discapacidad.
+C) Restringir el acceso a las técnicas de reproducción asistida mediante nuevas prohibiciones generales.
+OK: B
+EXP: El texto indica que las reformas posteriores se orientan a solucionar cuestiones concretas, entre ellas la accesibilidad de la información y del consentimiento.
+
+// [10]
+Q: ¿Qué significado tiene en la Ley 14/2006 la referencia al principio de diseño para todos en relación con la reproducción asistida?
+A) Exige que la información y el consentimiento relativos a los actos de reproducción asistida se ofrezcan en formatos adecuados y accesibles para las personas con discapacidad.
+B) Impone que todas las técnicas de reproducción asistida deban aplicarse del mismo modo a cualquier usuario sin adaptación individual.
+C) Obliga a que los centros de reproducción asistida utilicen un único modelo técnico y documental aprobado estatalmente.
+OK: A
+EXP: El principio se proyecta sobre la accesibilidad de la información y del consentimiento, no sobre la uniformidad técnica de los tratamientos.
+
+// [11]
+Q: ¿Qué alcance tiene en esta materia la mención legal a la posibilidad de matrimonio entre dos mujeres?
+A) Introduce un nuevo modelo general de filiación distinto del previsto por las leyes civiles.
+B) Se incorpora como una de las adaptaciones legales orientadas a precisar problemas concretos dentro del régimen vigente.
+C) Suprime la aplicación del Derecho común en la determinación de la filiación derivada de reproducción asistida.
+OK: B
+EXP: El texto presenta esa referencia como una precisión legal añadida posteriormente, no como una sustitución del sistema general.
+
+// [12]
+Q: ¿Qué valor atribuye el texto al artículo 7 de la Ley 14/2006 en el Derecho común respecto de la filiación?
+A) Es un precepto secundario de contenido meramente registral sin incidencia en la determinación de la filiación.
+B) Es el precepto básico, pues remite a las leyes civiles con las especificaciones legales propias de la reproducción asistida.
+C) Es una norma excepcional que excluye la aplicación de las leyes civiles en todos los nacimientos por reproducción asistida.
+OK: B
+EXP: El artículo 7 se presenta como la norma central en Derecho común para articular la filiación en este ámbito.
+
+// [13]
+Q: ¿Qué criterio establece el artículo 7 de la Ley 14/2006 sobre la filiación de los nacidos mediante técnicas de reproducción asistida?
+A) Que la filiación se rige por las leyes civiles, con las especificaciones establecidas en los artículos siguientes.
+B) Que la filiación depende exclusivamente de la voluntad declarada ante el centro sanitario autorizado.
+C) Que la filiación queda sometida preferentemente a normas administrativas sobre usuarios y donantes.
+OK: A
+EXP: El precepto remite a las leyes civiles y añade las especificaciones particulares previstas por la propia ley especial.
+
+// [14]
+Q: ¿Qué función cumple la regla registral que impide reflejar en el Registro Civil datos que permitan inferir el carácter de la generación?
+A) Garantizar que la inscripción revele la técnica concreta utilizada para acreditar la filiación especial.
+B) Permitir una diferenciación formal entre nacidos por procreación natural y por reproducción asistida.
+C) Evitar que la inscripción registral exteriorice indicios sobre el origen de la generación del nacido.
+OK: C
+EXP: La norma registral busca impedir que del asiento se deduzca el carácter de la generación, preservando así la neutralidad del registro.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 3
+
+// [15]
+Q: ¿Qué criterio establece la Ley 14/2006 sobre el acceso de la mujer usuaria a las técnicas de reproducción asistida?
+A) El acceso a las técnicas de reproducción asistida queda reservado a la mujer casada y con infertilidad médicamente acreditada.
+B) El acceso a las técnicas de reproducción asistida exige siempre la existencia de una pareja de sexo masculino.
+C) El acceso a las técnicas de reproducción asistida se reconoce a toda mujer mayor de edad y con plena capacidad de obrar que consienta libre, consciente, expresa y documentalmente.
+OK: C
+EXP: El texto vincula el acceso a la mayoría de edad, la plena capacidad y un consentimiento válido, no al matrimonio ni a una concreta orientación sexual.
+
+// [16]
+Q: ¿Qué revela la admisión de las técnicas de reproducción asistida con independencia del estado civil y de la orientación sexual de la mujer?
+A) Que la finalidad de las técnicas de reproducción asistida no se limita a remediar la esterilidad, sino que también facilita la descendencia a quienes no pueden obtenerla por medios tradicionales.
+B) Que la finalidad de las técnicas de reproducción asistida pasa a ser exclusivamente social y deja de tener dimensión médica.
+C) Que la finalidad de las técnicas de reproducción asistida consiste en sustituir completamente la procreación natural.
+OK: A
+EXP: La ley amplía la función de estas técnicas más allá del tratamiento de la esterilidad, incluyendo el acceso a la descendencia en otros supuestos.
+
+// [17]
+Q: ¿Qué exige el consentimiento informado de la mujer usuaria en las técnicas de reproducción asistida para ser jurídicamente válido?
+A) Que se preste genéricamente antes de cualquier tratamiento, sin necesidad de referencia al caso concreto.
+B) Que se refiera a las circunstancias concretas del caso tras información suficiente sobre éxito, riesgos, consecuencias para la descendencia y aspectos biológicos, jurídicos y éticos.
+C) Que se limite a aceptar los riesgos físicos inmediatos del tratamiento, sin incluir otras implicaciones.
+OK: B
+EXP: El consentimiento debe ser específico e informado de modo amplio, abarcando riesgos, resultados y consecuencias relevantes del caso.
+
+// [18]
+Q: ¿Sobre qué bases queda determinada la filiación respecto de la mujer usuaria en las técnicas de reproducción asistida?
+A) Sobre la coincidencia necesaria entre maternidad genética y maternidad legal acreditada por prueba biológica.
+B) Sobre la sola voluntad posterior de asumir la maternidad después del nacimiento.
+C) Sobre el consentimiento válidamente prestado, unido al hecho de ser la gestante y quien da a luz.
+OK: C
+EXP: La filiación materna se apoya en el consentimiento previo y en el parto, en línea con el criterio de determinación por el nacimiento.
+
+// [19]
+Q: ¿Qué consecuencia produce en la filiación materna el uso del óvulo de una donante en las técnicas de reproducción asistida?
+A) La filiación determinada a favor de la mujer usuaria no puede impugnarse por la falta de vínculo genético, porque prevalecen el consentimiento prestado y el parto.
+B) La filiación determinada a favor de la mujer usuaria queda automáticamente anulada si las pruebas genéticas descartan la maternidad biológica.
+C) La filiación determinada a favor de la mujer usuaria solo subsiste si la donante renuncia expresamente a toda reclamación.
+OK: A
+EXP: El texto afirma que la ausencia de vínculo genético no destruye esa filiación, ya que prevalecen el consentimiento previo y el hecho del parto.
+
+#ID = 4
+
+// [20]
+Q: ¿Qué criterio general rige la determinación de la filiación en la reproducción asistida respecto de la mujer usuaria y de la persona vinculada con ella?
+A) La filiación de ambos miembros de la pareja se determina siempre por el consentimiento prestado antes de la técnica.
+B) La filiación de la mujer usuaria y la de su pareja se determinan exclusivamente por la aportación genética.
+C) La filiación de la mujer usuaria se determina por el parto, mientras que la del otro miembro de la pareja depende de la aportación genética, del consentimiento o, en su caso, de la presunción legal de paternidad.
+OK: C
+EXP: El texto distingue claramente entre la filiación materna por el parto y la del otro progenitor o madre por otros fundamentos jurídicos.
+
+// [21]
+Q: ¿Cómo se determina la filiación del marido en el matrimonio heterosexual cuando la mujer usuaria se somete a técnicas de reproducción asistida?
+A) Mediante la presunción de paternidad del marido, reforzada por la realidad biológica si aportó material genético y mantenida por el consentimiento si no lo hizo.
+B) Únicamente mediante prueba genética positiva, sin relevancia del consentimiento prestado por el marido.
+C) Solo mediante adopción posterior, aunque exista matrimonio y consentimiento informado previo.
+OK: A
+EXP: En el matrimonio heterosexual opera la presunción de paternidad, y el consentimiento del marido sostiene también la filiación si no hubo aportación genética.
+
+// [22]
+Q: ¿Qué consecuencia produce la falta de consentimiento del marido en el uso de técnicas de reproducción asistida por su esposa?
+A) La filiación del marido queda automáticamente consolidada aunque nunca hubiera consentido la técnica.
+B) El marido podría destruir la presunción civil de paternidad si la mujer se sometió a las técnicas sin su consentimiento.
+C) La falta de consentimiento transforma necesariamente la filiación matrimonial en extramatrimonial.
+OK: B
+EXP: El texto señala que solo en ausencia de ese consentimiento podría el esposo desvirtuar la presunción de paternidad.
+
+// [23]
+Q: ¿Qué exige la ley para determinar la filiación a favor de la esposa de la mujer usuaria en el matrimonio homosexual?
+A) Que la esposa aporte necesariamente material genético para que pueda reconocerse la filiación.
+B) Que la esposa y la mujer usuaria acrediten convivencia previa durante un periodo mínimo legal.
+C) Que la esposa manifieste su consentimiento para que la filiación se determine a su favor respecto del hijo nacido de su cónyuge.
+OK: C
+EXP: Al no operar una presunción de paternidad, la filiación de la esposa requiere un consentimiento específico para atribuirle esa condición jurídica.
+
+// [24]
+Q: ¿Qué cambio introdujo la reforma de 2015 en la filiación dentro del matrimonio entre mujeres?
+A) Permitió prestar el consentimiento después del nacimiento en el formulario remitido al Registro Civil y eliminó la necesidad inicial de adopción del hijo de la consorte.
+B) Sustituyó el consentimiento por una presunción automática de doble maternidad desde la celebración del matrimonio.
+C) Suprimió toda intervención del Registro Civil en la determinación de la filiación matrimonial entre mujeres.
+OK: A
+EXP: La reforma flexibilizó el régimen, facilitando el consentimiento posterior al nacimiento y evitando la necesidad de la adopción que antes resultaba precisa.
+
+// [25]
+Q: ¿Qué requisito permite en la pareja heterosexual no casada determinar la filiación a favor del varón respecto del hijo nacido por fecundación asistida con material de donante?
+A) La existencia de convivencia more uxorio acreditada durante un tiempo suficiente.
+B) El consentimiento previo del varón formalizado ante el centro o servicio autorizado, sin perjuicio de la posible reclamación judicial de paternidad.
+C) La inscripción conjunta en el Registro Civil antes del nacimiento del hijo.
+OK: B
+EXP: En las parejas heterosexuales no casadas, la ley da eficacia al consentimiento previo formalizado, aunque también pueda existir reclamación judicial de paternidad.
+
+// [26]
+Q: ¿Qué alcance tiene la ausencia de convivencia more uxorio en la eficacia del consentimiento del varón no casado en la reproducción asistida?
+A) Impide toda determinación de filiación si no existe una relación afectiva análoga al matrimonio.
+B) Solo permite el consentimiento eficaz cuando haya convivencia estable y pública con la mujer usuaria.
+C) No impide la eficacia del consentimiento, porque la ley no exige convivencia more uxorio ni relación afectiva análoga para que produzca efectos.
+OK: C
+EXP: El texto destaca expresamente que la eficacia del consentimiento no depende de convivencia ni de una relación afectiva equiparable al matrimonio.
+
+// [27]
+Q: ¿Cuál es la solución general en el Derecho estatal para la filiación de la pareja no matrimonial de la mujer usuaria cuando esa pareja es otra mujer?
+A) El simple consentimiento previo no basta para determinar una filiación no matrimonial a su favor, de modo que en principio la vía restante sería la adopción.
+B) El simple consentimiento previo produce siempre una filiación no matrimonial plena en igualdad con las parejas heterosexuales no casadas.
+C) La identidad conocida del donante de gametos permite atribuir alternativamente la filiación a la pareja femenina no usuaria.
+OK: A
+EXP: La ley estatal no equipara este supuesto al de la pareja heterosexual no casada y, en principio, remite a la adopción si no existe matrimonio.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 5
+
+// [28]
+Q: ¿Qué función cumple el principio de anonimato del donante en el sistema de reproducción asistida?
+A) Garantizar que la identidad del donante pueda conocerse libremente por cualquier interesado desde el nacimiento.
+B) Atribuir automáticamente al donante la condición jurídica de progenitor cuando exista vínculo genético.
+C) Configurar un elemento básico del sistema, asegurando la confidencialidad de la donación y favoreciendo el funcionamiento de estas técnicas.
+OK: C
+EXP: El texto presenta el anonimato como un pilar del sistema y como instrumento para proteger la confidencialidad y facilitar la práctica de estas técnicas.
+
+// [29]
+Q: ¿Cómo se configura jurídicamente la donación de semen u óvulos en la Ley 14/2006?
+A) Como un contrato gratuito, aunque con posibles compensaciones económicas, formalizado por escrito, con información previa suficiente y sometido a estricta confidencialidad.
+B) Como un negocio oneroso de libre precio determinado por el banco de gametos y por el donante.
+C) Como una relación informal basada exclusivamente en la voluntad del centro autorizado y del donante.
+OK: A
+EXP: La donación aparece descrita como contrato gratuito con ciertos requisitos formales, informativos y de confidencialidad.
+
+// [30]
+Q: ¿Qué efecto produce sobre la filiación la eventual revelación de la identidad del donante en los supuestos legalmente previstos?
+A) Determina la filiación si queda acreditada la correspondencia genética entre el donante y el nacido.
+B) No determina por sí misma la filiación, porque la intervención del donante carece de voluntad de asumir trascendencia filiativa.
+C) Permite al nacido elegir entre mantener la filiación previa o sustituirla por la del donante.
+OK: B
+EXP: Aunque pueda conocerse la identidad del donante en casos excepcionales, ello no basta para atribuirle paternidad o maternidad legal.
+
+// [31]
+Q: ¿Qué objeción doctrinal principal se formula contra el principio de anonimato del donante?
+A) Que impide toda compensación económica y por ello dificulta la existencia de donaciones suficientes.
+B) Que contradice el carácter contractual de la donación y la somete a un régimen excesivamente administrativo.
+C) Que puede entrar en tensión con el mandato constitucional de posibilitar la investigación de la paternidad, especialmente si se compara con la adopción.
+OK: C
+EXP: El texto subraya esa crítica doctrinal y la refuerza con la comparación con el derecho a conocer la identidad biológica en la adopción.
+
+// [32]
+Q: ¿Cómo intenta conciliar la Ley 14/2006 el anonimato del donante con los intereses del nacido?
+A) Reconociendo al nacido acceso a información general no identificativa y permitiendo revelar la identidad solo excepcionalmente, de forma indispensable y restringida.
+B) Atribuyendo al nacido un derecho general e incondicionado a conocer la identidad completa del donante al alcanzar la mayoría de edad.
+C) Remitiendo cualquier acceso a la identidad del donante a la decisión discrecional de los bancos de gametos.
+OK: A
+EXP: La ley admite información general y solo permite la revelación identificativa en supuestos excepcionales, necesarios y sin publicidad.
+
+#ID = 6
+
+// [33]
+Q: ¿Qué cambio introduce la Ley 14/2006 en la finalidad de las técnicas de reproducción asistida respecto del modelo inicialmente vinculado a la esterilidad de la pareja?
+A) Mantiene exclusivamente la infertilidad de la pareja como único presupuesto material de utilización de las técnicas.
+B) Sustituye toda finalidad reproductiva por una función exclusivamente investigadora y preventiva.
+C) Adopta una formulación más amplia, de modo que la infertilidad deja de ser el objetivo principal y se abren otros supuestos de utilización.
+OK: C
+EXP: El texto destaca que la ley amplía el enfoque inicial y no limita ya estas técnicas a la respuesta frente a la esterilidad de la pareja.
+
+// [34]
+Q: ¿Qué presupuesto exige la Ley 14/2006 para que la mujer individualmente considerada pueda acceder a las técnicas de reproducción asistida?
+A) Que haya prestado su consentimiento escrito de forma libre, consciente y expresa, sin necesidad de pareja masculina ni de acreditar infertilidad de pareja.
+B) Que acredite una convivencia estable con pareja y una imposibilidad conjunta de procrear naturalmente.
+C) Que obtenga una autorización judicial previa basada en su situación personal o familiar.
+OK: A
+EXP: La ley permite el acceso individual de la mujer siempre que cumpla las exigencias legales de consentimiento, sin requerir pareja ni infertilidad de pareja.
+
+// [35]
+Q: ¿Qué significado tiene en la Ley 14/2006 la expresión toda mujer en relación con las técnicas de reproducción asistida?
+A) Que solo pueden acceder a estas técnicas las mujeres casadas o integradas en una unidad familiar estable.
+B) Que el acceso queda restringido a las mujeres que acrediten una concreta situación médica de esterilidad.
+C) Que no es necesario estar casada, convivir en pareja ni hallarse en una determinada situación personal, bastando con ser mujer y cumplir las exigencias legales.
+OK: C
+EXP: El texto atribuye a esa expresión un alcance amplio, incompatible con exigencias de matrimonio, convivencia o situación personal específica.
+
+// [36]
+Q: ¿Qué criterio utiliza el texto para descartar la paternidad en solitario del varón en el sistema de reproducción asistida?
+A) Que el varón necesitaría recurrir a una gestación de sustitución y el ordenamiento rechaza esa vía, considerando madre legal a la mujer que da a luz.
+B) Que el varón carece de todo derecho constitucional vinculado a la paternidad o al libre desarrollo de la personalidad.
+C) Que la ley prohíbe la aportación de material genético masculino en cualquier supuesto sin pareja femenina.
+OK: A
+EXP: El obstáculo decisivo no se formula en términos abstractos de derechos, sino en la necesidad de gestación de sustitución, que el ordenamiento no admite.
+
+// [37]
+Q: ¿Cuál es la consecuencia sistemática de la admisión de la maternidad en solitario y del rechazo de la gestación por sustitución?
+A) Que el sistema permite por igual la maternidad en solitario y la paternidad en solitario mediante técnicas equivalentes.
+B) Que el sistema permite la maternidad en solitario, pero excluye la posibilidad de que el varón pueda ser padre solo.
+C) Que el sistema impone que toda reproducción asistida se realice necesariamente en el marco de una pareja.
+OK: B
+EXP: El texto concluye expresamente que la maternidad en solitario es posible, mientras que la paternidad en solitario queda excluida.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 7
+
+// [38]
+Q: ¿Cuál es el rasgo definitorio de la fecundación post mortem como supuesto jurídico en la Ley 14/2006?
+A) La fecundación realizada con material reproductor de ambos miembros de una pareja viva tras una separación legal.
+B) La transferencia de preembriones cuando ambos progenitores han fallecido antes del nacimiento.
+C) La inseminación de una mujer viva con semen de un varón ya fallecido en el momento de practicarse la fecundación.
+OK: C
+EXP: El texto define la fecundación post mortem por la utilización del semen de un varón ya fallecido para fecundar a una mujer viva.
+
+// [39]
+Q: ¿Qué criterio general adopta la Ley 14/2006 respecto de la fecundación post mortem?
+A) Un criterio restrictivo, pues excluye su utilización con carácter general y solo la admite excepcionalmente en determinadas condiciones.
+B) Un criterio de libre admisión siempre que exista deseo reproductivo de la mujer supérstite.
+C) Un criterio puramente registral, sin incidencia en la determinación de la filiación.
+OK: A
+EXP: La ley parte de la exclusión general de esta técnica y solo permite su uso en supuestos excepcionales expresamente previstos.
+
+// [40]
+Q: ¿Qué consecuencia establece como regla general la Ley 14/2006 cuando, al morir el varón, su material reproductor no se hallaba ya en el útero de la mujer?
+A) Que se produce automáticamente la filiación matrimonial si existió convivencia estable previa.
+B) Que no puede determinarse legalmente la filiación ni producirse efectos jurídicos entre el hijo y el marido fallecido.
+C) Que la filiación depende exclusivamente de la voluntad posterior de la mujer inseminada.
+OK: B
+EXP: La regla general niega la determinación de la filiación y los efectos jurídicos con el fallecido si no existía ya esa situación al tiempo de la muerte.
+
+// [41]
+Q: ¿Qué requisitos permiten excepcionalmente la fecundación post mortem conforme al artículo 9 de la Ley 14/2006?
+A) Que la mujer supérstite solicite judicialmente la técnica y acredite imposibilidad de nueva maternidad.
+B) Que el consentimiento del varón fallecido se deduzca de cualquier manifestación verbal realizada ante familiares.
+C) Que la fecundación se realice dentro de los doce meses siguientes al fallecimiento y que el marido hubiera consentido el uso de su material reproductor con esa finalidad.
+OK: C
+EXP: La excepción legal exige límite temporal y consentimiento previo del fallecido para ese uso post mortem de su material reproductor.
+
+// [42]
+Q: ¿Cómo regula la Ley 14/2006 el consentimiento del marido en la fecundación post mortem?
+A) Permite que conste en varios instrumentos formales, admite su revocación antes de la técnica y presume su otorgamiento si ya existía un proceso iniciado para transferir preembriones constituidos antes del fallecimiento.
+B) Exige exclusivamente escritura pública irrevocable y excluye toda forma de consentimiento presunto.
+C) Reduce su eficacia a los matrimonios, sin aplicación posible a las parejas no casadas.
+OK: A
+EXP: La ley flexibiliza las formas de consentimiento, admite su revocación y prevé además un supuesto de consentimiento presunto en procedimientos ya iniciados.
+    `;
+
+
+    const BANCO_5 = ` 
+#ID = 8
+
+// [43]
+Q: ¿Cómo se configura la gestación subrogada como figura jurídica en el texto?
+A) Como una técnica de reproducción asistida en la que la mujer gestante conserva siempre la filiación y solo cede el cuidado del menor.
+B) Como un acuerdo de adopción prenatal mediante el cual los comitentes asumen la filiación por el solo consentimiento inicial.
+C) Como el encargo hecho por una persona sola o una pareja a una mujer para que geste un hijo y lo entregue tras el nacimiento, renunciando ella a la filiación materna a favor de los comitentes.
+OK: C
+EXP: El texto define la figura por el encargo de la gestación y la renuncia de la gestante a la filiación materna en favor de otros.
+
+// [44]
+Q: ¿Cuál es la principal objeción que formula la posición crítica frente a la gestación subrogada?
+A) Que puede implicar instrumentalización de la mujer gestante, cosificación del niño y mercantilización del cuerpo y de la filiación contrarias a la dignidad humana.
+B) Que impide en todo caso el acceso a la maternidad o paternidad de personas con dificultades reproductivas.
+C) Que solo plantea problemas técnicos de inscripción registral sin afectar a bienes jurídicos de mayor entidad.
+OK: A
+EXP: La crítica central se apoya en la dignidad humana y en el riesgo de explotación y mercantilización de la mujer y del niño.
+
+// [45]
+Q: ¿Qué criterio adopta el Derecho español respecto del contrato de gestación por sustitución?
+A) Lo admite si es gratuito y queda acreditada la finalidad altruista de la gestante.
+B) Lo declara nulo de pleno derecho exista o no precio cuando la mujer se compromete a gestar renunciando a la filiación materna.
+C) Lo considera válido si se celebra en documento público y media autorización judicial previa.
+OK: B
+EXP: El texto subraya que la ley niega eficacia al contrato con independencia de que exista o no contraprestación económica.
+
+// [46]
+Q: ¿Cómo se determina en España la filiación materna de los hijos nacidos mediante gestación subrogada?
+A) Por la voluntad procreacional de la madre comitente manifestada antes del embarazo.
+B) Por la aportación genética de la mujer que haya suministrado el óvulo fecundado.
+C) Por el parto, de modo que la madre legal es siempre la gestante, sin perjuicio de la posible reclamación de paternidad del padre biológico.
+OK: C
+EXP: La ley atribuye directamente la maternidad legal a quien da a luz, aunque exista una madre genética distinta.
+
+// [47]
+Q: ¿Qué posición mantiene el Tribunal Supremo sobre la filiación derivada de contratos de gestación subrogada celebrados en el extranjero?
+A) Que el interés del menor no permite desplazar sin más el criterio legal que atribuye la maternidad a la gestante y que las inscripciones pueden ser anuladas si se impugnan judicialmente.
+B) Que toda resolución judicial extranjera firme debe producir automáticamente efectos registrales plenos en España.
+C) Que la maternidad de la madre comitente prevalece siempre que exista un vínculo genético acreditado.
+OK: A
+EXP: El Tribunal Supremo insiste en que el interés del menor no se identifica con el del comitente y mantiene el criterio legal español sobre la maternidad.
+
+// [48]
+Q: ¿A qué vías reconduce el ordenamiento español la protección del menor cuando existe una situación familiar de hecho originada por gestación subrogada?
+A) A la inscripción directa de la filiación establecida en el extranjero por cualquier autoridad administrativa o judicial.
+B) A los medios ordinarios, como la determinación de la filiación biológica cuando proceda y, en su caso, el acogimiento o la adopción.
+C) A la convalidación automática del contrato nulo cuando el menor ya convive con los progenitores de intención.
+OK: B
+EXP: El texto señala que la tutela del menor debe articularse por las vías ordinarias del sistema, no sobre la base del contrato prohibido.
+
+// [49]
+Q: ¿Qué efecto atribuye la Instrucción de 2025 a los títulos extranjeros relativos a nacimientos por gestación subrogada?
+A) Permite inscribir en el Registro Civil español las sentencias extranjeras firmes, pero no las certificaciones registrales.
+B) Mantiene la práctica anterior de admitir la inscripción cuando exista protección suficiente del menor.
+C) Excluye en todo caso su utilización como título apto para inscribir en España el nacimiento y la filiación de menores nacidos mediante gestación subrogada.
+OK: C
+EXP: La Instrucción de 2025 deja sin efecto las directrices previas y niega eficacia registral a cualquier título extranjero en esta materia.
+
+// [50]
+Q: ¿Qué problema estructural del sistema vigente pone de relieve el texto en materia de gestación subrogada?
+A) Que puede subsistir una filiación derivada de gestación subrogada celebrada en el extranjero si nadie la impugna, pero puede anularse si se cuestiona judicialmente, generando inseguridad jurídica y desigualdad práctica.
+B) Que el ordenamiento español ofrece una respuesta uniforme, estable y plenamente coherente en todos los casos de gestación subrogada internacional.
+C) Que la única dificultad relevante reside en la identificación registral de la madre genética cuando coincide con la gestante.
+OK: A
+EXP: El texto califica el sistema de incoherente porque la subsistencia o anulación de la filiación depende en gran medida de que exista o no impugnación judicial.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
