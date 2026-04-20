@@ -1,0 +1,2612 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 8. Efectos comunes a la nulidad, separación y divorcio</h1>
+  <div class="small"> by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. INTRODUCCIÓN: AUTONOMÍA PRIVADA Y PROCESOS JUDICIALES
+
+La ruptura matrimonial, ya sea por nulidad, separación o divorcio, genera un conjunto amplio de consecuencias jurídicas que afectan tanto a los cónyuges como, en su caso, a los hijos. Rota la convivencia, resulta imprescindible establecer un nuevo marco normativo que regule la situación creada, incluso cuando el vínculo subsiste, como ocurre en la separación. Con mayor intensidad aún se impone esta necesidad cuando el matrimonio queda extinguido por nulidad o divorcio.
+
+Los conflictos derivados de la crisis matrimonial suelen concentrarse en cuestiones como el uso del domicilio familiar y del ajuar, la guarda y custodia de los hijos, el régimen de visitas, las pensiones o la liquidación del régimen económico matrimonial. El Código Civil aborda estos aspectos en los arts. 90 a 106, distinguiendo entre los efectos comunes a la nulidad, separación y divorcio y las medidas que pueden adoptarse durante el proceso.
+
+El sistema legal parte de una premisa clara: corresponde prioritariamente a los propios cónyuges adoptar las decisiones relativas a las consecuencias de su ruptura. La reforma de 1981 y las posteriores modificaciones han reforzado el papel de la autonomía privada, potenciando los acuerdos y convenios reguladores como instrumento principal de ordenación de la crisis.
+
+No obstante, esta autonomía no es absoluta. La declaración de nulidad, separación o divorcio requiere intervención judicial —o, tras la Ley de Jurisdicción Voluntaria, escritura pública o decreto— y la autoridad competente debe aprobar o, en su caso, modificar los acuerdos alcanzados, especialmente cuando puedan perjudicar a los hijos o vulnerar la igualdad entre los cónyuges. También puede suplir la falta de acuerdo.
+
+Por tanto, la autonomía decisoria de los cónyuges se encuentra sometida a control judicial. El sistema combina libertad de autorregulación con tutela pública, en un equilibrio no siempre bien articulado, pues la normativa resulta reiterativa y en ocasiones poco sistemática, especialmente tras la entrada en vigor de la Ley de Enjuiciamiento Civil de 2000, que incorpora reglas procesales en parte redundantes respecto del propio Código Civil.
+
+2. MEDIDAS PROVISIONALES DERIVADAS DE LA DEMANDA DE NULIDAD, SEPARACIÓN O DIVORCIO 
+
+La presentación de la demanda de nulidad, separación o divorcio produce de inmediato una alteración del estatuto jurídico de los cónyuges. A estos efectos iniciales se les denomina medidas provisionales, pues operan desde la admisión de la demanda y con independencia del resultado final del proceso. Su finalidad es adaptar provisionalmente la situación jurídica a la ruptura efectiva de la convivencia.
+
+El Código distingue entre efectos que se producen automáticamente por ministerio de la ley y aquellos que requieren acuerdo entre los cónyuges o pronunciamiento judicial.
+
+2.1. Los efectos producidos por ministerio de la ley
+
+Conforme al art. 102, admitida la demanda, se producen automáticamente determinados efectos: En primer lugar, los cónyuges pueden vivir separados y cesa la presunción de convivencia conyugal. Este extremo resulta especialmente relevante en materia de filiación, pues afecta a la presunción de paternidad y se justifica por la ruptura del deber de convivencia y fidelidad.
+
+En segundo lugar, quedan revocados los consentimientos y poderes que cualquiera de los cónyuges hubiera otorgado al otro. De este modo se evita que uno pueda seguir actuando en nombre del otro en un contexto de crisis matrimonial.
+
+Asimismo, salvo pacto en contrario, cesa la posibilidad de vincular los bienes privativos del otro cónyuge en el ejercicio de la potestad doméstica. Esto implica que los bienes privativos dejan de responder por los actos realizados por el otro consorte, incluso si se insertan en el ámbito de las necesidades domésticas.
+
+Finalmente, cualquiera de las partes puede instar la correspondiente anotación en el Registro Civil y, en su caso, en los Registros de la Propiedad o Mercantil, con el fin de dar publicidad a esta nueva situación y proteger a terceros.
+
+2.2. LAS MEDIDAS DE CARÁCTER CONVENCIONAL O JUDICIAL
+
+Además de los efectos que se producen automáticamente por ministerio de la ley, el art. 103 establece que, admitida la demanda, el juez —a falta de acuerdo aprobado judicialmente— adoptará, con audiencia de los cónyuges, las medidas necesarias para ordenar la situación derivada de la crisis matrimonial.
+
+Estas medidas no son necesariamente de origen judicial, pues pueden haber sido previamente pactadas por los cónyuges en el convenio presentado con la demanda. En tal caso, el juez se limita a aprobarlas si no resultan perjudiciales, especialmente para los hijos o para el principio de igualdad entre los cónyuges.
+
+A) Medidas relativas a las relaciones paterno-filiales Debe determinarse con cuál de los cónyuges quedarán los hijos sujetos a la patria potestad de ambos, así como el régimen de guarda y custodia, y el tiempo, modo y lugar en que el progenitor no custodio podrá comunicar con ellos y tenerlos en su compañía.
+
+Excepcionalmente, los hijos pueden ser encomendados a abuelos, parientes u otras personas que lo consientan, o incluso a una institución idónea, bajo autoridad judicial. Se contempla asimismo la adopción de medidas específicas en caso de riesgo de sustracción del menor.
+
+B) Medidas relativas al uso de la vivienda familiar Debe decidirse cuál de los cónyuges continuará en el uso de la vivienda familiar, atendiendo al interés más necesitado de protección. También se determinará el destino del ajuar doméstico, previo inventario, y las medidas cautelares necesarias para preservar los derechos de cada parte.
+
+C) Medidas relativas a las cargas del matrimonio Se fijará la contribución de cada cónyuge a las cargas del matrimonio, incluidas las litis expensas, las bases de actualización de las cantidades y las garantías necesarias para asegurar su cumplimiento. Se considera contribución el trabajo dedicado a la atención de los hijos comunes.
+
+D) Medidas relativas al régimen económico-matrimonial Se señalarán los bienes gananciales o comunes que, previo inventario, deban entregarse a uno u otro cónyuge, así como las reglas de administración, disposición y rendición de cuentas. El régimen económico no se disuelve automáticamente con la demanda, pero su funcionamiento se adapta a la nueva situación.
+
+Respecto de los bienes privativos especialmente afectados a las cargas del matrimonio, deberá determinarse su régimen de administración y disposición.
+
+E) Medidas relativas a los animales de compañía Tras la reforma de 2021, el juez debe decidir, atendiendo al interés de la familia y al bienestar del animal, a quién se confía el animal de compañía y en qué condiciones podrá relacionarse con él el otro cónyuge.
+
+Finalmente, la LO 1/2025 exige, como requisito de procedibilidad, la actividad negociadora previa respecto de los efectos previstos en los arts. 102 y 103 CC, sin perjuicio de la necesaria homologación judicial del acuerdo alcanzado. Esta exigencia garantiza que los pactos no vulneren el interés superior del menor ni otras materias indisponibles.
+
+3. LAS LLAMADAS MEDIDAS PROVISIONALÍSIMAS O PREVIAS
+
+El art. 104.1 permite que el cónyuge que se proponga demandar la nulidad, separación o divorcio pueda solicitar, incluso antes de interponer la demanda, los efectos y medidas previstos en los arts. 102 y 103. Se trata de las denominadas medidas provisionalísimas o previas, expresión que destaca su carácter anticipado y su vigencia temporal limitada.
+
+A diferencia de las medidas provisionales adoptadas tras la admisión de la demanda, las provisionalísimas no obligan automáticamente al juez por la mera solicitud de parte, sino que este puede valorar su procedencia y, en su caso, diferirlas hasta la presentación de la demanda.
+
+El carácter estrictamente temporal de estas medidas se desprende del art. 104.2: solo subsistirán si, dentro de los treinta días siguientes a su adopción, se presenta la demanda ante el órgano competente. En caso contrario, decaen automáticamente.
+
+La Ley de Enjuiciamiento Civil de 2000 regula estas medidas en los arts. 771 y 772 bajo la rúbrica de «medidas provisionales previas a la demanda». Aunque la terminología difiera, se trata de la misma institución. El plazo máximo de vigencia no puede exceder de treinta días, conforme a las reglas generales de cómputo procesal.
+
+La solicitud puede formularse sin necesidad de abogado ni procurador, y el auto que las acuerda no es susceptible de recurso, sin perjuicio de que el otro cónyuge pueda oponerse posteriormente en el proceso principal.
+
+En los supuestos de violencia doméstica o de género, la Ley 27/2003 regula la orden de protección, que puede incluir medidas penales y civiles, tales como la atribución del uso de la vivienda, la determinación del régimen de custodia o la fijación de alimentos. Estas medidas civiles tienen vigencia inicial de treinta días, prorrogables si se inicia proceso de familia.
+
+Posteriormente, la LO 1/2004 creó los Juzgados de Violencia sobre la Mujer, competentes tanto para adoptar órdenes de protección como para conocer, en el ámbito civil, de los procesos de nulidad, separación y divorcio cuando exista violencia de género, con la finalidad de garantizar una protección integral de la víctima.
+
+4. LA SENTENCIA Y LAS MEDIDAS DEFINITIVAS
+
+El art. 106.1 establece que los efectos y medidas provisionales o provisionalísimas cesan cuando sean sustituidos por los de la sentencia estimatoria o cuando el procedimiento finalice por otra causa. Por tanto, la sentencia firme que declare la nulidad, separación o divorcio pone fin a la vigencia de las medidas adoptadas durante la tramitación del proceso.
+
+Ahora bien, dicha sustitución solo se produce cuando la sentencia establece medidas distintas.
+
+En la práctica, es frecuente que la resolución judicial se limite a convertir en definitivas las medidas provisionales ya acordadas, sin introducir modificaciones sustanciales.
+
+Si no existe convenio regulador o este no resulta aprobado judicialmente, el juez deberá fijar las medidas definitivas conforme a los arts. 91 y siguientes. De ahí que sea necesario diferenciar entre las medidas adoptadas por acuerdo de los cónyuges y las medidas impuestas judicialmente.
+
+5. EL CONVENIO REGULADOR
+
+El convenio regulador es el documento en el que los cónyuges recogen los acuerdos alcanzados en caso de nulidad, separación o divorcio y lo someten a control judicial. Su aportación es obligatoria cuando la demanda se presenta de mutuo acuerdo o por uno con el consentimiento del otro (arts. 81.1 y 86), así como cuando la separación o el divorcio se formalizan ante letrado de la Administración de Justicia o notario (arts. 82 y 87).
+
+El art. 90 establece un contenido mínimo del convenio, que comprende las medidas relativas a los hijos, el uso de la vivienda familiar, la contribución a las cargas del matrimonio, la liquidación del régimen económico y, en su caso, la pensión compensatoria. Sin embargo, además de ese contenido esencial, pueden incorporarse otros pactos adicionales, lo que explica que se hable doctrinalmente de un posible «contenido atípico» del convenio regulador.
+
+Aunque pudiera pensarse que en la nulidad matrimonial no sería necesario convenio por carecer el matrimonio de validez, ello no es correcto. Incluso en estos supuestos deben regularse las consecuencias relativas a los hijos, la vivienda o el régimen económico. Así lo confirma el propio art. 90 al referirse expresamente a los acuerdos adoptados para regular las consecuencias de la nulidad, separación o divorcio.
+
+En definitiva, el convenio regulador constituye la principal manifestación de la autonomía privada en las crisis matrimoniales, si bien su eficacia queda supeditada a la aprobación judicial, que garantiza la protección del interés superior de los hijos y el respeto a la legalidad.
+
+5.1. CONTENIDO: EFECTOS RESPECTO DE LOS HIJOS, LOS BIENES Y LOS ANIMALES DE COMPAÑÍA
+
+El art. 90 establece el contenido mínimo obligatorio del convenio regulador, siempre que los extremos sean aplicables al caso concreto.
+
+A) En primer lugar, debe contemplar el cuidado de los hijos sujetos a patria potestad, el ejercicio de esta y el régimen de comunicación y estancia con el progenitor que no conviva habitualmente con ellos.
+
+B) Puede incluir, si se considera necesario, el régimen de visitas y comunicación de los nietos con sus abuelos, siempre atendiendo al interés de aquellos. El art. 90.2 prevé que, si se propone este régimen, el juez podrá aprobarlo previa audiencia y consentimiento de los abuelos.
+
+B bis) Debe fijarse el destino de los animales de compañía, atendiendo al interés de la familia y al bienestar del animal, incluyendo el reparto de tiempos de convivencia y las cargas derivadas de su cuidado.
+
+C) Ha de determinarse la atribución del uso de la vivienda y ajuar familiar.
+
+D) Debe regularse la contribución a las cargas del matrimonio y alimentos, con sus bases de actualización y garantías.
+
+E) Procederá, cuando corresponda, la liquidación del régimen económico matrimonial.
+
+F) Finalmente, podrá establecerse la pensión compensatoria del art. 97, si resulta procedente.
+
+5.2. ACUERDOS CONYUGALES Y APROBACIÓN JUDICIAL DEL CONVENIO
+
+Los acuerdos alcanzados por los cónyuges deben ser aprobados judicialmente. El art. 90 dispone que serán aprobados salvo que resulten dañosos para los hijos o gravemente perjudiciales para uno de los cónyuges. Tras la reforma de 2021, también cabe denegación cuando sean gravemente perjudiciales para el bienestar de los animales de compañía.
+
+La denegación ha de ser motivada. En tal caso, los cónyuges pueden presentar una nueva propuesta para su aprobación. El juez no sustituye automáticamente el contenido del convenio, sino que controla su legalidad y adecuación a los intereses protegidos.
+
+El convenio conserva su naturaleza de negocio jurídico de Derecho de familia. La aprobación judicial no lo transforma en un acto exclusivamente jurisdiccional, aunque, una vez homologado, quede integrado en la resolución judicial con eficacia procesal plena.
+
+Cuando el convenio se formaliza ante letrado de la Administración de Justicia o notario, estos deben advertir si alguna cláusula puede resultar perjudicial y, en tal caso, dar por terminado el expediente, quedando abierta la vía judicial. Desde su aprobación o elevación a escritura pública, los acuerdos son ejecutables por vía de apremio.
+
+5.3. MODIFICACIÓN DEL CONVENIO
+
+El art. 90.3 permite la modificación judicial del convenio o de las medidas adoptadas, o su revisión por nuevo acuerdo, cuando lo aconsejen las nuevas necesidades de los hijos o el cambio de circunstancias de los cónyuges.
+
+También podrán modificarse las medidas relativas a los animales de compañía si se alteran gravemente sus circunstancias.
+
+Las medidas acordadas ante letrado de la Administración de Justicia o en escritura pública podrán modificarse mediante nuevo acuerdo sujeto a los mismos requisitos formales.
+
+No obstante, la modificación exige una alteración sustancial de las circunstancias. En ningún caso puede afectar a la liquidación del régimen económico matrimonial cuando esta ya se haya llevado a cabo, pues dicha liquidación produce efectos definitivos.
+
+6. MEDIDAS JUDICIALES O «DEFINITIVAS»
+
+El art. 91 CC establece que, en las sentencias de nulidad, separación o divorcio —o en ejecución de las mismas— la autoridad judicial, en defecto de acuerdo de los cónyuges o en caso de no aprobación del convenio, determinará las medidas que deban sustituir a las adoptadas con anterioridad.
+
+Estas medidas pueden referirse a: los hijos, la vivienda familiar, el destino de los animales de compañía, las cargas del matrimonio, la liquidación del régimen económico y las cautelas o garantías correspondientes, estableciendo además aquellas que procedan cuando no se hubiera adoptado ninguna previamente. Asimismo, podrán modificarse cuando se alteren sustancialmente las circunstancias.
+
+Aunque el Código no las califica expresamente, la doctrina las denomina habitualmente medidas judiciales, pues son fijadas directamente por el juez cuando no existe acuerdo válido entre los cónyuges. Tras la entrada en vigor de la Ley de Enjuiciamiento Civil de 2000, se ha generalizado la expresión “medidas definitivas”, ya que así las denominan los arts. 774 y 775 LEC.
+
+No obstante, resulta discutible la expresión “definitivas”, dado que el propio sistema admite su modificación si cambian las circunstancias. Desde un punto de vista técnico, parece más preciso hablar de medidas judiciales, en cuanto derivan de una decisión jurisdiccional sustitutiva del acuerdo de los cónyuges.
+
+Además, la LEC reitera sustancialmente el contenido del art. 91 CC en su art. 774.4, lo que evidencia una duplicación normativa. En definitiva, estas medidas representan la intervención judicial plena cuando falla la autonomía privada, sustituyendo o completando las medidas provisionales o el convenio regulador no aprobado.
+
+6.1. EL «CONTENIDO» DE LAS MEDIDAS JUDICIALES
+
+El contenido de las medidas judiciales coincide sustancialmente con el del convenio regulador, lo que pone de manifiesto el carácter subsidiario de aquellas: solo operan en defecto de acuerdo de los cónyuges o cuando este no es aprobado judicialmente. Sin embargo, el Código no se limita a remitirse al art. 90, sino que desarrolla nuevamente cada materia en los arts. 91 a 98, generando una reiteración normativa evidente.
+
+A) Medidas relativas a la patria potestad y custodia compartida El art. 92 parte del principio de que la nulidad, separación o divorcio no eximen a los padres de sus obligaciones respecto de los hijos. El juez puede acordar la privación de la patria potestad si concurre causa, o atribuir su ejercicio total o parcial a uno de los progenitores.
+
+Tras la reforma de la Ley 15/2005, se impulsa la custodia compartida, que puede acordarse: a) A solicitud conjunta de los progenitores (art. 92.5). b) Excepcionalmente, a instancia de uno solo, aunque el carácter “favorable” del informe del Ministerio Fiscal fue declarado inconstitucional por la STC 185/2012.
+
+El Tribunal Supremo ha consolidado la idea de que la custodia compartida no es excepcional, sino deseable si responde al interés superior del menor, como afirman, entre otras, las STS 29 de abril de 2013 y STS 368/2014.
+
+No procederá la guarda conjunta cuando exista proceso penal por delitos graves contra el otro progenitor o los hijos, ni cuando existan indicios de violencia doméstica o de género (art. 92.7).
+
+B) Medidas relativas a los alimentos de los hijos El art. 93 impone al juez la obligación de fijar la contribución de cada progenitor para satisfacer los alimentos, adaptándolos a las circunstancias económicas y necesidades del menor.
+
+Si conviven hijos mayores de edad sin ingresos propios, el juez podrá fijar alimentos en la misma sentencia, por razones de economía procesal, aunque la legitimación activa corresponda propiamente al hijo mayor.
+
+C) Medidas referentes al derecho de visita El art. 94 regula el derecho del progenitor no custodio a visitar, comunicar y estar con los hijos. La autoridad judicial determinará tiempo, modo y lugar, pudiendo limitar o suspender el régimen si concurren circunstancias relevantes.
+
+No procederá el régimen de visitas cuando exista proceso penal por delitos graves contra el otro progenitor o los hijos, o cuando haya indicios fundados de violencia. No obstante, el juez puede acordarlo motivadamente si lo exige el interés superior del menor.
+
+D) Medidas sobre los animales de compañía El art. 94 bis, introducido por la Ley 17/2021, permite al juez atribuir el cuidado de los animales a uno o ambos cónyuges, fijando el régimen de convivencia y cargas asociadas, atendiendo al bienestar del animal y al interés familiar, con independencia de la titularidad dominical.
+
+E) Medidas relacionadas con el régimen económico matrimonial El art. 95 establece que la sentencia firme produce la disolución del régimen económico matrimonial. En caso de nulidad con mala fe de uno de los cónyuges, el de buena fe podrá optar por aplicar las reglas del régimen de participación, excluyendo al de mala fe de las ganancias obtenidas por aquel.
+
+F) Medidas sobre el uso de la vivienda familiar El art. 96 permite disociar titularidad y uso, atribuyendo este último a los hijos y al progenitor con quien convivan, con independencia de quién sea propietario.
+
+La jurisprudencia ha precisado que la convivencia del progenitor custodio con una nueva pareja puede justificar la extinción del derecho de uso, como declara la STS 1166/2024. Asimismo, la STS 624/2011 fija doctrina sobre la atribución del uso en supuestos de hijos mayores.
+
+En definitiva, las llamadas medidas judiciales reproducen el esquema material del convenio regulador, pero bajo control jurisdiccional directo. Constituyen la expresión de la intervención judicial plena cuando la autonomía privada no actúa o resulta insuficiente, garantizando en todo caso la protección del interés superior del menor y el equilibrio entre las partes.
+
+6.2. MODIFICACIÓN DE LAS MEDIDAS JUDICIALES
+
+El art. 91 establece que las medidas judiciales podrán modificarse cuando se alteren sustancialmente las circunstancias. La misma previsión aparece en el art. 90.3 respecto del convenio regulador, lo que evidencia una reiteración normativa clara: tanto las medidas convencionales como las judiciales quedan sometidas al mismo presupuesto material, esto es, la variación sustancial de las circunstancias tenidas en cuenta al adoptarlas.
+
+El art. 775.1 de la Ley de Enjuiciamiento Civil refuerza esta idea y amplía la legitimación activa, al disponer que podrán solicitar la modificación: • El Ministerio Fiscal, cuando existan hijos menores o hijos con discapacidad con medidas de apoyo atribuidas a sus progenitores. • En todo caso, los cónyuges.
+
+La inclusión del Ministerio Fiscal responde a la protección del interés superior del menor o de la persona con discapacidad, aunque desde el punto de vista sistemático se trata de una norma de claro contenido material que hubiera debido incorporarse al Código Civil.
+
+La clave jurídica es que no basta cualquier cambio, sino una alteración sustancial, relevante y posterior a la adopción de las medidas. El sistema no permite revisiones caprichosas ni reabrir el debate ya resuelto, sino únicamente adaptar la regulación a una realidad nueva que desvirtúe el equilibrio anterior.
+
+Especialmente significativa es la doctrina fijada por la STS 641/2018, que acordó la extinción del derecho de uso de la vivienda familiar atribuido a la esposa por convivir esta con una nueva pareja estable. El Tribunal Supremo consideró que el derecho de uso se concede en tanto la vivienda conserve su carácter de domicilio familiar, carácter que desaparece cuando pasa a servir a una nueva unidad convivencial distinta de la originaria.
+
+La sentencia subraya dos ideas fundamentales: 1) El derecho de uso no es indefinido ni absoluto, sino funcional y condicionado a la finalidad que justificó su atribución. 2) El interés de los hijos no puede desvincularse totalmente del de los progenitores cuando ambos pueden conciliarse, especialmente si el inmueble es ganancial y existen alternativas razonables como la adquisición de la mitad indivisa o la venta del bien.
+
+En definitiva, la modificación de las medidas judiciales constituye un mecanismo de adaptación del régimen familiar a la evolución de la realidad, evitando que decisiones válidas en un momento determinado se perpetúen cuando las circunstancias que las justificaban han cambiado de forma sustancial.
+
+7. LA COMPENSACIÓN EN LOS CASOS DE SEPARACIÓN Y DIVORCIO
+
+La llamada compensación del art. 97 CC procede exclusivamente en los supuestos de separación y divorcio, no en la nulidad matrimonial (donde el art. 98 prevé una indemnización distinta). Su fundamento no es sancionador ni asistencial puro, sino corrector: equilibrar la situación económica entre los cónyuges tras la ruptura.
+
+Existe, además, una incoherencia sistemática: el art. 90 incluye la pensión dentro del contenido mínimo del convenio regulador, pero el art. 91 no la menciona expresamente al regular las medidas judiciales definitivas. Ello no impide su fijación judicial, pero evidencia el desajuste técnico del capítulo.
+
+7.1. El art. 97 del Código Civil: de la pensión a la compensación
+
+A) De “pensión” a “compensación” La redacción originaria de la Ley 30/1981 hablaba de “pensión”, configurada como derecho del cónyuge al que la separación o divorcio produjera: • Un desequilibrio económico • En relación con la posición del otro • Que implicara un empeoramiento respecto de la situación anterior en el matrimonio La Ley 15/2005 sustituyó la noción estricta de pensión por la de compensación, ampliando sus modalidades: • Puede consistir en pensión temporal • O pensión indefinida • O prestación única (capital) La admisión expresa del carácter temporal responde a la evolución jurisprudencial, consolidada por la STS 307/2005, que ya había admitido la limitación temporal antes de la reforma legal. No es obligatoria la temporalidad: depende de las circunstancias del caso. ⸻ B) Estructura del art. 97 El precepto se articula en tres bloques claramente diferenciados: 1) Regla generadora del derecho El núcleo es el desequilibrio económico relevante producido por la ruptura.
+
+No se trata de igualar patrimonios ni de garantizar el mismo nivel de vida indefinidamente, sino de compensar el perjuicio económico que deriva del modelo matrimonial asumido (por ejemplo, dedicación exclusiva al hogar o colaboración en la actividad profesional del otro).
+
+El dato clave es comparativo: • Situación del cónyuge tras la ruptura • En relación con la del otro • Y respecto de la posición que tenía durante el matrimonio ⸻ 2) Circunstancias para fijar la cuantía El art. 97 enumera una serie de factores orientadores: • Edad y estado de salud • Cualificación profesional y acceso al empleo • Dedicación pasada y futura a la familia • Colaboración en actividades del otro cónyuge • Duración del matrimonio • Pérdida eventual de derechos de pensión • Medios económicos y necesidades No se trata de una lista cerrada (numerus clausus), sino abierta. La Ley 15/2005 añadió expresamente la cláusula 9.ª: “cualquier otra circunstancia relevante”, confirmando su carácter flexible. 3) Garantías y actualización La resolución (judicial o formalizada ante notario o letrado de la Administración de Justicia tras la LJV) debe fijar: • Periodicidad • Forma de pago • Bases de actualización • Duración o momento de cese • Garantías de efectividad Se busca así evitar que el derecho reconocido quede vacío por falta de ejecución futura.
+
+Naturaleza jurídica La compensación: • No es una sanción por culpa. • No depende de la inocencia o culpabilidad. • No es estrictamente alimenticia.
+
+Es un mecanismo corrector del desequilibrio económico causado por la ruptura, vinculado a la solidaridad postmatrimonial.
+
+La jurisprudencia ha insistido en que lo determinante no es quién provocó la crisis, sino si existe un desequilibrio real y relevante consecuencia del matrimonio y su ruptura.
+
+7.2. La fijación de la compensación
+
+Tras la ruptura definitiva, hay dos focos clásicos de conflicto que rara vez desaparecen: la custodia de los hijos y la compensación económica. El legislador fue consciente de que la pensión podía convertirse en un litigio permanente y, por eso, articuló un sistema con vocación de estabilidad.
+
+A) Mandatos legales para evitar litigiosidad constante 1) Determinación obligatoria en la resolución El art. 97 impone que la compensación se fije en la sentencia (o en el convenio formalizado) y que se establezcan bases de actualización y garantías de efectividad. 2) Modificación restrictiva El art. 100 limita su modificación a alteraciones sustanciales en la fortuna de uno u otro cónyuge. No basta una variación leve o coyuntural. 3) Facilidad de sustitución El art. 99 permite sustituir la pensión por otras fórmulas en cualquier momento, facilitando soluciones definitivas.
+
+La idea es clara: objetivar la compensación y reducir pleitos recurrentes.
+
+B) Modalidades de fijación La compensación puede establecerse por acuerdo o por decisión judicial, y adoptar tres formas principales: 1) Pensión temporal (por un plazo concreto). 2) Pensión de duración indefinida (no necesariamente vitalicia, pero sin plazo prefijado). alzado, etc.). 3) Prestación única (capital en dinero o bienes: acciones, inmueble, cantidad a tanto Desde la reforma de 2005, la temporalidad dejó de ser excepcional. Hoy es perfectamente legítima si las circunstancias lo justifican.
+
+En la práctica, suele imponerse: • Fijación a tanto alzado mensual, • Con periodicidad mensual, por razones obvias de operatividad.
+
+El juez no queda vinculado estrictamente a la fórmula solicitada por la parte, salvo que exista acuerdo entre los cónyuges (en cuyo caso solo puede rechazarlo por razones de orden público).
+
+7.3. Actualización de la cuantía
+
+La actualización suele vincularse al Índice de Precios al Consumo (IPC), aunque no es obligatoria. Es simplemente un módulo objetivo y cómodo.
+
+Si la pensión se fija como porcentaje de ingresos, no es necesario sistema de actualización: la variación salarial produce automáticamente el ajuste.
+
+7.4. Sustitución de la pensión
+
+El art. 99 permite, en cualquier momento, sustituir la pensión por: • Renta vitalicia • Usufructo de bienes • Entrega de capital en dinero o bienes Esto responde a una lógica práctica: cerrar definitivamente el conflicto económico.
+
+Además, la jurisprudencia ha admitido pactos en capitulaciones matrimoniales sobre renuncia o condicionamiento de la pensión, como reflejan, entre otras, las STS 362/2023, STS 130/2022 y STS 428/2022.
+
+7.5. Modificación de la pensión
+
+El principio es restrictivo: Solo procede la modificación si hay alteración sustancial en la fortuna de uno u otro cónyuge (art. 100).
+
+No cualquier variación económica permite revisión. La alteración debe ser: • Relevante • Estable • Sobrevenida Ejemplo clásico: la STS 250/2013 establece que el nacimiento de nuevos hijos no justifica por sí solo la reducción de pensiones anteriores; hay que acreditar insuficiencia real de medios.
+
+7.6. Extinción de la pensión
+
+La extinción de la pensión compensatoria responde a una lógica clara: si desaparece el desequilibrio que la justificaba, desaparece también el derecho. El art. 101 CC establece tres causas expresas: cese de la causa que la motivó, nuevo matrimonio del acreedor o convivencia marital con otra persona.
+
+La nueva vida en pareja del acreedor opera como causa típica de extinción porque rompe el presupuesto de necesidad vinculada a la ruptura matrimonial. El sistema parte de una idea sencilla: si el beneficiario rehace su vida afectiva y económica, la compensación pierde sentido.
+
+Aunque doctrinalmente se ha discutido si la extinción debe ser automática o si el juez podría ponderar circunstancias concretas, el diseño legal apunta a una consecuencia prácticamente automática, sin perjuicio de que deba declararse judicialmente si no existe acuerdo entre las partes.
+
+Más compleja es la extinción por cese de la causa. Aquí el núcleo es el binomio que justifica la pensión: desequilibrio económico y empeoramiento respecto de la situación matrimonial. Si ese desequilibrio desaparece de forma sustancial —por mejora patrimonial del acreedor o por alteración profunda en la situación del deudor— la pensión puede extinguirse, no simplemente reducirse. En esta lógica encaja también la reconciliación de los separados o el nuevo matrimonio entre los excónyuges, porque el “renacimiento” del vínculo hace incompatible el mantenimiento de una medida nacida de su crisis.
+
+El art. 101 añade un elemento relevante: la muerte del deudor no extingue por sí sola la pensión. La obligación se transmite a los herederos, aunque estos pueden solicitar judicialmente su reducción o supresión si el caudal hereditario no permite atenderla sin lesionar legítimas o derechos propios. La pensión no es estrictamente personalísima en este punto; mantiene una dimensión patrimonial transmisible, aunque modulable.
+
+Debe tenerse en cuenta además que, tras la reforma de 2005, la pensión puede ser temporal. En estos casos, la extinción más frecuente no deriva de una causa sobrevenida, sino del simple transcurso del plazo fijado. La temporalidad ha desplazado en la práctica la antigua concepción de la pensión como vitalicia por defecto.
+
+La jurisprudencia reciente confirma que la extinción no puede confundirse con una mera expectativa de mejora. La STS 229/2024 analiza precisamente si la pensión debe ser temporal o indefinida, inclinándose por esta última cuando no existe probabilidad real de reinserción laboral estable del acreedor. Por su parte, la STS 1593/2024 insiste en que la pensión no es un mecanismo de igualación patrimonial, sino una herramienta estrictamente compensatoria frente al desequilibrio generado por la ruptura.
+
+En definitiva, la pensión compensatoria no es perpetua ni automática: nace para corregir un desequilibrio concreto y se extingue cuando ese desequilibrio desaparece, cuando el beneficiario reorganiza su vida en condiciones que neutralizan la causa o cuando se cumple el plazo previsto.
+
+Su lógica no es igualar patrimonios, sino equilibrar una situación creada por la ruptura matrimonial.
+
+8. LA INDEMNIZACIÓN EN CASO DE MATRIMONIO PUTATIVO
+
+El art. 98 CC reconoce al cónyuge de buena fe cuyo matrimonio haya sido declarado nulo el derecho a una indemnización, siempre que haya existido convivencia conyugal efectiva. No basta la mera celebración del matrimonio: es necesaria vida en común.
+
+La figura no consiste en una pensión periódica, sino en una cantidad a tanto alzado, lo que la diferencia claramente de la compensación del art. 97. La remisión a dicho precepto no transforma su naturaleza, sino que únicamente proporciona criterios orientadores para cuantificar la indemnización.
+
+El fundamento no es el desequilibrio económico, sino la protección frente a la mala fe del otro cónyuge. Además, la indemnización no puede acordarse de oficio: debe ser solicitada por el cónyuge de buena fe, ya sea en el propio procedimiento de nulidad o en proceso independiente.
+
+9. REFERENCIAS ESTADÍSTICAS SOBRE LAS CRISIS MATRIMONIALES
+
+Las nulidades matrimoniales son un fenómeno claramente marginal dentro del conjunto de crisis matrimoniales.
+
+No es cierto que haya más crisis que matrimonios: el número de matrimonios celebrados supera al de rupturas registradas.
+
+Tampoco puede afirmarse que el sistema vigente haya provocado un aumento constante de crisis matrimoniales; las cifras no muestran un crecimiento estructural sostenido.
+
+Sí se observa, en cambio, una transformación en la tipología de las rupturas: la separación ha descendido notablemente y el divorcio concentra la mayoría de las crisis matrimoniales.
+
+REFERENCIAS ESTADÍSTICAS SOBRE LAS CRISIS MATRIMONIALES (2023) En 2023 se registraron 80.065 disoluciones matrimoniales (separaciones y divorcios), lo que supone una disminución del 5,3 % respecto al año anterior y una tasa de 1,7 por cada 1.000 habitantes.
+
+Hubo 76.685 divorcios, un 5,7 % menos que el año anterior, y 3.380 separaciones, que representan el 4,2 % del total, mientras que los divorcios alcanzan el 95,8 %.
+
+El 81,6 % de los divorcios fueron no contenciosos y el 18,4 % contenciosos. En cuanto a la forma de resolución, el 59,9 % se resolvieron por sentencia, el 25,2 % por decreto y el 14,9 % por escritura pública.
+
+La custodia compartida se otorgó en el 48,4 % de los divorcios con hijos, aumentando respecto al año anterior.
+
+La duración media del matrimonio disuelto por divorcio fue de 16,4 años. El mayor porcentaje de divorcios se produjo tras 20 años o más de matrimonio (32 %), seguido de los comprendidos entre 5 y 9 años (21,4 %).
+
+La franja de edad con mayor número de divorcios fue la de 40 a 49 años, con una edad media de 46,2 años en mujeres y 48,7 en hombres.
+
+La edad media en los procedimientos de divorcio en 2023 fue de 48,7 años en hombres y 46,2 en mujeres, manteniéndose una diferencia constante a lo largo de la serie 2014-2023, con edades ligeramente superiores en los hombres.
+
+En el 79,6 % de los divorcios entre cónyuges de diferente sexo ambos eran españoles; en el 12,3 % uno era extranjero y en el 8,0 % ambos lo eran. En cuanto al estado civil previo al matrimonio, la mayoría eran solteros; en los varones el 9,4 % eran divorciados y el 0,4 % viudos; en las mujeres, el 9,9 % divorciadas y el 0,5 % viudas.
+
+Respecto a la existencia de hijos, el 46,2 % de los divorcios no tenían hijos dependientes. El 42,6 % tenía solo hijos menores, el 3,7 % solo hijos mayores dependientes económicamente y el 7,4 % hijos menores y mayores dependientes. El 23,5 % tenía un único hijo.
+
+En el 50,7 % de los divorcios entre cónyuges de diferente sexo había hijos menores. En estos casos, la custodia se otorgó en el 3,5 % al padre, en el 47,8 % a la madre, en el 48,4 % fue compartida y en el 0,3 % a otras instituciones o familiares. Por primera vez, la custodia compartida superó a la atribuida exclusivamente a la madre.
+
+En el 54,5 % de los divorcios se fijó pensión alimenticia. De esos casos, el pago correspondió en el 54,9 % al padre, en el 3,6 % a la madre y en el 41,5 % a ambos progenitores.
+
+En el 7,0 % de los divorcios se estableció pensión compensatoria, y en el 90,2 % de esos supuestos el obligado al pago fue el esposo.
+
+En cuanto a la iniciativa procesal, el 72,4 % de las demandas fueron presentadas por ambos cónyuges, el 18,0 % por la esposa y el 9,6 % por el esposo.
+
+En 2023 se registraron 80.065 disoluciones matrimoniales (separaciones y divorcios), lo que supone una disminución del 5,3 % respecto al año anterior, con una tasa de 1,7 por cada 1.000 habitantes. No se dispone de información completa sobre nulidades ese año. 1) Tipo de ruptura • 76.685 divorcios (95,8 % del total). • 3.380 separaciones (4,2 %).
+
+Los divorcios disminuyeron un 5,7 %, mientras que las separaciones aumentaron un 5,3 %. 2) Forma de resolución • 47.588 por sentencia. • 20.147 por decreto. • 12.360 por escritura pública.
+
+El 14,9 % de los divorcios se formalizó ante notario. 3) Tipo de procedimiento • 81,6 % no contenciosos. • 18,4 % contenciosos.
+
+La mayoría de las rupturas se producen por acuerdo. 4) Duración media del matrimonio La duración media de los matrimonios disueltos por divorcio fue de 16,4 años.
+
+El 32 % se produjo tras 20 años o más de matrimonio.
+
+Los porcentajes decrecen progresivamente en matrimonios de menor duración. 5) Edad Media • Hombres: 48,7 años. • Mujeres: 46,2 años.
+
+La franja con mayor número de divorcios se sitúa entre 40 y 49 años. 6) Hijos El 46,2 % de los matrimonios disueltos no tenía hijos dependientes.
+
+El 50,7 % de los divorcios entre cónyuges de distinto sexo tenía hijos menores. 7) Custodia En los casos con hijos menores: • 48,4 % custodia compartida. • 47,8 % atribuida a la madre. • 3,5 % al padre. • 0,3 % a otras personas o instituciones.
+
+Por primera vez, la custodia compartida supera a la materna. 8) Pensiones • En el 54,5 % de los divorcios se fijó pensión alimenticia. • En el 7,0 % se estableció pensión compensatoria. • En el 90,2 % de estas últimas el pago correspondió al esposo. 9) Distribución territorial La tasa media nacional fue de 1,7 por 1.000 habitantes. • Mayor tasa: Ceuta (2,4). • Menor tasa: Melilla (1,1).
+
+10. REFERENCIAS COMPLEMENTARIAS SOBRE LA CUSTODIA COMPARTIDA
+
+El texto pone de relieve que la custodia compartida ha dejado de ser una cuestión meramente técnica para convertirse en un fenómeno social, político y legislativo, con fuerte carga ideológica y territorial.
+
+Desde la perspectiva del Código Civil, el estudio sistemático del art. 92 (especialmente apartados 4 a 9) permite afirmar que, atendiendo al interés superior del menor, la custodia compartida constituye el modelo preferente, siempre que resulte compatible con dicho interés.
+
+Sin embargo, el debate ha trascendido el ámbito estatal, generando iniciativas normativas propias en diversas Comunidades Autónomas, lo que evidencia: 1) Una proclividad legislativa autonómica hacia el reforzamiento del modelo compartido. normativa. 2) La utilización de la custodia compartida como elemento de diferenciación 3) La existencia de tensiones competenciales, como demuestra la declaración de inconstitucionalidad de la Ley valenciana de 2011.
+
+En concreto: • Aragón incorpora regulación específica en su Derecho Foral. • Navarra introduce previsiones en la reforma de su Compilación. • Cataluña consagra el principio de responsabilidad parental compartida, manteniendo el carácter conjunto de las responsabilidades tras la ruptura. • La Ley valenciana fue anulada por el Tribunal Constitucional.
+
+La idea central es clara: la custodia compartida se ha consolidado como paradigma dominante, aunque su implantación ha generado controversias jurídicas y políticas.
+
+11. LA TENENCIA O CUSTODIA DE MASCOTAS
+
+El tratamiento jurídico de los animales de compañía en situaciones de ruptura ha evolucionado significativamente.
+
+Inicialmente, los tribunales resolvían los conflictos sobre mascotas desde una perspectiva posesoria o patrimonial, considerándolas bienes integrados en la sociedad de gananciales o sujetos a reglas de propiedad.
+
+Sin embargo, progresivamente se ha producido una transformación conceptual: 1) Se abandona la equiparación estricta del animal con una cosa. 2) Se reconoce su condición de ser vivo dotado de sensibilidad. 3) Se introduce la idea de cuidado compartido o corresponsabilidad. 4) Se atiende al bienestar del animal como criterio decisorio.
+
+La reforma operada por la Ley 17/2021 supone el punto de inflexión definitivo: • Los animales dejan de ser considerados cosas. • Se incorporan criterios específicos para determinar su cuidado en casos de crisis matrimonial. existentes. • Se reconoce la posibilidad de pactar su régimen de convivencia. • El juez debe decidir atendiendo al bienestar del animal y a los vínculos afectivos La jurisprudencia más reciente incluso reconoce: • La figura del cocuidador. • La corresponsabilidad en gastos. • La posibilidad de indemnización por daño moral derivado de la privación unilateral del contacto con el animal.
+
+En conclusión, la evolución normativa y jurisprudencial refleja un cambio profundo: el animal de compañía deja de ser un mero objeto patrimonial para convertirse en un elemento relevante dentro del núcleo familiar, con tratamiento jurídico autónomo en las crisis de pareja.
+`.trim();
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+
+  
+    "1": "La crisis matrimonial exige fijar un nuevo marco jurídico para regular efectos sobre cónyuges e hijos, dando prioridad a la autonomía privada mediante acuerdos, pero bajo control de la autoridad competente para proteger intereses indisponibles y evitar pactos lesivos.",
+
+  "2": "La demanda de nulidad, separación o divorcio activa medidas provisionales desde su admisión para adecuar provisionalmente el estatuto de los cónyuges a la ruptura de la convivencia, combinando efectos automáticos y medidas acordadas o judiciales.",
+
+  "2.1": "Admitida la demanda, operan automáticamente efectos del art. 102 CC: posibilidad de vivir separados y cese de presunción de convivencia, revocación de consentimientos y poderes, cese de la vinculación de bienes privativos por potestad doméstica y posibilidad de publicidad registral.",
+
+  "2.2": "Además de los efectos automáticos, el art. 103 CC permite medidas pactadas y aprobadas o, a falta de acuerdo, medidas fijadas por el juez para ordenar hijos, vivienda y ajuar, cargas, régimen económico y animales de compañía, bajo control de legalidad e interés familiar.",
+
+  "3": "Las medidas provisionalísimas o previas permiten solicitar antes de la demanda los efectos y medidas de los arts. 102 y 103 CC, con vigencia estrictamente temporal y caducidad si no se presenta demanda en treinta días, coexistiendo con regímenes especiales de protección en violencia.",
+
+  "4": "La sentencia firme de nulidad, separación o divorcio sustituye y hace cesar las medidas provisionales o previas, pudiendo convertirlas en definitivas si las mantiene o fijar otras nuevas cuando no exista convenio aprobado.",
+
+  "5": "El convenio regulador es el instrumento central de autonomía privada para ordenar consecuencias de nulidad, separación o divorcio, obligatorio en mutuo acuerdo y sometido a aprobación para garantizar interés de los hijos, igualdad entre cónyuges y respeto a la legalidad.",
+
+  "5.1": "El contenido mínimo del convenio incluye medidas sobre hijos, vivienda y ajuar, cargas y alimentos, liquidación del régimen económico, pensión compensatoria y, tras reformas recientes, destino y régimen de relación con animales de compañía.",
+
+  "5.2": "El convenio requiere aprobación judicial salvo que sea dañoso para los hijos o gravemente perjudicial para un cónyuge o para el bienestar del animal, manteniendo su naturaleza de negocio jurídico familiar y adquiriendo fuerza ejecutiva tras su homologación o formalización.",
+
+  "5.3": "El convenio y las medidas pueden modificarse por cambio sustancial de circunstancias o nuevas necesidades, pero no puede reabrirse la liquidación del régimen económico ya realizada, por su carácter definitivo.",
+
+  "6": "Si no hay acuerdo o no se aprueba el convenio, la autoridad judicial fija medidas judiciales —llamadas en la LEC “definitivas”— sobre hijos, vivienda, animales, cargas y régimen económico, actuando como sustitución de la autonomía privada y con posibilidad de modificación por cambio sustancial.",
+
+  "6.1": "Las medidas judiciales reproducen el esquema material del convenio y se desarrollan en los arts. 91 a 98 CC: patria potestad y custodia (incluida custodia compartida con límites por violencia), alimentos, visitas, animales, disolución del régimen económico y atribución de uso de la vivienda.",
+
+  "6.2": "La modificación de medidas judiciales exige alteración sustancial y sobrevenida, con legitimación también del Ministerio Fiscal cuando haya menores o personas con discapacidad con medidas de apoyo, evitando revisiones caprichosas y adaptando el régimen a una realidad nueva.",
+
+  "7": "La compensación del art. 97 CC procede solo en separación y divorcio y tiene finalidad correctora: compensar el desequilibrio económico derivado de la ruptura, sin carácter sancionador, culpabilista ni estrictamente alimenticio.",
+
+  "7.1": "El art. 97 configura la compensación como derecho por desequilibrio relevante, con criterios abiertos para cuantía y posibilidad de pensión temporal, indefinida o prestación única, fijando además forma de pago, actualización, duración y garantías.",
+
+  "7.2": "La fijación busca estabilidad: debe concretarse en la resolución o acuerdo, su modificación es restrictiva, admite sustitución por fórmulas alternativas y puede articularse en modalidades diversas, predominando en la práctica el pago periódico.",
+
+  "7.3": "La actualización suele vincularse a módulos objetivos como el IPC, o quedar integrada en fórmulas porcentuales sobre ingresos que ajustan automáticamente la cuantía.",
+
+  "7.4": "La pensión puede sustituirse en cualquier momento por renta vitalicia, usufructo o capital, favoreciendo soluciones definitivas y permitiendo pactos conyugales sobre su configuración, dentro de los límites de orden público.",
+
+  "7.5": "La modificación de la compensación exige alteración sustancial en la fortuna de uno u otro cónyuge, no bastando cambios leves o coyunturales.",
+
+  "7.6": "La extinción opera por desaparición del desequilibrio, nuevo matrimonio o convivencia marital del acreedor, y la muerte del deudor no la extingue automáticamente, pudiendo los herederos solicitar reducción o supresión según el caudal, además del posible fin por transcurso del plazo si es temporal.",
+
+  "8": "En matrimonio putativo, el art. 98 CC reconoce al cónyuge de buena fe indemnización a tanto alzado si hubo convivencia efectiva, con criterios orientadores del art. 97 pero fundamento propio y necesidad de petición expresa.",
+
+  "9": "Las nulidades son marginales y la tipología de crisis se ha desplazado hacia el divorcio, con descenso acusado de la separación, sin que las cifras evidencien un crecimiento estructural sostenido de las rupturas.",
+
+  "10": "La custodia compartida se ha consolidado como fenómeno jurídico y social con debate político y territorial, considerándose modelo preferente si es compatible con el interés superior del menor y generando respuestas autonómicas con tensiones competenciales.",
+
+  "11": "La custodia de mascotas ha evolucionado de un enfoque patrimonial a un tratamiento centrado en su bienestar como seres sensibles, reconociéndose corresponsabilidad y régimen de convivencia, con intervención judicial o pactada y relevancia creciente en las crisis de pareja."
+  
+    };
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = `
+    
+    #ID = 1
+
+// [1]
+Q: ¿Qué función principal cumple la autonomía privada de los cónyuges en la crisis matrimonial?
+A) Sustituir por completo cualquier intervención de la autoridad competente en nulidad, separación o divorcio.
+B) Limitarse a cuestiones patrimoniales, quedando excluidas las medidas personales y familiares.
+C) Permitir que los cónyuges ordenen prioritariamente las consecuencias de la ruptura mediante acuerdos y convenio regulador.
+OK: C
+EXP: El sistema parte de que los propios cónyuges deben decidir preferentemente las consecuencias de la crisis matrimonial.
+
+// [2]
+Q: ¿Cómo articula el sistema jurídico la relación entre autonomía privada y control público en los procesos de nulidad, separación o divorcio?
+A) Somete los acuerdos de los cónyuges a aprobación o revisión por la autoridad competente cuando puedan perjudicar a los hijos o a la igualdad entre los cónyuges.
+B) Reconoce eficacia automática a cualquier pacto conyugal sin posibilidad de control posterior.
+C) Reserva toda decisión sobre los efectos de la ruptura exclusivamente al juez, sin margen para acuerdos previos.
+OK: A
+EXP: La autonomía existe, pero queda sujeta a homologación y posible corrección cuando entren en juego intereses protegidos.
+
+#ID = 2
+
+// [3]
+Q: ¿Cuál es la finalidad de las medidas provisionales derivadas de la demanda de nulidad, separación o divorcio?
+A) Anticipar la disolución definitiva del régimen económico matrimonial desde la mera presentación de la demanda.
+B) Adaptar provisionalmente la situación jurídica de los cónyuges a la ruptura efectiva de la convivencia desde la admisión de la demanda.
+C) Resolver de forma definitiva todas las consecuencias personales y patrimoniales de la crisis matrimonial.
+OK: B
+EXP: Las medidas provisionales ordenan de inmediato la nueva situación mientras se tramita el proceso.
+
+#ID = 2.1
+
+// [4]
+Q: ¿Qué consecuencia produce por ministerio de la ley la admisión de la demanda respecto de la convivencia conyugal?
+A) Mantiene intacta la presunción de convivencia hasta la sentencia firme.
+B) Suspende únicamente el deber de ayuda mutua, pero no afecta a la convivencia jurídica.
+C) Permite a los cónyuges vivir separados y hace cesar la presunción de convivencia conyugal.
+OK: C
+EXP: El art. 102 vincula la admisión de la demanda con la posibilidad de separación de hecho y con la desaparición de esa presunción.
+
+// [5]
+Q: ¿Qué efecto automático produce la admisión de la demanda sobre los consentimientos y poderes entre cónyuges?
+A) Quedan revocados para impedir que uno siga actuando en nombre del otro en un contexto de crisis matrimonial.
+B) Se mantienen vigentes hasta que uno de los cónyuges los revoque expresamente ante notario.
+C) Solo pierden eficacia los poderes referidos a bienes gananciales, no los demás.
+OK: A
+EXP: La ley revoca automáticamente esos poderes para evitar actuaciones representativas incompatibles con la crisis matrimonial.
+
+// [6]
+Q: ¿Qué implica, salvo pacto en contrario, el cese de la posibilidad de vincular bienes privativos del otro cónyuge en la potestad doméstica?
+A) Que los bienes privativos pasan a responder exclusivamente de las deudas gananciales.
+B) Que los bienes privativos del otro cónyuge dejan de responder por actos realizados por su consorte, aunque se refieran a necesidades domésticas.
+C) Que la potestad doméstica desaparece por completo desde la admisión de la demanda.
+OK: B
+EXP: La consecuencia es la desvinculación de los bienes privativos del otro cónyuge respecto de esos actos domésticos.
+
+// [7]
+Q: ¿Qué finalidad tiene la anotación de la nueva situación matrimonial en el Registro Civil y, en su caso, en otros registros?
+A) Convertir automáticamente las medidas provisionales en definitivas.
+B) Disolver el matrimonio desde la fecha del asiento registral.
+C) Dar publicidad a la nueva situación y proteger a terceros.
+OK: C
+EXP: La anotación registral cumple una función de publicidad jurídica frente a terceros.
+
+#ID = 2.2
+
+// [8]
+Q: ¿Qué criterio rige la adopción de las medidas del art. 103 CC cuando no existe acuerdo aprobado judicialmente?
+A) El juez debe acordarlas, oyendo a los cónyuges, para ordenar la situación derivada de la crisis matrimonial.
+B) Deben posponerse hasta la sentencia definitiva, salvo que afecten al patrimonio común.
+C) Corresponden exclusivamente al Ministerio Fiscal por tratarse de materias indisponibles.
+OK: A
+EXP: A falta de acuerdo homologado, el juez adopta las medidas necesarias tras audiencia de los cónyuges.
+
+// [9]
+Q: ¿Qué contenido esencial incluyen las medidas relativas a las relaciones paterno-filiales en la crisis matrimonial?
+A) Solo la fijación de alimentos y la atribución del uso de la vivienda familiar.
+B) La determinación de la situación de los hijos sujetos a patria potestad, la guarda y custodia y el régimen de comunicación con el progenitor no custodio.
+C) Exclusivamente la atribución de la patria potestad a uno de los progenitores.
+OK: B
+EXP: Estas medidas abarcan la organización básica de la convivencia y relación de los hijos con ambos progenitores.
+
+// [10]
+Q: ¿Con qué criterio debe decidirse el uso de la vivienda familiar dentro de las medidas provisionales de carácter convencional o judicial?
+A) Con preferencia automática del cónyuge titular registral de la vivienda.
+B) Según el cónyuge que asuma más cargas del matrimonio.
+C) Atendiendo al interés más necesitado de protección, junto con el destino del ajuar y las cautelas oportunas.
+OK: C
+EXP: El uso de la vivienda no se atribuye mecánicamente por la titularidad, sino conforme al interés más digno de tutela.
+
+// [11]
+Q: ¿Qué particularidad presentan las medidas relativas a las cargas del matrimonio según el art. 103 CC?
+A) Consideran contribución a las cargas también el trabajo dedicado a la atención de los hijos comunes.
+B) Excluyen expresamente las litis expensas por tratarse de gastos procesales.
+C) Impiden fijar garantías o bases de actualización de las cantidades.
+OK: A
+EXP: El precepto amplía la noción de contribución, incluyendo el trabajo de cuidado de los hijos comunes.
+
+// [12]
+Q: ¿Qué rasgo define las medidas relativas al régimen económico-matrimonial tras la admisión de la demanda?
+A) La demanda disuelve automáticamente el régimen económico-matrimonial y abre su liquidación total.
+B) El régimen económico-matrimonial no se disuelve automáticamente, pero su funcionamiento se adapta a la nueva situación mediante reglas sobre bienes y administración.
+C) Los bienes privativos quedan sometidos sin excepción a administración judicial.
+OK: B
+EXP: La demanda no provoca por sí sola la disolución automática, aunque sí exige reordenar la gestión patrimonial.
+
+// [13]
+Q: ¿Qué novedad incorporan las medidas relativas a los animales de compañía tras la reforma de 2021?
+A) La atribución automática del animal al cónyuge que conserve la vivienda familiar.
+B) La obligación de vender el animal si no existe acuerdo entre los cónyuges.
+C) La decisión sobre su atribución y régimen de relación atendiendo al interés de la familia y al bienestar del animal.
+OK: C
+EXP: La reforma introduce un criterio específico que combina interés familiar y bienestar animal.
+
+// [14]
+Q: ¿Qué exige la LO 1/2025 como requisito de procedibilidad en relación con los efectos de los arts. 102 y 103 CC?
+A) Una actividad negociadora previa entre las partes, sin perjuicio de la posterior homologación judicial del acuerdo alcanzado.
+B) Una mediación obligatoria con acuerdo vinculante e inmune al control judicial.
+C) La renuncia previa de los cónyuges a discutir judicialmente las medidas sobre los hijos.
+OK: A
+EXP: La ley impone una negociación previa, pero mantiene la necesidad de control judicial sobre lo acordado.
+
+
+    `;
+
+
+    const BANCO_2 = `
+    
+    #ID = 3
+
+// [15]
+Q: ¿Qué caracteriza a las medidas provisionalísimas o previas del art. 104 CC en los procesos de nulidad, separación o divorcio?
+A) Que solo pueden adoptarse tras la admisión de la demanda y producen automáticamente todos sus efectos.
+B) Que sustituyen de forma definitiva a las medidas de la sentencia si no son recurridas.
+C) Que pueden solicitarse antes de presentar la demanda y tienen un carácter anticipado y temporalmente limitado.
+OK: C
+EXP: Su rasgo distintivo es que se piden antes de la demanda y su vigencia queda sujeta a un plazo breve.
+
+// [16]
+Q: ¿Qué diferencia existe entre las medidas provisionalísimas y las medidas provisionales respecto de la intervención judicial?
+A) Las medidas provisionalísimas no obligan automáticamente al juez por la mera solicitud, pues este puede valorar su procedencia.
+B) Las medidas provisionalísimas deben acordarse siempre que uno de los cónyuges las solicite.
+C) Las medidas provisionales solo pueden dictarse si ambos cónyuges las aceptan previamente.
+OK: A
+EXP: A diferencia de otros efectos ligados a la admisión de la demanda, aquí el juez conserva un margen de apreciación.
+
+// [17]
+Q: ¿Qué requisito temporal condiciona la subsistencia de las medidas provisionalísimas conforme al art. 104.2 CC?
+A) Que se celebre vista dentro de los treinta días siguientes a su adopción.
+B) Que se presente la demanda ante el órgano competente dentro de los treinta días siguientes a su adopción.
+C) Que el otro cónyuge no formule oposición durante los treinta días siguientes.
+OK: B
+EXP: Si no se interpone la demanda en ese plazo, las medidas decaen automáticamente.
+
+// [18]
+Q: ¿Qué rasgo procesal singular presentan la solicitud y la impugnación del auto que acuerda las medidas provisionalísimas?
+A) Exigen siempre abogado y procurador y admiten apelación inmediata.
+B) Requieren intervención del Ministerio Fiscal y solo pueden revisarse por nulidad de actuaciones.
+C) Pueden solicitarse sin abogado ni procurador y el auto que las acuerda no es recurrible.
+OK: C
+EXP: La ley flexibiliza su solicitud, aunque permite posterior oposición en el proceso principal.
+
+// [19]
+Q: ¿Qué función cumple la orden de protección en los supuestos de violencia doméstica o de género respecto de las medidas civiles?
+A) Puede incorporar medidas civiles como uso de la vivienda, custodia o alimentos con vigencia inicial de treinta días.
+B) Sustituye definitivamente al proceso de familia y excluye cualquier medida posterior.
+C) Se limita a medidas penales, sin incidencia sobre relaciones familiares o patrimoniales.
+OK: A
+EXP: La orden de protección puede contener medidas civiles urgentes con duración inicial limitada.
+
+// [20]
+Q: ¿Qué finalidad persigue la competencia de los Juzgados de Violencia sobre la Mujer en materia civil cuando existe violencia de género?
+A) Centralizar solo la ejecución penal de las órdenes de protección, sin conocer de nulidad, separación o divorcio.
+B) Garantizar una protección integral de la víctima, conociendo también de procesos civiles como nulidad, separación y divorcio.
+C) Resolver exclusivamente cuestiones patrimoniales derivadas del régimen económico matrimonial.
+OK: B
+EXP: La atribución competencial busca una respuesta integral y coordinada en presencia de violencia de género.
+
+#ID = 4
+
+// [21]
+Q: ¿Cuándo cesan las medidas provisionales o provisionalísimas en la crisis matrimonial según el art. 106.1 CC?
+A) Cuando son sustituidas por las medidas de la sentencia estimatoria o cuando el procedimiento termina por otra causa.
+B) Solo cuando se dicta sentencia firme que modifique expresamente cada una de ellas.
+C) Únicamente cuando ambas partes pactan su extinción mediante convenio regulador.
+OK: A
+EXP: Su vigencia está unida a la tramitación del proceso y desaparece al ser sustituidas o al finalizar este.
+
+// [22]
+Q: ¿Qué ocurre en la práctica con frecuencia entre las medidas provisionales y las medidas definitivas de la sentencia?
+A) La sentencia debe modificarlas siempre de manera sustancial para que desplieguen eficacia definitiva.
+B) La sentencia suele convertir en definitivas las medidas provisionales ya acordadas, sin cambios relevantes.
+C) Las medidas provisionales se extinguen necesariamente sin continuidad posible en la sentencia.
+OK: B
+EXP: No es raro que la resolución final mantenga lo ya establecido durante la tramitación.
+
+// [23]
+Q: ¿Qué corresponde hacer al juez si no existe convenio regulador aprobado judicialmente?
+A) Limitarse a declarar la ruptura matrimonial, dejando las medidas para un proceso posterior.
+B) Remitir obligatoriamente a los cónyuges a una nueva fase de negociación extrajudicial.
+C) Fijar las medidas definitivas conforme a los arts. 91 y siguientes del Código Civil.
+OK: C
+EXP: En ausencia de convenio eficaz, el juez debe establecer directamente las medidas definitivas.
+
+#ID = 5
+
+// [24]
+Q: ¿Qué es el convenio regulador en las crisis matrimoniales?
+A) El documento en el que los cónyuges recogen sus acuerdos sobre las consecuencias de la nulidad, separación o divorcio y los someten a control judicial.
+B) Una resolución judicial previa que sustituye la voluntad de los cónyuges en todo caso.
+C) Un acto notarial reservado exclusivamente a los supuestos de divorcio sin hijos.
+OK: A
+EXP: Es el instrumento central de autorregulación de los efectos de la crisis matrimonial.
+
+// [25]
+Q: ¿En qué supuestos resulta obligatoria la aportación del convenio regulador?
+A) Solo cuando existe controversia sobre el uso de la vivienda o la pensión compensatoria.
+B) Cuando la demanda es de mutuo acuerdo o con consentimiento del otro cónyuge, y también en separación o divorcio ante letrado de la Administración de Justicia o notario.
+C) Únicamente cuando el matrimonio tiene hijos menores o bienes gananciales.
+OK: B
+EXP: Su aportación es obligada en los procedimientos consensuales y también en las vías no judiciales previstas.
+
+// [26]
+Q: ¿Cómo debe entenderse el contenido del convenio regulador según el art. 90 CC?
+A) Como un elenco cerrado que impide cualquier pacto adicional distinto del mínimo legal.
+B) Como un documento limitado a las medidas patrimoniales, quedando fuera las personales y familiares.
+C) Como un instrumento con contenido mínimo obligatorio, al que pueden añadirse otros pactos adicionales.
+OK: C
+EXP: Junto al contenido esencial, cabe incorporar otros acuerdos, lo que explica su posible contenido atípico.
+
+// [27]
+Q: ¿Por qué también en la nulidad matrimonial puede ser necesario el convenio regulador?
+A) Porque, pese a la invalidez del matrimonio, siguen existiendo consecuencias que deben ordenarse, como las relativas a hijos, vivienda o régimen económico.
+B) Porque la nulidad produce automáticamente una separación de bienes que debe documentarse.
+C) Porque la nulidad exige siempre pensión compensatoria a favor del cónyuge de buena fe.
+OK: A
+EXP: La invalidez del vínculo no elimina la necesidad de ordenar jurídicamente sus efectos prácticos.
+
+// [28]
+Q: ¿Qué posición ocupa el convenio regulador dentro del sistema de crisis matrimoniales?
+A) Es una fórmula accesoria frente a la regla general de decisión exclusivamente judicial.
+B) Constituye la principal manifestación de la autonomía privada, aunque su eficacia depende de la aprobación judicial.
+C) Es un simple trámite documental sin relevancia material propia.
+OK: B
+EXP: El sistema otorga prioridad al acuerdo de los cónyuges, pero somete su eficacia a control externo.
+
+#ID = 5.1
+
+// [29]
+Q: ¿Qué criterio determina el contenido mínimo obligatorio del convenio regulador conforme al art. 90 CC?
+A) Que deban incluirse siempre todos los extremos legales, aunque sean ajenos al caso concreto.
+B) Que solo se incorporen los extremos del art. 90 que resulten aplicables al supuesto concreto.
+C) Que el contenido quede libremente fijado por los cónyuges sin exigencias mínimas.
+OK: B
+EXP: El contenido mínimo opera con flexibilidad y depende de la realidad del caso.
+
+// [30]
+Q: ¿Qué debe contemplar el convenio regulador respecto de los hijos sujetos a patria potestad?
+A) El cuidado de los hijos, el ejercicio de la patria potestad y el régimen de comunicación y estancia con el progenitor no conviviente.
+B) Solo la atribución exclusiva de la patria potestad a uno de los progenitores.
+C) Únicamente la cuantía de los alimentos y el cambio de domicilio familiar.
+OK: A
+EXP: El convenio debe ordenar de forma completa la situación personal de los hijos comunes.
+
+// [31]
+Q: ¿Qué particularidad presenta el régimen de visitas y comunicación de los nietos con sus abuelos en el convenio regulador?
+A) Debe establecerse obligatoriamente en todo convenio con hijos menores.
+B) Puede incluirse, y si se propone, el juez podrá aprobarlo previa audiencia y consentimiento de los abuelos.
+C) Solo puede fijarse por sentencia contenciosa y nunca por convenio.
+OK: B
+EXP: Es una previsión eventual, condicionada además a la audiencia y consentimiento de los abuelos.
+
+// [32]
+Q: ¿Qué exige el convenio regulador respecto de los animales de compañía?
+A) La venta del animal o su entrega al cónyuge propietario registral.
+B) La atribución exclusiva al cónyuge custodio de los hijos.
+C) La fijación de su destino atendiendo al interés de la familia y al bienestar del animal, con reparto de tiempos y cargas.
+OK: C
+EXP: El convenio debe contemplar tanto la convivencia como las responsabilidades de cuidado del animal.
+
+// [33]
+Q: ¿Qué materias patrimoniales mínimas debe regular el convenio regulador?
+A) La atribución del uso de la vivienda y ajuar, la contribución a las cargas y alimentos, y, en su caso, la liquidación del régimen económico.
+B) Solo la distribución de bienes privativos y el inventario de deudas futuras.
+C) Únicamente la cuantía de la pensión compensatoria y las costas procesales.
+OK: A
+EXP: El art. 90 impone un núcleo patrimonial mínimo de regulación.
+
+// [34]
+Q: ¿Qué carácter tiene la pensión compensatoria dentro del contenido del convenio regulador?
+A) Debe pactarse siempre que exista separación o divorcio, aunque no concurra desequilibrio.
+B) Solo puede acordarse judicialmente y nunca por convenio.
+C) Puede establecerse en el convenio cuando resulte procedente.
+OK: C
+EXP: No es automática ni obligatoria en todo caso, sino dependiente de que proceda jurídicamente.
+
+#ID = 5.2
+
+// [35]
+Q: ¿Cuál es la regla general de aprobación judicial de los acuerdos conyugales contenidos en el convenio regulador?
+A) Deben aprobarse salvo que sean dañosos para los hijos o gravemente perjudiciales para uno de los cónyuges, y también para el bienestar de los animales de compañía.
+B) Deben aprobarse siempre que hayan sido firmados por ambos cónyuges, sin control material adicional.
+C) Solo pueden rechazarse por defectos formales de redacción o autenticidad documental.
+OK: A
+EXP: El control judicial se centra en la protección de intereses especialmente tutelados.
+
+// [36]
+Q: ¿Qué alcance tiene la denegación judicial de la aprobación del convenio regulador?
+A) El juez sustituye de oficio las cláusulas rechazadas por otras que considere más adecuadas.
+B) La denegación debe ser motivada y permite a los cónyuges presentar una nueva propuesta.
+C) La denegación extingue definitivamente la posibilidad de alcanzar acuerdos sobre esas materias.
+OK: B
+EXP: El juez no rehace automáticamente el convenio, sino que rechaza motivadamente y deja margen para nueva propuesta.
+
+// [37]
+Q: ¿Qué naturaleza conserva el convenio regulador tras su aprobación judicial?
+A) Se convierte íntegramente en un acto jurisdiccional y pierde toda naturaleza negocial.
+B) Mantiene su condición de negocio jurídico de Derecho de familia, aunque quede integrado en la resolución judicial.
+C) Pasa a ser un contrato civil ordinario independiente del proceso matrimonial.
+OK: B
+EXP: La homologación no elimina su origen negocial, aunque le confiere eficacia procesal plena.
+
+// [38]
+Q: ¿Qué sucede cuando el convenio regulador se formaliza ante letrado de la Administración de Justicia o notario y alguna cláusula puede resultar perjudicial?
+A) Deben advertirlo y, si persiste ese perjuicio, dar por terminado el expediente, quedando abierta la vía judicial.
+B) Deben autorizar el convenio y remitir después la cláusula controvertida al Ministerio Fiscal.
+C) Deben modificar directamente la cláusula para hacerla conforme a Derecho.
+OK: A
+EXP: En estas vías no judiciales no cabe convalidar cláusulas perjudiciales; se cierra el expediente y queda la vía judicial.
+
+// [39]
+Q: ¿Desde cuándo son ejecutables por vía de apremio los acuerdos del convenio regulador?
+A) Desde la mera firma privada por los cónyuges, aunque no exista aprobación ni escritura pública.
+B) Solo desde que transcurre el plazo de apelación contra la resolución que los contiene.
+C) Desde su aprobación o desde su elevación a escritura pública.
+OK: C
+EXP: La ejecutividad requiere su homologación o formalización con la eficacia legal correspondiente.
+
+#ID = 5.3
+
+// [40]
+Q: ¿Cuándo permite el art. 90.3 la modificación del convenio regulador o de las medidas adoptadas?
+A) Cuando nuevas necesidades de los hijos o cambios en las circunstancias de los cónyuges lo aconsejen.
+B) Cuando uno de los cónyuges quiera revisar libremente lo pactado sin necesidad de cambio alguno.
+C) Solo cuando ambas partes renuncien previamente a los efectos de la sentencia.
+OK: A
+EXP: La modificación se vincula a una alteración relevante de la realidad familiar o personal.
+
+// [41]
+Q: ¿Qué presupuesto exige la modificación de las medidas relativas a los animales de compañía?
+A) Que uno de los cónyuges cambie de domicilio, aunque el bienestar del animal no se vea afectado.
+B) Que se alteren gravemente las circunstancias del animal de compañía.
+C) Que desaparezca todo vínculo afectivo entre el animal y la familia.
+OK: B
+EXP: La revisión de estas medidas exige un cambio grave en las circunstancias que afectan al animal.
+
+// [42]
+Q: ¿Cómo pueden modificarse las medidas acordadas ante letrado de la Administración de Justicia o en escritura pública?
+A) Solo mediante demanda contenciosa posterior, sin posibilidad de nuevo acuerdo.
+B) Mediante cualquier pacto privado entre los cónyuges, sin necesidad de forma específica.
+C) Mediante nuevo acuerdo sometido a los mismos requisitos formales.
+OK: C
+EXP: La revisión extrajudicial exige respetar la misma forma reforzada que tuvo el acuerdo inicial.
+
+// [43]
+Q: ¿Qué límite material impide modificar determinadas previsiones del convenio regulador?
+A) La imposibilidad de revisar la liquidación del régimen económico matrimonial cuando ya se haya llevado a cabo.
+B) La prohibición absoluta de modificar cualquier medida patrimonial una vez aprobada judicialmente.
+C) La imposibilidad de alterar las medidas sobre hijos aunque cambien sustancialmente las circunstancias.
+OK: A
+EXP: La liquidación ya consumada produce efectos definitivos y queda fuera del régimen general de modificación.
+    `;
+
+
+    const BANCO_3 = `
+    
+    #ID = 6
+
+// [44]
+Q: ¿Qué función cumplen las medidas judiciales del art. 91 CC en los procesos de nulidad, separación o divorcio?
+A) Sustituir exclusivamente el convenio regulador aunque este haya sido aprobado judicialmente.
+B) Limitarse a desarrollar efectos patrimoniales, quedando fuera las medidas personales y familiares.
+C) Determinar, en defecto de acuerdo válido o de aprobación del convenio, las medidas que deban sustituir o completar las adoptadas con anterioridad.
+OK: C
+EXP: Estas medidas actúan cuando falla la autonomía privada o cuando no existe un acuerdo eficaz.
+
+// [45]
+Q: ¿Qué materias pueden integrar las medidas judiciales conforme al art. 91 CC?
+A) Los hijos, la vivienda familiar, los animales de compañía, las cargas del matrimonio, la liquidación del régimen económico y las garantías correspondientes.
+B) Solo las relativas al régimen económico matrimonial y al uso de la vivienda familiar.
+C) Únicamente las medidas que ya hubieran sido acordadas provisionalmente, sin poder añadir otras nuevas.
+OK: A
+EXP: El precepto contempla un ámbito material amplio e incluso permite fijar medidas no adoptadas antes.
+
+// [46]
+Q: ¿Por qué resulta técnicamente discutible la expresión “medidas definitivas” aplicada a las medidas del art. 91 CC?
+A) Porque solo pueden adoptarse en fase de ejecución y no en la sentencia principal.
+B) Porque el sistema admite su modificación posterior si se alteran sustancialmente las circunstancias.
+C) Porque dependen siempre de un acuerdo previo de los cónyuges para su existencia.
+OK: B
+EXP: La posibilidad de revisión posterior relativiza su pretendido carácter definitivo.
+
+// [47]
+Q: ¿Qué revela la reiteración entre el art. 91 CC y el art. 774.4 LEC respecto de las medidas judiciales?
+A) Una duplicación normativa del mismo esquema regulador.
+B) La sustitución del Código Civil por la Ley de Enjuiciamiento Civil.
+C) La desaparición del control judicial sobre las medidas familiares.
+OK: A
+EXP: Ambos preceptos reproducen sustancialmente la misma regulación, generando reiteración normativa.
+
+#ID = 6.1
+
+// [48]
+Q: ¿Qué relación existe entre el contenido de las medidas judiciales y el contenido del convenio regulador?
+A) Las medidas judiciales tienen un contenido completamente distinto porque solo abarcan materias procesales.
+B) Las medidas judiciales coinciden sustancialmente con el convenio regulador y tienen carácter subsidiario respecto del acuerdo de los cónyuges.
+C) Las medidas judiciales solo pueden referirse a cuestiones no previstas en el convenio regulador.
+OK: B
+EXP: El paralelismo de contenidos muestra que la decisión judicial suple o reemplaza al acuerdo no existente o no aprobado.
+
+// [49]
+Q: ¿Qué principio afirma el art. 92 CC sobre la patria potestad en caso de nulidad, separación o divorcio?
+A) Que la ruptura matrimonial exime a los padres de sus deberes cuando exista custodia exclusiva.
+B) Que la nulidad, separación o divorcio no libera a los padres de sus obligaciones respecto de los hijos.
+C) Que la patria potestad debe atribuirse siempre por entero al progenitor custodio.
+OK: B
+EXP: La crisis matrimonial no elimina las responsabilidades parentales frente a los hijos.
+
+// [50]
+Q: ¿Cómo puede acordarse la custodia compartida según el texto?
+A) Solo a solicitud conjunta de ambos progenitores.
+B) Únicamente cuando el Ministerio Fiscal emita informe favorable vinculante.
+C) A solicitud conjunta de los progenitores o, excepcionalmente, a instancia de uno solo.
+OK: C
+EXP: El texto contempla ambas vías, aunque la segunda aparece como excepcional en el plano legal.
+
+// [51]
+Q: ¿Qué orientación jurisprudencial recoge el texto sobre la custodia compartida?
+A) Que la custodia compartida es una solución deseable si responde al interés superior del menor y no una medida excepcional.
+B) Que la custodia compartida debe rechazarse salvo acuerdo expreso de ambos progenitores.
+C) Que la custodia compartida solo procede cuando no exista conflicto entre los padres.
+OK: A
+EXP: La jurisprudencia del Tribunal Supremo ha reforzado una visión favorable a esta modalidad cuando beneficia al menor.
+
+// [52]
+Q: ¿Cuándo no procederá la guarda conjunta conforme al art. 92.7 CC?
+A) Cuando uno de los progenitores carezca de ingresos propios aunque mantenga vínculo con los hijos.
+B) Cuando exista proceso penal por delitos graves contra el otro progenitor o los hijos, o indicios de violencia doméstica o de género.
+C) Cuando los progenitores residan en municipios distintos con dificultad de desplazamiento.
+OK: B
+EXP: El texto excluye la guarda conjunta en contextos de especial gravedad vinculados a violencia o delitos graves.
+
+// [53]
+Q: ¿Qué impone el art. 93 CC en materia de alimentos de los hijos?
+A) La obligación judicial de fijar la contribución de cada progenitor según sus circunstancias económicas y las necesidades del menor.
+B) La fijación automática de una contribución idéntica para ambos progenitores.
+C) La exclusión de cualquier pronunciamiento sobre alimentos en la sentencia matrimonial.
+OK: A
+EXP: Los alimentos deben individualizarse atendiendo a las necesidades del menor y a la capacidad económica de cada progenitor.
+
+// [54]
+Q: ¿Qué posibilidad admite el texto respecto de los alimentos de los hijos mayores de edad?
+A) Que nunca puedan fijarse en la sentencia matrimonial por corresponderles exclusivamente reclamarlos en procedimiento separado.
+B) Que el juez pueda fijarlos en la misma sentencia si conviven hijos mayores sin ingresos propios, por economía procesal.
+C) Que se establezcan automáticamente hasta que el hijo alcance independencia económica plena.
+OK: B
+EXP: El texto admite esa solución por razones prácticas, aunque subraya que la legitimación activa corresponde propiamente al hijo mayor.
+
+// [55]
+Q: ¿Qué contenido tiene el derecho de visita del progenitor no custodio según el art. 94 CC?
+A) Un derecho cuya extensión queda libremente fijada por el progenitor custodio.
+B) Un derecho absoluto e inmodificable de comunicación y estancia con los hijos.
+C) Un derecho a visitar, comunicar y estar con los hijos, cuya concreción corresponde a la autoridad judicial.
+OK: C
+EXP: El juez determina tiempo, modo y lugar, pudiendo incluso limitar o suspender el régimen.
+
+// [56]
+Q: ¿Qué criterio rige la exclusión o eventual mantenimiento del régimen de visitas cuando existen procesos penales graves o indicios fundados de violencia?
+A) El régimen de visitas no procede en principio, aunque el juez puede acordarlo motivadamente si lo exige el interés superior del menor.
+B) El régimen de visitas debe mantenerse siempre para preservar el vínculo paterno-filial.
+C) La existencia de indicios de violencia solo afecta a la custodia, pero no al régimen de visitas.
+OK: A
+EXP: El texto parte de la improcedencia del régimen, salvo decisión motivada en atención al interés del menor.
+
+// [57]
+Q: ¿Qué novedad introduce el art. 94 bis CC respecto de los animales de compañía?
+A) Permite atribuir su cuidado a uno o ambos cónyuges, fijando convivencia y cargas según el bienestar del animal y el interés familiar.
+B) Obliga a adjudicar el animal al cónyuge titular del derecho de propiedad.
+C) Excluye cualquier decisión judicial sobre animales en los procesos matrimoniales.
+OK: A
+EXP: La regulación se aparta del criterio dominical estricto y atiende a parámetros familiares y de bienestar animal.
+
+// [58]
+Q: ¿Qué efecto produce la sentencia firme sobre el régimen económico matrimonial conforme al art. 95 CC?
+A) Suspende provisionalmente su funcionamiento hasta que se liquide judicialmente.
+B) Produce su disolución.
+C) Mantiene su vigencia hasta que ambas partes pidan expresamente la liquidación.
+OK: B
+EXP: El texto atribuye a la sentencia firme el efecto de disolver el régimen económico matrimonial.
+
+// [59]
+Q: ¿Qué consecuencia específica puede producir la nulidad matrimonial cuando uno de los cónyuges actuó de mala fe?
+A) La pérdida automática de todos sus bienes privativos.
+B) La atribución de una pensión compensatoria obligatoria al cónyuge de buena fe.
+C) La posibilidad de que el cónyuge de buena fe opte por las reglas del régimen de participación, excluyendo al de mala fe de sus ganancias.
+OK: C
+EXP: El texto contempla una protección específica para el cónyuge de buena fe en ese supuesto.
+
+// [60]
+Q: ¿Qué permite el art. 96 CC respecto del uso de la vivienda familiar?
+A) Disociar titularidad y uso, atribuyendo este a los hijos y al progenitor con quien convivan aunque no sean propietarios.
+B) Mantener siempre unido el uso a la titularidad dominical del inmueble.
+C) Atribuir necesariamente el uso al cónyuge económicamente más débil, sin atender a los hijos.
+OK: A
+EXP: El precepto permite separar propiedad y uso para proteger la función familiar de la vivienda.
+
+// [61]
+Q: ¿Qué relevancia atribuye el texto a la convivencia del progenitor custodio con una nueva pareja respecto del uso de la vivienda familiar?
+A) Ninguna, porque el derecho de uso es absoluto mientras existan hijos comunes.
+B) Puede justificar la extinción del derecho de uso cuando la vivienda deja de servir al domicilio familiar originario.
+C) Solo influye si el inmueble es privativo del otro cónyuge.
+OK: B
+EXP: La jurisprudencia citada conecta el derecho de uso con la pervivencia de la función que justificó su atribución.
+
+#ID = 6.2
+
+// [62]
+Q: ¿Qué presupuesto material exige la modificación de las medidas judiciales conforme al art. 91 CC?
+A) La simple voluntad de una de las partes de revisar el contenido de la sentencia.
+B) La alteración sustancial de las circunstancias.
+C) La existencia de desacuerdo posterior entre los excónyuges.
+OK: B
+EXP: No basta cualquier cambio; debe tratarse de una modificación relevante de la situación tenida en cuenta al adoptarlas.
+
+// [63]
+Q: ¿Qué relación establece el texto entre la modificación del convenio regulador y la modificación de las medidas judiciales?
+A) Ambas quedan sometidas al mismo presupuesto material de variación sustancial de las circunstancias.
+B) Solo las medidas judiciales pueden modificarse, pero no las convencionales.
+C) El convenio regulador se revisa libremente, mientras las medidas judiciales exigen causa reforzada.
+OK: A
+EXP: El texto destaca la coincidencia sustancial entre el art. 91 CC y el art. 90.3 CC.
+
+// [64]
+Q: ¿Quiénes están legitimados para solicitar la modificación de las medidas según el art. 775.1 LEC?
+A) Solo los cónyuges, cualquiera que sea la situación familiar.
+B) El Ministerio Fiscal exclusivamente cuando lo solicite uno de los progenitores.
+C) El Ministerio Fiscal en determinados supuestos de hijos menores o con discapacidad, y en todo caso los cónyuges.
+OK: C
+EXP: La ley amplía la legitimación activa para proteger intereses especialmente vulnerables.
+
+// [65]
+Q: ¿Qué justifica la legitimación del Ministerio Fiscal para promover la modificación de medidas?
+A) La protección del interés superior del menor o de la persona con discapacidad.
+B) Su condición de representante general de todos los intereses patrimoniales familiares.
+C) La necesidad de sustituir siempre la iniciativa procesal de los progenitores.
+OK: A
+EXP: La intervención del Ministerio Fiscal responde a finalidades de tutela de personas especialmente protegidas.
+
+// [66]
+Q: ¿Qué exige jurídicamente el sistema para revisar las medidas judiciales?
+A) Un cambio sustancial, relevante y posterior a la adopción de las medidas.
+B) Cualquier modificación de conveniencia apreciada por una de las partes.
+C) Una nueva valoración judicial sin necesidad de hechos sobrevenidos.
+OK: A
+EXP: El sistema excluye revisiones caprichosas y exige una alteración real que rompa el equilibrio anterior.
+
+// [67]
+Q: ¿Qué doctrina recoge la STS 641/2018 sobre el uso de la vivienda familiar?
+A) Que el derecho de uso atribuido a un progenitor custodio es irreversible mientras existan hijos comunes.
+B) Que puede extinguirse cuando el titular convive establemente con una nueva pareja y la vivienda deja de ser el domicilio familiar originario.
+C) Que la nueva convivencia solo afecta al uso cuando el inmueble es privativo del excónyuge no usuario.
+OK: B
+EXP: La sentencia vincula el uso a la función familiar originaria de la vivienda, no a un derecho perpetuo.
+
+// [68]
+Q: ¿Cómo caracteriza el texto el derecho de uso de la vivienda familiar en la doctrina de la STS 641/2018?
+A) Como un derecho absoluto e indefinido, inmune a cualquier cambio convivencial.
+B) Como un derecho patrimonial autónomo desligado por completo del interés de los hijos.
+C) Como un derecho funcional, no absoluto, condicionado a la finalidad que justificó su atribución.
+OK: C
+EXP: El derecho de uso se mantiene mientras subsistan las circunstancias que explicaban su concesión.
+
+// [69]
+Q: ¿Qué idea subraya el texto sobre la relación entre el interés de los hijos y el interés de los progenitores en la modificación del uso de la vivienda familiar?
+A) Que el interés de los hijos no puede desvincularse totalmente del de los progenitores cuando ambos pueden conciliarse.
+B) Que el interés de los hijos prevalece siempre de modo automático sobre cualquier otra consideración.
+C) Que el interés de los progenitores debe primar cuando la vivienda es ganancial.
+OK: A
+EXP: El texto destaca que ambos intereses pueden armonizarse dentro de una solución razonable y proporcionada.
+#ID = 7
+
+// [70]
+Q: ¿En qué supuestos procede la compensación del art. 97 CC?
+A) En nulidad, separación y divorcio, como mecanismo general de reequilibrio económico.
+B) Solo en los casos de nulidad matrimonial cuando exista mala fe de uno de los cónyuges.
+C) Exclusivamente en los supuestos de separación y divorcio, no en la nulidad matrimonial.
+OK: C
+EXP: El texto distingue expresamente la compensación del art. 97 de la indemnización propia de la nulidad del art. 98.
+
+// [71]
+Q: ¿Cuál es el fundamento de la compensación del art. 97 CC?
+A) Corregir el desequilibrio económico entre los cónyuges tras la ruptura, sin carácter sancionador ni asistencial puro.
+B) Castigar al cónyuge responsable de la ruptura matrimonial con una obligación patrimonial.
+C) Garantizar indefinidamente al acreedor el mismo nivel de vida disfrutado durante el matrimonio.
+OK: A
+EXP: La compensación tiene una función correctora del perjuicio económico derivado de la ruptura.
+
+// [72]
+Q: ¿Qué desajuste sistemático destaca el texto respecto de la compensación económica?
+A) Que el art. 91 CC prohíbe expresamente fijarla por vía judicial.
+B) Que el art. 90 CC la incluye en el convenio regulador, pero el art. 91 CC no la menciona expresamente al regular las medidas judiciales.
+C) Que el art. 97 CC la limita solo a los convenios aprobados por notario.
+OK: B
+EXP: El texto subraya esa incoherencia técnica, aunque aclara que no impide su fijación judicial.
+
+#ID = 7.1
+
+// [73]
+Q: ¿Qué cambio introdujo la Ley 15/2005 en la configuración de la compensación del art. 97 CC?
+A) Sustituyó la noción estricta de pensión por una compensación que puede consistir en pensión temporal, indefinida o prestación única.
+B) Eliminó toda posibilidad de compensación distinta de la pensión vitalicia.
+C) Transformó la compensación en una prestación exclusivamente alimenticia.
+OK: A
+EXP: La reforma amplió las modalidades y abandonó la concepción rígida de la pensión única.
+
+// [74]
+Q: ¿Qué presupuesto genera el derecho a la compensación del art. 97 CC?
+A) La simple existencia de una diferencia patrimonial entre los cónyuges en el momento de la sentencia.
+B) La culpa del cónyuge deudor en la producción de la crisis matrimonial.
+C) Un desequilibrio económico relevante causado por la ruptura en relación con la posición del otro cónyuge y con la situación mantenida durante el matrimonio.
+OK: C
+EXP: El derecho nace de un perjuicio económico comparativo ligado al modelo matrimonial y a su ruptura.
+
+// [75]
+Q: ¿Qué finalidad tiene la compensación del art. 97 CC respecto de la posición económica de los cónyuges?
+A) Igualar patrimonios y asegurar de forma permanente el mismo nivel de vida previo a la ruptura.
+B) Compensar el perjuicio económico derivado del modelo matrimonial asumido, sin imponer una igualación patrimonial automática.
+C) Sustituir íntegramente las obligaciones alimenticias entre parientes tras el divorcio.
+OK: B
+EXP: La compensación no pretende igualar fortunas, sino corregir el desequilibrio producido por la ruptura.
+
+// [76]
+Q: ¿Qué carácter tiene la lista de circunstancias del art. 97 CC para fijar la cuantía de la compensación?
+A) Cerrado, de manera que solo pueden valorarse los factores expresamente enumerados por la ley.
+B) Abierto, pues junto a los factores enumerados cabe cualquier otra circunstancia relevante.
+C) Puramente orientativo solo para los convenios, pero no para la decisión judicial.
+OK: B
+EXP: La cláusula final confirma que no se trata de un numerus clausus, sino de una enumeración flexible.
+
+// [77]
+Q: ¿Qué debe concretar la resolución que reconozca la compensación del art. 97 CC?
+A) La periodicidad, forma de pago, bases de actualización, duración o momento de cese y garantías de efectividad.
+B) Exclusivamente la cuantía inicial de la prestación, dejando el resto a la ejecución posterior.
+C) Solo la forma de pago y la posible renuncia futura del acreedor.
+OK: A
+EXP: La regulación exige precisar los elementos necesarios para que el derecho sea realmente eficaz.
+
+// [78]
+Q: ¿Cuál es la naturaleza jurídica de la compensación del art. 97 CC según el texto?
+A) Una sanción civil derivada de la culpa en la ruptura matrimonial.
+B) Un mecanismo estrictamente alimenticio fundado en la necesidad del acreedor.
+C) Un mecanismo corrector del desequilibrio económico causado por la ruptura, vinculado a la solidaridad postmatrimonial.
+OK: C
+EXP: Su lógica no es punitiva ni puramente asistencial, sino compensadora del perjuicio económico.
+
+#ID = 7.2
+
+// [79]
+Q: ¿Qué finalidad persiguen los mandatos legales sobre fijación, modificación y sustitución de la compensación?
+A) Objetivar la compensación y reducir la litigiosidad recurrente tras la ruptura.
+B) Convertir toda compensación en una obligación vitalicia no revisable.
+C) Reservar la compensación exclusivamente al acuerdo entre los cónyuges.
+OK: A
+EXP: El sistema busca estabilidad y evitar pleitos constantes sobre esta materia.
+
+// [80]
+Q: ¿Qué impone el art. 97 CC respecto de la resolución que fija la compensación?
+A) Que se limite a reconocer el derecho, remitiendo la actualización y garantías a un proceso posterior.
+B) Que determine la compensación en la sentencia o convenio formalizado y establezca bases de actualización y garantías.
+C) Que fije necesariamente una pensión indefinida sin posibilidad de capitalización.
+OK: B
+EXP: La ley exige que la decisión inicial deje cerrados los elementos esenciales del régimen compensatorio.
+
+// [81]
+Q: ¿Qué criterio establece el art. 100 CC para la modificación de la compensación?
+A) Cualquier variación económica de uno de los cónyuges permite revisar la compensación.
+B) La modificación solo es posible si media acuerdo expreso de ambos cónyuges.
+C) La modificación queda limitada a alteraciones sustanciales en la fortuna de uno u otro cónyuge.
+OK: C
+EXP: El sistema restringe la revisión a cambios relevantes, no a variaciones leves o coyunturales.
+
+// [82]
+Q: ¿Qué permite el art. 99 CC en relación con la compensación?
+A) Sustituir la pensión por otras fórmulas en cualquier momento.
+B) Extinguir automáticamente la compensación cuando el deudor lo solicite.
+C) Convertir toda prestación única en pensión mensual indefinida.
+OK: A
+EXP: La norma favorece soluciones definitivas y flexibles mediante sustitución de modalidades.
+
+// [83]
+Q: ¿Qué modalidades principales puede adoptar la compensación económica?
+A) Solo pensión temporal o renta vitalicia.
+B) Pensión temporal, pensión de duración indefinida o prestación única.
+C) Exclusivamente una entrega de capital en bienes inmuebles.
+OK: B
+EXP: El texto recoge esas tres formas principales como modalidades posibles de fijación.
+
+// [84]
+Q: ¿Qué significado tiene la temporalidad de la compensación tras la reforma de 2005?
+A) Se mantiene como fórmula excepcional que exige motivación reforzada.
+B) Queda prohibida si no existe acuerdo entre los cónyuges.
+C) Es una modalidad plenamente legítima cuando las circunstancias del caso la justifican.
+OK: C
+EXP: La reforma consolidó la admisión de la pensión temporal y dejó de tratarla como excepcional.
+
+// [85]
+Q: ¿Qué forma práctica suele adoptar la compensación en su fijación ordinaria?
+A) Una cantidad mensual a tanto alzado con periodicidad mensual.
+B) Una adjudicación inmediata de bienes gananciales en todos los casos.
+C) Un porcentaje obligatorio sobre los ingresos del deudor.
+OK: A
+EXP: El texto destaca esa fórmula por su operatividad práctica habitual.
+
+// [86]
+Q: ¿Hasta qué punto queda vinculado el juez por la fórmula de compensación solicitada por una de las partes?
+A) Queda siempre vinculado por la modalidad pedida por el cónyuge acreedor.
+B) No queda estrictamente vinculado, salvo que exista acuerdo entre los cónyuges.
+C) Solo puede apartarse de la petición si el Ministerio Fiscal lo autoriza.
+OK: B
+EXP: Sin acuerdo conyugal, el juez conserva margen para fijar la modalidad que proceda.
+
+#ID = 7.3
+
+// [87]
+Q: ¿Qué criterio suele utilizarse para la actualización de la cuantía de la compensación?
+A) El Índice de Precios al Consumo, aunque no sea un módulo obligatorio.
+B) La actualización automática por decisión unilateral del acreedor.
+C) La revalorización fija anual establecida imperativamente por el Código Civil.
+OK: A
+EXP: El IPC aparece como referencia objetiva y cómoda, pero no impuesta necesariamente.
+
+// [88]
+Q: ¿Cuándo no resulta necesario un sistema específico de actualización de la compensación?
+A) Cuando la pensión se fija por tiempo indefinido.
+B) Cuando la pensión se fija como porcentaje de ingresos.
+C) Cuando la cuantía inicial supera cierto umbral económico.
+OK: B
+EXP: En ese caso, la propia variación de los ingresos produce el ajuste de manera automática.
+
+#ID = 7.4
+
+// [89]
+Q: ¿Qué permite el art. 99 CC respecto de la pensión compensatoria ya fijada?
+A) Su sustitución por renta vitalicia, usufructo de bienes o entrega de capital en dinero o bienes.
+B) Su conversión obligatoria en prestación única cuando el deudor contrae nuevo matrimonio.
+C) Su extinción automática por simple solicitud de cualquiera de las partes.
+OK: A
+EXP: El art. 99 permite sustituir la pensión por otras fórmulas patrimoniales con lógica de cierre definitivo del conflicto.
+   `;
+
+
+    const BANCO_4 = `
+    
+    #ID = 8
+
+// [90]
+Q: ¿Qué presupuesto específico exige la indemnización del art. 98 CC en caso de matrimonio putativo?
+A) La mera celebración formal del matrimonio nulo, aunque no haya existido convivencia.
+B) El simple desequilibrio económico generado por la nulidad matrimonial.
+C) Que el cónyuge de buena fe haya convivido efectivamente en el matrimonio declarado nulo.
+OK: C
+EXP: El art. 98 exige no solo buena fe, sino también vida en común efectiva.
+
+// [91]
+Q: ¿En qué se diferencia la indemnización del art. 98 CC de la compensación del art. 97 CC?
+A) En que la indemnización consiste en una cantidad a tanto alzado y no en una pensión periódica.
+B) En que la indemnización solo puede fijarse en separaciones y divorcios.
+C) En que la indemnización tiene carácter estrictamente alimenticio.
+OK: A
+EXP: El texto destaca que la indemnización del art. 98 no adopta la forma de pensión periódica.
+
+// [92]
+Q: ¿Qué alcance tiene la remisión del art. 98 CC al art. 97 CC para cuantificar la indemnización?
+A) Convierte la indemnización en una modalidad especial de pensión compensatoria.
+B) Aporta únicamente criterios orientadores de cuantificación, sin alterar la naturaleza de la indemnización.
+C) Obliga a aplicar íntegramente el régimen jurídico de la compensación por separación o divorcio.
+OK: B
+EXP: La remisión no transforma la figura, sino que solo ofrece pautas para fijar su cuantía.
+
+// [93]
+Q: ¿Cuál es el fundamento de la indemnización del art. 98 CC en el matrimonio putativo?
+A) La necesidad de igualar patrimonios tras la nulidad.
+B) La protección asistencial del cónyuge económicamente más débil.
+C) La protección del cónyuge de buena fe frente a la mala fe del otro cónyuge.
+OK: C
+EXP: Su base no es el desequilibrio económico, sino la tutela frente a la mala fe del otro consorte.
+
+// [94]
+Q: ¿Cómo puede obtenerse la indemnización del art. 98 CC?
+A) Debe ser solicitada por el cónyuge de buena fe, en el proceso de nulidad o en proceso independiente.
+B) Puede ser acordada de oficio por el juez aunque no haya petición expresa.
+C) Solo puede reclamarse en un procedimiento posterior y nunca en el propio juicio de nulidad.
+OK: A
+EXP: El texto subraya que no procede de oficio, sino a instancia de quien tenga derecho.
+
+#ID = 9
+
+// [95]
+Q: ¿Qué relevancia tienen las nulidades matrimoniales dentro del conjunto de crisis matrimoniales?
+A) Constituyen la forma más habitual de ruptura en el sistema vigente.
+B) Son un fenómeno claramente marginal dentro del conjunto de crisis matrimoniales.
+C) Han sustituido progresivamente a las separaciones como categoría dominante.
+OK: B
+EXP: El texto destaca expresamente el carácter residual de las nulidades frente a otras rupturas.
+
+// [96]
+Q: ¿Qué afirmación rechazan las referencias estadísticas sobre las crisis matrimoniales?
+A) Que el divorcio concentra hoy la mayoría de las rupturas.
+B) Que la separación ha descendido notablemente.
+C) Que haya más crisis matrimoniales registradas que matrimonios celebrados.
+OK: C
+EXP: El texto niega expresamente que las rupturas superen en número a los matrimonios.
+
+// [97]
+Q: ¿Qué tendencia general niegan los datos sobre el sistema vigente de crisis matrimoniales?
+A) Que el régimen actual haya provocado un aumento constante y estructural de las crisis matrimoniales.
+B) Que el divorcio haya desplazado a la separación como forma principal de ruptura.
+C) Que las nulidades tengan peso estadístico reducido.
+OK: A
+EXP: El texto afirma que las cifras no evidencian un crecimiento sostenido de las crisis.
+
+// [98]
+Q: ¿Qué transformación principal reflejan las estadísticas sobre la tipología de las rupturas matrimoniales?
+A) La sustitución del divorcio por la nulidad como forma predominante.
+B) El descenso de la separación y la concentración de la mayoría de las crisis en el divorcio.
+C) La equiparación numérica entre separación y divorcio.
+OK: B
+EXP: La evolución señalada consiste en la pérdida de peso de la separación y el predominio del divorcio.
+
+// [99]
+Q: ¿Qué dato global registraron las disoluciones matrimoniales en 2023?
+A) 76.685 disoluciones, con una tasa de 2,4 por 1.000 habitantes.
+B) 83.380 disoluciones, con una tasa de 1,1 por 1.000 habitantes.
+C) 80.065 disoluciones, con una disminución del 5,3 % y una tasa de 1,7 por 1.000 habitantes.
+OK: C
+EXP: Ese es el dato general que el texto ofrece para separaciones y divorcios en 2023.
+
+// [100]
+Q: ¿Qué composición tuvieron las crisis matrimoniales de 2023 por tipo de ruptura?
+A) Los divorcios representaron el 95,8 % y las separaciones el 4,2 %.
+B) Los divorcios y las separaciones se repartieron prácticamente por mitades.
+C) Las separaciones superaron a los divorcios por primera vez en la serie.
+OK: A
+EXP: El texto muestra un predominio abrumador del divorcio frente a la separación.
+
+// [101]
+Q: ¿Qué rasgo caracterizó al tipo de procedimiento en las rupturas matrimoniales de 2023?
+A) Predominaron claramente los procedimientos contenciosos.
+B) La mayoría fueron procedimientos no contenciosos.
+C) Solo una minoría se resolvió por acuerdo entre los cónyuges.
+OK: B
+EXP: El 81,6 % de los divorcios fueron no contenciosos, lo que confirma el predominio del acuerdo.
+
+// [102]
+Q: ¿Qué revela la forma de resolución de los divorcios en 2023?
+A) Que la escritura pública fue la forma más frecuente de resolución.
+B) Que el decreto desplazó a la sentencia como forma principal.
+C) Que la sentencia siguió siendo la vía más frecuente, aunque también hubo decretos y escrituras públicas.
+OK: C
+EXP: El texto indica que la sentencia fue la forma más habitual, seguida de decreto y escritura pública.
+
+// [103]
+Q: ¿Qué tendencia mostró la custodia en los divorcios con hijos menores en 2023?
+A) La custodia compartida alcanzó el 48,4 % y superó por primera vez a la atribuida exclusivamente a la madre.
+B) La custodia paterna exclusiva fue la modalidad predominante.
+C) La custodia atribuida a otras instituciones superó a la custodia compartida.
+OK: A
+EXP: El dato más destacado es el avance de la custodia compartida por encima de la materna exclusiva.
+
+// [104]
+Q: ¿Qué dato resume mejor la duración de los matrimonios disueltos por divorcio en 2023?
+A) La mayoría de los divorcios se produjo antes de los cinco años de matrimonio.
+B) La duración media fue de 16,4 años y el mayor porcentaje correspondió a matrimonios de 20 años o más.
+C) La duración media fue inferior a diez años y el tramo principal fue el de uno a cuatro años.
+OK: B
+EXP: El texto combina ambos datos como indicadores centrales de la duración de los matrimonios disueltos.
+    `;
+
+
+    const BANCO_5 = `
+    
+    #ID = 10
+
+// [105]
+Q: ¿Qué significado atribuye el texto a la custodia compartida en el debate contemporáneo?
+A) Que sigue siendo una cuestión estrictamente técnica y ajena a controversias sociales o políticas.
+B) Que ha quedado reducida a un problema exclusivamente jurisprudencial sin proyección legislativa.
+C) Que se ha convertido en un fenómeno social, político y legislativo con fuerte carga ideológica y territorial.
+OK: C
+EXP: El texto destaca que la custodia compartida ha desbordado el plano técnico y ha adquirido gran relevancia pública.
+
+// [106]
+Q: ¿Qué conclusión permite extraer el estudio sistemático del art. 92 CC sobre la custodia compartida?
+A) Que, atendiendo al interés superior del menor, la custodia compartida constituye el modelo preferente si es compatible con ese interés.
+B) Que la custodia compartida solo procede como solución residual y excepcional.
+C) Que la custodia compartida exige siempre acuerdo previo de ambos progenitores para poder valorarse.
+OK: A
+EXP: El texto presenta la custodia compartida como modelo preferente, condicionado siempre al interés superior del menor.
+
+// [107]
+Q: ¿Qué pone de manifiesto la proliferación de iniciativas autonómicas sobre custodia compartida?
+A) La desaparición de toda diferencia territorial en esta materia.
+B) Una tendencia autonómica a reforzar el modelo compartido, utilizarlo como signo de diferenciación normativa y generar tensiones competenciales.
+C) La renuncia de las Comunidades Autónomas a intervenir en la regulación familiar.
+OK: B
+EXP: El texto subraya esos tres rasgos: impulso autonómico, diferenciación normativa y conflicto competencial.
+
+// [108]
+Q: ¿Qué ejemplo ofrece el texto como manifestación de las tensiones competenciales en materia de custodia compartida?
+A) La derogación estatal del art. 92 del Código Civil.
+B) La anulación por el Tribunal Constitucional de la Ley valenciana de 2011.
+C) La supresión del Derecho Foral aragonés en materia de familia.
+OK: B
+EXP: La declaración de inconstitucionalidad de la ley valenciana aparece como ejemplo claro de ese conflicto competencial.
+
+// [109]
+Q: ¿Qué idea central resume el texto sobre la evolución de la custodia compartida?
+A) Que la custodia compartida se ha consolidado como paradigma dominante, aunque con controversias jurídicas y políticas.
+B) Que la custodia compartida ha perdido relevancia frente al retorno del modelo exclusivo.
+C) Que la custodia compartida solo se ha impuesto en los territorios con Derecho civil especial.
+OK: A
+EXP: El texto combina ambas ideas: consolidación del modelo y persistencia de controversias.
+
+#ID = 11
+
+// [110]
+Q: ¿Cómo resolvían inicialmente los tribunales los conflictos sobre mascotas en las rupturas de pareja?
+A) Aplicando prioritariamente el bienestar animal como criterio autónomo.
+B) Desde una perspectiva posesoria o patrimonial, tratándolas como bienes sujetos a propiedad o ganancialidad.
+C) Reconociendo desde el inicio un régimen de corresponsabilidad familiar específico.
+OK: B
+EXP: El punto de partida era patrimonialista: la mascota se trataba como un bien más.
+
+// [111]
+Q: ¿Qué transformación conceptual describe el texto respecto de los animales de compañía?
+A) La reafirmación de su equiparación jurídica plena con las cosas muebles.
+B) El paso desde una visión patrimonial a otra basada en su sensibilidad, el cuidado compartido y su bienestar.
+C) La exclusión de cualquier criterio afectivo en las decisiones judiciales.
+OK: B
+EXP: El cambio consiste en abandonar la visión cosificadora y reconocer su dimensión sensible y familiar.
+
+// [112]
+Q: ¿Qué papel atribuye el texto a la Ley 17/2021 en materia de tenencia o custodia de mascotas?
+A) Un papel secundario, limitado a aclaraciones terminológicas sin efectos materiales.
+B) La consolidación del régimen patrimonial clásico sobre los animales.
+C) El punto de inflexión definitivo al dejar de considerarlos cosas e introducir criterios específicos para decidir su cuidado.
+OK: C
+EXP: La reforma de 2021 aparece como el gran cambio normativo en esta materia.
+
+// [113]
+Q: ¿Qué criterio debe guiar la decisión judicial sobre los animales de compañía en una crisis de pareja tras la reforma legal?
+A) El bienestar del animal y los vínculos afectivos existentes.
+B) Exclusivamente la titularidad formal o registral del animal.
+C) Solo la capacidad económica del cónyuge que solicite su tenencia.
+OK: A
+EXP: El texto desplaza el criterio dominical y sitúa en el centro el bienestar animal y la realidad afectiva.
+
+// [114]
+Q: ¿Qué novedades jurisprudenciales recientes menciona el texto respecto de los animales de compañía?
+A) Solo la imposibilidad de repartir gastos entre los convivientes.
+B) La figura del cocuidador, la corresponsabilidad en gastos y la posible indemnización por daño moral por privación unilateral del contacto.
+C) La atribución automática del animal al miembro de la pareja que conviviera en la vivienda familiar.
+OK: B
+EXP: El texto destaca esas tres líneas jurisprudenciales como signos de una protección más avanzada.
+
+// [115]
+Q: ¿Qué conclusión general formula el texto sobre el estatuto jurídico del animal de compañía en las crisis de pareja?
+A) Que sigue siendo un mero objeto patrimonial sometido a las reglas generales de propiedad.
+B) Que se convierte en un elemento relevante del núcleo familiar con tratamiento jurídico autónomo.
+C) Que queda excluido del ámbito de decisión judicial por tratarse de una cuestión privada.
+OK: B
+EXP: La idea final es que el animal deja de ser tratado solo como bien patrimonial y adquiere relevancia jurídica propia.
+    `;
+    
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
