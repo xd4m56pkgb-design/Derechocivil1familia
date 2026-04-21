@@ -1,0 +1,1781 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 16. El régimen de separación de bienes</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. EL RÉGIMEN DE SEPARACIÓN DE BIENES
+
+El régimen de separación de bienes se basa en la inexistencia de una masa patrimonial común entre los cónyuges, de modo que cada uno conserva la titularidad, la administración y la facultad de disposición sobre sus propios bienes como si no estuviera casado. No obstante, ambos siguen obligados a contribuir al sostenimiento de las cargas del matrimonio y, al no existir patrimonio común, deben hacerlo con cargo a sus respectivos bienes.
+
+Antes de la reforma de 1981, este régimen tenía en el Código una regulación muy escasa y un marcado sentido sancionador, pues se aplicaba a matrimonios celebrados con infracción de determinadas prohibiciones o impedimentos. Esa insuficiente regulación, unida al predominio del régimen de gananciales en el Derecho común, hacía que la separación de bienes tuviera una importancia claramente residual.
+
+En la actualidad, su significado ha cambiado de forma profunda. En la redacción vigente del Código, la separación de bienes actúa como régimen legal supletorio de segundo grado, lo que le otorga una relevante posición normativa. Además, en la práctica, muchas crisis matrimoniales de matrimonios sometidos al régimen de gananciales terminan desembocando en la instauración de la separación de bienes. También resulta especialmente aconsejable cuando la actividad profesional o laboral de uno de los cónyuges puede generar graves riesgos patrimoniales, ya que las deudas propias de uno no afectan al patrimonio privativo del otro, sin perjuicio de que los acreedores suelan exigir en ocasiones la asunción conjunta de responsabilidad por ambos.
+
+Sin embargo, este régimen no presenta solo ventajas. La separación estricta de la titularidad de los bienes dentro de una comunidad de vida como la matrimonial puede resultar difícil de mantener en la práctica. Además, se ha destacado tradicionalmente que impedir que cada cónyuge participe en las vicisitudes patrimoniales del otro puede generar situaciones de notable injusticia.
+
+En definitiva, la elección entre este régimen y los demás corresponde a los cónyuges, que, conforme al art. 1315, pueden decidir cuál les resulta más conveniente o atractivo.
+
+2. ORIGEN CONVENCIONAL E INCIDENTAL DEL RÉGIMEN DE SEPARACIÓN DE BIENES
+
+El art. 1435 establece que existirá separación de bienes cuando así lo hayan convenido los cónyuges, cuando en capitulaciones matrimoniales excluyan la sociedad de gananciales sin fijar las reglas de su régimen patrimonial y cuando, vigente el matrimonio, se extinga la sociedad de gananciales o el régimen de participación sin que los interesados lo sustituyan por otro distinto.
+
+Por ello, la aplicación de este régimen puede tener un origen convencional, basado en la voluntad de los cónyuges, o un origen incidental, derivado de supuestos en los que la ley lo impone como régimen legal supletorio de segundo grado.
+
+2.1. El régimen de separación de bienes convencional
+
+La separación de bienes convencional corresponde al supuesto del art. 1435.1., que exige el otorgamiento de capitulaciones matrimoniales. En este caso, las reglas legales del régimen de separación de bienes solo se aplican en la medida en que no contradigan lo pactado expresamente por los cónyuges, ya que los acuerdos capitulares prevalecen por la libertad de configuración de la que disfrutan en materia de régimen económico matrimonial. Por ello, el modelo legal no tiene carácter imperativo para quienes hayan optado voluntariamente por este régimen.
+
+2.2. El régimen de separación de bienes incidental
+
+La separación de bienes incidental se produce por circunstancias ajenas a la voluntad de los cónyuges, aunque parte de la doctrina prefiera calificar estos supuestos como casos de separación legal o judicial. Entre ellos se incluye el supuesto en que los cónyuges otorgan capitulaciones para excluir expresamente el régimen de gananciales, pero sin determinar las reglas que han de regir sus bienes, caso que se presenta como anómalo en la práctica. También comprende los supuestos en que se extingue un régimen económico previo y este ha de ser sustituido por otro, siendo entonces aplicable la separación de bienes.
+
+En consecuencia, este régimen se aplicará cuando se disuelva la sociedad de gananciales por embargo de bienes comunes a causa de deudas propias de uno de los cónyuges, cuando se decrete judicialmente la separación de los cónyuges y en todos los supuestos contemplados en el art. 1393 para la disolución judicial de la sociedad de gananciales, supuestos que también se consideran aplicables al régimen de participación por la remisión del art. 1415.
+
+3. LA TITULARIDAD DE LOS BIENES
+
+En el régimen de separación de bienes, la regla general es que cada cónyuge mantiene un patrimonio propio y separado, que funciona con autonomía respecto del otro. Solo en los supuestos de separación de bienes de origen convencional pueden introducirse matizaciones pactadas por los cónyuges, como la consideración común de determinados bienes muebles.
+
+3.1. Inexistencia de masa conyugal
+
+La inexistencia de masa conyugal se expresa en el art. 1437, según el cual pertenecen a cada cónyuge los bienes que tuviera al iniciarse el régimen y los que adquiera después por cualquier título. De este modo, todos los bienes corresponden separadamente a uno u otro cónyuge, tanto si fueron adquiridos antes del matrimonio como después, ya procedan de actos gratuitos o de la actividad laboral o profesional de quien los obtiene.
+
+3.2. La eventualidad de la copropiedad ordinaria
+
+La ausencia de patrimonio común exige una identificación precisa de la pertenencia de los bienes para poder determinar, en el momento de la liquidación, cuáles integran cada patrimonio privativo o el ajuar familiar. Esta dificultad apenas se plantea respecto de los inmuebles, por su documentación e inscripción registral, pero sí resulta especialmente problemática en relación con los bienes muebles. Por ello, el art. 1441 dispone que, cuando no pueda acreditarse a cuál de los cónyuges pertenece un bien o derecho, se entenderá que corresponde a ambos por mitad. Esa atribución determina la aplicación del régimen de copropiedad o comunidad ordinaria.
+
+3.3. La declaración de quiebra o concurso de uno de los cónyuges
+
+El Código contiene una regla especial para el supuesto de concurso de uno de los cónyuges. La legislación concursal, siguiendo el criterio anterior, establecía una presunción en beneficio de la masa activa según la cual, si el concursado estaba casado en separación de bienes, se presumía que había donado a su cónyuge la mitad de las contraprestaciones satisfechas por este durante el año anterior a la declaración de concurso para adquirir bienes o derechos a título oneroso. Si se acreditaba que la contraprestación procedía directa o indirectamente del patrimonio del concursado, se presumía la donación de la totalidad. Estas presunciones no operaban cuando los cónyuges estuvieran separados judicialmente o de hecho al realizarse el acto.
+
+Posteriormente, la Ley 15/2015 dio nueva redacción al art. 1442 CC, que pasó a remitirse de forma general a la legislación concursal en caso de declaración de concurso de uno de los cónyuges. Entre sus disposiciones destaca la presunción de que, en caso de concurso del titular de una cuenta indistinta, la totalidad del saldo pertenece a este, salvo prueba en contrario.
+
+4. REGLAS DE ADMINISTRACIÓN Y DISPOSICIÓN
+
+El art. 1437, tras atribuir a cada cónyuge los bienes que tuviera al iniciarse el régimen y los que adquiera después por cualquier título, establece también que corresponde a cada uno la administración, el goce y la libre disposición de esos bienes. En consecuencia, salvo en lo relativo al sostenimiento de las cargas del matrimonio, el régimen de separación de bienes parte de que cada cónyuge actúa respecto de su propio patrimonio como si no estuviera casado, dada la plena separación patrimonial existente entre ambos.
+
+No obstante, el art. 1439 contempla el supuesto de que uno de los cónyuges administre o gestione bienes o intereses del otro, previendo así que, pese a la regla general de autonomía patrimonial, uno de ellos pueda intervenir en el ámbito patrimonial reservado al otro como titular de los bienes. Sin embargo, conforme al principio del art. 71, ningún cónyuge puede atribuirse la representación del otro si no le ha sido conferida, por lo que tales actos de administración o disposición deben fundarse en un poder otorgado al efecto o, al menos, en circunstancias que permitan deducir de forma tácita la conformidad del otro cónyuge.
+
+Por ello, la gestión de los asuntos patrimoniales del otro se reconduce al ámbito del mandato o, en su caso, de la gestión de negocios sin mandato. De ahí que el art. 1439 disponga que el cónyuge que actúe tendrá las mismas obligaciones y responsabilidades que un mandatario, aunque no estará obligado a rendir cuentas de los frutos percibidos y consumidos, salvo que se pruebe que los destinó a atenciones distintas del levantamiento de las cargas del matrimonio.
+
+5. EL SOSTENIMIENTO DE LAS CARGAS DEL MATRIMONIO
+
+Aunque en el régimen de separación de bienes exista una clara disgregación patrimonial, la convivencia matrimonial exige atender los gastos y obligaciones derivados de la vida familiar. Por ello, también en este régimen rige la regla general de que los bienes de ambos cónyuges quedan sujetos al levantamiento de las cargas del matrimonio. El art. 1438 concreta esta idea al disponer que los cónyuges contribuirán a su sostenimiento, comprendiendo en tales cargas los gastos necesarios para la familia, especialmente los relativos a los hijos, la asistencia sanitaria y la atención del hogar.
+
+5.1. La contribución al sostenimiento de las cargas del matrimonio
+
+La obligación de contribuir presenta aquí rasgos propios, ya que, al no existir patrimonio común, es necesario determinar cómo debe hacerse esa aportación. El art. 1438 establece que, a falta de convenio, los cónyuges contribuirán proporcionalmente a sus respectivos recursos económicos.
+
+No obstante, esa contribución puede regularse libremente por acuerdo entre ellos, sin que el Código imponga un criterio igualitario ni exija capitulaciones matrimoniales para ello. En defecto de pacto, la regla subsidiaria no es la contribución por mitad, sino la proporcionalidad según el conjunto de bienes, rentas e ingresos de cada cónyuge.
+
+5.2. La valoración del trabajo doméstico
+
+La reforma de 1981 introdujo la novedad de reconocer expresamente que el trabajo para la casa se computa como contribución a las cargas del matrimonio y que, al extinguirse el régimen, da derecho a una compensación fijada por el juez si no existe acuerdo. La jurisprudencia interpretativa de este inciso excluye que para obtener esa compensación sea necesario acreditar un incremento patrimonial del otro cónyuge. La dedicación a las tareas domésticas, especialmente cuando recae de forma principal sobre uno de los cónyuges y comprende la atención y educación de los hijos, constituye una aportación relevante al sostenimiento familiar y debe ser tenida en cuenta tanto durante la vigencia del régimen como al extinguirse.
+
+El precepto plantea, sin embargo, la dificultad de explicar por qué el trabajo doméstico, además de computarse como contribución, debe ser también compensado, lo que sugiere una doble valoración económica. Pese a ello, el sentido de la norma parece vincularse a la tradicional minusvaloración del trabajo doméstico y a la voluntad de proteger al cónyuge que sacrifica su capacidad laboral o profesional en beneficio de la familia y del otro cónyuge, especialmente en un régimen en el que quien no obtiene ingresos no participa en los del otro. El texto añade que algunas legislaciones autonómicas contienen reglas semejantes, formuladas de manera más amplia, y recuerda finalmente que el baremo de daños personales en accidentes de circulación ha reconocido también relevancia económica al trabajo doméstico al prever indemnización por lucro cesante para quienes dejan de realizarlo por causa del accidente.
+
+6. LA RESPONSABILIDAD POR DEUDAS
+
+En materia de deudas frente a terceros, debe distinguirse entre las deudas propias de cada cónyuge y aquellas que, aunque hayan sido asumidas por uno solo, queden comprendidas en el ejercicio de la potestad doméstica. Para delimitar qué debe entenderse por deuda propia de uno de los cónyuges, el texto remite, con las matizaciones oportunas, a lo ya expuesto al tratar el régimen de gananciales.
+
+6.1. Las deudas propias de uno de los cónyuges
+
+El art. 1440 establece que las obligaciones contraídas por cada cónyuge son de su exclusiva responsabilidad. Por tanto, el acreedor no puede dirigirse contra el patrimonio privativo del otro.
+
+Esta es una de las razones por las que el régimen de separación de bienes resulta especialmente adecuado cuando uno de los cónyuges desarrolla actividades empresariales o negociales cuyos riesgos patrimoniales se pretende aislar del patrimonio del otro, a diferencia de lo que ocurre en el régimen de gananciales, donde los bienes gananciales pueden responder subsidiariamente incluso de deudas propias de uno de los cónyuges.
+
+6.2. Las deudas asumidas en virtud de la potestad doméstica
+
+Distinto es el caso de las obligaciones contraídas en el ejercicio de la potestad doméstica ordinaria. En este supuesto, conforme al art. 1440, ambos cónyuges responden en la forma prevista por los arts. 1319 y 1438. Así, el cónyuge no deudor responderá subsidiariamente con sus bienes y en la proporción que resulte del convenio existente entre ambos o, en su defecto, de sus respectivos recursos económicos.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1": "La separación de bienes se caracteriza por la inexistencia de patrimonio común, de modo que cada cónyuge conserva la titularidad, administración y disposición de sus bienes, aunque ambos deben contribuir con sus propios recursos a las cargas del matrimonio.",
+"2": "La separación de bienes puede surgir por voluntad de los cónyuges o aplicarse de forma incidental como régimen supletorio cuando se excluyen los gananciales sin fijar otro régimen o se extingue el régimen previo sin sustituirlo.",
+"2.1": "La separación de bienes convencional exige capitulaciones matrimoniales y permite a los cónyuges configurar libremente su régimen, quedando la regulación legal subordinada a lo expresamente pactado.",
+"2.2": "La separación de bienes incidental opera por imposición legal en supuestos ajenos a la voluntad de los cónyuges, especialmente cuando desaparece un régimen económico anterior y no se establece otro distinto.",
+"3": "En este régimen cada cónyuge mantiene un patrimonio propio y autónomo, sin perjuicio de que en la separación convencional puedan pactarse matizaciones respecto de determinados bienes.",
+"3.1": "La inexistencia de masa conyugal implica que pertenecen a cada cónyuge tanto los bienes que tenía al iniciarse el régimen como los que adquiera después por cualquier título.",
+"3.2": "Cuando no pueda probarse a cuál de los cónyuges pertenece un bien o derecho, este se presume perteneciente a ambos por mitad, aplicándose entonces el régimen de copropiedad ordinaria.",
+"3.3": "En caso de concurso de uno de los cónyuges, el Código remite a la legislación concursal, que contempla reglas presuntivas para proteger la masa activa, entre ellas la atribución al concursado del saldo de una cuenta indistinta salvo prueba en contrario.",
+"4": "Cada cónyuge administra, disfruta y dispone libremente de sus bienes, pero si uno gestiona bienes del otro solo puede hacerlo con poder expreso o consentimiento deducible, quedando sometido al régimen del mandato o de la gestión de negocios.",
+"5": "Aunque no exista patrimonio común, ambos cónyuges deben atender las cargas del matrimonio, que comprenden los gastos familiares necesarios, especialmente los relativos a hijos, asistencia sanitaria y hogar.",
+"5.1": "La contribución a las cargas puede pactarse libremente y, a falta de acuerdo, debe hacerse en proporción a los recursos económicos de cada cónyuge, no por mitad.",
+"5.2": "El trabajo doméstico se computa como contribución a las cargas del matrimonio y, al extinguirse el régimen, puede generar una compensación judicial sin necesidad de probar incremento patrimonial del otro cónyuge, en atención a su valor económico y a la protección del cónyuge que sacrifica su actividad profesional.",
+"6": "La responsabilidad por deudas exige distinguir entre las obligaciones propias de cada cónyuge y las contraídas en el ejercicio de la potestad doméstica, pues no producen las mismas consecuencias frente a terceros.",
+"6.1": "Las deudas propias de un cónyuge solo gravan su patrimonio, lo que convierte a la separación de bienes en un régimen útil para aislar los riesgos patrimoniales derivados de actividades empresariales o profesionales.",
+"6.2": "Las deudas asumidas en el ejercicio de la potestad doméstica comprometen también al otro cónyuge, que responde subsidiariamente con sus bienes en la proporción fijada por convenio o, en su defecto, según sus recursos económicos."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1
+
+// [1]
+Q: ¿Qué caracteriza al régimen de separación de bienes en relación con el patrimonio de los cónyuges?
+A) La existencia de una masa patrimonial común administrada separadamente por cada cónyuge.
+B) La atribución conjunta de todos los bienes adquiridos durante el matrimonio a ambos cónyuges.
+C) La inexistencia de un patrimonio común, conservando cada cónyuge la titularidad, administración y disposición de sus propios bienes.
+OK: C
+EXP: El rasgo definidor del régimen es que no hay masa común y cada cónyuge mantiene el control jurídico de sus bienes propios.
+
+// [2]
+Q: En el régimen de separación de bienes, ¿cómo se articula la contribución a las cargas del matrimonio?
+A) Cada cónyuge debe contribuir con cargo a sus propios bienes, porque no existe patrimonio común.
+B) Las cargas del matrimonio se satisfacen exclusivamente con los bienes del cónyuge con mayores ingresos.
+C) Las cargas del matrimonio solo pueden atenderse con los bienes adquiridos después del matrimonio.
+OK: A
+EXP: Aunque no exista patrimonio común, ambos cónyuges siguen obligados a contribuir al sostenimiento de las cargas matrimoniales con sus respectivos bienes.
+
+// [3]
+Q: ¿Qué significado tenía tradicionalmente el régimen de separación de bienes antes de la reforma de 1981?
+A) Era el régimen general preferente en el Derecho común por su mayor seguridad patrimonial.
+B) Tenía una regulación escasa y un sentido sancionador, con una relevancia práctica residual.
+C) Funcionaba ya como régimen legal supletorio de segundo grado con amplia aplicación práctica.
+OK: B
+EXP: Antes de 1981 su regulación era insuficiente, se vinculaba a supuestos con infracción de prohibiciones o impedimentos y tenía un papel claramente residual frente a gananciales.
+
+// [4]
+Q: ¿Cuál es la posición normativa actual del régimen de separación de bienes en el Código Civil?
+A) Ha quedado relegado a un uso puramente excepcional sin función supletoria.
+B) Se ha convertido en el único régimen económico matrimonial aplicable en defecto de pacto.
+C) Actúa como régimen legal supletorio de segundo grado, lo que refuerza su relevancia jurídica.
+OK: C
+EXP: El texto destaca que hoy la separación de bienes ocupa una posición normativa relevante al operar como régimen legal supletorio de segundo grado.
+
+// [5]
+Q: ¿Por qué puede resultar especialmente aconsejable el régimen de separación de bienes cuando uno de los cónyuges desarrolla una actividad profesional arriesgada?
+A) Porque las deudas propias de un cónyuge no afectan al patrimonio privativo del otro, aunque a veces los acreedores procuren una responsabilidad conjunta.
+B) Porque transforma automáticamente todas las deudas profesionales en cargas comunes del matrimonio.
+C) Porque impide en todo caso que los acreedores reclamen responsabilidad a ambos cónyuges.
+OK: A
+EXP: Su utilidad práctica radica en que protege el patrimonio privativo del otro cónyuge frente a deudas propias, sin perjuicio de que los acreedores intenten exigir responsabilidad conjunta.
+
+// [6]
+Q: ¿Qué crítica principal se formula al régimen de separación de bienes desde la perspectiva de la vida matrimonial?
+A) Que elimina la libertad de los cónyuges para escoger régimen económico matrimonial.
+B) Que exige la creación de un patrimonio común para evitar desequilibrios entre cónyuges.
+C) Que la estricta separación patrimonial puede ser difícil de sostener en la práctica y generar situaciones de injusticia al impedir la participación en las vicisitudes patrimoniales del otro.
+OK: C
+EXP: El texto subraya que la separación estricta puede resultar poco realista dentro de una comunidad de vida y provocar desigualdades o injusticias entre los cónyuges.
+
+// [7]
+Q: Según el art. 1315 citado en el texto, ¿a quién corresponde decidir entre el régimen de separación de bienes y los demás regímenes económicos matrimoniales?
+A) A los cónyuges, que pueden optar por el régimen que consideren más conveniente o atractivo.
+B) Al juez, en función de la situación patrimonial previa de cada cónyuge.
+C) A los acreedores, cuando exista riesgo económico derivado de la actividad de uno de los cónyuges.
+OK: A
+EXP: La elección del régimen corresponde a los cónyuges, conforme al principio de libertad de elección recogido en el art. 1315.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 2
+
+// [8]
+Q: ¿Qué idea central expresa el art. 1435 sobre el origen del régimen de separación de bienes?
+A) El régimen de separación de bienes solo nace por decisión judicial en situaciones de crisis matrimonial.
+B) El régimen de separación de bienes surge exclusivamente cuando los cónyuges pactan reglas completas en capitulaciones matrimoniales.
+C) El régimen de separación de bienes puede nacer por convenio de los cónyuges o por supuestos en que la ley lo impone al extinguirse otro régimen sin sustitución.
+OK: C
+EXP: El precepto contempla tanto un origen voluntario como un origen derivado de situaciones legalmente previstas.
+
+// [9]
+Q: ¿Qué diferencia conceptual existe entre el origen convencional y el origen incidental del régimen de separación de bienes?
+A) El origen convencional descansa en la voluntad de los cónyuges, mientras que el incidental deriva de supuestos legales ajenos a esa voluntad.
+B) El origen convencional solo opera tras la disolución del matrimonio, mientras que el incidental actúa únicamente antes de su celebración.
+C) El origen convencional exige intervención judicial, mientras que el incidental nace siempre de un acuerdo capitular completo.
+OK: A
+EXP: La distinción básica estriba en que uno responde a la autonomía de los cónyuges y el otro a la aplicación supletoria prevista por la ley.
+
+#ID = 2.1
+
+// [10]
+Q: En el régimen de separación de bienes convencional del art. 1435.1, ¿qué requisito resulta necesario para su establecimiento?
+A) La previa disolución judicial de la sociedad de gananciales.
+B) El otorgamiento de capitulaciones matrimoniales.
+C) La simple exclusión verbal del régimen de gananciales por los cónyuges.
+OK: B
+EXP: El texto vincula expresamente este supuesto al otorgamiento de capitulaciones matrimoniales.
+
+// [11]
+Q: En la separación de bienes convencional, ¿qué relación existe entre las capitulaciones matrimoniales y las reglas legales del régimen?
+A) Las reglas legales prevalecen siempre sobre cualquier pacto capitular.
+B) Las capitulaciones solo son válidas si reproducen íntegramente el modelo legal.
+C) Los pactos capitulares prevalecen y las reglas legales se aplican solo en lo que no los contradiga.
+OK: C
+EXP: La libertad de configuración permite que lo pactado por los cónyuges desplace al régimen legal en lo incompatible.
+
+// [12]
+Q: ¿Qué consecuencia tiene para el modelo legal del régimen de separación de bienes el hecho de que los cónyuges lo hayan elegido voluntariamente?
+A) El modelo legal deja de tener carácter imperativo para quienes han optado voluntariamente por ese régimen.
+B) El modelo legal se convierte en indisponible y excluye toda modulación pactada por los cónyuges.
+C) El modelo legal solo puede aplicarse si un juez confirma previamente su contenido.
+OK: A
+EXP: Al tratarse de una opción voluntaria, el régimen legal funciona de manera supletoria respecto de lo expresamente pactado.
+
+#ID = 2.2
+
+// [13]
+Q: ¿Cómo se caracteriza el régimen de separación de bienes incidental en relación con la voluntad de los cónyuges?
+A) Como un régimen que solo puede surgir de un acuerdo completo y expreso entre ambos cónyuges.
+B) Como un régimen que nace por circunstancias ajenas a la voluntad de los cónyuges.
+C) Como un régimen que depende siempre de que los cónyuges soliciten su aplicación al juez.
+OK: B
+EXP: Su nota distintiva es que no procede de una decisión configuradora de los cónyuges, sino de supuestos legalmente previstos.
+
+// [14]
+Q: ¿Qué supuesto anómalo menciona el texto dentro del régimen de separación de bienes incidental?
+A) La exclusión del régimen de gananciales en capitulaciones sin fijar las reglas del nuevo régimen patrimonial.
+B) La sustitución expresa del régimen de gananciales por el de participación con regulación detallada.
+C) La elección inicial de la separación de bienes mediante capitulaciones plenamente configuradas.
+OK: A
+EXP: El supuesto anómalo consiste en excluir expresamente gananciales sin determinar las reglas patrimoniales aplicables, lo que conduce a la separación incidental.
+
+// [15]
+Q: ¿Qué ocurre, según el texto, cuando se extingue un régimen económico matrimonial previo y no es sustituido por otro distinto?
+A) Se restablece automáticamente la sociedad de gananciales.
+B) Queda suspendido el régimen económico matrimonial hasta nuevo acuerdo.
+C) Pasa a aplicarse el régimen de separación de bienes.
+OK: C
+EXP: El texto señala que, extinguida la sociedad de gananciales o el régimen de participación sin sustitución, entra en juego la separación de bienes.
+
+// [16]
+Q: ¿Cuál de los siguientes supuestos se menciona expresamente como caso de aplicación del régimen de separación de bienes incidental?
+A) La modificación pactada del contenido de las capitulaciones matrimoniales sin exclusión de gananciales.
+B) La disolución de la sociedad de gananciales por embargo de bienes comunes por deudas propias de uno de los cónyuges.
+C) La adquisición conjunta de bienes privativos por ambos cónyuges constante matrimonio.
+OK: B
+EXP: El texto incluye expresamente ese caso como uno de los supuestos en que la separación de bienes pasa a ser aplicable.
+
+// [17]
+Q: ¿Qué relevancia tienen el art. 1393 y la remisión del art. 1415 en relación con el régimen de separación de bienes incidental?
+A) Permiten extender al régimen de participación los supuestos de disolución judicial que determinan la aplicación de la separación de bienes.
+B) Excluyen toda aplicación de la separación de bienes cuando el régimen previo sea el de participación.
+C) Limitan la separación de bienes incidental a los casos de capitulaciones matrimoniales incompletas.
+OK: A
+EXP: El texto indica que los supuestos del art. 1393 se consideran también aplicables al régimen de participación por la remisión del art. 1415.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 3
+
+// [18]
+Q: ¿Cuál es la regla general sobre la titularidad de los bienes en el régimen de separación de bienes?
+A) Los bienes adquiridos durante el matrimonio pasan a formar una masa común salvo pacto en contrario.
+B) Los bienes anteriores al matrimonio son privativos, pero los posteriores se presumen comunes.
+C) Cada cónyuge mantiene un patrimonio propio y separado, dotado de autonomía respecto del otro.
+OK: C
+EXP: La idea central del régimen es la existencia de dos patrimonios separados, no de una masa común compartida.
+
+// [19]
+Q: En el régimen de separación de bienes, ¿en qué supuesto pueden introducirse matizaciones sobre la consideración de determinados bienes?
+A) En los supuestos de separación de bienes de origen convencional mediante pacto de los cónyuges.
+B) En todo caso, por decisión unilateral de cualquiera de los cónyuges.
+C) Solo cuando exista una declaración judicial posterior al matrimonio.
+OK: A
+EXP: El texto solo admite matizaciones pactadas en la separación de bienes de origen convencional.
+
+#ID = 3.1
+
+// [20]
+Q: Según el art. 1437, ¿qué bienes pertenecen a cada cónyuge en el régimen de separación de bienes?
+A) Únicamente los bienes que tuviera antes del matrimonio, quedando los posteriores sometidos a comunidad.
+B) Los bienes que tuviera al iniciarse el régimen y los que adquiera después por cualquier título.
+C) Solo los bienes adquiridos a título gratuito, pero no los procedentes del trabajo o la profesión.
+OK: B
+EXP: El precepto atribuye a cada cónyuge tanto los bienes iniciales como los adquiridos después por cualquier causa.
+
+// [21]
+Q: ¿Qué alcance tiene en el régimen de separación de bienes la inexistencia de masa conyugal respecto del origen de los bienes?
+A) Solo se proyecta sobre los bienes adquiridos antes del matrimonio.
+B) Se limita a los bienes obtenidos por herencia o donación.
+C) Comprende tanto los bienes adquiridos antes o después del matrimonio como los procedentes de actos gratuitos o de la actividad laboral o profesional.
+OK: C
+EXP: El texto precisa que todos esos bienes pertenecen separadamente a uno u otro cónyuge.
+
+#ID = 3.2
+
+// [22]
+Q: ¿Por qué la ausencia de patrimonio común en el régimen de separación de bienes exige identificar con precisión la pertenencia de los bienes?
+A) Porque es necesario determinar, al liquidar, qué bienes integran cada patrimonio privativo o el ajuar familiar.
+B) Porque todos los bienes muebles e inmuebles deben inscribirse obligatoriamente a nombre de ambos cónyuges.
+C) Porque la ley prohíbe cualquier forma de copropiedad entre los cónyuges.
+OK: A
+EXP: La identificación de la titularidad resulta clave para saber qué corresponde a cada patrimonio en el momento de la liquidación.
+
+// [23]
+Q: En la eventualidad de la copropiedad ordinaria, ¿respecto de qué clase de bienes señala el texto una dificultad especial para acreditar la pertenencia?
+A) Respecto de los inmuebles, por carecer normalmente de documentación suficiente.
+B) Respecto de los bienes muebles, por ser más problemática su identificación.
+C) Respecto del ajuar familiar, por quedar siempre excluido de toda atribución dominical.
+OK: B
+EXP: El texto indica que la dificultad apenas existe en inmuebles, pero sí aparece de modo especial en los bienes muebles.
+
+// [24]
+Q: ¿Qué consecuencia establece el art. 1441 cuando no puede acreditarse a cuál de los cónyuges pertenece un bien o derecho?
+A) El bien se atribuye íntegramente al cónyuge que lo posea materialmente.
+B) El bien queda sin titularidad hasta que se practique su liquidación judicial.
+C) El bien o derecho se entiende perteneciente a ambos por mitad y se aplica la copropiedad ordinaria.
+OK: C
+EXP: La falta de prueba sobre la pertenencia conduce a una atribución por mitad y a la aplicación del régimen de comunidad ordinaria.
+
+#ID = 3.3
+
+// [25]
+Q: En caso de concurso de uno de los cónyuges sometidos al régimen de separación de bienes, ¿qué criterio seguía la legislación concursal anterior respecto de ciertos bienes adquiridos por el otro cónyuge?
+A) Presumía, en beneficio de la masa activa, una donación de la mitad de las contraprestaciones satisfechas por el cónyuge no concursado durante el año anterior para adquirir bienes o derechos a título oneroso.
+B) Consideraba nulas todas las adquisiciones realizadas por el otro cónyuge en los dos años anteriores al concurso.
+C) Atribuía automáticamente al cónyuge no concursado la propiedad exclusiva de todos los bienes adquiridos onerosamente.
+OK: A
+EXP: La legislación anterior establecía una presunción favorable a la masa activa sobre esas contraprestaciones, ampliable a la totalidad si se probaba su procedencia del patrimonio del concursado.
+
+// [26]
+Q: Tras la nueva redacción del art. 1442 CC por la Ley 15/2015, ¿qué regla destaca el texto en caso de concurso del titular de una cuenta indistinta?
+A) Que la mitad del saldo pertenece necesariamente al otro cotitular.
+B) Que la totalidad del saldo se presume del concursado salvo prueba en contrario.
+C) Que el saldo queda bloqueado sin atribución patrimonial posible hasta la conclusión del concurso.
+OK: B
+EXP: El texto subraya esta presunción específica, aunque admite prueba en contrario sobre la titularidad del saldo.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 4
+
+// [27]
+Q: ¿Qué regla general establece el art. 1437 sobre la administración y disposición en el régimen de separación de bienes?
+A) La administración de los bienes corresponde conjuntamente a ambos cónyuges, aunque la disposición sea individual.
+B) La administración y disposición de los bienes propios queda sujeta en todo caso a autorización judicial.
+C) Cada cónyuge tiene la administración, el goce y la libre disposición de sus propios bienes.
+OK: C
+EXP: El precepto atribuye a cada cónyuge el control completo sobre sus bienes, en coherencia con la separación patrimonial.
+
+// [28]
+Q: ¿Cómo actúa cada cónyuge respecto de su propio patrimonio en el régimen de separación de bienes, salvo en materia de cargas del matrimonio?
+A) Como si no estuviera casado, dada la plena separación patrimonial entre ambos.
+B) Como administrador parcial de una masa conyugal compartida.
+C) Como representante necesario del otro cónyuge en los actos patrimoniales ordinarios.
+OK: A
+EXP: La regla general del régimen parte de la autonomía patrimonial de cada cónyuge respecto de sus propios bienes.
+
+// [29]
+Q: ¿Qué supuesto contempla el art. 1439 dentro del régimen de separación de bienes?
+A) La conversión automática de todos los bienes privativos en bienes comunes.
+B) La intervención de un cónyuge en la administración o gestión de bienes o intereses del otro.
+C) La atribución legal de representación recíproca entre los cónyuges para todos los actos patrimoniales.
+OK: B
+EXP: El precepto prevé que, excepcionalmente, un cónyuge pueda gestionar bienes o intereses del otro pese a la regla general de autonomía.
+
+// [30]
+Q: Según el principio del art. 71, ¿qué límite existe a la representación entre cónyuges en materia patrimonial?
+A) Cualquier cónyuge puede atribuirse la representación del otro si actúa en interés familiar.
+B) La representación entre cónyuges se presume en todos los actos de administración ordinaria.
+C) Ningún cónyuge puede atribuirse la representación del otro si este no se la ha conferido.
+OK: C
+EXP: El texto rechaza una representación automática entre cónyuges y exige que haya sido conferida por el titular.
+
+// [31]
+Q: ¿En qué fundamento deben apoyarse los actos de administración o disposición que un cónyuge realiza sobre bienes del otro?
+A) En un poder otorgado al efecto o, al menos, en circunstancias que permitan deducir tácitamente la conformidad del otro cónyuge.
+B) En la mera existencia del matrimonio como título bastante para actuar sobre bienes ajenos.
+C) En la presunción legal de comunidad patrimonial propia de la separación de bienes.
+OK: A
+EXP: La actuación sobre bienes del otro requiere autorización expresa o una conformidad tácita deducible de las circunstancias.
+
+// [32]
+Q: ¿A qué ámbito jurídico se reconduce la gestión de los asuntos patrimoniales de un cónyuge por el otro en el régimen de separación de bienes?
+A) Exclusivamente al régimen de comunidad ordinaria entre cónyuges.
+B) Al mandato o, en su caso, a la gestión de negocios sin mandato.
+C) A una representación legal indisponible derivada del vínculo matrimonial.
+OK: B
+EXP: El texto encuadra esa actuación en figuras generales de gestión ajena, no en una representación automática por matrimonio.
+
+// [33]
+Q: ¿Qué régimen de obligaciones y responsabilidades establece el art. 1439 para el cónyuge que gestiona bienes o intereses del otro?
+A) Tiene las mismas obligaciones y responsabilidades que un mandatario, aunque no debe rendir cuentas de los frutos percibidos y consumidos salvo destino ajeno a las cargas del matrimonio.
+B) Queda exento de responsabilidad por actuar dentro de una relación conyugal y familiar.
+C) Responde solo por dolo, sin quedar sometido a las reglas propias del mandato.
+OK: A
+EXP: El precepto equipara su posición a la del mandatario, con la particularidad relativa a los frutos consumidos aplicados a las cargas matrimoniales.
+    `;
+
+
+    const BANCO_5 = ` 
+#ID = 5
+
+// [34]
+Q: ¿Qué principio rige en el régimen de separación de bienes respecto del sostenimiento de las cargas del matrimonio?
+A) Solo responde de las cargas del matrimonio el cónyuge que obtiene ingresos periódicos.
+B) Las cargas del matrimonio se atienden exclusivamente con el patrimonio del titular de la vivienda familiar.
+C) Los bienes de ambos cónyuges quedan sujetos al levantamiento de las cargas del matrimonio pese a la separación patrimonial.
+OK: C
+EXP: La separación de bienes no elimina la obligación común de atender los gastos derivados de la vida familiar.
+
+// [35]
+Q: ¿Qué comprende el concepto de cargas del matrimonio según el art. 1438 en el régimen de separación de bienes?
+A) Los gastos necesarios para la familia, en especial los relativos a los hijos, la asistencia sanitaria y la atención del hogar.
+B) Solo los gastos extraordinarios derivados de crisis económicas sobrevenidas en el matrimonio.
+C) Únicamente las obligaciones patrimoniales asumidas conjuntamente en escritura pública.
+OK: A
+EXP: El precepto concreta las cargas matrimoniales como gastos necesarios para la familia, con especial referencia a hijos, salud y hogar.
+
+#ID = 5.1
+
+// [36]
+Q: En el régimen de separación de bienes, ¿qué criterio subsidiario fija el art. 1438 para la contribución al sostenimiento de las cargas del matrimonio cuando no existe convenio?
+A) La contribución por mitad entre ambos cónyuges con independencia de sus recursos.
+B) La contribución proporcional a los respectivos recursos económicos de cada cónyuge.
+C) La contribución exclusiva del cónyuge que administre el patrimonio familiar.
+OK: B
+EXP: A falta de pacto, la aportación no se hace por mitades, sino en proporción a los recursos de cada uno.
+
+// [37]
+Q: ¿Qué margen de autonomía reconoce el art. 1438 a los cónyuges para regular la contribución al sostenimiento de las cargas del matrimonio?
+A) Ninguno, porque el Código impone siempre una contribución igualitaria e inderogable.
+B) Solo permite pactar la contribución mediante capitulaciones matrimoniales.
+C) Permite regular libremente la contribución por acuerdo entre los cónyuges, sin imponer criterio igualitario ni exigir capitulaciones.
+OK: C
+EXP: El texto destaca la libertad de pacto y niega que el Código exija igualdad matemática o capitulaciones para fijar esa contribución.
+
+// [38]
+Q: ¿Qué elementos deben tomarse en consideración para aplicar la regla subsidiaria de proporcionalidad del art. 1438?
+A) El conjunto de bienes, rentas e ingresos de cada cónyuge.
+B) Solo el salario mensual neto de cada cónyuge.
+C) Únicamente los bienes adquiridos constante matrimonio.
+OK: A
+EXP: La proporcionalidad se mide atendiendo al conjunto de recursos económicos de cada cónyuge, no a un solo parámetro aislado.
+
+#ID = 5.2
+
+// [39]
+Q: ¿Qué novedad introdujo la reforma de 1981 sobre la valoración del trabajo doméstico en el régimen de separación de bienes?
+A) Excluyó el trabajo doméstico del concepto de cargas del matrimonio.
+B) Reconoció que el trabajo para la casa computa como contribución a las cargas y puede generar compensación al extinguirse el régimen.
+C) Limitó toda compensación por trabajo doméstico a los casos de previa capitulación matrimonial.
+OK: B
+EXP: La reforma atribuyó valor jurídico al trabajo doméstico tanto como contribución durante el régimen como en forma de posible compensación al extinguirse.
+
+// [40]
+Q: Según la jurisprudencia citada sobre la compensación por trabajo doméstico, ¿qué no es necesario acreditar para obtenerla?
+A) No es necesario acreditar un incremento patrimonial del otro cónyuge.
+B) No es necesario acreditar la dedicación a tareas domésticas o al cuidado de los hijos.
+C) No es necesario que el régimen económico haya llegado a extinguirse.
+OK: A
+EXP: El texto afirma justamente que no se exige probar que el otro cónyuge haya incrementado su patrimonio para que proceda la compensación.
+
+// [41]
+Q: ¿Por qué se considera relevante el trabajo doméstico en el sostenimiento de las cargas del matrimonio?
+A) Porque sustituye siempre toda contribución económica directa de los cónyuges.
+B) Porque solo tiene valor cuando se realiza conjuntamente por ambos cónyuges.
+C) Porque constituye una aportación relevante al sostenimiento familiar, especialmente cuando uno de los cónyuges asume principalemente las tareas del hogar y la atención de los hijos.
+OK: C
+EXP: El texto destaca la relevancia económica y familiar de esa dedicación, sobre todo cuando recae principalmente sobre uno de los cónyuges.
+
+// [42]
+Q: ¿Qué problema conceptual señala el texto respecto de la compensación del trabajo doméstico en el art. 1438?
+A) Que el trabajo doméstico no puede valorarse nunca en términos económicos.
+B) Que la compensación judicial excluye cualquier valoración del trabajo doméstico como contribución.
+C) Que el precepto parece atribuir una doble valoración económica al trabajo doméstico al computarlo como contribución y además compensarlo.
+OK: C
+EXP: El propio texto subraya esa dificultad explicativa: el trabajo doméstico se valora como contribución y, además, puede dar lugar a compensación.
+
+// [43]
+Q: ¿Qué finalidad protectora parece inspirar la compensación por trabajo doméstico en el régimen de separación de bienes?
+A) Proteger al cónyuge que sacrifica su capacidad laboral o profesional en beneficio de la familia y del otro cónyuge.
+B) Garantizar que ambos cónyuges participen automáticamente por mitad en todos los ingresos obtenidos durante el matrimonio.
+C) Sustituir el régimen de separación de bienes por una comunidad universal de ganancias.
+OK: A
+EXP: La norma se orienta a corregir la minusvaloración del trabajo doméstico y a proteger a quien deja de desarrollar plenamente su actividad laboral o profesional por atender a la familia.
+
+#ID = 6
+
+// [44]
+Q: ¿Qué distinción básica debe hacerse en el régimen de separación de bienes para determinar la responsabilidad por deudas frente a terceros?
+A) Entre deudas anteriores y posteriores al matrimonio exclusivamente.
+B) Entre deudas garantizadas con bienes muebles y deudas garantizadas con inmuebles.
+C) Entre las deudas propias de cada cónyuge y las deudas asumidas en el ejercicio de la potestad doméstica.
+OK: C
+EXP: El texto parte de esa distinción para fijar después un régimen de responsabilidad diferente en cada caso.
+
+#ID = 6.1
+
+// [45]
+Q: ¿Qué regla establece el art. 1440 sobre las deudas propias de uno de los cónyuges en el régimen de separación de bienes?
+A) Las obligaciones contraídas por cada cónyuge son de su exclusiva responsabilidad.
+B) Las obligaciones de uno de los cónyuges vinculan automáticamente al otro por razón del matrimonio.
+C) Las deudas propias se satisfacen siempre por mitad con bienes de ambos cónyuges.
+OK: A
+EXP: El precepto atribuye la responsabilidad de las obligaciones propias únicamente al cónyuge que las contrajo.
+
+// [46]
+Q: ¿Qué consecuencia tiene para el acreedor la regla de responsabilidad exclusiva del art. 1440 respecto de las deudas propias de un cónyuge?
+A) Puede elegir libremente entre dirigirse contra el patrimonio del deudor o contra el del otro cónyuge.
+B) No puede dirigirse contra el patrimonio privativo del otro cónyuge.
+C) Debe reclamar primero contra ambos cónyuges y solo después contra el deudor principal.
+OK: B
+EXP: La separación patrimonial impide que el acreedor alcance el patrimonio privativo del cónyuge no deudor.
+
+// [47]
+Q: ¿Por qué el régimen de separación de bienes resulta especialmente adecuado cuando uno de los cónyuges desarrolla actividades empresariales o negociales?
+A) Porque convierte en comunes las ganancias y las pérdidas derivadas de la actividad empresarial.
+B) Porque excluye toda posibilidad de responsabilidad patrimonial frente a terceros.
+C) Porque permite aislar del patrimonio del otro los riesgos patrimoniales propios de esa actividad.
+OK: C
+EXP: Una de las ventajas del régimen es precisamente separar los riesgos patrimoniales del cónyuge empresario del patrimonio privativo del otro.
+
+// [48]
+Q: ¿Qué diferencia señala el texto entre el régimen de separación de bienes y el régimen de gananciales en materia de deudas propias?
+A) En el régimen de gananciales, los bienes gananciales pueden responder subsidiariamente incluso de deudas propias de uno de los cónyuges.
+B) En el régimen de gananciales, las deudas propias nunca producen efecto patrimonial alguno.
+C) En el régimen de gananciales, el patrimonio privativo del otro cónyuge responde siempre de forma principal.
+OK: A
+EXP: El texto contrapone la separación de bienes, que aísla patrimonios, con gananciales, donde existe una posible responsabilidad subsidiaria de bienes gananciales.
+
+#ID = 6.2
+
+// [49]
+Q: En las deudas asumidas en virtud de la potestad doméstica ordinaria, ¿cómo responden los cónyuges según el art. 1440?
+A) Solo responde el cónyuge que contrató la obligación, sin excepción alguna.
+B) Ambos cónyuges responden en la forma prevista por los arts. 1319 y 1438.
+C) Responden siempre por mitad con independencia de sus recursos económicos o de cualquier convenio.
+OK: B
+EXP: El texto remite expresamente a los arts. 1319 y 1438 para concretar la responsabilidad en este tipo de obligaciones.
+
+// [50]
+Q: ¿Cómo responde el cónyuge no deudor por las deudas contraídas en ejercicio de la potestad doméstica ordinaria?
+A) Responde subsidiariamente con sus bienes y en la proporción fijada por el convenio entre los cónyuges o, en su defecto, por sus respectivos recursos económicos.
+B) Responde de forma solidaria e ilimitada con todo su patrimonio en cualquier caso.
+C) No responde nunca, porque la deuda fue asumida solo por el otro cónyuge.
+OK: A
+EXP: La responsabilidad del cónyuge no deudor es subsidiaria y se mide según el pacto existente o, en su defecto, conforme a los recursos económicos de ambos.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
