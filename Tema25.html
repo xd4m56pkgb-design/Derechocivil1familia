@@ -1,0 +1,1719 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 25. Capacidad, discapacidad y sistemas de apoyo</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. INCAPACITACIÓN Y APOYO PARA EL EJERCICIO DE LA CAPACIDAD JURÍDICA: VIEJO Y NUEVO SISTEMA
+
+1.1. La redacción originaria del Código Civil y las primeras reformas: Leyes 13/1983 y 41/2003
+
+La redacción originaria del Código Civil partía de un sistema en el que determinadas circunstancias legalmente tasadas permitían privar a una persona de la capacidad de obrar, dando lugar a la incapacitación. Esa privación nunca afectaba a la capacidad jurídica, pero exigía establecer mecanismos de representación y defensa mediante la tutela de familia, integrada por tutor, protutor y Consejo de familia. Los menores no emancipados quedaban sujetos a tutela cuando sus padres no podían ejercer la patria potestad y, en los supuestos de conflicto de intereses con ellos, procedía el nombramiento de defensor judicial.
+
+La Ley 13/1983 transformó profundamente este esquema. Sustituyó la enumeración cerrada de causas de incapacitación por una fórmula general referida a enfermedades o deficiencias persistentes de carácter físico o psíquico que impidieran a la persona gobernarse por sí misma.
+
+Introdujo la curatela junto a la tutela y al defensor judicial, aunque dejando poco claras las fronteras entre tutela y curatela y concediendo al juez un amplio margen de configuración.
+
+Además, abandonó la tutela de familia y la reemplazó por una tutela sometida a la autoridad judicial. También permitió incapacitar a menores cuando fuese previsible la persistencia de la causa tras la mayoría de edad, lo que daba lugar a la patria potestad prorrogada o, en su defecto, a la tutela.
+
+La Ley 41/2003 desplazó el foco hacia la protección patrimonial de las personas con discapacidad mediante la creación de un patrimonio especialmente protegido, vinculado a la satisfacción de sus necesidades vitales y favorecido por aportaciones gratuitas de bienes y derechos. Esta norma partía de que la discapacidad y la incapacitación judicial no coincidían necesariamente, porque podía existir discapacidad sin que procediera una declaración judicial de incapacitación. Por ello, los beneficiarios de este patrimonio podían ser personas con discapacidad con determinados grados de minusvalía, con independencia de que concurrieran o no causas de incapacitación y de que hubieran sido o no incapacitadas judicialmente.
+
+1.2. La reforma normativa introducida por la Ley 8/2021, de 2 de junio, y la adaptación a la
+
+Convención de Nueva York de 2006, sobre derechos de las personas con discapacidad La reforma española en esta materia deriva de la ratificación de la Convención de Nueva York de 2006 y se fue construyendo progresivamente mediante diversas modificaciones legislativas orientadas a adaptar el ordenamiento interno a los derechos de las personas con discapacidad.
+
+Ese proceso culmina en el plano civil y procesal con la Ley 8/2021, en vigor desde el 3 de septiembre de 2021, que supone un cambio decisivo en la forma de entender la capacidad jurídica de estas personas.
+
+La Convención proclama que las personas con discapacidad tienen capacidad jurídica en igualdad de condiciones con las demás en todos los aspectos de la vida y obliga a los Estados a proporcionarles los apoyos necesarios para su ejercicio. Las medidas que se adopten deben respetar los derechos, la voluntad y las preferencias de la persona, ser proporcionales, adaptadas a sus circunstancias, aplicarse durante el menor tiempo posible y someterse a revisión periódica por una autoridad competente, independiente e imparcial. Frente al modelo anterior, basado en la sustitución en la toma de decisiones, la nueva regulación se inspira en la dignidad de la persona, en la tutela de sus derechos fundamentales y en el respeto a su libre voluntad, de modo que la persona con discapacidad pasa a ser, con carácter general, quien toma sus propias decisiones.
+
+En esta misma línea debe situarse la Ley 6/2022, que introduce como aspecto destacado la accesibilidad cognitiva, entendida como el conjunto de exigencias y pautas necesarias para garantizar la comprensión, la comunicación y la interacción de todas las personas con los entornos, bienes, servicios, procesos y procedimientos.
+
+1.3. Los principales pilares de la reforma: de la tutela a la curatela y de la representación a los
+
+apoyos La reforma abandona la lógica de sustitución de la voluntad y la sustituye por un sistema de asistencia en la toma de decisiones ajustado a las circunstancias concretas de cada persona.
+
+Frente al modelo uniforme de la incapacitación judicial, se impone una respuesta individualizada, sometida a los principios de necesidad y proporcionalidad y objeto de revisión constante. Dentro de este nuevo enfoque se otorga preferencia a las medidas voluntarias adoptadas anticipadamente por la propia persona, como la autocuratela, los poderes preventivos, la escritura pública de autoayuda o las instrucciones previas sobre el cuidado de la salud.
+
+Uno de los pilares esenciales es el fin de la incapacitación judicial como eje del sistema. El nuevo Título XI del Libro Primero del Código Civil pasa a centrarse en las medidas de apoyo a las personas con discapacidad para el ejercicio de su capacidad jurídica. El apoyo se concibe en sentido amplio, incluyendo acompañamiento, ayuda técnica en la comunicación, eliminación de barreras, consejo o incluso decisiones delegadas por la propia persona. Solo cuando el apoyo no pueda articularse de otro modo cabe la representación en la toma de decisiones. Además, cualquier persona que precise apoyo puede beneficiarse de estas medidas, aunque no tenga reconocimiento administrativo de discapacidad. El cambio no es solo terminológico, sino de enfoque, porque se asume que muchas limitaciones no proceden de la persona, sino del entorno físico, comunicacional, cognitivo, actitudinal y jurídico, lo que exige también una transformación social y profesional alejada del paternalismo.
+
+Otro pilar es que la tutela queda reducida exclusivamente a los menores no emancipados no sujetos a patria potestad. En consecuencia, desaparecen en el ámbito de la discapacidad la tutela de adultos, la patria potestad prorrogada y la rehabilitada, por considerarse figuras rígidas e inadecuadas para promover la autonomía de la persona adulta con discapacidad. Al alcanzar la mayoría de edad, el menor con discapacidad pasará a recibir los apoyos que necesite en las mismas condiciones que cualquier otro adulto.
+
+La figura central del nuevo sistema es la curatela, entendida como cuidado, asistencia y apoyo.
+
+Puede ser asistencial y, solo en supuestos excepcionales en los que la persona no pueda decidir por sí misma, representativa. Cuando la necesidad de apoyo sea ocasional, aunque recurrente, podrá nombrarse un defensor judicial para actuar únicamente en esos momentos.
+
+La reforma también potencia la guarda de hecho, porque en muchos casos la persona con discapacidad ya está atendida adecuadamente por alguien que la asiste sin necesidad de una investidura judicial formal. Cuando para actos concretos sea necesaria acreditación frente a terceros, podrá obtenerse una autorización judicial específica sin necesidad de incoar un procedimiento completo de nombramiento.
+
+Por último, se crea un nuevo procedimiento de provisión de apoyos, de carácter preferentemente no contencioso y desligado de la lógica de la incapacitación. Se configura como un expediente judicial de prestación de apoyos basado en la participación activa de la propia persona y en la colaboración de profesionales especializados de los ámbitos jurídico, asistencial y sanitario, que orientarán sobre las medidas más adecuadas. Las medidas judiciales deberán revisarse periódicamente en un plazo máximo de tres años, ampliable excepcionalmente hasta seis, y podrán modificarse cuando cambie la situación de la persona. El sistema apuesta así por la jurisdicción voluntaria, sin excluir que el procedimiento se convierta en contradictorio, y remite el contenido de la sentencia a las normas civiles aplicables al tratarse de una cuestión sustantiva.
+
+La aplicación judicial de esta normativa ya ha comenzado a consolidarse, incluso en la jurisprudencia del Tribunal Supremo, que insiste en que solo justifica la imposición de apoyos contra la voluntad de la persona aquella discapacidad que afecte realmente a su capacidad de tomar decisiones con efectos jurídicos en sus asuntos personales y patrimoniales. Además, la LO 1/2025 excluye estos procesos de la exigencia de actividad negociadora previa para acudir a la vía jurisdiccional.
+
+2. LOS CARGOS TUITIVOS EN EL SISTEMA ANTERIOR A LA LAPCD O LEY 8/2021, DE 2 DE JUNIO 
+
+El sistema anterior a la Ley 8/2021 preveía, conforme al art. 215 del Código Civil, tres cargos tuitivos para la guarda y protección de menores e incapacitados: tutela, curatela y defensor judicial. En términos generales, el tutor asumía la representación legal estable del menor o incapacitado, mientras que el curador tenía también carácter estable, pero su función consistía en complementar la capacidad del sometido a curatela sin sustituirlo. El defensor judicial presentaba un perfil próximo al del curador, aunque marcado por su carácter ocasional. Su régimen fue parcialmente modificado por la Ley 15/2015, que permitió al defensor judicial designado por el Letrado de la Administración de Justicia asumir la administración de los bienes de quien hubiera de ser sometido a tutela o curatela.
+
+No obstante, la regulación introducida por la Ley 13/1983 se caracterizaba por una gran flexibilidad, que dificultaba cualquier esquema rígido. Podía haber uno o varios tutores, existían incapacitados sometidos a curatela y no a tutela, y las funciones del defensor judicial no estaban predeterminadas legalmente, sino que dependían de la decisión judicial. Por ello, más que una ordenación cerrada de figuras, el sistema ofrecía un marco dúctil en el que la concreción de funciones quedaba ampliamente abierta.
+
+Dentro de ese régimen, los cargos tutelares tenían carácter obligatorio, aunque la ley admitía causas de excusa. El nombramiento del titular del cargo, salvo en el caso del defensor judicial, debía y solía recaer en un familiar cercano. Además, las resoluciones judiciales relativas a estos cargos debían inscribirse en el Registro Civil para hacer oponibles a terceros las condiciones de capacidad de la persona afectada. De este modo, si la declaración judicial no constaba inscrita, quien contratara con un incapacitado o con un pródigo no podía resultar perjudicado por esa falta de capacidad.
+
+Una vez inscrita la resolución judicial sobre la capacidad, los actos realizados por la persona afectada producían consecuencias distintas según la medida establecida. Los contratos celebrados por personas sometidas a tutela eran nulos de pleno derecho, porque debían actuar por medio de su tutor. En cambio, los celebrados por quienes tenían asignado curador o defensor judicial eran anulables. También eran radicalmente nulos los actos y contratos realizados por el tutor sin la preceptiva autorización judicial cuando esta resultara exigible.
+
+La Ley 8/2021 incorporó disposiciones transitorias para adaptar las situaciones existentes al nuevo sistema de apoyos. A los tutores de personas con discapacidad pasaron a aplicárseles las normas previstas para los curadores representativos. A determinados curadores de emancipados y menores beneficiados por la mayor edad se les aplicaron las normas del defensor judicial del menor. Los guardadores de hecho quedaron sometidos al nuevo régimen legal, y quienes ostentaban patria potestad prorrogada o rehabilitada continuaron ejerciéndola hasta la revisión prevista legalmente.
+
+La revisión de las medidas ya acordadas quedó regulada en la disposición transitoria cuarta.
+
+Podían solicitarla en cualquier momento las personas con capacidad modificada judicialmente, los declarados pródigos, los progenitores con patria potestad prorrogada o rehabilitada, los tutores, curadores, defensores judiciales y apoderados preventivos, con el fin de adaptar las medidas anteriores a la nueva ley. Esa revisión debía realizarse en el plazo máximo de un año desde la solicitud. Si no existía solicitud, la autoridad judicial debía revisar de oficio o a instancia del Ministerio Fiscal las medidas en un plazo máximo de tres años.
+
+3. LA TUTELA EN EL SISTEMA INSTAURADO POR LA LAPCD O LEY 8/2021, DE 2 DE JUNIO
+
+En el sistema instaurado por la Ley 8/2021, la tutela queda reducida a los menores no emancipados en situación de desamparo y a los menores no emancipados no sujetos a patria potestad. Desaparece así su aplicación a las personas adultas con discapacidad, para las que se reservan la curatela y las demás medidas de apoyo. Además, el régimen de la curatela se aplica supletoriamente a la tutela, al defensor judicial y al guardador de hecho.
+
+Las funciones tutelares siguen configurándose como un deber, deben ejercerse en beneficio del tutelado y permanecen bajo la salvaguarda de la autoridad judicial. Para el nombramiento de tutor se da preferencia a la persona o personas designadas por los progenitores en testamento o documento público notarial y, en su defecto, al ascendiente o hermano que designe la autoridad judicial. No obstante, el juez puede alterar ese orden o prescindir de esas personas si el interés superior del menor lo exige, considerándose beneficiosa su integración en la vida familiar del tutor. A falta de las personas expresamente preferidas, la autoridad judicial designará a quien estime más idóneo por sus relaciones con el menor y atendiendo siempre a su interés superior.
+
+Aunque la tutela debe ser objeto de estudio específico en el Derecho de familia, su tratamiento general conserva relevancia porque su régimen jurídico sigue proyectándose supletoriamente sobre otras instituciones. En el sistema anterior, el nombramiento del tutor respondía a un orden de preferencia más amplio, podía recaer en una o varias personas y también en personas jurídicas sin ánimo de lucro dedicadas a la protección de menores e incapacitados. Junto a ello, el Código Civil contemplaba numerosas causas de inhabilidad para ser tutor, que excluían a quienes hubieran sido privados de la patria potestad o de derechos de guarda, removidos de una tutela anterior, condenados a determinadas penas o delitos, incursos en imposibilidad de hecho, enemistad manifiesta, mala conducta, conflictos de intereses o determinadas situaciones concursales. También los progenitores podían excluir a ciertos parientes mediante testamento o documento notarial, aunque el juez podía apartarse de esa exclusión en beneficio del menor.
+
+En el régimen anterior, pese a afirmarse el carácter obligatorio del cargo, las causas de excusa eran amplias, pues bastaban razones de edad, enfermedad, ocupaciones, falta de vínculo o cualquier otra circunstancia que hiciera excesivamente gravoso su ejercicio. Además, aunque la ley fijaba un breve plazo para alegarlas, podían invocarse en cualquier momento si eran sobrevenidas. También se distinguía entre la remoción del tutor, que suponía su cese por causas imputables a su conducta o situación personal, y la extinción de la tutela, que implicaba la desaparición de las circunstancias que justificaban la institución. La remoción podía fundarse en la concurrencia de causas de inhabilidad, en el mal desempeño del cargo o en graves problemas de convivencia con el pupilo.
+
+En el nuevo sistema, pueden ser tutores las fundaciones y demás personas jurídicas sin ánimo de lucro, públicas o privadas, cuyos fines incluyan la protección y asistencia de menores. La ley diferencia entre causas de incapacidad absoluta para ser tutor y supuestos en que la autoridad judicial no puede efectuar el nombramiento. No podrán ser tutores quienes hayan sido privados o suspendidos judicialmente en el ejercicio de la patria potestad o de derechos de guarda y protección, ni quienes hayan sido legalmente removidos de una tutela, curatela o guarda anterior.
+
+Tampoco podrá nombrarse tutor a quien haya sido excluido por los progenitores, condenado por delito que haga suponer un mal desempeño del cargo, sustituido en sus facultades de administración durante un procedimiento concursal, declarado culpable en un concurso, salvo tutela solo de la persona, o a quien tenga conflicto de intereses con la persona sujeta a tutela.
+
+Las causas de excusa y de remoción de la tutela pasan a regirse por las normas de la curatela. La remoción no equivale a la extinción de la tutela, sino al cese del tutor por una causa imputable a su persona, mientras que en la excusa opera una causa ajena a su voluntad.
+
+En relación con los menores en situación de desamparo, la tutela corresponde por ministerio de la ley a la entidad pública encargada en cada territorio de la protección de menores. Sin embargo, podrá nombrarse tutor conforme a las reglas ordinarias cuando existan personas físicas que puedan asumir la tutela en interés del menor. En tal caso, antes o al mismo tiempo deberá acordarse la suspensión o privación de la patria potestad o la remoción del tutor anterior. Están legitimados para promover estas actuaciones el Ministerio Fiscal, la entidad pública y quienes estén llamados al ejercicio de la tutela.
+
+Cuando un menor se halla en situación de desamparo, la asunción de la tutela por la entidad pública implica la adopción de todas las medidas necesarias para su guarda y la suspensión de la patria potestad o de la tutela ordinaria, pudiendo promoverse, si procede, la privación de la patria potestad y la remoción de la tutela. La guarda debe realizarse preferentemente mediante acogimiento familiar, ya sea urgente, temporal o permanente, dentro de la familia extensa o en familia ajena. Solo cuando ello no sea posible o conveniente para el interés del menor se acudirá al acogimiento residencial. En todo caso, se busca el interés del menor, se prioriza su reintegración en la propia familia y se procura que los hermanos permanezcan unidos. El acogimiento cesa con la mayoría de edad o antes, si deja de ser necesario o conveniente.
+
+4. LAS NUEVAS MEDIDAS DE APOYO A LAS PERSONAS CON DISCAPACIDAD PARA EL EJERCICIO DE SU CAPACIDAD JURÍDICA
+
+Las nuevas medidas de apoyo para las personas mayores de edad o menores emancipados que las necesiten para el ejercicio de su capacidad jurídica son, junto a las de naturaleza voluntaria, la guarda de hecho, la curatela y el defensor judicial. Quienes presten ese apoyo deben actuar conforme a la voluntad, deseos y preferencias de la persona, procurando que esta desarrolle su propio proceso de toma de decisiones y que, incluso, pueda necesitar menos apoyo en el futuro.
+
+Solo cuando, pese al esfuerzo realizado, no sea posible determinar esa voluntad, las medidas podrán incluir funciones representativas. Además, la ley impone límites a quienes desempeñen funciones de apoyo, prohibiéndoles recibir liberalidades no ordinarias mientras no se apruebe definitivamente su gestión, intervenir en actos con conflicto de intereses y adquirir o transmitir onerósamente bienes de la persona apoyada, salvo exclusión expresa en las medidas voluntarias.
+
+4.1. Las medidas voluntarias
+
+En el nuevo sistema adquieren especial protagonismo las medidas voluntarias, por las que la propia persona determina quién debe prestarle apoyo y con qué alcance. Entre ellas se encuentra la posibilidad de que, en los dos años anteriores a la mayoría de edad, cuando sea razonable prever que un menor sujeto a patria potestad o tutela precisará apoyo al llegar a la vida adulta, la autoridad judicial adopte la medida correspondiente a petición del menor, de sus progenitores, del tutor o del Ministerio Fiscal, siempre que el mayor de dieciséis años no haya hecho ya sus propias previsiones. En otro caso, el menor participa en el proceso conforme a su voluntad, deseos y preferencias.
+
+También cualquier mayor de edad o menor emancipado puede prever o acordar en escritura pública medidas de apoyo relativas a su persona o bienes si aprecia o prevé circunstancias que dificulten el ejercicio de su capacidad jurídica. Dentro de estas medidas destacan los poderes y mandatos preventivos, pues quien los otorga puede establecer que subsistan si en el futuro necesita apoyo para ejercer su capacidad. Estos poderes deben otorgarse en escritura pública y el notario debe comunicarlos de oficio al Registro Civil. Solo cuando estas medidas sean inexistentes o insuficientes, y no exista guarda de hecho bastante, podrá la autoridad judicial adoptar medidas supletorias o complementarias.
+
+4.2. La curatela conforme a la LAPCD
+
+La curatela es una medida formal de apoyo para quienes necesiten apoyo de modo continuado.
+
+Su alcance debe fijarse en la resolución judicial de acuerdo con la situación, circunstancias y necesidades de la persona. Como medida judicial, ha de revisarse periódicamente en un plazo máximo de tres años, salvo que excepcional y motivadamente se establezca otro superior que no podrá exceder de seis años. La curatela tiene carácter subsidiario respecto de las medidas voluntarias y solo procede cuando no exista otra medida de apoyo suficiente.
+
+La nueva regulación distingue entre una curatela asistencial, centrada en el apoyo y el cuidado, y una curatela representativa, prevista solo para los casos excepcionales en que resulte imprescindible por las circunstancias de la persona. La autoridad judicial debe concretar los actos para los que la persona precisa asistencia del curador y, en su caso, los actos concretos en que este habrá de asumir su representación. En los supuestos de curatela representativa, el curador necesita autorización judicial para los actos determinados en la resolución y para otros de especial trascendencia patrimonial, personal o familiar. La resolución judicial no puede consistir en una mera privación de derechos.
+
+Junto a ello, se regula la autocuratela, que permite a cualquier mayor de edad o menor emancipado proponer en escritura pública el nombramiento o la exclusión de determinadas personas para el ejercicio del cargo de curador. La autoridad judicial nombrará curador a quien haya sido propuesto por la persona que necesite apoyo o por quien ella haya designado para ello. A falta de propuesta, la ley establece un orden de preferencia en favor del cónyuge o pareja conviviente, descendientes, progenitores o ascendientes, personas designadas en testamento o documento público, guardador de hecho, hermanos, parientes o allegados convivientes, y personas jurídicas sin ánimo de lucro orientadas a la promoción de la autonomía y asistencia a personas con discapacidad. Ese orden puede alterarse por el juez, tras oír a la persona afectada, para nombrar a quien mejor comprenda e interprete su voluntad, deseos y preferencias.
+
+La ley regula también las causas de inhabilidad, excusa y remoción del curador, aplicables supletoriamente a la tutela. No podrán ser curadores quienes hayan sido excluidos por la persona que precise apoyo, quienes estén privados o suspendidos judicialmente en la patria potestad y quienes hayan sido removidos legalmente de una tutela, curatela o guarda anterior. Tampoco podrá ser nombrado quien haya sido condenado por delito que haga suponer un mal desempeño del cargo, quien tenga conflicto de intereses, quien haya sido sustituido en sus facultades de administración durante un procedimiento concursal o a quien le sea imputable la calificación culpable del concurso. El desempeño del cargo será excusable cuando resulte excesivamente gravoso, y las personas jurídicas privadas podrán excusarse si carecen de medios suficientes o si la curatela no se ajusta a sus fines estatutarios, posibilidad que no se reconoce a las personas jurídicas públicas. La remoción procede cuando concurra causa legal de inhabilidad, cuando el curador incumpla sus deberes o actúe mal en el cargo, o cuando existan problemas graves y continuados de convivencia con la persona apoyada. Mientras se resuelve la excusa o la remoción, el juez puede nombrar un defensor judicial.
+
+4.3. El defensor judicial conforme a la LAPCD
+
+El nuevo sistema distingue entre el defensor judicial del menor y el de la persona con discapacidad, siendo la regulación de este último supletoria de la del primero en lo no previsto específicamente. En el caso del menor, procede cuando exista conflicto de intereses con sus representantes legales, cuando el tutor no desempeñe sus funciones hasta que cese la causa o se nombre a otra persona, y cuando el menor emancipado necesite complemento de capacidad y quienes deban prestarlo no puedan hacerlo o tengan conflicto de intereses.
+
+Respecto de la persona con discapacidad, el defensor judicial actúa como medida de apoyo cuando la necesidad sea ocasional, aunque recurrente. Se nombra cuando quien deba prestar apoyo no pueda hacerlo temporalmente, cuando exista conflicto de intereses con la persona apoyada, cuando el juez lo considere necesario durante la tramitación de la excusa del curador, cuando se haya promovido la provisión judicial de apoyos y sea preciso administrar bienes hasta que recaiga resolución, o cuando la persona necesite medidas de apoyo de carácter ocasional, aunque repetidas en el tiempo.
+
+4.4. La guarda de hecho
+
+La ley diferencia entre el guardador de hecho del menor y el de la persona con discapacidad, aplicándose supletoriamente a este último la regulación del primero. Cuando la autoridad judicial conozca la existencia de un guardador de hecho de un menor, puede requerirle información sobre la situación personal y patrimonial del menor y sobre su actuación. Excepcionalmente, mientras subsista esa guarda y hasta que se constituya la medida adecuada, pueden atribuirse judicialmente facultades tutelares al guardador.
+
+En relación con la persona con discapacidad, la guarda de hecho se configura como una medida informal de apoyo que puede mantenerse cuando no existan medidas voluntarias o judiciales eficaces. La Ley 8/2021 refuerza esta figura favoreciendo la continuidad de quien ya viene prestando adecuadamente ese apoyo, incluso si existen otras medidas que no se están aplicando de forma eficaz. Además, el guardador de hecho puede llegar a realizar actuaciones representativas, pero para ello necesita autorización obtenida mediante expediente de jurisdicción voluntaria, con audiencia de la persona con discapacidad. Esa autorización puede comprender uno o varios actos necesarios para el desarrollo de la función de apoyo y debe ejercerse de conformidad con la voluntad, deseos y preferencias de la persona. No obstante, no será necesaria autorización judicial para actos de menor trascendencia, como solicitar una prestación económica que no altere significativamente su forma de vida o realizar actos jurídicos sobre bienes de escasa relevancia económica y sin especial significado personal o familiar.
+`.trim();
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1.1": "El sistema originario del Código Civil vinculaba la incapacitación a causas tasadas que privaban de la capacidad de obrar y exigían tutela familiar, mientras que las reformas de 1983 y 2003 sustituyeron ese esquema por una noción más flexible de incapacitación, introdujeron la curatela, judicializaron la protección y separaron conceptualmente discapacidad e incapacitación judicial, reforzando además la protección patrimonial de la persona con discapacidad.",
+"1.2": "La Ley 8/2021 culmina la adaptación del ordenamiento español a la Convención de Nueva York de 2006 al afirmar que las personas con discapacidad tienen capacidad jurídica en igualdad de condiciones y que las medidas de apoyo deben respetar su voluntad, ser proporcionales, temporales y revisables, completándose este enfoque con la accesibilidad cognitiva impulsada por la Ley 6/2022.",
+"1.3": "La reforma sustituye el modelo de incapacitación y representación por otro centrado en apoyos individualizados, voluntarios y revisables, reduce la tutela al ámbito de los menores, convierte la curatela en medida principal de apoyo, refuerza la guarda de hecho y articula un procedimiento de provisión de apoyos basado en la participación de la persona y en los principios de necesidad, proporcionalidad y respeto a su voluntad.",
+"2": "El sistema anterior a la Ley 8/2021 se estructuraba en torno a tutela, curatela y defensor judicial como cargos tuitivos flexibles, obligatorios y normalmente atribuidos a familiares, con efectos distintos sobre la validez de los actos del afectado según la medida aplicada y con un régimen transitorio posterior destinado a adaptar las situaciones previas al nuevo sistema de apoyos.",
+"3": "En el nuevo sistema la tutela queda reservada a menores no emancipados desamparados o no sujetos a patria potestad, bajo control judicial y con preferencia por soluciones acordes con su interés superior, diferenciándose con mayor precisión las causas de incapacidad, excusa y remoción del tutor y atribuyéndose a la entidad pública la tutela legal del menor desamparado, con preferencia por fórmulas de guarda que favorezcan su interés y reintegración familiar.",
+"4": "Las nuevas medidas de apoyo para mayores de edad y menores emancipados se articulan mediante medidas voluntarias, guarda de hecho, curatela y defensor judicial, y deben ejercerse conforme a la voluntad, deseos y preferencias de la persona, admitiéndose funciones representativas solo cuando no sea posible reconstruir esa voluntad y sujetándose quienes apoyan a estrictas prohibiciones para evitar abusos y conflictos de intereses.",
+"4.1": "Las medidas voluntarias ocupan una posición preferente en el nuevo sistema porque permiten a la propia persona anticipar en escritura pública quién le prestará apoyo y con qué alcance, incluyendo previsiones para la mayoría de edad y poderes o mandatos preventivos que subsisten si en el futuro precisa apoyo, quedando las medidas judiciales relegadas a supuestos de defecto o insuficiencia.",
+"4.2": "La curatela es una medida formal, subsidiaria y revisable de apoyo continuado que puede ser asistencial o excepcionalmente representativa, admite autocuratela y un sistema de designación judicial orientado por la voluntad de la persona y por su entorno más idóneo, y se completa con un régimen de inhabilidad, excusa y remoción destinado a asegurar el correcto ejercicio del cargo.",
+"4.3": "El defensor judicial se configura como una medida de apoyo ocasional para menores o personas con discapacidad cuando exista conflicto de intereses, imposibilidad temporal de quien deba prestar el apoyo, necesidad transitoria durante procedimientos en curso o requerimiento de apoyo no continuado aunque recurrente.",
+"4.4": "La guarda de hecho se mantiene como medida informal de apoyo tanto para menores como para personas con discapacidad, pero la Ley 8/2021 potencia especialmente su continuidad cuando funcione eficazmente y permite que el guardador realice incluso actuaciones representativas con autorización judicial, salvo en actos de escasa trascendencia económica o personal."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1.1
+
+// [1]
+Q: ¿Qué cambio conceptual introdujo la Ley 13/1983 en relación con las causas de incapacitación?
+A) Sustituyó toda referencia a enfermedades o deficiencias por una apreciación puramente patrimonial de la situación personal.
+B) Mantuvo un catálogo cerrado de causas de incapacitación, pero reforzó el control del protutor sobre su aplicación.
+C) Reemplazó la enumeración taxativa de causas por una cláusula general basada en enfermedades o deficiencias persistentes que impidieran a la persona gobernarse por sí misma.
+OK: C
+EXP: La novedad principal fue pasar de un sistema de causas cerradas a una fórmula general más abierta centrada en la imposibilidad de autogobierno.
+
+// [2]
+Q: ¿Qué diferencia fundamental establecía la Ley 41/2003 entre discapacidad e incapacitación judicial?
+A) La discapacidad podía justificar protección patrimonial sin exigir necesariamente una previa declaración judicial de incapacitación.
+B) La discapacidad solo producía efectos jurídicos cuando iba acompañada de una sentencia de incapacitación firme.
+C) La discapacidad equivalía automáticamente a incapacidad de obrar cuando superaba un determinado grado de minusvalía.
+OK: A
+EXP: La Ley 41/2003 parte de que discapacidad e incapacitación no son categorías necesariamente coincidentes.
+
+#ID = 1.2
+
+// [3]
+Q: Según la Convención de Nueva York de 2006 y la reforma culminada por la Ley 8/2021, ¿cuál es el criterio rector en materia de capacidad jurídica de las personas con discapacidad?
+A) La sustitución preventiva de la voluntad siempre que exista limitación funcional relevante.
+B) El reconocimiento de capacidad jurídica en igualdad de condiciones, con acceso a apoyos respetuosos con la voluntad y preferencias de la persona.
+C) La preferencia por medidas judiciales permanentes que aseguren estabilidad en la toma de decisiones.
+OK: B
+EXP: El nuevo modelo parte de la igualdad en capacidad jurídica y de apoyos adaptados, no de la sustitución de la persona.
+
+// [4]
+Q: ¿Qué función cumple la accesibilidad cognitiva en la línea normativa posterior a la Ley 8/2021?
+A) Restringir la intervención de terceros en procedimientos de apoyo para reforzar la autonomía individual.
+B) Convertir toda dificultad de comprensión en causa automática de provisión judicial de apoyos.
+C) Garantizar condiciones de comprensión, comunicación e interacción con entornos, bienes, servicios, procesos y procedimientos.
+OK: C
+EXP: La accesibilidad cognitiva se concibe como un conjunto de exigencias que hacen comprensibles e interactuables los distintos ámbitos de la vida social y jurídica.
+
+#ID = 1.3
+
+// [5]
+Q: ¿Qué idea define mejor el paso de la representación a los apoyos en la reforma del sistema de capacidad jurídica?
+A) La sustitución de un modelo uniforme de incapacitación por apoyos individualizados, sometidos a necesidad, proporcionalidad y revisión.
+B) La conservación de la incapacitación judicial, pero con una ampliación de los sujetos legitimados para solicitarla.
+C) La supresión de toda intervención judicial en favor de un sistema exclusivamente familiar de asistencia.
+OK: A
+EXP: La reforma abandona el esquema homogéneo de sustitución y lo reemplaza por apoyos ajustados a cada situación concreta.
+
+// [6]
+Q: En el nuevo Título XI del Libro Primero del Código Civil, ¿qué significado tiene el concepto de apoyo?
+A) Se limita a la representación legal en negocios patrimoniales y personales.
+B) Comprende un abanico amplio de actuaciones, y la representación solo aparece cuando no puede articularse el apoyo de otro modo.
+C) Se identifica exclusivamente con medidas administrativas de reconocimiento de discapacidad.
+OK: B
+EXP: El apoyo se entiende en sentido amplio y la representación pasa a ser excepcional, no la regla.
+
+// [7]
+Q: ¿Qué consecuencia estructural produce la reforma sobre la tutela en el ámbito de la discapacidad?
+A) Mantiene la tutela de adultos con discapacidad, pero con mayor intervención del juez.
+B) Sustituye la tutela de adultos por la patria potestad rehabilitada como regla general.
+C) Reduce la tutela a menores no emancipados no sujetos a patria potestad y excluye su uso como medida ordinaria respecto de adultos con discapacidad.
+OK: C
+EXP: La tutela deja de ser instrumento de protección de adultos con discapacidad y queda circunscrita al ámbito de menores.
+
+// [8]
+Q: ¿Qué función ocupa la curatela en el nuevo sistema de apoyos?
+A) Se convierte en la figura central de apoyo, con carácter asistencial como regla y representativo solo en supuestos excepcionales.
+B) Queda relegada a un papel residual para conflictos patrimoniales entre familiares.
+C) Desaparece en favor de la guarda de hecho como única medida estable de apoyo.
+OK: A
+EXP: La curatela pasa a ser la institución clave del nuevo modelo, priorizando la asistencia sobre la representación.
+
+// [9]
+Q: ¿Cómo se configura el nuevo procedimiento de provisión de apoyos?
+A) Como un proceso contencioso ordinario centrado en declarar la incapacidad civil de la persona.
+B) Como un expediente preferentemente no contencioso, participativo y revisable, orientado a determinar apoyos adecuados con intervención profesional especializada.
+C) Como un trámite exclusivamente notarial que excluye toda revisión judicial posterior.
+OK: B
+EXP: El procedimiento se diseña para fijar apoyos concretos con participación de la persona y revisión periódica, no para declarar incapacidades.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 2
+
+// [10]
+Q: ¿Qué rasgo diferenciaba de forma más precisa al defensor judicial dentro del sistema anterior de cargos tuitivos?
+A) El defensor judicial sustituía siempre al incapacitado con el mismo alcance que el tutor, pero solo en materias patrimoniales.
+B) El defensor judicial asumía necesariamente la tutela de familia cuando faltaban tutor y curador.
+C) El defensor judicial tenía una función tendencialmente complementaria, semejante a la del curador, pero caracterizada por su ocasionalidad.
+OK: C
+EXP: El tutor representaba de forma estable, el curador complementaba de forma también estable y el defensor judicial actuaba de manera ocasional.
+
+// [11]
+Q: ¿Qué revela sobre la curatela y la tutela la flexibilidad introducida por la Ley 13/1983 en los cargos tuitivos?
+A) Que la asignación de funciones no respondía a una separación rígida, sino a una configuración judicial abierta según cada situación.
+B) Que toda persona incapacitada debía quedar necesariamente sometida a tutela y nunca a curatela.
+C) Que la ley establecía con detalle cerrado las competencias del defensor judicial para evitar discrecionalidad.
+OK: A
+EXP: El sistema era dúctil: podía haber varios tutores, incapacitados sujetos a curatela y funciones del defensor judicial fijadas por el juez.
+
+// [12]
+Q: ¿Qué función cumplía la inscripción en el Registro Civil de las resoluciones judiciales sobre cargos tutelares?
+A) Convertir automáticamente en nulos todos los contratos anteriores celebrados por la persona afectada.
+B) Hacer oponible frente a terceros la situación de capacidad, evitando que resultaran perjudicados si la declaración no constaba inscrita.
+C) Sustituir la necesidad de intervención judicial posterior en los actos realizados por tutor o curador.
+OK: B
+EXP: La inscripción permitía que terceros conocieran jurídicamente la situación de capacidad y evitaba perjuicios si esa publicidad no existía.
+
+// [13]
+Q: ¿Qué consecuencia tenía, una vez inscrita la resolución judicial, la celebración de contratos por una persona sometida a tutela?
+A) Los contratos quedaban plenamente válidos si existía buena fe del tercero contratante.
+B) Los contratos podían confirmarse libremente por el tutor sin control alguno.
+C) Los contratos eran nulos de pleno derecho porque la actuación debía realizarse a través del tutor.
+OK: C
+EXP: La tutela implicaba representación legal, por lo que la actuación directa del sometido a tutela carecía de validez plena.
+
+// [14]
+Q: ¿Qué criterio siguieron las disposiciones transitorias de la Ley 8/2021 respecto de las situaciones previas?
+A) Adaptar las medidas existentes al nuevo sistema de apoyos mediante reglas de reconducción funcional y continuidad provisional de algunas instituciones.
+B) Suprimir de inmediato todas las medidas previas sin permitir ninguna continuidad hasta revisión judicial.
+C) Mantener sin cambios el sistema anterior para quienes ya tuvieran la capacidad modificada judicialmente.
+OK: A
+EXP: La ley no anuló sin más las situaciones anteriores, sino que previó cómo encajarlas provisionalmente en el nuevo modelo.
+
+// [15]
+Q: ¿Cómo se articula la revisión de las medidas previas conforme a la disposición transitoria cuarta de la Ley 8/2021?
+A) Solo podía iniciarse por el Ministerio Fiscal y debía resolverse siempre en tres años.
+B) Podía solicitarse en cualquier momento por los sujetos legitimados, debiendo revisarse en un año desde la solicitud, y en su defecto procedía revisión de oficio o a instancia del Ministerio Fiscal en tres años.
+C) Únicamente procedía respecto de la patria potestad prorrogada y quedaba excluida para tutela, curatela y defensor judicial.
+OK: B
+EXP: La revisión se abre ampliamente a los legitimados y combina revisión a instancia de parte con revisión de oficio dentro de plazos distintos.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 3
+
+// [16]
+Q: ¿Qué consecuencia principal tiene la tutela en el sistema instaurado por la Ley 8/2021 respecto de las personas adultas con discapacidad?
+A) La tutela mantiene su función general, pero subordinada a la guarda de hecho.
+B) La tutela pasa a coexistir con la patria potestad prorrogada como medida ordinaria.
+C) La tutela queda excluida para las personas adultas con discapacidad y se reserva a menores no emancipados en determinados supuestos.
+OK: C
+EXP: La reforma restringe la tutela al ámbito de los menores y desplaza la protección de los adultos con discapacidad hacia la curatela y otras medidas de apoyo.
+
+// [17]
+Q: ¿Qué criterio rige el nombramiento de tutor en la nueva regulación de la tutela?
+A) Prima la voluntad de los progenitores expresada en testamento o documento notarial, aunque el juez puede alterarla si lo exige el interés superior del menor.
+B) Debe nombrarse siempre al familiar de grado más próximo, sin posibilidad de apartarse de ese orden.
+C) La entidad pública competente debe ser nombrada tutor con preferencia absoluta en cualquier supuesto.
+OK: A
+EXP: La preferencia inicial recae en las personas designadas por los progenitores, pero el interés superior del menor permite al juez modificar el orden.
+
+// [18]
+Q: ¿Qué regla de supletoriedad establece expresamente el texto en el sistema instaurado por la Ley 8/2021?
+A) Que el régimen de la tutela se aplica supletoriamente a la curatela y a las demás medidas de apoyo.
+B) Que el régimen del defensor judicial se aplica supletoriamente a la curatela y a la guarda de hecho.
+C) Que el régimen de la curatela se aplica supletoriamente a la tutela, al defensor judicial y al guardador de hecho.
+OK: C
+EXP: El texto afirma expresamente que, en el nuevo sistema, el régimen de la curatela se aplica supletoriamente a la tutela, al defensor judicial y al guardador de hecho.
+
+// [19]
+Q: ¿Qué rasgo caracterizaba las causas de excusa de la tutela en el régimen anterior?
+A) Eran amplias y permitían apartarse del cargo cuando su ejercicio resultaba excesivamente gravoso, incluso por causas sobrevenidas.
+B) Solo podían alegarse por razones patrimoniales y dentro de un plazo absolutamente preclusivo.
+C) Exigían siempre una declaración previa de inhabilidad del tutor por parte del Ministerio Fiscal.
+OK: A
+EXP: El texto destaca la amplitud de las causas de excusa y la posibilidad de alegarlas en cualquier momento si sobrevenían.
+
+// [20]
+Q: ¿Qué diferencia conceptual existe entre remoción de la tutela y extinción de la tutela?
+A) La remoción y la extinción son categorías equivalentes que producen idénticos efectos sobre el cargo tutelar.
+B) La remoción supone el cese del tutor por causa imputable a su persona, mientras que la extinción implica la desaparición del presupuesto que justificaba la tutela.
+C) La extinción depende siempre de la mala conducta del tutor y la remoción de la desaparición del desamparo.
+OK: B
+EXP: La remoción afecta al tutor designado, mientras que la extinción afecta a la propia subsistencia de la institución tutelar.
+
+// [21]
+Q: ¿Cómo trata la nueva regulación la aptitud para ser tutor de personas jurídicas sin ánimo de lucro?
+A) Excluye a todas las personas jurídicas y reserva la tutela a personas físicas emparentadas con el menor.
+B) Solo admite a personas jurídicas privadas, pero nunca a entidades públicas.
+C) Permite que fundaciones y demás personas jurídicas sin ánimo de lucro, públicas o privadas, sean tutores si sus fines incluyen la protección y asistencia de menores.
+OK: C
+EXP: La nueva regulación admite expresamente a determinadas personas jurídicas sin ánimo de lucro como posibles tutores.
+
+// [22]
+Q: Según el texto, ¿cómo trata la nueva regulación las causas que impiden el nombramiento de tutor?
+A) Diferencia entre causas de incapacidad absoluta para ser tutor y supuestos en que la autoridad judicial no puede efectuar el nombramiento.
+B) Suprime toda distinción y remite íntegramente la cuestión a la discrecionalidad judicial.
+C) Limita esas causas exclusivamente a supuestos de conflicto patrimonial con el menor.
+OK: A
+EXP: El texto afirma expresamente que la ley diferencia entre causas de incapacidad absoluta para ser tutor y supuestos en que la autoridad judicial no puede efectuar el nombramiento, aunque después enumera de forma conjunta varias causas de exclusión.
+
+// [23]
+Q: ¿Qué régimen siguen en la nueva tutela las causas de excusa y de remoción?
+A) Se regulan autónomamente en un sistema separado del de la curatela.
+B) Se remiten a las normas de la curatela, manteniéndose la diferencia entre excusa y remoción.
+C) Desaparecen como categorías diferenciadas y quedan absorbidas por la extinción de la tutela.
+OK: B
+EXP: La nueva regulación remite expresamente a las normas de la curatela para excusa y remoción.
+
+// [24]
+Q: ¿Qué consecuencia jurídica produce la tutela por ministerio de la ley respecto del menor en situación de desamparo?
+A) Impone de forma automática el acogimiento residencial permanente como única modalidad de guarda.
+B) Excluye toda posibilidad de nombrar tutor conforme a reglas ordinarias.
+C) Atribuye la tutela a la entidad pública competente, sin perjuicio de que pueda nombrarse tutor ordinario si existen personas físicas idóneas en interés del menor.
+OK: C
+EXP: La entidad pública asume inicialmente la tutela, pero el sistema permite después el nombramiento ordinario de tutor si ello beneficia al menor.
+
+// [25]
+Q: ¿Qué principio orienta la guarda del menor desamparado cuando la tutela corresponde a la entidad pública?
+A) La preferencia por el acogimiento familiar y por soluciones que favorezcan el interés del menor, su reintegración familiar y la unidad entre hermanos.
+B) La prioridad del acogimiento residencial para asegurar estabilidad institucional desde el inicio.
+C) La separación ordinaria de hermanos para individualizar mejor las medidas de protección.
+OK: A
+EXP: El texto sitúa en primer plano el acogimiento familiar, el interés del menor, la reintegración en su familia y el mantenimiento de los hermanos unidos.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 4
+
+// [26]
+Q: ¿Cuál es el criterio rector de las medidas de apoyo a las personas con discapacidad para el ejercicio de la capacidad jurídica en el nuevo sistema?
+A) La sustitución estable de la voluntad por quien preste el apoyo cuando exista discapacidad reconocida.
+B) La intervención preferente de la autoridad judicial en toda decisión personal o patrimonial relevante.
+C) La actuación conforme a la voluntad, deseos y preferencias de la persona, fomentando su propio proceso de decisión y reduciendo, si es posible, la intensidad futura del apoyo.
+OK: C
+EXP: El nuevo sistema sitúa en el centro la voluntad de la persona y orienta el apoyo a reforzar su autonomía, no a sustituirla.
+
+// [27]
+Q: ¿Cuándo pueden las medidas de apoyo incluir funciones representativas en el nuevo sistema?
+A) Cuando, pese al esfuerzo realizado, no sea posible determinar la voluntad, deseos y preferencias de la persona apoyada.
+B) Cuando la persona apoyada tenga reconocida administrativamente una discapacidad superior a un determinado grado.
+C) Cuando el apoyo se refiera a cualquier acto patrimonial celebrado ante notario.
+OK: A
+EXP: La representación no es la regla, sino una posibilidad excepcional ligada a la imposibilidad de reconstruir la voluntad de la persona.
+
+// [28]
+Q: ¿Qué finalidad tienen las prohibiciones impuestas por la ley a quien desempeña funciones de apoyo?
+A) Evitar toda relación patrimonial entre la persona apoyada y su entorno familiar, incluso en actos de escasa relevancia.
+B) Prevenir abusos y conflictos de intereses en el ejercicio del apoyo, salvo exclusión expresa en medidas voluntarias cuando la ley lo permite.
+C) Sustituir el control judicial por un régimen absoluto de responsabilidad patrimonial del apoyador.
+OK: B
+EXP: Las prohibiciones buscan proteger a la persona apoyada frente a liberalidades indebidas, conflictos de intereses y transmisiones onerosas potencialmente abusivas.
+
+#ID = 4.1
+
+// [29]
+Q: ¿Qué posición ocupan las medidas voluntarias dentro del sistema de apoyos?
+A) Son complementarias y solo operan después de una resolución judicial de curatela.
+B) Tienen un alcance limitado a cuestiones patrimoniales y quedan subordinadas al defensor judicial.
+C) Tienen protagonismo preferente porque permiten a la propia persona decidir anticipadamente quién le prestará apoyo y con qué alcance.
+OK: C
+EXP: El sistema prioriza la autorregulación preventiva de la persona frente a medidas impuestas externamente.
+
+// [30]
+Q: ¿Qué presupuesto permite a la autoridad judicial adoptar medidas de apoyo para un menor antes de alcanzar la mayoría de edad?
+A) Que en los dos años anteriores a la mayoría de edad sea razonable prever la necesidad de apoyo posterior y que el mayor de dieciséis años no haya hecho ya sus propias previsiones.
+B) Que exista siempre una declaración previa de desamparo y una oposición expresa del menor.
+C) Que el tutor solicite necesariamente la curatela representativa con carácter definitivo.
+OK: A
+EXP: La adopción anticipada de apoyos exige previsibilidad de la necesidad futura y respeta las propias previsiones del menor suficientemente maduro.
+
+// [31]
+Q: ¿Qué rasgo define a los poderes y mandatos preventivos dentro de las medidas voluntarias?
+A) Se extinguen automáticamente cuando la persona comienza a necesitar apoyo para ejercer su capacidad jurídica.
+B) Pueden otorgarse para que subsistan en el futuro si la persona necesita apoyo, debiendo constar en escritura pública y comunicarse al Registro Civil.
+C) Solo pueden referirse a decisiones sanitarias y nunca a la persona o a los bienes en general.
+OK: B
+EXP: Los poderes preventivos permiten anticipar el apoyo futuro y quedan sujetos a una forma solemne y a publicidad registral.
+
+#ID = 4.2
+
+// [32]
+Q: ¿Qué función cumple la curatela en el sistema de medidas judiciales de apoyo?
+A) Es la primera medida a aplicar con preferencia sobre las medidas voluntarias.
+B) Sustituye toda actuación personal de quien precise apoyo, cualquiera que sea su situación concreta.
+C) Es una medida formal y subsidiaria de apoyo continuado, que solo procede cuando no exista otra medida suficiente.
+OK: C
+EXP: La curatela no es automática ni preferente frente a medidas voluntarias, sino una respuesta judicial subsidiaria para apoyos continuados.
+
+// [33]
+Q: ¿Cómo se articula la diferencia entre curatela asistencial y curatela representativa?
+A) La curatela asistencial constituye la regla general y la representativa solo cabe excepcionalmente para actos concretos cuando resulte imprescindible.
+B) La curatela representativa es la modalidad ordinaria y la asistencial queda reservada a actos de mera administración.
+C) La diferencia depende exclusivamente de que el curador sea persona física o jurídica.
+OK: A
+EXP: El modelo favorece la asistencia y reserva la representación para supuestos excepcionales y concretamente delimitados.
+
+// [34]
+Q: ¿Qué expresa la autocuratela dentro de la nueva regulación de la curatela?
+A) La facultad del juez de nombrar curador sin oír a la persona afectada cuando exista urgencia patrimonial.
+B) La posibilidad de que la propia persona proponga o excluya en escritura pública a quienes podrán ejercer el cargo de curador.
+C) La conversión automática de la guarda de hecho en curatela cuando lo solicite la familia.
+OK: B
+EXP: La autocuratela refuerza la autonomía preventiva de la persona en la designación futura de apoyos.
+
+// [35]
+Q: ¿Qué principio inspira el nombramiento judicial de curador cuando falta propuesta previa válida?
+A) La designación automática del Ministerio Fiscal como curador provisional hasta nueva resolución.
+B) La atribución preferente a la entidad pública competente en materia de discapacidad.
+C) La selección de la persona más idónea dentro de un orden legal flexible, atendiendo a quien mejor comprenda e interprete la voluntad, deseos y preferencias de la persona.
+OK: C
+EXP: El orden legal orienta el nombramiento, pero el juez puede alterarlo para respetar mejor la voluntad y situación concreta de la persona.
+
+// [36]
+Q: ¿Qué criterio distingue las causas de excusa y remoción del curador en la nueva regulación?
+A) La excusa responde a la excesiva carga del cargo, mientras que la remoción se vincula a inhabilidad, mal desempeño o graves problemas de convivencia.
+B) La excusa solo puede invocarla una persona jurídica pública y la remoción únicamente la persona apoyada.
+C) La excusa y la remoción producen idénticos efectos y obedecen a las mismas causas.
+OK: A
+EXP: La excusa se basa en la gravosidad del cargo; la remoción, en cambio, responde a circunstancias que desaconsejan la continuidad del curador.
+
+#ID = 4.3
+
+// [37]
+Q: ¿Qué caracteriza al defensor judicial de la persona con discapacidad en el nuevo sistema?
+A) Su carácter permanente como medida ordinaria de apoyo continuado.
+B) Su función de apoyo ocasional, aunque la necesidad pueda repetirse en el tiempo.
+C) Su necesaria identificación con la curatela representativa en todo conflicto de intereses.
+OK: B
+EXP: El defensor judicial está pensado para apoyos ocasionales, incluso si la ocasión se reproduce de forma recurrente.
+
+// [38]
+Q: ¿En qué supuestos procede el defensor judicial del menor según la nueva regulación?
+A) Cuando exista conflicto de intereses con sus representantes legales, cuando el tutor no desempeñe sus funciones hasta que cese la causa o se nombre a otra persona, y cuando el menor emancipado necesite complemento de capacidad y quienes deban prestarlo no puedan hacerlo o tengan conflicto de intereses.
+B) Cuando el menor no emancipado quiera excluir a sus progenitores mediante escritura pública.
+C) Cuando se pretenda sustituir definitivamente la patria potestad por una guarda de hecho.
+OK: A
+EXP: El texto prevé tres grupos de supuestos: conflicto de intereses con representantes legales, imposibilidad temporal del tutor y necesidad de complemento de capacidad del menor emancipado cuando quien deba prestarlo no pueda hacerlo o tenga conflicto de intereses.
+
+#ID = 4.4
+
+// [39]
+Q: ¿Qué posición ocupa la guarda de hecho de la persona con discapacidad en la Ley 8/2021?
+A) Queda desplazada siempre que exista cualquier medida voluntaria o judicial, aunque no funcione eficazmente.
+B) Se configura como una medida informal que puede mantenerse y reforzarse cuando presta un apoyo adecuado o cuando otras medidas no resultan eficaces.
+C) Solo puede existir cuando la persona con discapacidad haya sido sometida previamente a curatela representativa.
+OK: B
+EXP: La reforma potencia la guarda de hecho eficaz y no la elimina por la mera existencia formal de otras medidas.
+
+// [40]
+Q: ¿Cuándo puede el guardador de hecho realizar actuaciones representativas respecto de la persona con discapacidad?
+A) Siempre que considere útil la actuación para la protección patrimonial de la persona apoyada.
+B) Solo cuando exista una autorización general previa otorgada en documento privado por la familia.
+C) Cuando obtenga autorización judicial en expediente de jurisdicción voluntaria, con audiencia de la persona, salvo actos de menor trascendencia legalmente exceptuados.
+OK: C
+EXP: El guardador de hecho puede realizar actuaciones representativas si obtiene autorización judicial mediante expediente de jurisdicción voluntaria, con audiencia de la persona con discapacidad. No obstante, no se exige autorización para actos de menor trascendencia legalmente exceptuados.
+    `;
+
+
+    const BANCO_5 = ` 
+pega texto aqui
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
