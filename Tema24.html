@@ -1,0 +1,1893 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 6. Los alimentos entre parientes</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. INTRODUCCIÓN: LOS ALIMENTOS ENTRE PARIENTES
+
+1.1. Sede sistemática y consideraciones previas
+
+El Código Civil regula los alimentos entre parientes en los arts. 142 a 153 como una obligación legal de asistencia y socorro que alcanza a los cónyuges y a determinados parientes cercanos. La denominación es solo relativamente exacta, porque no se refiere a todos los parientes, sino a los de línea recta y a los hermanos, e incluye además a los cónyuges, que técnicamente no son parientes.
+
+Esta institución no sustituye a los deberes alimenticios derivados del matrimonio o de la filiación, sino que actúa de forma complementaria cuando tales deberes resultan insuficientes o han decaído, como ocurre en supuestos de separación matrimonial o cuando los hijos alcanzan la mayoría de edad y se extingue la patria potestad. En la práctica, aumentan las reclamaciones de alimentos de hijos mayores de edad, especialmente frente a padres divorciados o separados de hecho.
+
+Aunque varios preceptos parecen partir de la idea de que la prestación de alimentos surge tras un procedimiento judicial y una sentencia, ese planteamiento resulta criticable, porque no responde a la realidad sociológica ni a la dinámica ordinaria de las relaciones familiares. Lo habitual es que la ayuda entre familiares cercanos se preste espontáneamente e incluso por encima de las exigencias legales, sin necesidad de intervención judicial.
+
+Pese a ello, existe una notable litigiosidad, sobre todo en contextos de divorcio o separación de hecho, en los que con frecuencia se generan reclamaciones alimenticias respecto de los hijos. En esos casos, si la reclamación la formula un progenitor contra el otro en nombre de los hijos menores, la competencia territorial se determina conforme al art. 769.3 de la Ley de Enjuiciamiento Civil. Además, la negativa a prestar alimentos puede dar lugar tanto a la revocación de donaciones como a la desheredación.
+
+1.2. Fundamento y vigencia actual: solidaridad familiar y política asistencial
+
+La obligación alimenticia se fundamenta en la solidaridad familiar entre los parientes más cercanos y presupone, por un lado, la existencia de una situación de necesidad en el alimentista y, por otro, la disponibilidad de medios económicos suficientes en el familiar obligado para atender su subsistencia.
+
+Históricamente, esta obligación cumplió una función de asistencia social familiar, pero su sentido actual debe reconsiderarse a la luz de la política asistencial que la Constitución encomienda a los poderes públicos. Los preceptos constitucionales sobre enseñanza básica gratuita, tutela de la salud pública, Seguridad Social, atención a las personas con discapacidad y suficiencia económica de las personas mayores muestran que muchas necesidades que antes podían recaer sobre la familia deben ser hoy atendidas también mediante cauces públicos.
+
+Por ello, la satisfacción de esas necesidades a través de prestaciones públicas puede exonerar o, al menos, mitigar la obligación de los familiares. De ahí que parte de la doctrina sostenga que la obligación civil de alimentos tiene hoy carácter subsidiario respecto de la asistencia pública, pues no sería razonable que quien tiene derecho a prestaciones públicas dejara de solicitarlas para vivir a costa de sus familiares.
+
+Sin embargo, el texto pone en duda que esa subsidiariedad pueda afirmarse de manera absoluta.
+
+Resulta más adecuado entender que la obligación de alimentos cumple una función complementaria respecto de la asistencia pública, ya que las ayudas y pensiones no aseguran por sí solas, como regla general, la satisfacción plena de las necesidades del alimentista. En este sentido, las obligaciones familiares no quedan desplazadas sin más por la acción pública, sino que pueden coexistir con ella.
+
+Finalmente, en el plano internacional, los problemas de esta obligación se agravan cuando concurren elementos que impiden la aplicación directa del Derecho interno y exigen mecanismos de cooperación entre Estados. Para hacer frente a esas situaciones se menciona el Convenio de La Haya de 23 de noviembre de 2007 sobre cobro internacional de alimentos para los niños y otros miembros de la familia, aprobado en nombre de la Unión Europea por la Decisión 2011/432/ UE, de 9 de junio.
+
+2. NATURALEZA Y CARACTERES
+
+La naturaleza del derecho de alimentos ha sido discutida doctrinalmente a partir de la contraposición entre su posible carácter patrimonial o extrapatrimonial. Frente a quienes niegan su carácter patrimonial aunque admiten la patrimonialidad de su contenido, el texto considera más adecuado distinguir entre el derecho de alimentos en abstracto y una obligación alimenticia ya concreta, porque el régimen jurídico de ambas situaciones no es coincidente.
+
+El derecho de alimentos se entiende como un derecho-deber latente entre los familiares comprendidos en la ley para exigir o prestar alimentos conforme al Código Civil, mientras que la relación obligatoria alimenticia alude a una obligación ya determinada, nacida por acuerdo entre las partes o por sentencia judicial.
+
+En su fase general o latente, el derecho de alimentos se caracteriza por la reciprocidad, ya que los familiares legalmente previstos pueden ser potencialmente acreedores o deudores si concurren los presupuestos legales. Presenta también carácter personalísimo, porque solo esas personas pueden exigirlo o prestarlo, lo que explica su irrenunciabilidad e intransmisibilidad.
+
+Además, es imprescriptible mientras permanece en estado de latencia, de modo que puede ejercitarse en cualquier momento por el familiar necesitado.
+
+Estas notas cambian cuando la obligación alimenticia se concreta en una pensión periódica. En ese momento, la prestación adquiere un contenido patrimonial evidente y desaparece la reciprocidad, ya que quien es acreedor de la renta no puede ser a la vez deudor de esa misma prestación. También deja de existir la imprescriptibilidad, porque las pensiones vencidas y no pagadas prescriben a los cinco años. Del mismo modo, el carácter personalísimo se atenúa respecto de las pensiones atrasadas, pues pueden ser renunciadas y transmitidas, al tratarse ya de un derecho de crédito susceptible de negociación.
+
+3. LOS ALIMENTISTAS Y LAS PERSONAS OBLIGADAS AL PAGO O ALIMENTANTES
+
+El carácter recíproco de la obligación alimenticia implica que las mismas personas pueden ocupar la posición de alimentistas o de alimentantes, según tengan derecho a reclamar alimentos o deban satisfacerlos efectivamente. Esa reciprocidad alcanza a los cónyuges, a los parientes en línea recta y a los hermanos, de manera que el vínculo familiar constituye el presupuesto básico de la deuda alimenticia, junto con la suficiencia económica del obligado y la situación de necesidad del reclamante, siempre dentro del concreto entorno familiar y de sus condiciones económicas.
+
+El art. 143 contempla como obligados recíprocos a los cónyuges, a los ascendientes y descendientes y, con alcance más limitado, a los hermanos, que solo se deben los auxilios necesarios para la vida cuando la necesidad no sea imputable al alimentista, extendiéndose en su caso a la educación. Quedan fuera de este régimen los cónyuges divorciados y las parejas no casadas en el Derecho común, sin perjuicio de otras posibles soluciones jurídicas en caso de ruptura. La jurisprudencia recoge además supuestos en los que la conducta del reclamante excluye la procedencia de alimentos, como cuando quien abandona voluntariamente el hogar familiar pretende mantener simultáneamente su propio modelo de vida y las ventajas económicas del entorno que rechaza, sin acreditar una verdadera situación de necesidad o incapacidad para mantenerse por sí mismo.
+
+3.1. Los alimentantes u obligados al pago: orden de prelación
+
+Cuando existen varios familiares potencialmente obligados, el art. 144 fija un orden de prelación para la reclamación de alimentos, comenzando por el cónyuge, seguido de los descendientes de grado más próximo, después los ascendientes también del grado más próximo y, finalmente, los hermanos. Entre descendientes y ascendientes, la gradación se determina según el orden de llamamiento en la sucesión legítima.
+
+No obstante, ese orden no opera de forma rígida, pues la jurisprudencia admite reclamar alimentos a cualquiera de los obligados cuando se pruebe que los llamados con preferencia carecen de medios. Así, puede imponerse la obligación a los abuelos cuando los progenitores no pueden atenderla. En relación con los cónyuges, la aplicación práctica de estas normas queda reducida esencialmente a los supuestos de separación de hecho, ya que durante la convivencia matrimonial rige un deber de ayuda más amplio y, en las crisis matrimoniales judicializadas, la cuestión se encauza por las reglas específicas correspondientes. El Tribunal Supremo ha afirmado reiteradamente que la separación de hecho no excluye por sí sola la exigibilidad de alimentos entre cónyuges.
+
+Respecto de los hermanos, el texto critica la terminología legal que distingue entre hermanos de doble vínculo y hermanos uterinos o consanguíneos, por considerarla poco adecuada, aunque la idea normativa es clara: tienen preferencia como alimentantes los hermanos de doble vínculo frente a los de vínculo sencillo. Se aclara además que los medio hermanos no deben confundirse con los hermanastros, ya que estos últimos no comparten consanguinidad, sino solo un vínculo de afinidad derivado del matrimonio entre sus respectivos progenitores. Finalmente, se recuerda que, si el obligado a prestar alimentos es declarado en concurso, resultan aplicables las disposiciones específicas de la legislación concursal.
+
+3.2. Pluralidad de obligados: el carácter mancomunado de la deuda alimenticia
+
+Cuando varios sujetos están obligados a prestar alimentos, la sola proximidad del parentesco no basta para resolver quién debe pagarlos y en qué medida. El art. 145 establece que el pago de la pensión debe repartirse entre todos los obligados en proporción a su respectivo caudal, lo que excluye una condena solidaria y configura la deuda alimenticia como una obligación mancomunada pasiva. Por tanto, la contribución de cada obligado depende de su concreta capacidad económica y no de una división igualitaria automática.
+
+Excepcionalmente, en casos de urgente necesidad y circunstancias especiales, el juez puede imponer provisionalmente la prestación íntegra a uno solo de los obligados, sin perjuicio de que este pueda repetir después frente a los demás por la parte que les corresponda. Cuando concurren varios alimentistas frente a un único obligado que no dispone de recursos suficientes para atender a todos, debe respetarse el orden legal de preferencia, salvo que concurran el cónyuge y un hijo sujeto a patria potestad, supuesto en el que el hijo será preferido.
+
+4. EL NACIMIENTO DEL DERECHO A LOS ALIMENTOS
+
+El derecho a reclamar alimentos nace desde el momento en que el alimentista los necesita para subsistir y existe un familiar obligado con medios económicos suficientes para prestarlos. Sin embargo, el art. 148.1 establece que, aunque la obligación sea exigible desde la necesidad, solo deben abonarse desde la fecha de interposición de la demanda, lo que refleja una concepción judicializada de la institución.
+
+Esta regla procede del ius commune y responde a la idea de que los alimentos, por su función de subsistencia inmediata, no pueden proyectarse sobre períodos anteriores a la reclamación judicial. Por ello, el juez no puede fijarlos desde una reclamación extrajudicial previa, aunque esta se hubiera formulado sin éxito. Distinto es el caso en que la reclamación extrajudicial sea atendida, pues entonces los alimentos pueden exigirse desde ese momento y su pago no tiene carácter indebido pese a no existir demanda.
+
+La lentitud del proceso judicial ha hecho necesaria la previsión de mecanismos que permitan atender de forma inmediata las necesidades del alimentista. Con esta finalidad, el art. 148 incorpora la posibilidad de que el juez, a petición del alimentista o del Ministerio Fiscal, adopte con urgencia medidas cautelares para asegurar los anticipos realizados por una entidad pública u otra persona y para atender las necesidades futuras, entendidas estas como las surgidas desde la presentación de la demanda hasta que recaiga sentencia firme.
+
+La jurisprudencia ha afirmado, en relación con los hijos menores en situaciones de crisis matrimonial o de pareja no casada, que la regla del art. 148.1 resulta aplicable y que los alimentos deben abonarse desde la interposición de la demanda. En cambio, cuando se trata de hijos mayores de edad, la legitimación activa para reclamarlos corresponde a ellos mismos y no a su madre.
+
+Finalmente, se recuerda que en estos procesos es necesario acreditar una actividad negociadora previa como requisito para acudir a la vía judicial, sin perjuicio de que, si los alimentos se refieren a menores de edad, los acuerdos alcanzados deban ser homologados judicialmente.
+
+5. EL CONTENIDO DE LA OBLIGACIÓN ALIMENTICIA
+
+El contenido de la obligación alimenticia no es uniforme, sino que varía según el grupo familiar de que se trate. Entre cónyuges y parientes en línea recta se configura con gran amplitud, mientras que entre hermanos su contenido queda notablemente restringido. De ahí la distinción doctrinal entre alimentos amplios o civiles y alimentos estrictos o naturales, que resulta útil para explicar el diferente alcance de la prestación alimenticia.
+
+5.1. Los alimentos amplios
+
+Entre cónyuges y parientes en línea recta la obligación de alimentos comprende todo lo indispensable para el sustento, la habitación, el vestido y la asistencia médica. Incluye además la educación e instrucción del alimentista mientras sea menor de edad y también después, cuando no haya terminado su formación por causa no imputable a él. Asimismo, se incorporan los gastos de embarazo y parto cuando no estén cubiertos de otro modo.
+
+La obligación alimenticia no se reduce, por tanto, al mero mantenimiento físico, sino que abarca el conjunto de atenciones necesarias para el desarrollo personal, con especial relevancia del cobijo, la formación y la instrucción. Precisamente por ello, la reforma de 1981 consideró necesario dejar expresamente garantizada la continuidad de la educación más allá de la mayoría de edad cuando el alimentista no haya podido concluirla por causa no imputable a él.
+
+Esa precisión responde a la conjunción de dos circunstancias: la fijación de la mayoría de edad en los dieciocho años y la prolongación progresiva de los periodos de formación y dependencia juvenil. En consecuencia, la obligación alimenticia amplia se adapta a una realidad en la que la plena autonomía económica y formativa suele alcanzarse después de la mayoría de edad.
+
+5.2. Los alimentos estrictos
+
+Entre hermanos, la obligación se limita a los auxilios necesarios para la vida cuando la necesidad no sea imputable al alimentista, extendiéndose también, en su caso, a lo preciso para su educación. Se trata, por tanto, de una prestación más reducida, orientada a cubrir necesidades básicas y no al conjunto más amplio de atenciones que integran los alimentos entre cónyuges y parientes en línea recta.
+
+Con todo, la diferencia entre alimentos amplios y estrictos no siempre presenta contornos nítidos, especialmente en relación con los criterios para fijar su cuantía. El texto subraya que no existen razones concluyentes para entender que tales criterios deban reservarse exclusivamente a los alimentos amplios, y destaca además la escasez de jurisprudencia sobre reclamaciones de alimentos entre hermanos. Las pocas resoluciones citadas inciden en aspectos concretos y confirman, en todo caso, el carácter personalísimo de esta obligación, de modo que, si un hermano no puede prestar alimentos, no cabe trasladar la reclamación a otros parientes como los sobrinos.
+
+6. DETERMINACIÓN DE LA PRESTACIÓN ALIMENTICIA
+
+6.1. Los criterios de determinación
+
+La cuantía de la prestación alimenticia no puede fijarse legalmente mediante criterios rígidos, porque la variedad de situaciones impide establecer módulos abstractos. Por ello, el Código remite su concreción al acuerdo de las partes o, en su defecto, a la decisión judicial, tomando como criterio conjunto la situación económica del alimentante y las necesidades del alimentista.
+
+Así, la determinación de los alimentos parte siempre de la valoración simultánea de los medios de quien debe prestarlos y de las necesidades de quien debe recibirlos.
+
+Esa valoración constituye la base de toda fijación concreta de la obligación alimenticia, cuya prestación puede materializarse bien mediante una pensión, bien a través del mantenimiento del alimentista en la casa del alimentante.
+
+6.2. Las formas de la prestación
+
+La obligación alimenticia tiene carácter alternativo, ya que el obligado puede cumplirla, a su elección, pagando la pensión correspondiente o recibiendo y manteniendo en su propia casa al alimentista. Aunque la práctica y algunos preceptos del Código conceden preferencia a la pensión pecuniaria, que debe abonarse por meses anticipados, ello no elimina en principio la posibilidad de que el alimentante opte por el mantenimiento en su domicilio.
+
+Sin embargo, esa facultad de elección no es absoluta. La ley excluye esta opción cuando contradiga la situación de convivencia establecida para el alimentista por las normas aplicables o por resolución judicial, y también cuando exista justa causa o resulte perjudicial para el interés del alimentista menor de edad. De este modo, la libertad de elección del obligado queda subordinada a la protección efectiva de la situación personal y familiar del alimentista.
+
+6.3. La fijación y duración de la pensión
+
+Cuando la obligación alimenticia se cumple mediante pensión, lo habitual en los procesos judiciales es que se fije una cuantía concreta en dinero. Esa cuantía puede ir acompañada de cláusulas de estabilización para preservar su valor futuro y también cabe que se determine mediante un porcentaje de los ingresos líquidos del alimentante.
+
+La práctica jurisprudencial muestra que, en familias de tipo medio, las pensiones fijadas en favor de los hijos se sitúan habitualmente en torno a una determinada cuantía mensual, aunque su importe varía según las circunstancias del caso. También es posible establecer pensiones diferentes para hijos de distintos matrimonios cuando concurran situaciones distintas, ya que para fijar la aportación del padre debe valorarse igualmente la contribución que corresponde a la madre.
+
+Una vez fijada judicialmente la pensión de alimentos, la obligación de abonarla se mantiene mientras no concurra alguna de las causas legales de extinción.
+
+7. LA MODIFICACIÓN DE LA PENSIÓN
+
+La prestación alimenticia, al depender de la situación patrimonial de las partes y tener carácter duradero y periódico, es esencialmente modificable. Por ello, la cuantía o el porcentaje de la pensión puede reducirse o aumentarse en función de la variación que experimenten tanto las necesidades del alimentista como la fortuna del alimentante.
+
+La posibilidad de modificación se mantiene mientras la obligación alimenticia no se haya extinguido y responde a los mismos criterios que presiden la fijación inicial de la pensión. Así, la cuantía no es estable por naturaleza, sino que debe adaptarse a los cambios que puedan producirse en la situación económica o personal de una y otra parte, ya sea por mejora o empeoramiento de la salud, adquisición de bienes, acceso o pérdida de ingresos o cualquier otra circunstancia relevante que altere el equilibrio inicial.
+
+Aunque alguna jurisprudencia y parte de la doctrina han vinculado esta modificación a la cláusula rebus sic stantibus, el texto rechaza expresamente ese planteamiento. La razón es que el propio art. 147 ya establece un mecanismo específico de ajuste para adecuar la pensión a las variaciones sobrevenidas de las necesidades del alimentista y de la fortuna del obligado, por lo que no resulta necesario acudir a una construcción pensada para otros ámbitos.
+
+Finalmente, se advierte que la alteración de las circunstancias patrimoniales puede alcanzar tal intensidad que no solo justifique la modificación de la pensión, sino incluso la extinción de la propia obligación alimenticia.
+
+8. LA EXTINCIÓN DE LA OBLIGACIÓN ALIMENTICIA
+
+La obligación de prestar alimentos cesa con la muerte del obligado y también con la del alimentista. El Código reúne bajo la rúbrica de extinción supuestos de distinta naturaleza, pues algunos producen verdaderamente la desaparición de una obligación ya existente, mientras que otros funcionan más bien como causas que impiden su nacimiento o continuidad en sentido propio.
+
+8.1. La muerte de los interesados
+
+La muerte o declaración de fallecimiento del alimentante o del alimentista extingue la obligación alimenticia por su carácter personalísimo. Si fallece el obligado, sus herederos no asumen por sucesión la deuda de alimentos, aunque puedan quedar obligados por una nueva relación alimenticia si concurren entre ellos y el necesitado los presupuestos legales. Si muere el alimentista, la obligación desaparece y sus herederos no adquieren por ello derecho alguno a percibir alimentos. Además, si el pago se había hecho por meses anticipados, los herederos del alimentista no deben devolver la parte correspondiente a los días no vividos del mes en curso.
+
+8.2. La variación de las circunstancias patrimoniales
+
+La obligación alimenticia puede extinguirse cuando la fortuna del obligado disminuye hasta el punto de no poder atenderla sin desatender sus propias necesidades y las de su familia, o cuando el alimentista llega a poder mantenerse por sí mismo mediante trabajo, profesión, industria, destino o mejora de fortuna. En estos casos, la alteración patrimonial alcanza tal entidad que hace desaparecer la necesidad o imposibilita legítimamente la prestación, produciendo la cesación de la obligación.
+
+8.3. La mala conducta del alimentista
+
+También incide en la obligación alimenticia la conducta del propio alimentista. Cuando incurre en hechos que darían lugar a desheredación, esa conducta puede extinguir una obligación ya existente o impedir una reclamación futura. En cambio, cuando el alimentista es descendiente del obligado y su necesidad procede de mala conducta o de falta de aplicación al trabajo, no se está propiamente ante una extinción de una obligación ya nacida, sino ante la inexistencia del presupuesto que permitiría exigirla mientras subsista esa situación.
+
+El texto subraya además que la falta de verdadera necesidad y la actitud pasiva del descendiente mayor de edad pueden justificar el cese de la pensión alimenticia. Así, cuando quien reclama alimentos cuenta con capacidad física y mental, ha alcanzado una edad madura y no acredita diligencia suficiente en su formación o en la búsqueda de empleo, deja de encontrarse en una situación que justifique el mantenimiento indefinido de la prestación. En esta línea, la desafección grave y prolongada hacia el progenitor, cuando resulte imputable exclusivamente al hijo mayor de edad, puede también operar como fundamento para extinguir la pensión alimenticia.
+
+9. OTRAS OBLIGACIONES ALIMENTICIAS
+
+El art. 153 dispone que las reglas sobre alimentos entre parientes se aplicarán también a otros supuestos en que exista derecho a alimentos por previsión del Código, por testamento o por pacto, salvo que prevalezca lo pactado, lo ordenado por el testador o lo establecido específicamente por la ley. Con ello, el precepto parece pretender que el régimen de los alimentos entre parientes actúe como marco general para otras obligaciones alimenticias.
+
+Sin embargo, el texto considera que esa pretensión carece de verdadero alcance general, porque los presupuestos propios de los alimentos entre parientes, especialmente su reciprocidad y la necesidad del alimentista, impiden trasladar sin más sus reglas a otras deudas alimenticias.
+
+Existen, en efecto, supuestos en los que el fundamento y el régimen de la obligación son distintos, lo que hace inviable una aplicación automática de los arts. 142 y siguientes.
+
+Así ocurre, por ejemplo, en casos en que la ley impone alimentos sin atender a la necesidad del beneficiario, o en aquellos en que la obligación nace de la voluntad de las partes o del causante.
+
+En las prestaciones alimenticias de origen convencional o testamentario, la cuantía y el contenido quedan determinados por lo pactado o dispuesto, lo que excluye por principio la aplicación de las reglas propias de la obligación alimenticia entre parientes, incluida su posible modificación conforme a ese régimen.
+
+Por ello, la verdadera relevancia del art. 153 queda reducida, en lo esencial, a reconocer la admisibilidad de obligaciones alimenticias convencionales y a admitir, de manera puramente eventual, que un testador pudiera someter un legado de alimentos al modelo normativo de los alimentos entre parientes.
+
+10. EL FONDO DE GARANTÍA DEL PAGO DE ALIMENTOS
+
+El Fondo de Garantía del Pago de Alimentos entra en vigor como respuesta de los poderes públicos al grave problema social que supone el impago de prestaciones alimenticias debidas a menores de edad, especialmente en situaciones de separación, divorcio, nulidad matrimonial, procesos de filiación o reclamaciones de alimentos. Su creación se presenta así como una medida de protección frente al incumplimiento del obligado al pago.
+
+Su finalidad es garantizar a los hijos e hijas menores de edad la percepción de determinadas cantidades económicas configuradas como anticipos, destinadas a atender las necesidades de la unidad familiar en la que se integran cuando no se abonan los alimentos judicialmente reconocidos. Para apreciar si procede la concesión de esos anticipos, resulta decisiva la insuficiencia económica de dicha unidad familiar.
+
+Pueden ser beneficiarios los menores titulares de un derecho de alimentos reconocido judicialmente e impagado y también los hijos e hijas mayores de edad con discapacidad cuando concurran las mismas circunstancias de insuficiencia económica. El Fondo se nutre de las aportaciones consignadas en los Presupuestos Generales del Estado y, en su caso, de los reintegros y reembolsos de los anticipos satisfechos.
+
+La cuantía máxima del anticipo se fija por cada beneficiario en una suma mensual determinada y su percepción tiene una duración máxima también legalmente limitada. El derecho se extingue al alcanzar el beneficiario la mayoría de edad y el Estado queda subrogado de pleno derecho, hasta el importe abonado, en los derechos del interesado frente al obligado al pago, teniendo ese crédito naturaleza pública.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1.1": "Los alimentos entre parientes constituyen una obligación legal de asistencia entre cónyuges y determinados familiares cercanos, con función complementaria respecto de los deberes derivados del matrimonio y la filiación, y aunque el Código los presenta con una perspectiva judicializada, en la práctica la solidaridad familiar suele operar extrajudicialmente.",
+"1.2": "La obligación alimenticia se funda en la solidaridad familiar, pero en el Estado social actual debe entenderse en relación con la política asistencial pública, no tanto como obligación estrictamente subsidiaria, sino como mecanismo complementario que coexiste con las prestaciones públicas cuando estas no cubren plenamente la necesidad.",
+"2": "La naturaleza del derecho de alimentos exige distinguir entre el derecho-deber latente entre familiares y la obligación alimenticia ya concretada, pues en la primera fase predominan la reciprocidad, el carácter personalísimo y la imprescriptibilidad, mientras que en la obligación ya constituida aflora su dimensión patrimonial y crediticia.",
+"3": "La posición de alimentista o alimentante recae recíprocamente sobre cónyuges, parientes en línea recta y, más limitadamente, hermanos, siempre que concurran necesidad en quien reclama y suficiencia económica en quien debe prestar, quedando fuera de este régimen los divorciados y las parejas no casadas en el Derecho común.",
+"3.1": "Cuando existen varios posibles obligados, el orden legal de prelación comienza por el cónyuge, sigue con descendientes, ascendientes y hermanos, pero la jurisprudencia flexibiliza ese orden si los preferentes carecen de medios, de modo que la obligación puede desplazarse a otros familiares con capacidad económica.",
+"3.2": "Si concurren varios obligados a prestar alimentos, la deuda tiene carácter mancomunado y cada uno contribuye en proporción a su caudal, aunque en casos de urgente necesidad el juez puede imponer provisionalmente la prestación íntegra a uno solo con derecho de repetición frente a los demás.",
+"4": "El derecho a alimentos nace desde la situación de necesidad del alimentista y la existencia de un familiar con medios, pero su abono judicial solo procede desde la interposición de la demanda, sin perjuicio de medidas cautelares para atender necesidades inmediatas y de la distinta legitimación procesal según se trate de hijos menores o mayores de edad.",
+"5": "El contenido de la obligación alimenticia varía según el vínculo familiar, distinguiéndose entre alimentos amplios para cónyuges y parientes en línea recta y alimentos estrictos entre hermanos, lo que revela un distinto alcance de la protección legal.",
+"5.1": "Los alimentos amplios comprenden no solo sustento, habitación, vestido y asistencia médica, sino también educación, instrucción y, en su caso, gastos de embarazo y parto, prolongándose incluso más allá de la mayoría de edad cuando la formación no haya concluido por causa no imputable al alimentista.",
+"5.2": "Los alimentos entre hermanos se reducen a los auxilios necesarios para la vida y, en su caso, para la educación, aunque la frontera con los alimentos amplios no es totalmente nítida y se mantiene en todo caso su carácter personalísimo.",
+"6": "La determinación de la prestación alimenticia depende siempre de una valoración casuística de las necesidades del alimentista y de los medios del alimentante, lo que impide criterios legales rígidos y remite su concreción al acuerdo o a la decisión judicial.",
+"6.1": "La cuantía de los alimentos se fija conforme al principio de proporcionalidad entre las necesidades de quien los recibe y el caudal de quien los presta, pudiendo traducirse la prestación en pensión o en mantenimiento directo.",
+"6.2": "La obligación alimenticia es alternativa, pues el deudor puede cumplirla mediante pensión o acogiendo al alimentista en su casa, aunque esta facultad de elección cede cuando contradice la situación de convivencia fijada o perjudica el interés del menor.",
+"6.3": "Cuando se opta por la pensión, esta suele fijarse en una cuantía dineraria o como porcentaje de ingresos, puede incorporar cláusulas de actualización y subsiste hasta que concurra alguna causa legal de extinción.",
+"7": "La pensión alimenticia es esencialmente modificable porque depende de circunstancias variables de necesidad y fortuna, de modo que puede reducirse o aumentarse conforme al art. 147 sin necesidad de recurrir a la cláusula rebus sic stantibus.",
+"8": "La obligación alimenticia se extingue por causas ligadas a la muerte de las partes, a la alteración relevante de sus circunstancias patrimoniales o a determinadas conductas del alimentista, aunque no todos los supuestos legales responden técnicamente a una verdadera extinción.",
+"8.1": "La muerte del alimentante o del alimentista extingue la obligación por su carácter personalísimo, sin transmisión sucesoria de la deuda ni del derecho, aunque puedan surgir nuevas obligaciones alimenticias entre otros familiares.",
+"8.2": "La obligación cesa cuando el obligado ya no puede atenderla sin desatender sus propias necesidades o cuando el alimentista alcanza medios suficientes para su subsistencia, porque desaparece el presupuesto económico que justificaba la prestación.",
+"8.3": "La mala conducta del alimentista puede extinguir o impedir la obligación de alimentos, especialmente cuando incurre en causa de desheredación o cuando, siendo descendiente, su necesidad deriva de desidia, falta de aplicación al trabajo o una actitud pasiva e imputable solo a él.",
+"9": "El art. 153 no convierte realmente el régimen de los alimentos entre parientes en normativa general de toda obligación alimenticia, pues otros supuestos legales, testamentarios o convencionales responden a fundamentos y reglas propias que desplazan ese régimen.",
+"10": "El Fondo de Garantía del Pago de Alimentos protege a menores y, en ciertos casos, a mayores con discapacidad frente al impago de pensiones alimenticias judicialmente reconocidas, mediante anticipos condicionados a la insuficiencia económica de la unidad familiar y con subrogación del Estado frente al deudor."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = ` 
+#ID = 1.1
+
+// [1]
+Q: ¿Qué función cumple la obligación de alimentos entre parientes respecto de los deberes alimenticios derivados del matrimonio y de la filiación?
+A) Sustituye de forma general a los deberes de asistencia conyugal y a los deberes derivados de la patria potestad.
+B) Absorbe los deberes familiares previos y los transforma en una única obligación patrimonial.
+C) Actúa de forma complementaria cuando los deberes derivados del matrimonio o de la filiación han decaído o resultan insuficientes.
+OK: C
+EXP: Los alimentos entre parientes no desplazan los deberes familiares originarios, sino que operan como complemento cuando esos deberes ya no bastan o han cesado.
+
+// [2]
+Q: ¿Por qué la denominación legal de alimentos entre parientes se considera solo relativamente exacta?
+A) Porque la obligación no alcanza a todos los parientes, sino solo a determinados familiares cercanos, e incluye además a los cónyuges.
+B) Porque la obligación se aplica a cualquier persona vinculada afectivamente con el alimentista.
+C) Porque la obligación solo existe entre ascendientes y descendientes, pero nunca entre hermanos.
+OK: A
+EXP: La expresión no es plenamente precisa porque el régimen no se extiende a todos los parientes y comprende también a los cónyuges, que técnicamente no son parientes.
+
+// [3]
+Q: ¿Qué crítica principal merece la concepción judicializada de la obligación de alimentos entre parientes?
+A) Que impide jurídicamente cualquier reclamación de alimentos fuera del matrimonio.
+B) Que presupone una intervención judicial sistemática que no refleja la realidad habitual de solidaridad familiar espontánea.
+C) Que elimina la posibilidad de reclamar alimentos en los supuestos de separación de hecho.
+OK: B
+EXP: El planteamiento es criticable porque presenta como normal la reclamación judicial, cuando lo habitual es la ayuda familiar espontánea sin proceso judicial.
+
+#ID = 1.2
+
+// [4]
+Q: ¿Cuál es el fundamento inmediato de la obligación alimenticia entre parientes en su configuración civil?
+A) La mera existencia de un vínculo sucesorio entre causante y legitimario.
+B) La imposición exclusiva de la política asistencial de los poderes públicos.
+C) La solidaridad familiar, siempre que concurra necesidad en el alimentista y suficiencia económica en el obligado.
+OK: C
+EXP: La obligación nace de la solidaridad familiar, pero exige además la concurrencia conjunta de necesidad en quien reclama y medios en quien debe prestar.
+
+// [5]
+Q: ¿Qué valoración resulta más adecuada sobre la relación entre obligación alimenticia familiar y asistencia pública?
+A) La obligación alimenticia cumple una función preferentemente complementaria, porque las prestaciones públicas no aseguran por sí solas la cobertura plena de las necesidades.
+B) La obligación alimenticia ha quedado sustituida con carácter general por las prestaciones públicas del Estado social.
+C) La obligación alimenticia solo subsiste cuando el alimentista ha renunciado previamente a toda prestación pública.
+OK: A
+EXP: El planteamiento preferible no es una subsidiariedad absoluta, sino la complementariedad entre asistencia pública y deberes familiares.
+
+#ID = 2
+
+// [6]
+Q: ¿Qué criterio resulta más adecuado para determinar la naturaleza del derecho de alimentos?
+A) Identificar siempre el derecho de alimentos con un derecho de crédito plenamente patrimonial desde su origen.
+B) Negar toda dimensión patrimonial al derecho de alimentos incluso cuando existe una pensión ya fijada.
+C) Distinguir entre el derecho de alimentos en abstracto y la relación obligatoria alimenticia ya concretada, porque ambas fases tienen distinto régimen jurídico.
+OK: C
+EXP: La clave está en separar la fase latente del derecho de alimentos y la obligación ya constituida, pues sus notas jurídicas no coinciden.
+
+// [7]
+Q: ¿Cómo debe entenderse el derecho de alimentos en su fase latente?
+A) Como un derecho-deber entre familiares legalmente comprendidos para exigir o prestar alimentos si concurren los presupuestos legales.
+B) Como una renta ya vencida y exigible frente a cualquier familiar del alimentista.
+C) Como una obligación judicialmente liquidada que solo puede nacer mediante sentencia.
+OK: A
+EXP: En su fase latente, el derecho de alimentos existe como posibilidad jurídica recíproca entre familiares determinados por la ley.
+
+// [8]
+Q: ¿Qué rasgo caracteriza al derecho de alimentos mientras permanece en estado de latencia?
+A) La libre transmisibilidad entre particulares por tratarse de un crédito ordinario.
+B) La imprescriptibilidad, porque puede ejercitarse en cualquier momento por el familiar necesitado.
+C) La pérdida de su carácter personalísimo desde el momento en que surge la necesidad.
+OK: B
+EXP: Mientras no se concrete en una obligación periódica, el derecho de alimentos no prescribe y conserva además su carácter personalísimo.
+
+// [9]
+Q: ¿Qué transformación jurídica se produce cuando la obligación alimenticia se concreta en una pensión periódica?
+A) Se refuerza la reciprocidad entre acreedor y deudor de la prestación alimenticia.
+B) Se mantiene íntegramente la irrenunciabilidad de todas las pensiones vencidas.
+C) La prestación adquiere una dimensión patrimonial más clara y las pensiones atrasadas pueden renunciarse o transmitirse como derecho de crédito.
+OK: C
+EXP: Al concretarse en pensión, desaparecen notas propias de la fase latente y aflora el contenido patrimonial de la obligación.
+    `;
+
+
+    const BANCO_2 = ` 
+#ID = 3
+
+// [10]
+Q: ¿Qué implica el carácter recíproco de la obligación alimenticia en relación con alimentistas y alimentantes?
+A) Que solo los ascendientes pueden ser alimentantes y solo los descendientes pueden ser alimentistas.
+B) Que la obligación alimenticia se limita a los parientes por consanguinidad y excluye siempre a los cónyuges.
+C) Que las mismas personas legalmente comprendidas pueden ser acreedoras o deudoras de alimentos según concurran necesidad y capacidad económica.
+OK: C
+EXP: La reciprocidad significa que los mismos sujetos pueden ocupar una u otra posición jurídica según su concreta situación.
+
+// [11]
+Q: ¿Cuál es el alcance de la obligación alimenticia entre hermanos dentro del régimen de alimentos entre parientes?
+A) La obligación alimenticia entre hermanos se limita a los auxilios necesarios para la vida y, en su caso, a la educación, cuando la necesidad no sea imputable al alimentista.
+B) La obligación alimenticia entre hermanos es idéntica a la existente entre cónyuges y descendientes.
+C) La obligación alimenticia entre hermanos solo nace si existe resolución judicial previa en todo caso.
+OK: A
+EXP: Entre hermanos el contenido de la obligación es más restringido y se ciñe a necesidades vitales y, en su caso, educativas.
+
+// [12]
+Q: ¿Qué relevancia puede tener la conducta del reclamante en la procedencia de la obligación alimenticia?
+A) Ninguna, porque la obligación alimenticia depende solo del parentesco.
+B) Puede excluir la procedencia de alimentos si el reclamante rompe voluntariamente la convivencia y no acredita verdadera necesidad ni incapacidad para mantenerse.
+C) Solo puede valorarse cuando el reclamante sea un hermano del obligado.
+OK: B
+EXP: El parentesco no basta por sí solo; la necesidad real del reclamante y su propia conducta pueden resultar decisivas.
+
+#ID = 3.1
+
+// [13]
+Q: ¿Cómo debe entenderse el orden de prelación de obligados del art. 144 en la reclamación de alimentos?
+A) Como un orden absoluto que impide reclamar a cualquier obligado posterior aunque el preferente carezca de medios.
+B) Como un criterio orientador que puede ceder si se acredita que los obligados preferentes no tienen medios suficientes.
+C) Como una regla aplicable exclusivamente entre hermanos de doble vínculo.
+OK: B
+EXP: El orden legal existe, pero la jurisprudencia admite reclamar a otros obligados cuando los preferentes no pueden atender la prestación.
+
+// [14]
+Q: ¿En qué supuesto conserva especial sentido la reclamación de alimentos entre cónyuges dentro del régimen general de alimentos entre parientes?
+A) En cualquier matrimonio vigente, porque el deber de alimentos desplaza al deber de ayuda conyugal.
+B) Principalmente en la separación de hecho, ya que la falta de convivencia no elimina por sí sola la exigibilidad de alimentos entre cónyuges.
+C) Solo tras el divorcio, porque la obligación alimenticia sustituye a cualquier otro remedio legal.
+OK: B
+EXP: La utilidad práctica de estas reglas entre cónyuges aparece sobre todo en la separación de hecho, no durante la convivencia normal ni tras el divorcio.
+
+// [15]
+Q: ¿Qué diferencia conceptual existe entre medio hermanos y hermanastros a efectos del régimen de alimentos entre parientes?
+A) Ninguna, porque ambos términos designan a hermanos de vínculo sencillo.
+B) Los hermanastros comparten un progenitor, mientras que los medio hermanos solo tienen afinidad.
+C) Los medio hermanos comparten un progenitor y los hermanastros se vinculan solo por afinidad, sin consanguinidad entre sí.
+OK: C
+EXP: El texto diferencia claramente entre vínculo consanguíneo parcial de los medio hermanos y mera afinidad de los hermanastros.
+
+#ID = 3.2
+
+// [16]
+Q: ¿Qué carácter tiene la deuda alimenticia cuando varios obligados deben prestar alimentos a un mismo alimentista?
+A) Tiene carácter solidario, de modo que cualquiera responde íntegramente de forma definitiva.
+B) Tiene carácter mancomunado, por lo que cada obligado contribuye según su caudal respectivo.
+C) Tiene carácter alternativo, de modo que el alimentista elige libremente a un único deudor definitivo.
+OK: B
+EXP: La deuda no es solidaria, sino mancomunada, y el reparto se hace conforme a la capacidad económica de cada obligado.
+
+// [17]
+Q: ¿Qué permite excepcionalmente el régimen de pluralidad de obligados en caso de urgente necesidad?
+A) Permite que el juez imponga provisionalmente la prestación íntegra a uno solo, con derecho posterior de repetición frente a los demás.
+B) Permite transformar definitivamente la obligación mancomunada en una obligación solidaria sin más requisitos.
+C) Permite excluir de forma automática a todos los obligados salvo al de parentesco más próximo.
+OK: A
+EXP: La solución excepcional responde a la urgencia, pero no elimina el derecho del obligado que paga a reclamar luego la parte correspondiente a los demás.
+
+// [18]
+Q: ¿Qué criterio de preferencia rige cuando concurren varios alimentistas frente a un único obligado con recursos insuficientes?
+A) Se atiende siempre al orden cronológico de la reclamación judicial.
+B) Se prefiere en todo caso al cónyuge frente a cualquier descendiente.
+C) Se sigue el orden legal, salvo que concurran cónyuge e hijo sujeto a patria potestad, supuesto en el que se prefiere al hijo.
+OK: C
+EXP: La regla general es el orden legal de preferencia, con la excepción expresa a favor del hijo sujeto a patria potestad frente al cónyuge.
+
+#ID = 4
+
+// [19]
+Q: ¿Cuándo nace el derecho a reclamar alimentos dentro del régimen del nacimiento del derecho a los alimentos?
+A) Cuando se dicta sentencia firme que reconoce por primera vez la obligación alimenticia.
+B) Cuando el alimentista formula una reclamación extrajudicial, aunque no exista necesidad actual.
+C) Cuando el alimentista necesita alimentos para subsistir y existe un familiar obligado con medios suficientes para prestarlos.
+OK: C
+EXP: El nacimiento del derecho se vincula a la necesidad del alimentista y a la posibilidad real de prestación por parte del familiar obligado.
+
+// [20]
+Q: ¿Qué consecuencia establece el art. 148.1 sobre el abono de alimentos en la institución del nacimiento del derecho a los alimentos?
+A) Que, aunque la necesidad exista antes, los alimentos solo se abonan desde la interposición de la demanda.
+B) Que los alimentos pueden abonarse retroactivamente desde cualquier requerimiento extrajudicial.
+C) Que los alimentos solo se abonan desde la sentencia definitiva que fija la pensión.
+OK: A
+EXP: La exigibilidad nace con la necesidad, pero el abono judicial se fija desde la presentación de la demanda.
+
+// [21]
+Q: ¿Qué efecto produce una reclamación extrajudicial atendida en el régimen del nacimiento del derecho a los alimentos?
+A) Ninguno, porque todo pago anterior a la demanda judicial se considera indebido.
+B) Permite exigir alimentos desde ese momento sin que el pago tenga carácter indebido.
+C) Obliga siempre a presentar demanda para validar jurídicamente las cantidades entregadas.
+OK: B
+EXP: Si la reclamación extrajudicial prospera, los alimentos pueden exigirse desde entonces aunque no exista demanda judicial.
+
+// [22]
+Q: ¿Qué finalidad cumplen las medidas cautelares previstas en el art. 148 dentro del nacimiento del derecho a los alimentos?
+A) Sustituir definitivamente la sentencia sobre alimentos por una decisión provisional del Ministerio Fiscal.
+B) Garantizar con urgencia anticipos y atender las necesidades surgidas desde la demanda hasta la sentencia firme.
+C) Fijar con carácter irrevocable la cuantía futura de la pensión alimenticia.
+OK: B
+EXP: Las medidas cautelares buscan cubrir de inmediato las necesidades urgentes y asegurar los anticipos mientras se resuelve el proceso.
+
+// [23]
+Q: ¿Quién ostenta la legitimación activa para reclamar alimentos cuando los hijos son mayores de edad en la institución del nacimiento del derecho a los alimentos?
+A) Los propios hijos mayores de edad.
+B) El progenitor conviviente que asuma sus gastos ordinarios.
+C) Cualquiera de los ascendientes en nombre de la familia.
+OK: A
+EXP: Tratándose de hijos mayores de edad, la acción para reclamar alimentos corresponde a ellos mismos y no a su madre.
+    `;
+
+
+    const BANCO_3 = ` 
+#ID = 5
+
+// [24]
+Q: ¿Cómo se caracteriza el contenido de la obligación alimenticia en el régimen de los alimentos entre parientes?
+A) Como un contenido idéntico para todos los familiares obligados, con independencia del vínculo.
+B) Como un contenido determinado exclusivamente por la voluntad del alimentista.
+C) Como un contenido variable según el grupo familiar, lo que permite distinguir entre alimentos amplios y alimentos estrictos.
+OK: C
+EXP: La obligación alimenticia no tiene igual alcance en todos los casos, sino que se modula según la relación familiar existente.
+
+#ID = 5.1
+
+// [25]
+Q: ¿Qué rasgo define a los alimentos amplios entre cónyuges y parientes en línea recta?
+A) Comprenden no solo el sustento material, sino también habitación, vestido, asistencia médica, educación e instrucción en los casos legalmente previstos.
+B) Se reducen a la cobertura mínima de necesidades biológicas imprescindibles para sobrevivir.
+C) Excluyen toda prestación posterior a la mayoría de edad del alimentista.
+OK: A
+EXP: Los alimentos amplios abarcan un conjunto de atenciones necesarias para el desarrollo personal, no solo la mera subsistencia.
+
+// [26]
+Q: ¿Por qué los alimentos amplios pueden extenderse más allá de la mayoría de edad del alimentista?
+A) Porque toda relación de parentesco en línea recta genera alimentos indefinidos con independencia de la formación.
+B) Porque la educación e instrucción siguen comprendidas cuando la formación no ha concluido por causa no imputable al alimentista.
+C) Porque la mayoría de edad carece de relevancia en materia de alimentos entre parientes.
+OK: B
+EXP: La continuidad de la formación justifica la prolongación de los alimentos si el alimentista no ha podido concluirla por causa ajena a su voluntad.
+
+#ID = 5.2
+
+// [27]
+Q: ¿Qué distingue a los alimentos estrictos entre hermanos frente a los alimentos amplios?
+A) Que incluyen siempre la totalidad de gastos formativos y sanitarios del alimentista.
+B) Que se fijan sin atender nunca a la concreta situación del alimentista.
+C) Que se limitan a los auxilios necesarios para la vida y, en su caso, a lo preciso para la educación, con un alcance más restringido.
+OK: C
+EXP: Entre hermanos la obligación es más reducida y se dirige a cubrir necesidades básicas, no el conjunto amplio de atenciones propio de otros vínculos.
+
+// [28]
+Q: ¿Qué consecuencia deriva del carácter personalísimo de la obligación alimenticia entre hermanos?
+A) Que, si un hermano no puede prestar alimentos, la reclamación no puede desplazarse a parientes como los sobrinos.
+B) Que la obligación entre hermanos se transforma automáticamente en una deuda solidaria familiar.
+C) Que la educación del hermano necesitado queda excluida de toda cobertura alimenticia.
+OK: A
+EXP: El carácter personalísimo impide extender la obligación a otros familiares que no estén legalmente comprendidos como obligados en ese supuesto.
+
+#ID = 6.1
+
+// [29]
+Q: ¿Qué criterio rige la determinación de la cuantía de la prestación alimenticia en la institución de los criterios de determinación?
+A) La aplicación de módulos legales fijos basados exclusivamente en el parentesco.
+B) La libre decisión del alimentista atendiendo solo a sus necesidades personales.
+C) La valoración conjunta de los medios del alimentante y de las necesidades del alimentista.
+OK: C
+EXP: La cuantía no se fija con criterios rígidos, sino mediante una apreciación conjunta de capacidad económica y necesidad.
+
+// [30]
+Q: ¿Por qué la institución de los criterios de determinación de la prestación alimenticia no admite cánones cuantitativos legales rígidos?
+A) Porque la diversidad de situaciones impide establecer módulos abstractos válidos para todos los casos.
+B) Porque la cuantía de los alimentos depende siempre de un pacto previo entre los familiares.
+C) Porque la fijación de alimentos corresponde exclusivamente al Ministerio Fiscal.
+OK: A
+EXP: La variedad de supuestos concretos obliga a remitir la cuantía al acuerdo o a la decisión judicial, no a reglas fijas.
+
+#ID = 6.2
+
+// [31]
+Q: ¿Qué significa que la obligación alimenticia tenga carácter alternativo en las formas de la prestación?
+A) Que el alimentista puede imponer al deudor cualquier modalidad de cumplimiento.
+B) Que el obligado puede cumplir pagando una pensión o manteniendo al alimentista en su propia casa.
+C) Que el juez debe imponer simultáneamente pensión y mantenimiento domiciliario.
+OK: B
+EXP: El carácter alternativo implica que el obligado dispone, en principio, de dos formas distintas de cumplimiento.
+
+// [32]
+Q: ¿Cuándo queda excluida la elección del mantenimiento en casa del alimentante dentro de las formas de la prestación?
+A) Cuando el alimentante prefiera una prestación no dineraria por razones de comodidad.
+B) Cuando la pensión pecuniaria sea inferior a una cuantía media habitual.
+C) Cuando esa opción contradiga la situación de convivencia aplicable al alimentista, exista justa causa o perjudique el interés del alimentista menor de edad.
+OK: C
+EXP: La facultad de elección del obligado no es absoluta. El texto excluye el mantenimiento en casa cuando contradiga la situación de convivencia establecida, cuando exista justa causa y también cuando resulte perjudicial para el interés del alimentista menor de edad.
+
+#ID = 6.3
+
+// [33]
+Q: ¿Cómo puede fijarse la pensión en la institución de la fijación y duración de la pensión?
+A) Mediante una cuantía concreta en dinero o mediante un porcentaje de los ingresos líquidos del alimentante.
+B) Exclusivamente mediante una cantidad fija e invariable establecida judicialmente.
+C) Solo mediante una estimación global de los gastos del alimentista sin referencia al obligado.
+OK: A
+EXP: La pensión puede concretarse de distintas maneras, incluida una suma fija o un porcentaje de ingresos, y puede incorporar cláusulas de estabilización.
+
+// [34]
+Q: ¿Qué principio rige la duración de la pensión de alimentos una vez fijada judicialmente?
+A) Que se extingue automáticamente al alcanzar la mayoría de edad el alimentista.
+B) Que subsiste mientras no concurra alguna de las causas legales de extinción.
+C) Que debe revisarse y cesar necesariamente al finalizar cada anualidad.
+OK: B
+EXP: La obligación de pago no desaparece por sí sola tras su fijación, sino únicamente cuando concurre una causa legal de extinción.
+   `;
+
+
+    const BANCO_4 = ` 
+#ID = 7
+
+// [35]
+Q: ¿Cuál es la razón principal por la que la pensión alimenticia se considera esencialmente modificable en la institución de la modificación de la pensión?
+A) Porque toda pensión alimenticia debe revisarse automáticamente cada año con independencia de las circunstancias.
+B) Porque la modificación de la pensión depende exclusivamente de la voluntad del alimentante.
+C) Porque la prestación alimenticia depende de la situación patrimonial de las partes y tiene carácter duradero y periódico.
+OK: C
+EXP: La pensión no es fija por naturaleza, ya que se apoya en circunstancias económicas y personales que pueden variar con el tiempo.
+
+// [36]
+Q: ¿Qué criterio rige la modificación de la pensión alimenticia en la institución de la modificación de la pensión?
+A) Los mismos criterios que presiden la fijación inicial, atendiendo a las necesidades del alimentista y a la fortuna del alimentante.
+B) Un criterio sancionador dirigido a castigar al obligado que haya visto mejorar su situación económica.
+C) La mera antigüedad de la pensión previamente establecida.
+OK: A
+EXP: La modificación responde a la misma lógica que la fijación inicial: equilibrio entre necesidad y capacidad económica.
+
+// [37]
+Q: ¿Por qué rechaza el texto la aplicación de la cláusula rebus sic stantibus a la modificación de la pensión alimenticia?
+A) Porque la cláusula rebus sic stantibus solo puede aplicarse a relaciones entre hermanos.
+B) Porque el art. 147 ya contiene un mecanismo específico de ajuste de la pensión ante variaciones sobrevenidas.
+C) Porque la cláusula rebus sic stantibus impide siempre cualquier modificación de obligaciones legales.
+OK: B
+EXP: No hace falta acudir a una construcción ajena cuando la propia regulación de alimentos prevé expresamente cómo adaptar la pensión.
+
+// [38]
+Q: ¿Qué consecuencia puede producir una alteración intensa de las circunstancias patrimoniales en la institución de la modificación de la pensión?
+A) Solo puede provocar una suspensión provisional del pago sin afectar nunca a la obligación.
+B) Obliga necesariamente a sustituir la pensión por alimentos prestados en domicilio.
+C) Puede justificar no solo la modificación de la pensión, sino también la extinción de la obligación alimenticia.
+OK: C
+EXP: Si la alteración es suficientemente grave, puede desaparecer el presupuesto que sostenía la obligación y llegar a extinguirla.
+
+#ID = 8
+
+// [39]
+Q: ¿Qué precisión conceptual exige la institución de la extinción de la obligación alimenticia respecto de las causas recogidas por el Código?
+A) Que todas las causas legales producen siempre la desaparición de una obligación ya nacida.
+B) Que ninguna de las causas legales extingue realmente la obligación alimenticia.
+C) Que bajo la rúbrica de extinción se incluyen tanto supuestos verdaderamente extintivos como otros que impiden el nacimiento o la continuidad de la obligación.
+OK: C
+EXP: El texto advierte que no todos los supuestos legales tienen la misma naturaleza técnica, aunque aparezcan agrupados como causas de extinción.
+
+#ID = 8.1
+
+// [40]
+Q: ¿Qué efecto produce la muerte del alimentante en la institución de la muerte de los interesados?
+A) Extingue la obligación alimenticia por su carácter personalísimo, sin que los herederos asuman por sucesión esa deuda.
+B) Transmite automáticamente la deuda de alimentos a los herederos del alimentante.
+C) Mantiene la obligación frente a la herencia hasta la liquidación del caudal relicto.
+OK: A
+EXP: La obligación no se transmite mortis causa como deuda sucesoria, aunque pueda surgir una nueva obligación entre otros familiares y el necesitado.
+
+// [41]
+Q: ¿Qué consecuencia se produce si muere el alimentista después de haberse pagado la pensión por meses anticipados en la institución de la muerte de los interesados?
+A) Los herederos del alimentista deben devolver íntegramente la mensualidad anticipada.
+B) Los herederos del alimentista no deben devolver la parte correspondiente a los días no vividos del mes en curso.
+C) La pensión queda convertida en un crédito sucesorio a favor de los herederos del alimentista.
+OK: B
+EXP: El pago anticipado de alimentos no obliga a restitución proporcional por los días del mes que el alimentista no llegue a vivir.
+
+#ID = 8.2
+
+// [42]
+Q: ¿Cuándo puede extinguirse la obligación alimenticia por variación de las circunstancias patrimoniales?
+A) Solo cuando el alimentante pierde totalmente todo su patrimonio.
+B) Solo cuando el alimentista alcanza la mayoría de edad.
+C) Cuando la situación económica del obligado impide atender los alimentos sin desatender sus propias necesidades o cuando el alimentista puede mantenerse por sí mismo.
+OK: C
+EXP: La extinción se vincula a una alteración patrimonial relevante que haga desaparecer la necesidad o imposibilite legítimamente la prestación.
+
+#ID = 8.3
+
+// [43]
+Q: ¿Qué efecto puede tener la conducta del alimentista constitutiva de causa de desheredación en la institución de la mala conducta del alimentista?
+A) Puede extinguir una obligación alimenticia ya existente o impedir una futura reclamación de alimentos.
+B) Solo puede valorarse para reducir provisionalmente la cuantía de la pensión.
+C) Carece de relevancia si el alimentista no es heredero forzoso.
+OK: A
+EXP: La conducta que integra causa de desheredación puede operar tanto frente a una obligación ya nacida como frente a una pretensión futura de alimentos.
+
+// [44]
+Q: ¿Cómo debe calificarse la situación del descendiente cuya necesidad procede de mala conducta o de falta de aplicación al trabajo en la institución de la mala conducta del alimentista?
+A) Como un supuesto de suspensión automática de toda obligación alimenticia ya reconocida.
+B) Como una situación en la que falta el presupuesto para exigir alimentos mientras subsista esa causa.
+C) Como un caso de solidaridad reforzada del progenitor obligado.
+OK: B
+EXP: El texto aclara que aquí no se trata propiamente de extinguir una obligación ya nacida, sino de negar el presupuesto que permitiría reclamarla.
+
+// [45]
+Q: ¿Qué circunstancia puede justificar la extinción de la pensión alimenticia de un hijo mayor de edad en la institución de la mala conducta del alimentista?
+A) El mero transcurso del tiempo desde que alcanzó la mayoría de edad.
+B) La sola existencia de desacuerdos familiares esporádicos con el progenitor.
+C) La ausencia de verdadera necesidad por actitud pasiva imputable al hijo, incluida la falta de diligencia en formarse o buscar empleo y, en su caso, una desafección grave y prolongada hacia el progenitor.
+OK: C
+EXP: La pensión puede cesar cuando el hijo mayor de edad ya no se encuentra en situación de necesidad jurídicamente relevante por causas imputables a su propia conducta.
+    `;
+
+
+    const BANCO_5 = ` 
+#ID = 9
+
+// [46]
+Q: ¿Qué alcance atribuye el texto al art. 153 en la institución de otras obligaciones alimenticias?
+A) Convierte de forma efectiva y general el régimen de los alimentos entre parientes en norma común aplicable a toda obligación alimenticia.
+B) Excluye por completo cualquier conexión entre los alimentos entre parientes y otras obligaciones alimenticias.
+C) Formula una pretensión de generalidad que en realidad queda muy limitada, porque los presupuestos de los alimentos entre parientes no son trasladables sin más a otros supuestos.
+OK: C
+EXP: El texto entiende que la aparente generalidad del art. 153 no opera plenamente, ya que otras obligaciones alimenticias responden a fundamentos distintos.
+
+// [47]
+Q: ¿Por qué no puede aplicarse automáticamente el régimen de los alimentos entre parientes a otras obligaciones alimenticias?
+A) Porque los alimentos entre parientes se apoyan en presupuestos propios, como la reciprocidad y la necesidad del alimentista, que no concurren necesariamente en otros casos.
+B) Porque toda obligación alimenticia ajena al parentesco queda prohibida por el Código Civil.
+C) Porque las obligaciones alimenticias testamentarias y pactadas carecen siempre de contenido económico.
+OK: A
+EXP: La razón decisiva es la diversidad de fundamento y estructura de otras deudas alimenticias respecto del régimen propio entre parientes.
+
+// [48]
+Q: ¿Cuál es la relevancia principal del art. 153 en la institución de otras obligaciones alimenticias?
+A) Imponer la modificación judicial de toda prestación alimenticia convencional.
+B) Reconocer la admisibilidad de obligaciones alimenticias convencionales y, solo de forma eventual, la posibilidad de que un testador someta un legado de alimentos al régimen de los alimentos entre parientes.
+C) Establecer que todo alimento testamentario se rige necesariamente por los arts. 142 y siguientes.
+OK: B
+EXP: El valor real del precepto queda reducido sobre todo a admitir esas obligaciones convencionales y a contemplar de modo excepcional esa posible remisión testamentaria.
+
+#ID = 10
+
+// [49]
+Q: ¿Cuál es la finalidad del Fondo de Garantía del Pago de Alimentos en la institución del Fondo de Garantía del Pago de Alimentos?
+A) Sustituir con carácter general al obligado al pago de alimentos en toda relación familiar.
+B) Financiar cualquier necesidad económica de los menores al margen de una obligación alimenticia reconocida.
+C) Garantizar mediante anticipos la atención de las necesidades de la unidad familiar cuando se impagan alimentos judicialmente reconocidos.
+OK: C
+EXP: El Fondo nace para proteger frente al impago de prestaciones alimenticias ya reconocidas judicialmente, no para reemplazar todo el sistema de alimentos.
+
+// [50]
+Q: ¿Qué presupuesto económico resulta decisivo para la concesión de anticipos por el Fondo de Garantía del Pago de Alimentos?
+A) La insuficiencia económica de la unidad familiar en la que se integra el beneficiario.
+B) La mera existencia de una separación o divorcio entre los progenitores.
+C) La voluntad del representante legal del menor de solicitar cualquier ayuda pública.
+OK: A
+EXP: No basta el impago; también debe apreciarse una situación de insuficiencia económica en la unidad familiar correspondiente.
+
+// [51]
+Q: ¿Quiénes pueden ser beneficiarios del Fondo de Garantía del Pago de Alimentos según el régimen descrito?
+A) Solo los menores de edad, con exclusión absoluta de cualquier mayor de edad.
+B) Los menores con derecho de alimentos judicialmente reconocido e impagado y también los mayores de edad con discapacidad en iguales condiciones de insuficiencia económica.
+C) Todos los parientes del alimentista que acrediten cualquier perjuicio económico derivado del impago.
+OK: B
+EXP: El régimen incluye a los menores y extiende la protección a mayores de edad con discapacidad si concurren las mismas circunstancias exigidas.
+
+// [52]
+Q: ¿Qué efecto jurídico produce el pago de anticipos por el Fondo de Garantía del Pago de Alimentos frente al obligado al pago?
+A) La extinción definitiva de toda deuda alimenticia del obligado incumplidor.
+B) La conversión del anticipo en una donación pública no reintegrable.
+C) La subrogación de pleno derecho del Estado en los derechos del interesado hasta el importe abonado, con naturaleza pública del crédito.
+OK: C
+EXP: El Estado ocupa la posición del beneficiario por lo satisfecho y puede reclamar al obligado incumplidor como titular de un crédito de naturaleza pública.
+    `;
+    
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
