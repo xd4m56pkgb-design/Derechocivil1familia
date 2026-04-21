@@ -1,0 +1,1842 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Derecho Civil 1 - Familia</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+:root{
+  --text:#111827;
+  --muted:#6b7280;
+  --bd:rgba(17,24,39,.12);
+  --bg:#ffffff;
+  --pillbg:#f3f4f6;
+  --pillbd:#e5e7eb;
+
+  --prioBg:#eff6ff;
+  --prioBd:#60a5fa;
+
+  --ideaBg:#f5f3ff;
+  --ideaBd:#a78bfa;
+
+  --quizBg:#fff7ed;
+  --quizBd:#fb923c;
+
+  --okBg:#ecfdf5;
+  --okBd:#34d399;
+
+  --badBg:#fef2f2;
+  --badBd:#f87171;
+
+  --btnBg:#111827;
+  --btnTxt:#ffffff;
+  --btnBg2:#0b1220;
+}
+
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.wrap{ max-width:1000px; margin:30px auto; padding:0 16px 60px }
+h1{ margin:0 0 10px }
+.small{ font-size:12px; opacity:.8; color:var(--muted) }
+
+details{
+  border:1px solid var(--bd);
+  border-radius:14px;
+  margin-bottom:12px;
+  overflow:visible;
+}
+summary{
+  cursor:pointer;
+  padding:14px 16px;
+  font-weight:800;
+  list-style:none;
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  justify-content:space-between;
+}
+
+.sumLeft{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  min-width:0;
+  flex:1;
+}
+
+.sumTitle{
+  min-width:0;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  line-height:1.35;
+  word-break:break-word;
+}
+
+.pill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:var(--pillbg);
+  border:1px solid var(--pillbd);
+  font-weight:800;
+  white-space:nowrap;
+  flex-shrink:0;
+}
+
+.tag{
+  font-size:11px;
+  text-transform:uppercase;
+  font-weight:800;
+  letter-spacing:.1em;
+  margin-bottom:6px;
+}
+
+/* CAJAS */
+.prio{
+  background:var(--prioBg);
+  border-left:5px solid var(--prioBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+.prio p{ margin:8px 0; }
+.prio p.li{ display:flex; gap:10px; margin:6px 0; }
+.prio .liNum{ min-width:2.2em; font-weight:700; }
+
+.idea{
+  background:var(--ideaBg);
+  border-left:5px solid var(--ideaBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+  font-weight:650;
+}
+
+.quizBox{
+  background:var(--quizBg);
+  border-left:5px solid var(--quizBd);
+  padding:14px;
+  border-radius:12px;
+  margin-top:14px;
+}
+
+.rowActions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+.btn{
+  appearance:none;
+  border:1px solid rgba(17,24,39,.15);
+  background:transparent;
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+  color:var(--text);
+}
+.btn:hover{ background:rgba(17,24,39,.04) }
+
+.btnPrimary{
+  background:var(--btnBg);
+  color:var(--btnTxt);
+  border:1px solid rgba(17,24,39,.10);
+}
+.btnPrimary:hover{ background:var(--btnBg2) }
+
+.badge{
+  font-size:12px;
+  font-weight:800;
+  color:var(--muted);
+}
+
+p{
+  margin:0 0 10px;
+  line-height:1.6;
+  white-space:normal;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+
+/* ===========================
+   MODAL QUIZ
+=========================== */
+.modalOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(17,24,39,.55);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalOverlay.show{ display:flex; }
+
+.modal{
+  width:min(860px, 100%);
+  background:#fff;
+  border-radius:16px;
+  border:1px solid rgba(17,24,39,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+.modalHeader{
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-bottom:1px solid rgba(17,24,39,.10);
+  background:linear-gradient(to bottom, rgba(17,24,39,.03), rgba(17,24,39,0));
+}
+.modalHeader .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+}
+.modalHeader .title{
+  font-weight:900;
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.modalHeader .right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.timerPill{
+  font-size:12px;
+  padding:3px 8px;
+  border-radius:999px;
+  border:1px solid rgba(17,24,39,.12);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+
+.modalBody{ padding:16px; }
+.qText{
+  font-weight:900;
+  font-size:16px;
+  margin-bottom:12px;
+}
+.opts{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.optBtn{
+  text-align:left;
+  border:1px solid rgba(17,24,39,.12);
+  background:#fff;
+  border-radius:12px;
+  padding:12px 12px;
+  cursor:pointer;
+  font-weight:750;
+}
+.optBtn:hover{ background:rgba(17,24,39,.03) }
+.optBtn .k{
+  display:inline-flex;
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  align-items:center;
+  justify-content:center;
+  margin-right:10px;
+  border:1px solid rgba(17,24,39,.10);
+  background:rgba(17,24,39,.04);
+  font-weight:900;
+}
+.feedback{
+  margin-top:14px;
+  padding:12px;
+  border-radius:12px;
+  border-left:5px solid transparent;
+  display:none;
+}
+.feedback.show{ display:block; }
+.feedback.ok{ background:var(--okBg); border-left-color:var(--okBd); }
+.feedback.bad{ background:var(--badBg); border-left-color:var(--badBd); }
+
+.explicacion{
+  margin-top:8px;
+  font-size:13px;
+  opacity:.9;
+}
+
+.modalFooter{
+  padding:14px 16px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid rgba(17,24,39,.10);
+  flex-wrap:wrap;
+}
+.modalFooter .left{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+kbd{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size:12px;
+  padding:2px 6px;
+  border-radius:8px;
+  border:1px solid rgba(17,24,39,.15);
+  background:rgba(17,24,39,.04);
+}
+.scoreLine{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+}
+
+/* Caja de error visible */
+.errBox{
+  display:none;
+  margin-top:12px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  border-left:5px solid #f87171;
+  color:#111827;
+  font-weight:800;
+}
+.errBox.show{ display:block; }
+
+/* Diagnóstico */
+.diag{
+  margin-top:12px;
+  padding:12px;
+  border:1px solid rgba(17,24,39,.12);
+  border-radius:12px;
+  background:rgba(17,24,39,.02);
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.diag b{ color:#111827; }
+</style>
+</head>
+
+<body>
+<div class="wrap">
+  <h1 id="tituloTema">Capítulo 13. La gestión de la Sociedad de gananciales</h1>
+  <div class="small">by M.García</div>
+
+  <div id="errBox" class="errBox"></div>
+  <div id="diag" class="diag">Diagnóstico: <b>cargando…</b></div>
+
+  <div class="rowActions" style="margin-top:12px">
+    <button class="btn btnPrimary" id="btnTemaRandom" type="button">Realiza test por tema</button>
+
+    <label class="badge" style="display:flex; gap:8px; align-items:center;">
+      Nº preguntas
+      <select id="selTemaN" class="btn" style="padding:6px 10px;">
+        <option value="10">10</option>
+        <option value="20" selected>20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </label>
+
+    <button class="btn" id="btnSoloFalladas" type="button">Solo falladas</button>
+    <button class="btn" id="btnResetStats" type="button">Reiniciar stats</button>
+    <span class="badge" id="badgeTemaTotal">0 preguntas cargadas</span>
+  </div>
+
+  <div id="contenido" style="margin-top:14px"></div>
+</div>
+
+<!-- MODAL -->
+<div id="modalOverlay" class="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="left">
+        <span id="modalPill" class="pill">—</span>
+        <div class="title" id="modalTitle">Pregunta</div>
+      </div>
+      <div class="right">
+        <span class="timerPill" id="modalTimer">00:00</span>
+        <button class="btn" id="btnCloseModal" type="button">Cerrar</button>
+      </div>
+    </div>
+
+    <div class="modalBody">
+      <div class="qText" id="modalQuestion">—</div>
+      <div class="opts" id="modalOptions"></div>
+
+      <div id="modalFeedback" class="feedback">
+        <div id="modalFeedbackTitle" style="font-weight:900"></div>
+        <div class="explicacion" id="modalExplanation"></div>
+      </div>
+    </div>
+
+    <div class="modalFooter">
+      <div class="left">
+        <button class="btn btnPrimary" id="btnNextQuestion" type="button">Siguiente</button>
+        <button class="btn" id="btnBlank" type="button">Dejar en blanco</button>
+        <span class="badge" id="modalCounter">0/0</span>
+      </div>
+      <div>
+        <div class="scoreLine" id="scoreLine">Aciertos 0 · Fallos 0 · Blancos 0 · Puntos 0.00 (de 0)</div>
+        <div class="small">Atajos: <kbd>Esc</kbd> cerrar · <kbd>Enter</kbd> siguiente</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const errBox = document.getElementById("errBox");
+  const diag = document.getElementById("diag");
+
+  function showErr(msg){
+    if(!errBox) return;
+    errBox.textContent = msg;
+    errBox.classList.add("show");
+  }
+
+  window.addEventListener("error", (e)=>{
+    showErr("Error JS: " + (e.message || "desconocido"));
+  });
+
+  try{
+    /* =========================
+       ✅ PUNTUACIÓN (UNA SOLA VEZ)
+    ========================= */
+    const SCORE_OK = 0.5;
+    const SCORE_BAD = 0.20;   // resta
+    const SCORE_BLANK = 0;    // no suma ni resta
+
+    /* =========================================================
+       1) TEXTO BASE (tu PDF pegado)
+    ========================================================= */
+    const PDF_TEXTO = `
+1. INTRODUCCIÓN
+
+Tras la reforma de 1981, la disposición de los bienes gananciales se basa en la gestión conjunta de ambos cónyuges, sustituyendo el modelo anterior de administración unilateral del marido.
+
+Antes de dicha reforma, la mujer casada carecía prácticamente de facultades dispositivas incluso sobre sus propios bienes privativos, ya que el Código Civil atribuía al marido la gestión exclusiva del patrimonio matrimonial.
+
+El originario art. 1413 permitía al marido enajenar y gravar bienes gananciales a título oneroso sin consentimiento de la esposa, lo que generó graves abusos patrimoniales y situaciones de ruina familiar, al actuar el esposo sin control efectivo sobre el patrimonio común. Esta regulación fue ampliamente criticada y se convirtió en uno de los preceptos más cuestionados del Código Civil.
+
+La Ley de 24 de abril de 1958 introdujo una primera corrección parcial, exigiendo el consentimiento de la mujer o, en su defecto, autorización judicial para disponer de inmuebles o establecimientos mercantiles gananciales. Sin embargo, la reforma mantuvo la posición del marido como administrador exclusivo de la sociedad de gananciales, permitiéndole seguir disponiendo por sí solo de los restantes bienes gananciales.
+
+La propia Exposición de Motivos de la Ley de 1958 justificaba esta situación afirmando que, por exigencias de la unidad matrimonial, la potestad de dirección dentro de la sociedad conyugal correspondía al marido por razones de naturaleza, religión e historia.
+
+2. LA GESTIÓN CONJUNTA
+
+La justificación de la Ley de 1958, basada en naturaleza, religión e historia, duró hasta la igualdad conyugal establecida en la Constitución de 1978. Actualmente, el artículo 1375 establece que, en defecto de pacto en capitulaciones, la gestión y disposición de los bienes gananciales corresponde conjuntamente a los cónyuges. El inciso "sin perjuicio de lo que se determina en los artículos siguientes" no introduce excepciones a favor del marido, sino que advierte que la gestión conjunta no excluye la posibilidad de actuación individual en algunos supuestos.
+
+2.1. Administración y disposición: el principio de actuación conjunta
+
+El artículo 1375 abre la Sección 4ª, rúbrica "De la administración de la sociedad de gananciales", pero el conjunto normativo no contempla solo actos de administración, sino también de disposición. Por ello, doctrinalmente se emplea la expresión "gestión" para referirse a ambos tipos de actos. El principio de actuación conjunta se refiere tanto a las facultades de administración como a las de disposición, y el legislador los somete como regla al mismo régimen de exigencia de consentimiento de ambos cónyuges.
+
+2.2. Actos de administración o de disposición a título oneroso
+
+El artículo 1377.1 exige el consentimiento de ambos cónyuges para los actos de disposición onerosa sobre bienes gananciales, como mera concreción del principio de actuación conjunta. Si un cónyuge realiza un acto de disposición sin el consentimiento del otro, el supuesto se regula en el artículo 1322.1, que establece que los actos realizados sin consentimiento y no confirmados expresa o tácitamente podrán ser anulados a instancia del cónyuge cuyo consentimiento se omitió o de sus herederos. Procede, pues, el régimen de anulabilidad, cuya acción prescribe a los cuatro años desde la disolución de la sociedad conyugal o del matrimonio, salvo que antes se hubiese tenido conocimiento suficiente del acto.
+
+2.3. Actos de disposición a título gratuito
+
+En los actos de disposición a título gratuito, la falta de consentimiento de cualquier cónyuge produce nulidad radical, conforme a los artículos 1378 y 1322.2. Dada la imprescriptibilidad de la acción de nulidad, la impugnación es posible en cualquier momento, incluso décadas después, al llegar la disolución y liquidación de la sociedad de gananciales. No obstante, la restitución no será posible si los bienes han sido usucapidos por un tercero (seis años para muebles, treinta para inmuebles). En supuestos de negocios fraudulentos, si los bienes no pueden recuperarse, el artículo 1397.2 dispone que se comprenda en el activo ganancial el valor actualizado que tenían al ser enajenados, y además estas disposiciones pueden ser causa de disolución judicial según el artículo 1393.2. La diferencia de trato entre los actos onerosos (anulabilidad) y los gratuitos (nulidad) se justifica porque los adquirentes a título gratuito nada han sacrificado y no merecen la misma protección. Por disposición expresa del artículo 1378, las liberalidades de uso o regalos de costumbre son válidos y eficaces aunque los realice un solo cónyuge con cargo a los bienes gananciales, pues se consideran integrados en la potestad doméstica cuando son acordes con el nivel económico familiar.
+
+2.4. El deber de información
+
+Tras la reforma de 1981, el principio de actuación conjunta se completa con el deber de información del artículo 1383, que obliga a los cónyuges a informarse recíproca y periódicamente sobre la situación y rendimientos de cualquier actividad económica suya. Aunque este precepto pueda parecer retórico, el artículo 1393.4º considera causa de disolución judicial de la sociedad de gananciales el incumplimiento grave y reiterado del deber de informar sobre la marcha y rendimientos de las actividades económicas. El fundamento del deber es que los rendimientos de cualquier actividad económica de un cónyuge incrementan el activo ganancial que a ambos interesa, como aspecto de la comunidad de vida e intereses que el matrimonio y el régimen de gananciales presuponen.
+
+2.5. La autorización judicial supletoria
+
+La exigencia de actuación conjunta ha obligado al legislador a establecer un mecanismo mediador cuando, siendo necesario el consentimiento de ambos, uno no se aviene a prestarlo: la autorización judicial supletoria, que sustituye al consentimiento faltante y convierte al juez en protagonista de la decisión. El Código la contempla para actos de administración (artículo 1376: cuando uno esté impedido o se niegue injustificadamente, el juez puede suplirlo si halla fundada la petición) y para actos de disposición (artículo 1377.2: si uno niega o está impedido, el juez puede autorizar uno o varios actos dispositivos si lo considera de interés para la familia, pudiendo acordar limitaciones o cautelas). Ambos preceptos coinciden básicamente y deberían haberse refundido: el juez representa el desempate cuando uno niega injustificadamente el consentimiento o está impedido de forma provisional o pasajera, pues si el impedimento es permanente procede la transferencia judicial de la gestión del patrimonio ganancial.
+
+2.6. Desacuerdos conyugales y expedientes de jurisdicción voluntaria
+
+La Ley de jurisdicción voluntaria (Ley 15/2015) dedica su artículo 90 a la intervención judicial en casos de desacuerdo conyugal y administración de bienes gananciales. Los cónyuges, individual o conjuntamente, pueden solicitar intervención o autorización judicial para fijar el domicilio conyugal o disponer sobre la vivienda habitual y objetos de uso ordinario si hay desacuerdo, para fijar la contribución a las cargas del matrimonio cuando uno incumple, para realizar actos de administración o disposición onerosa cuando el otro está impedido o se niega injustificadamente, para conferir la administración de los bienes comunes por impedimento, abandono o separación de hecho, y para realizar actos de disposición sobre inmuebles, establecimientos mercantiles, objetos preciosos o valores mobiliarios cuando un cónyuge tenga la administración y disposición por ley o resolución judicial. En los expedientes sobre atribución de la administración y disposición a un solo cónyuge, el juez puede acordar cautelas y limitaciones de oficio o a instancia del Ministerio Fiscal. Es competente el Juzgado de Primera Instancia del último domicilio o residencia de los cónyuges. No es preceptiva la intervención de abogado ni procurador, salvo para actos patrimoniales superiores a 6.000 euros. El juez oirá en comparecencia al solicitante, al otro cónyuge y a los interesados, y se dará audiencia al Ministerio Fiscal cuando estén comprometidos intereses de menores o personas con discapacidad.
+
+3. LA GESTIÓN INDIVIDUAL PACTADA CONVENCIONALMENTE
+
+El artículo 1375 del Código Civil establece que la gestión y disposición de los bienes gananciales corresponde conjuntamente a los cónyuges, salvo pacto en contrario fijado en capitulaciones matrimoniales. Esta regla, en concordancia con el artículo 1315, reconoce que los cónyuges pueden conformar libremente sus relaciones patrimoniales sin quedar vinculados a los esquemas legales de los regímenes económicos del matrimonio. No obstante, el artículo 1315 precisa que la libertad capitular debe respetar las limitaciones establecidas en el propio Código, y el artículo 1328 declara nula cualquier estipulación que limite la igualdad de derechos de cada cónyuge. De esta tensión entre libertad de estipulación e igualdad conyugal surge la cuestión de si es admisible pactar en capitulaciones que solo uno de los cónyuges sea el administrador de la sociedad de gananciales.
+
+La doctrina se encuentra muy enfrentada sobre esta admisibilidad, sin que exista jurisprudencia al respecto. Por un lado, autores como Álvarez-Sala, Díez-Picazo y Amorós consideran que tal pacto sería nulo por atentar contra la igualdad conyugal consagrada en el artículo 1328 del Código Civil y en el artículo 32 de la Constitución, salvo que se configurara como un poder revocable que permitiera al cónyuge no administrador recuperar su facultad mediante el desapoderamiento. Por otro lado, civilistas como Lacruz, Peña, De los Mozos y Pérez Sanz sostienen que el artículo 1375 autoriza expresamente modificar las reglas igualitarias de gestión, por lo que el pacto de administración por uno solo no atenta contra el principio de igualdad.
+
+El autor del texto considera preferible esta última opción, pues en los escasos supuestos en que se otorgan tales capitulaciones, son los propios cónyuges quienes valoran si ejercen la administración conjunta o si uno queda exonerado de esa carga. Por último, la mayoría doctrinal considera que no presenta problemas de igualdad el pacto capitular por el que los cónyuges establecen que cualquiera de ellos, indistintamente, puede gestionar el patrimonio ganancial sin necesidad del consentimiento del otro, incluso en los casos en que el Código exige consentimiento de ambos, si bien este pacto es aún más infrecuente en la práctica que el de administración individual.
+
+4. LOS SUPUESTOS LEGALES DE ACTUACIÓN INDIVIDUAL
+
+La gestión conjunta es en muchos casos un ideal imposible o una regla excesiva para el funcionamiento cotidiano de la pareja sometida al régimen de gananciales, por lo que podría generar más inconvenientes que ventajas. Por ello, el Código regula numerosos supuestos en los que legitima la actuación individual de cualquiera de los cónyuges, aunque rija la gestión conjunta como principio. Algunos tratadistas consideran que la gestión conjunta es la regla y la actuación individual la excepción, aplicándose aquella a los actos más importantes y esta a los de menor trascendencia económica. Sin embargo, en la práctica cotidiana, la gestión individual no es una rareza, sino una constante en la mayoría de los matrimonios bajo gananciales.
+
+4.1. La potestad doméstica
+
+En el ámbito de la potestad doméstica, que atiende a las necesidades familiares y circunstancias de cada caso, la actuación individual de los cónyuges es no solo lícita y admisible, sino también un deber de ambos en lo relativo al sostenimiento, alimentos y educación de los hijos. Por tanto, cualquiera de ellos puede realizar actos de administración y disposición sobre bienes gananciales de forma individual, siempre que actúe conforme al artículo 1319.
+
+4.2. La disposición de los frutos de los bienes privativos
+
+El artículo 1381 establece que los frutos y ganancias de los patrimonios privativos forman parte del haber ganancial. Su primera parte reitera lo dispuesto en el artículo 1347, sin relación con la administración de la sociedad de gananciales. La segunda parte otorga a cada cónyuge la facultad de disponer de los frutos de sus bienes privativos al solo efecto de permitir la correcta administración de su patrimonio privativo, debiendo esos actos dirigirse a evitar el perjuicio de tales frutos, cuyo resultado patrimonial debe integrarse en la masa ganancial. Alguna autora propone extender esta facultad a las ganancias del trabajo, pero dicha propuesta es minoritaria y difícilmente compartible.
+
+4.3. El anticipo de numerario ganancial
+
+El artículo 1382 permite a cada cónyuge tomar, sin consentimiento del otro pero con su conocimiento, el numerario ganancial necesario, según los usos y circunstancias familiares, para el ejercicio de su profesión o la administración ordinaria de sus bienes. Esta norma no resulta extraña al sistema, pues el artículo 1362 declara que esos gastos son cargo de la sociedad de gananciales, y resulta natural recurrir al metálico ganancial para atender la continuidad de la profesión o la administración de los bienes privativos, ya que lo obtenido por el trabajo y los frutos del patrimonio privativo forman parte de la masa ganancial.
+
+4.4. Bienes y derechos a nombre de uno de los cónyuges
+
+Aunque la titularidad conjunta es la regla, no es infrecuente que ciertos bienes o derechos gananciales figuren formalmente a nombre de un solo cónyuge por razones prácticas. Pretender en estos casos la gestión conjunta atentaría contra el sentido común. Por ello, el artículo 1384 declara válidos los actos de administración de bienes y los de disposición de dinero o títulos valores realizados por el cónyuge a cuyo nombre figuren o en cuyo poder se encuentren. El artículo 1385.1 añade que los derechos de crédito, sean gananciales o privativos, serán ejercitados por el cónyuge a cuyo nombre aparezcan constituidos.
+
+4.5. La defensa del patrimonio ganancial
+
+El Código habilita a cualquier cónyuge para realizar actos necesarios para la defensa del patrimonio ganancial. El artículo 1385.2 lo plantea desde el prisma judicial, permitiendo ejercitar la defensa de bienes y derechos comunes por vía de acción o excepción, pero es obvio que quien puede lo más puede lo menos, por lo que también podrá realizar actos jurídicos o materiales no procesales que eviten perjuicios al patrimonio ganancial.
+
+4.6. Los gastos urgentes
+
+El artículo 1386 establece que para realizar gastos urgentes de carácter necesario, aunque sean extraordinarios, basta el consentimiento de uno solo de los cónyuges, tenga o no conocimiento el otro, atendiendo a la urgencia. La norma contempla supuestos diversos a los de la potestad doméstica, reconociendo un ámbito propio para las necesidades extraordinarias. No obstante, en numerosos casos resultará difícil deslindar ambos ámbitos, pues los gastos extraordinarios pueden incardinarse en la potestad doméstica, como ocurre con la atención médica urgente por accidente de un hijo o los gastos por inundación o incendio del hogar familiar.
+
+5. LOS ACTOS INDIVIDUALES DE CARÁCTER LESIVO O FRAUDULENTO
+
+El Código regula dos supuestos de actos individuales de un cónyuge que pueden perjudicar al otro. El artículo 1390 establece que si un cónyuge, mediante un acto de administración o disposición, obtiene un beneficio exclusivo para sí o causa dolosamente un daño a la sociedad de gananciales, será deudor a esta por el importe correspondiente, aunque el otro cónyuge no impugne la eficacia del acto. El artículo 1391 añade que, si el acto se realiza en fraude de los derechos del consorte, se aplica lo anterior y, además, si el adquirente actuó de mala fe, el acto será rescindible.
+
+Estos preceptos se refieren exclusivamente a actos sobre bienes gananciales, pues sobre los bienes privativos cada cónyuge puede disponer libremente aunque ello perjudique a la sociedad (por ejemplo, cancelar un arrendamiento de una finca privativa cuyas rentas sí son gananciales).
+
+La lesión o fraude se refieren única y exclusivamente al otro cónyuge o a la sociedad de gananciales, no a terceros. Además, la aplicación de los artículos 1390 y 1391 no queda circunscrita a los casos en que el cónyuge actuante contravenga las normas de gestión conjunta; son aplicables incluso si estaba legitimado para actuar individualmente, siempre que el resultado sea lesivo o fraudulento para el otro cónyuge. La finalidad es evitar el perjuicio patrimonial del cónyuge no actuante o proteger el patrimonio ganancial.
+
+El perjuicio puede consistir en: a) beneficio o lucro exclusivo para el cónyuge agente, que supone un enriquecimiento injusto para él y privación para el otro; b) daño doloso a la sociedad mediante la asunción de deudas o gastos caprichosos que no sean cargas de la sociedad (juego, vicios); c) actos fraudulentos respecto del consorte no actuante, como ocultar beneficios o enajenar bienes gananciales a bajo precio. La consecuencia principal es que el cónyuge contratante se constituye en deudor de la sociedad por el importe correspondiente, aunque no se impugne el acto, pudiendo el perjudicado instar el reintegro en la liquidación. Desde el punto de vista de terceros, el acto transmisivo o la deuda mantienen su validez si no se impugnan. En caso de fraude, si el adquirente actuó de mala fe, el acto es además rescindible.
+
+Esta regla del reintegro no es especialmente grave, lo que explica que el artículo 1393.2ª considere legitimado al cónyuge perjudicado para instar la disolución judicial de la sociedad cuando el otro cónyuge realice por sí solo actos dispositivos o de gestión que entrañen fraude, daño o peligro para los derechos del otro. La mayoría de la doctrina entiende que este precepto exige reiteración (actos continuados y repetitivos), pero los autores consideran que esa interpretación beneficia excesivamente al cónyuge ventajista y debería revisarse.
+
+6. LA TRANSFERENCIA DE LA GESTIÓN A UN SOLO CONSORTE
+
+La posibilidad de actuación individual de un cónyuge no quiebra el principio de gestión conjunta, sino que concreta sus excepciones. Para el resto, rige la regla de actuación conjunta. No obstante, cuando la gestión conjunta resulta inviable por imposibilidad o inconveniencia de que uno de los cónyuges actúe o preste su consentimiento, el ordenamiento transfiere a uno de ellos todas las facultades administrativas sobre el patrimonio ganancial. Doctrinalmente, estos casos se denominaban, con la normativa anterior a 1981, “supuestos de transferencia de la gestión” a la mujer cuando el marido estaba prófugo, rebelde o impedido. La Ley 11/1981 mantiene la denominación, pero en plano de igualdad para ambos cónyuges. Así, cabe transferir en bloque las facultades de administración y disposición, distinguiendo los artículos 1387 y 1388 entre transferencia ope legis y transferencia judicial.
+
+6.1. Transferencia ope legis: la representación legal del consorte
+
+El artículo 1387 regula la transferencia ope legis, según la cual la administración y disposición de los bienes gananciales se transferirá por ministerio de la ley al cónyuge que sea nombrado curador de su consorte con discapacidad, cuando se le hayan atribuido facultades de representación plena. Esta asunción presupone que el cónyuge administrador sea el curador de su consorte, regla general ex artículo 276 CC, y recibe tales poderes de forma automática, tanto de administración como de disposición. Si se nombra otro curador distinto o solo curador de la persona pero no de los bienes, el otro cónyuge no recibe las facultades de gestión.
+
+6.2. La transferencia judicial
+
+La transferencia judicial, regulada en el artículo 1388, permite a los Tribunales conferir la administración a un solo cónyuge cuando el otro se halle en imposibilidad de prestar consentimiento, haya abandonado la familia o exista separación de hecho. El abandono de la familia requiere escasa justificación. La separación de hecho parece referirse a la separación por abandono, pues en la convencional los cónyuges suelen pactar medidas patrimoniales. La imposibilidad de prestar consentimiento puede deberse a causas fácticas (secuestro, ingreso en UCI) o jurídicas (duda sobre capacidad de obrar, aunque no haya declaración de necesidad de apoyo). A diferencia del artículo 1387, el 1388 solo permite “conferir la administración”, por lo que para actos de disposición sería necesaria autorización judicial. No obstante, el artículo 1389 podría llevar a que solo los actos de disposición especialmente relevantes requieran dicha autorización, pues resulta impensable que el cónyuge administrador quede sometido a autorización judicial incluso para actos de disposición propios de la administración ordinaria.
+
+6.3. Las facultades del cónyuge administrador
+
+El artículo 1389.1 establece que el cónyuge administrador tendrá plenas facultades para ello, salvo que el juez establezca cautelas o limitaciones en interés de la familia. Sin embargo, esa plenitud es más aparente que real respecto de los actos de disposición sobre bienes valiosos, pues el apartado segundo exige autorización judicial para disponer de inmuebles, establecimientos mercantiles, objetos preciosos o valores mobiliarios, salvo el derecho de suscripción preferente. Cabe defender la anulabilidad de los actos realizados sin dicha autorización, pero quizá sea preferible predicar la nulidad radical por vulnerar una norma imperativa, dado que el otro cónyuge difícilmente podrá instar la anulación. Esto es aplicable tanto a la transferencia ope legis como a la judicial. En cambio, para los actos de disposición requeridos por la administración ordinaria, el primer párrafo del artículo 1389 (“tendrá para ello plenas facultades”) parece autorizar su admisibilidad como regla, si bien la resolución judicial puede establecer limitaciones concretas.
+
+7. LA DISPOSICIÓN TESTAMENTARIA DE LOS BIENES GANANCIALES
+
+El artículo 1379 permite que cada cónyuge disponga por testamento de la mitad de los bienes gananciales. Sin embargo, este precepto está mal ubicado sistemáticamente, porque la gestión de la sociedad de gananciales presupone su vigencia, mientras que la disposición testamentaria solo surte efecto tras la muerte del testador, momento en que la sociedad ya se ha disuelto. Su permanencia en el Código se debe a razones históricas: antes de la Ley 11/1981, el artículo 1414 establecía que el marido no podía disponer por testamento sino de su mitad de los gananciales.
+
+La reforma de 1981 convirtió la norma en afirmativa y la extendió a ambos cónyuges, manteniendo un precepto superfluo y mal sistematizado. El artículo 1380 merece igual crítica: su contenido debería estar en las normas sobre legados, no en la gestión de gananciales. Este precepto señala que la disposición testamentaria de un bien ganancial produce todos sus efectos si el bien es adjudicado a la herencia del testador; en caso contrario, se entiende legado el valor que tenía al momento del fallecimiento.
+
+8. ADMINISTRACIÓN Y DISPOSICIÓN DE LOS BIENES PROPIOS
+
+En principio, cada cónyuge administra y dispone de sus propios bienes, y ninguno puede atribuirse la representación del otro sin que le haya sido conferida, según el artículo 71.
+`.trim();
+
+    /* =========================================================
+       2) IDEAS CLAVE (MANUAL)
+    ========================================================= */
+    const IDEAS_CLAVE = {
+"1": "Tras la reforma de 1981, la gestión de los bienes gananciales pasó de la administración unilateral del marido a la gestión conjunta de ambos cónyuges, eliminando la anterior situación de desigualdad patrimonial.",
+"2": "El artículo 1375 establece la gestión conjunta como regla general, aplicable tanto a actos de administración como de disposición, salvo pacto en capitulaciones matrimoniales.",
+"2.1": "La expresión 'gestión' abarca tanto actos de administración como de disposición, y el principio de actuación conjunta exige el consentimiento de ambos cónyuges para ambos tipos de actos.",
+"2.2": "Los actos de disposición onerosa realizados sin consentimiento del otro cónyuge son anulables (art. 1322.1), con acción que prescribe a los cuatro años desde la disolución de la sociedad conyugal.",
+"2.3": "Los actos de disposición a título gratuito sin consentimiento de ambos cónyuges son radicalmente nulos (arts. 1378 y 1322.2), salvo las liberalidades de uso o regalos de costumbre, que son válidos aunque los realice un solo cónyuge.",
+"2.4": "El deber de información recíproca (art. 1383) es exigible periódicamente sobre cualquier actividad económica, y su incumplimiento grave y reiterado puede ser causa de disolución judicial de la sociedad de gananciales (art. 1393.4º).",
+"2.5": "La autorización judicial supletoria permite al juez suplir el consentimiento del cónyuge impedido o que se niega injustificadamente, tanto para actos de administración (art. 1376) como de disposición (art. 1377.2).",
+"2.6": "La Ley de jurisdicción voluntaria (Ley 15/2015) regula la intervención judicial en desacuerdos conyugales, permitiendo al juez atribuir la administración a un solo cónyuge con las cautelas necesarias, sin exigir abogado ni procurador salvo para actos superiores a 6.000 euros.",
+"3": "El artículo 1375 permite pactar en capitulaciones la gestión individual de los gananciales, si bien existe controversia doctrinal sobre si ello vulnera la igualdad conyugal del artículo 1328 y el artículo 32 de la Constitución.",
+"4": "La gestión conjunta es la regla general, pero el Código admite numerosos supuestos de actuación individual que en la práctica cotidiana son constantes, no excepciones.",
+"4.1": "En el ámbito de la potestad doméstica, cualquier cónyuge puede realizar actos de administración y disposición sobre bienes gananciales de forma individual, en cumplimiento del deber de sostenimiento, alimentos y educación de los hijos (art. 1319).",
+"4.2": "Cada cónyuge puede disponer individualmente de los frutos de sus bienes privativos para evitar su perjuicio, aunque el resultado patrimonial debe integrarse en la masa ganancial (art. 1381).",
+"4.3": "Cada cónyuge puede tomar numerario ganancial sin consentimiento del otro, pero con su conocimiento, para el ejercicio de su profesión o la administración ordinaria de sus bienes, según usos y circunstancias familiares (art. 1382).",
+"4.4": "Los actos de administración de bienes y disposición de dinero o títulos valores son válidos si los realiza el cónyuge a cuyo nombre figuren o en cuyo poder se encuentren (arts. 1384 y 1385.1).",
+"4.5": "Cualquier cónyuge está legitimado para realizar actos necesarios para la defensa del patrimonio ganancial, tanto judiciales como extrajudiciales (art. 1385.2).",
+"4.6": "Para gastos urgentes de carácter necesario, aunque sean extraordinarios, basta el consentimiento de un solo cónyuge, atendiendo a la urgencia (art. 1386).",
+"5": "Los artículos 1390 y 1391 imponen al cónyuge que obtiene beneficio exclusivo o causa daño doloso a la sociedad de gananciales la obligación de reintegrar el importe correspondiente; si hay fraude y mala fe del adquirente, el acto es además rescindible.",
+"6": "Cuando la gestión conjunta resulta inviable por imposibilidad, abandono o separación de hecho, el ordenamiento permite transferir la administración a un solo cónyuge, bien por ministerio de la ley (art. 1387) o por decisión judicial (art. 1388).",
+"6.1": "La transferencia ope legis se produce automáticamente al cónyuge que sea nombrado curador de su consorte con discapacidad, siempre que se le atribuyan facultades de representación plena (art. 1387).",
+"6.2": "La transferencia judicial permite al tribunal conferir la administración a un solo cónyuge cuando el otro está imposibilitado, ha abandonado la familia o existe separación de hecho (art. 1388).",
+"6.3": "El cónyuge administrador tiene plenas facultades, pero requiere autorización judicial para disponer de inmuebles, establecimientos mercantiles, objetos preciosos o valores mobiliarios, salvo el derecho de suscripción preferente (art. 1389).",
+"7": "El artículo 1379 permite a cada cónyuge disponer por testamento de la mitad de los bienes gananciales, aunque es un precepto mal sistematizado porque la disposición testamentaria solo surte efecto tras la disolución de la sociedad.",
+"8": "Cada cónyuge administra y dispone libremente de sus bienes privativos, sin que ninguno pueda atribuirse la representación del otro sin mandato expreso (art. 71)."
+};
+
+    /* =========================================================
+       3) BANCO DE PREGUNTAS (TU BANCO ORIGINAL)
+       ✅ OJO: aquí pegamos TAL CUAL tu banco (1–100)
+    ========================================================= */
+    
+    
+    const BANCO_1 = `
+    #ID = 1
+
+// [1]
+Q: ¿Qué cambio estructural introdujo la reforma de 1981 en la disposición de los bienes gananciales?
+A) Sustituyó la sociedad de gananciales por un sistema de separación automática de bienes.
+B) Mantuvo la gestión exclusiva del marido, pero sometida a control judicial general.
+C) Estableció la gestión conjunta de ambos cónyuges en lugar de la administración unilateral del marido.
+OK: C
+EXP: La reforma de 1981 reemplazó el modelo de control exclusivo del marido por un sistema de actuación conjunta de ambos cónyuges.
+
+// [2]
+Q: ¿Qué consecuencia jurídica reflejaba la regulación anterior a la reforma de 1981 respecto de la mujer casada?
+A) La mujer casada apenas tenía facultades dispositivas ni siquiera sobre sus bienes privativos, por atribuirse al marido la gestión exclusiva del patrimonio matrimonial.
+B) La mujer casada podía disponer libremente de sus bienes privativos, aunque no de los gananciales.
+C) La mujer casada compartía con el marido la administración de los bienes comunes, pero no la de los bienes propios.
+OK: A
+EXP: El texto destaca que la mujer carecía prácticamente de capacidad dispositiva incluso sobre sus bienes privativos por la posición exclusiva del marido.
+
+// [3]
+Q: ¿Qué problema principal generaba el originario art. 1413 del Código Civil en materia de bienes gananciales?
+A) Impedía toda enajenación de bienes gananciales sin autorización judicial previa.
+B) Permitía al marido enajenar y gravar bienes gananciales a título oneroso sin consentimiento de la esposa, facilitando abusos patrimoniales.
+C) Exigía el acuerdo de ambos cónyuges para cualquier acto de disposición onerosa.
+OK: B
+EXP: El precepto permitía al marido disponer por sí solo de bienes gananciales a título oneroso, lo que favorecía abusos y ruina familiar.
+
+// [4]
+Q: ¿Cuál fue el alcance real de la corrección introducida por la Ley de 24 de abril de 1958 sobre la disposición de bienes gananciales?
+A) Implantó la igualdad plena de ambos cónyuges en toda la administración del patrimonio ganancial.
+B) Eliminó la posibilidad de que el marido dispusiera unilateralmente de cualquier bien ganancial.
+C) Exigió consentimiento de la mujer o autorización judicial para disponer de inmuebles o establecimientos mercantiles gananciales, sin suprimir la administración exclusiva del marido.
+OK: C
+EXP: La reforma de 1958 solo limitó algunos actos sobre determinados bienes, pero mantuvo al marido como administrador exclusivo de la sociedad de gananciales.
+
+// [5]
+Q: Según la Exposición de Motivos de la Ley de 1958, ¿cómo se justificaba la atribución al marido de la dirección dentro de la sociedad conyugal?
+A) Por supuestas exigencias de la unidad matrimonial apoyadas en razones de naturaleza, religión e historia.
+B) Por un criterio estrictamente económico basado en la mayor aportación patrimonial del marido.
+C) Por la necesidad de proteger judicialmente a la mujer frente a terceros adquirentes.
+OK: A
+EXP: El texto señala que la propia Exposición de Motivos justificaba esa posición del marido en la unidad matrimonial y en razones de naturaleza, religión e historia.
+#ID = 2
+
+// [6]
+Q: ¿Qué establece actualmente el artículo 1375 del Código Civil sobre la gestión y disposición de los bienes gananciales?
+A) Atribuye la gestión ordinaria a un cónyuge y la disposición a ambos.
+B) Permite la actuación individual de cualquiera de los cónyuges como regla general.
+C) Atribuye conjuntamente a los cónyuges la gestión y disposición de los bienes gananciales, salvo lo previsto en los artículos siguientes.
+OK: C
+EXP: El artículo 1375 consagra como regla la gestión conjunta de ambos cónyuges sobre los bienes gananciales.
+
+// [7]
+Q: ¿Cómo debe interpretarse en el artículo 1375 el inciso “sin perjuicio de lo que se determina en los artículos siguientes”?
+A) Como una advertencia de que la gestión conjunta no excluye supuestos concretos de actuación individual, no como una excepción a favor del marido.
+B) Como una reserva legal que restablece la posición preferente del marido en la sociedad de gananciales.
+C) Como una remisión exclusiva a los actos de administración, pero no a los de disposición.
+OK: A
+EXP: El inciso no reintroduce privilegios del marido, sino que indica que puede haber supuestos específicos de actuación individual.
+
+#ID = 2.1
+
+// [8]
+Q: ¿Qué alcance tiene en la sociedad de gananciales la expresión doctrinal “gestión” utilizada a partir del artículo 1375?
+A) Se limita a los actos de administración ordinaria del patrimonio ganancial.
+B) Comprende tanto los actos de administración como los actos de disposición, sometidos en principio al consentimiento de ambos cónyuges.
+C) Se refiere solo a los actos de disposición sobre bienes inmuebles gananciales.
+OK: B
+EXP: La doctrina usa “gestión” para abarcar administración y disposición, porque el régimen legal no se limita a la mera administración.
+
+#ID = 2.2
+
+// [9]
+Q: ¿Qué función cumple el artículo 1377.1 del Código Civil respecto de los actos de disposición onerosa sobre bienes gananciales?
+A) Introduce una excepción al principio de actuación conjunta para favorecer la rapidez del tráfico jurídico.
+B) Permite la validez automática de los actos realizados por un solo cónyuge si hay beneficio económico.
+C) Concreta el principio de actuación conjunta al exigir el consentimiento de ambos cónyuges para los actos de disposición onerosa.
+OK: C
+EXP: El artículo 1377.1 no crea una regla distinta, sino que aplica al ámbito oneroso el principio general de actuación conjunta.
+
+// [10]
+Q: ¿Cuál es la consecuencia jurídica de los actos de disposición onerosa sobre bienes gananciales realizados sin el consentimiento del otro cónyuge?
+A) Son anulables a instancia del cónyuge cuyo consentimiento se omitió o de sus herederos, si no hubo confirmación expresa o tácita.
+B) Son nulos de pleno derecho y no admiten convalidación posterior.
+C) Son válidos mientras no se pruebe perjuicio económico para la familia.
+OK: A
+EXP: El artículo 1322.1 somete estos actos al régimen de anulabilidad, no de nulidad radical.
+
+// [11]
+Q: ¿Cómo se regula la acción de anulabilidad de los actos de disposición onerosa realizados sin consentimiento del otro cónyuge?
+A) Prescribe a los seis años desde la celebración del acto, sin atender al conocimiento.
+B) Prescribe a los cuatro años desde la disolución de la sociedad conyugal o del matrimonio, salvo conocimiento suficiente anterior del acto.
+C) Es imprescriptible mientras subsista la sociedad de gananciales.
+OK: B
+EXP: El texto fija un plazo de cuatro años con referencia principal a la disolución, salvo conocimiento suficiente previo.
+
+#ID = 2.3
+
+// [12]
+Q: ¿Qué consecuencia produce en los actos de disposición a título gratuito sobre bienes gananciales la falta de consentimiento de cualquiera de los cónyuges?
+A) Produce mera anulabilidad si el otro cónyuge no formula oposición expresa.
+B) Produce ineficacia provisional hasta que el juez autorice el acto.
+C) Produce nulidad radical conforme a los artículos 1378 y 1322.2.
+OK: C
+EXP: En los actos gratuitos, la falta de consentimiento no genera anulabilidad, sino nulidad radical.
+
+// [13]
+Q: ¿Qué relevancia tiene la imprescriptibilidad de la acción de nulidad en los actos de disposición gratuita sobre bienes gananciales?
+A) Permite impugnar el acto en cualquier momento, incluso mucho tiempo después, al disolverse y liquidarse la sociedad de gananciales.
+B) Impide impugnar el acto una vez transmitido el bien a un tercero.
+C) Limita la impugnación a los cuatro años siguientes a la enajenación.
+OK: A
+EXP: La nulidad radical puede hacerse valer sin límite temporal, aunque la restitución pueda encontrar obstáculos posteriores.
+
+// [14]
+Q: ¿Cómo justifica el régimen legal la distinta protección entre los actos onerosos y los actos gratuitos sobre bienes gananciales realizados sin consentimiento?
+A) Porque los actos gratuitos solo pueden recaer sobre bienes muebles.
+B) Porque el cónyuge que dispone gratuitamente actúa dentro de la potestad doméstica.
+C) Porque el adquirente a título gratuito no ha realizado sacrificio patrimonial y no merece la misma protección que el adquirente oneroso.
+OK: C
+EXP: La diferencia entre anulabilidad y nulidad se explica por la menor protección que merece quien adquiere gratuitamente sin contraprestación real.
+
+// [15]
+Q: ¿Qué solución establece el artículo 1397.2 para los negocios fraudulentos relativos a bienes gananciales cuando los bienes no pueden recuperarse?
+A) Excluye definitivamente esos bienes de la liquidación ganancial.
+B) Ordena incluir en el activo ganancial el valor actualizado que tenían los bienes al ser enajenados.
+C) Sustituye siempre la restitución por una indemnización a cargo del tercero adquirente.
+OK: B
+EXP: Si los bienes no pueden recuperarse, su valor actualizado debe integrarse en el activo ganancial; además, estas disposiciones pueden motivar disolución judicial.
+
+// [16]
+Q: ¿Qué tratamiento reciben las liberalidades de uso o regalos de costumbre realizados por un solo cónyuge con cargo a bienes gananciales?
+A) Son válidos y eficaces cuando se ajustan al nivel económico familiar, por considerarse integrados en la potestad doméstica.
+B) Son siempre nulos por implicar disposición gratuita sin consentimiento conjunto.
+C) Solo son válidos si recaen sobre bienes privativos del cónyuge que los realiza.
+OK: A
+EXP: El artículo 1378 salva estas liberalidades habituales cuando son acordes con la situación económica de la familia.
+
+#ID = 2.4
+
+// [17]
+Q: ¿Qué impone el artículo 1383 del Código Civil como complemento del principio de actuación conjunta en la sociedad de gananciales?
+A) Un deber de autorización previa para cualquier actividad económica individual.
+B) Un deber recíproco y periódico de información sobre la situación y rendimientos de cualquier actividad económica de cada cónyuge.
+C) Un deber exclusivo del cónyuge administrador de rendir cuentas anuales al otro.
+OK: B
+EXP: El deber de información obliga a ambos cónyuges a mantener informado al otro sobre sus actividades económicas y sus rendimientos.
+
+// [18]
+Q: ¿Qué consecuencia puede producir el incumplimiento grave y reiterado del deber de información del artículo 1383?
+A) La nulidad de todos los actos realizados por el cónyuge incumplidor.
+B) La pérdida automática de la condición de administrador de los bienes gananciales.
+C) La disolución judicial de la sociedad de gananciales conforme al artículo 1393.4º.
+OK: C
+EXP: El incumplimiento grave y repetido del deber de informar constituye causa legal de disolución judicial de la sociedad de gananciales.
+
+#ID = 2.5
+
+// [19]
+Q: ¿Cuál es la finalidad de la autorización judicial supletoria en la gestión de los bienes gananciales?
+A) Sustituir el consentimiento de un cónyuge cuando este se niega injustificadamente o está impedido y el acto requiere actuación conjunta.
+B) Revisar con carácter general toda decisión económica adoptada por los cónyuges.
+C) Reemplazar definitivamente a ambos cónyuges en la administración del patrimonio ganancial.
+OK: A
+EXP: La autorización judicial supletoria actúa como mecanismo de sustitución del consentimiento faltante en supuestos concretos.
+
+// [20]
+Q: ¿Qué diferencia señala el texto entre el impedimento provisional y el impedimento permanente de un cónyuge en materia de gestión ganancial?
+A) En ambos casos procede exclusivamente la autorización judicial supletoria para actos concretos.
+B) El impedimento provisional o pasajero justifica la autorización judicial supletoria, mientras que el permanente conduce a la transferencia judicial de la gestión del patrimonio ganancial.
+C) El impedimento permanente solo permite actos de administración, pero no actos de disposición.
+OK: B
+EXP: La autorización supletoria sirve para desbloquear situaciones temporales; si el impedimento es permanente, la solución es transferir judicialmente la gestión.
+
+#ID = 2.6
+
+// [21]
+Q: ¿Qué regula el artículo 90 de la Ley 15/2015 sobre desacuerdos conyugales y bienes gananciales?
+A) Un procedimiento exclusivamente dirigido a liquidar la sociedad de gananciales tras el divorcio.
+B) Un sistema notarial obligatorio para sustituir cualquier intervención judicial entre cónyuges.
+C) Un conjunto de expedientes de jurisdicción voluntaria para intervenir o autorizar judicialmente decisiones sobre domicilio, cargas familiares, administración y disposición de bienes en casos de desacuerdo o impedimento.
+OK: C
+EXP: El artículo 90 articula distintas vías de intervención judicial en situaciones de desacuerdo, incumplimiento o impedimento entre cónyuges.
+
+// [22]
+Q: ¿Qué regla procesal establece la Ley de jurisdicción voluntaria sobre abogado y procurador en estos expedientes?
+A) No es preceptiva su intervención, salvo para actos patrimoniales superiores a 6.000 euros.
+B) Su intervención es siempre obligatoria por afectar al régimen económico matrimonial.
+C) Solo es obligatoria la intervención de abogado, pero no la de procurador.
+OK: A
+EXP: Como regla general no son preceptivos, aunque sí lo serán cuando el acto patrimonial supere los 6.000 euros.
+
+// [23]
+Q: ¿Qué competencia judicial y qué garantías de audiencia prevé el artículo 90 de la Ley 15/2015 en estos expedientes?
+A) Es competente cualquier juzgado del lugar donde radique el bien principal, sin intervención del Ministerio Fiscal.
+B) Es competente el Juzgado de Primera Instancia del último domicilio o residencia de los cónyuges, con audiencia de los interesados y del Ministerio Fiscal cuando haya intereses de menores o personas con discapacidad.
+C) Es competente el Juzgado de Violencia sobre la Mujer, con audiencia exclusiva del solicitante.
+OK: B
+EXP: El texto precisa tanto la competencia territorial como la audiencia del otro cónyuge, interesados y, cuando proceda, del Ministerio Fiscal.
+    `;
+
+
+    const BANCO_2 = `
+    #ID = 3
+
+// [24]
+Q: ¿Qué posibilidad reconoce el artículo 1375 del Código Civil, en relación con las capitulaciones matrimoniales, respecto de la gestión y disposición de los bienes gananciales?
+A) Exige siempre la gestión conjunta, sin admitir modificación convencional alguna.
+B) Permite alterar solo las facultades de disposición, pero no las de administración.
+C) Permite que la regla legal de gestión conjunta sea desplazada por pacto en capitulaciones matrimoniales.
+OK: C
+EXP: El artículo 1375 establece la gestión conjunta como regla legal, pero admite pacto en contrario fijado en capitulaciones.
+
+// [25]
+Q: ¿Qué límite impone el artículo 1328 del Código Civil a la libertad capitular en materia de gestión de la sociedad de gananciales?
+A) Declara nula cualquier estipulación que limite la igualdad de derechos de cada cónyuge.
+B) Prohíbe toda capitulación que modifique el régimen legal de gananciales.
+C) Somete toda cláusula de administración individual a autorización judicial previa.
+OK: A
+EXP: El artículo 1328 actúa como límite material a la libertad de pactos al proscribir estipulaciones contrarias a la igualdad conyugal.
+
+// [26]
+Q: ¿Cuál es el argumento principal de la doctrina que considera nulo el pacto capitular de administración de la sociedad de gananciales por un solo cónyuge?
+A) Que el artículo 1375 solo permite pactos sobre bienes privativos.
+B) Que ese pacto vulnera la igualdad conyugal proclamada en el artículo 1328 del Código Civil y en el artículo 32 de la Constitución.
+C) Que la administración individual solo es válida en caso de separación judicial.
+OK: B
+EXP: La posición restrictiva entiende que atribuir la administración a un solo cónyuge quebranta la igualdad de derechos entre ambos.
+
+// [27]
+Q: ¿Qué fundamento utiliza la doctrina que admite el pacto capitular de administración de la sociedad de gananciales por un solo cónyuge?
+A) Que la administración individual queda justificada por la mayor capacidad económica de uno de los esposos.
+B) Que la nulidad del pacto desaparece si ambos cónyuges lo ejecutan durante años.
+C) Que el artículo 1375 autoriza expresamente modificar convencionalmente las reglas legales de gestión, sin que ello suponga por sí mismo lesión de la igualdad.
+OK: C
+EXP: La tesis favorable parte de que la propia norma permite pactar una organización distinta de la gestión ganancial.
+
+// [28]
+Q: ¿Qué valoración recibe mayoritariamente en la doctrina el pacto capitular por el que cualquiera de los cónyuges puede gestionar indistintamente el patrimonio ganancial sin consentimiento del otro?
+A) Se considera, en general, compatible con la igualdad conyugal, aunque sea aún más infrecuente en la práctica que el pacto de administración individual.
+B) Se considera nulo por atribuir facultades dispositivas incompatibles con el régimen de gananciales.
+C) Se considera válido solo para actos de administración ordinaria, pero no para actos en que el Código exige consentimiento de ambos.
+OK: A
+EXP: La mayoría doctrinal entiende que este pacto no plantea objeciones de igualdad, aunque su uso práctico sea muy excepcional.
+
+    `;
+
+
+    const BANCO_3 = `
+    #ID = 4
+
+// [29]
+Q: ¿Cómo presenta el texto la relación entre la gestión conjunta y los supuestos legales de actuación individual en la sociedad de gananciales?
+A) La actuación individual queda excluida de la práctica cotidiana y solo opera en casos judiciales.
+B) La gestión conjunta ha sido sustituida legalmente por la libre actuación individual de cualquiera de los cónyuges.
+C) La gestión conjunta sigue siendo el principio, pero el Código legitima numerosos supuestos de actuación individual por exigencias prácticas de la vida matrimonial.
+OK: C
+EXP: El texto destaca que la gestión conjunta es la regla, pero que el Código admite múltiples casos de actuación individual por razones funcionales y cotidianas.
+
+#ID = 4.1
+
+// [30]
+Q: ¿Qué alcance tiene la potestad doméstica en relación con la actuación individual sobre bienes gananciales?
+A) Permite que cualquiera de los cónyuges realice individualmente actos de administración y disposición sobre bienes gananciales para atender necesidades familiares, conforme al artículo 1319.
+B) Solo autoriza actos materiales de cuidado doméstico, pero no actos jurídicos sobre bienes gananciales.
+C) Exige siempre acuerdo previo de ambos cónyuges, salvo en gastos suntuarios.
+OK: A
+EXP: En la potestad doméstica la actuación individual no solo es admisible, sino vinculada al sostenimiento y atención de la familia.
+
+#ID = 4.2
+
+// [31]
+Q: ¿Para qué autoriza el artículo 1381 a cada cónyuge a disponer de los frutos de sus bienes privativos?
+A) Para incorporarlos libremente a su patrimonio personal sin conexión con la sociedad de gananciales.
+B) Para permitir la correcta administración de su patrimonio privativo y evitar perjuicios a unos frutos cuyo resultado debe integrarse en la masa ganancial.
+C) Para atribuir carácter privativo a las ganancias obtenidas con esos frutos.
+OK: B
+EXP: La facultad se justifica por la necesidad de administrar adecuadamente el patrimonio privativo, aunque los frutos pertenezcan al haber ganancial.
+
+#ID = 4.3
+
+// [32]
+Q: ¿Qué permite el anticipo de numerario ganancial del artículo 1382?
+A) Que cualquiera de los cónyuges disponga libremente de todo el metálico ganancial sin conocimiento del otro.
+B) Que cada cónyuge tome, con conocimiento del otro pero sin su consentimiento, el numerario ganancial necesario para ejercer su profesión o administrar ordinariamente sus bienes.
+C) Que un cónyuge retire numerario ganancial únicamente con autorización judicial previa.
+OK: B
+EXP: El artículo 1382 permite tomar numerario ganancial necesario sin consentimiento del otro, pero con su conocimiento y dentro de los usos y circunstancias familiares.
+
+#ID = 4.4
+
+// [33]
+Q: ¿Qué criterio siguen los artículos 1384 y 1385.1 respecto de bienes, dinero, títulos valores y derechos de crédito a nombre de un solo cónyuge?
+A) Mantienen la exigencia de gestión conjunta aunque la titularidad formal figure en uno solo.
+B) Consideran válidos determinados actos de administración o disposición realizados por el cónyuge a cuyo nombre figuren los bienes o derechos, o en cuyo poder se encuentren.
+C) Transforman automáticamente en privativos todos los bienes gananciales inscritos a nombre de un solo cónyuge.
+OK: B
+EXP: El Código atiende a la titularidad formal o a la posesión para facilitar la operatividad práctica de la gestión en esos supuestos.
+
+#ID = 4.5
+
+// [34]
+Q: ¿Qué facultad reconoce el Código Civil a cualquiera de los cónyuges para la defensa del patrimonio ganancial?
+A) Solo la de interponer acciones judiciales, pero no oponer excepciones ni realizar actos extraprocesales.
+B) La de ejercitar la defensa de bienes y derechos comunes, al menos por vía de acción o excepción, y también realizar actos no procesales dirigidos a evitar perjuicios.
+C) Exclusivamente la de impugnar actos del otro cónyuge ante el juez competente.
+OK: B
+EXP: El texto parte del artículo 1385.2 en clave judicial y extiende razonablemente esa defensa a actos no procesales de protección del patrimonio ganancial.
+
+#ID = 4.6
+
+// [35]
+Q: ¿Qué régimen establece el artículo 1386 para los gastos urgentes de carácter necesario?
+A) Basta el consentimiento de uno solo de los cónyuges, aunque el otro no tenga conocimiento, por razón de la urgencia.
+B) Se exige siempre el consentimiento expreso de ambos por tratarse de gastos extraordinarios.
+C) Solo cabe actuación individual cuando los gastos urgentes recaen sobre bienes privativos.
+OK: A
+EXP: El artículo 1386 admite la actuación de un solo cónyuge en gastos urgentes necesarios, incluso extraordinarios, precisamente por la urgencia del supuesto.
+#ID = 5
+
+// [36]
+Q: ¿Qué consecuencia establece el artículo 1390 del Código Civil cuando un cónyuge, mediante un acto de administración o disposición sobre bienes gananciales, obtiene un beneficio exclusivo para sí o causa dolosamente un daño a la sociedad de gananciales?
+A) La nulidad automática del acto realizado por el cónyuge.
+B) La disolución inmediata de la sociedad de gananciales.
+C) La obligación del cónyuge actuante de reintegrar a la sociedad de gananciales el importe correspondiente, aunque no se impugne la eficacia del acto.
+OK: C
+EXP: El artículo 1390 no impone necesariamente la ineficacia del acto, sino el deber de reintegro a favor de la sociedad de gananciales.
+
+// [37]
+Q: ¿En qué supuesto añade el artículo 1391 del Código Civil la rescindibilidad del acto individual lesivo o fraudulento?
+A) Cuando el acto se realiza en fraude de los derechos del consorte y el adquirente actúa de mala fe.
+B) Cuando cualquier tercero adquiere un bien ganancial, aunque actúe de buena fe.
+C) Cuando el cónyuge perjudicado no impugna el acto antes de la liquidación.
+OK: A
+EXP: El artículo 1391 exige fraude respecto del consorte y mala fe del adquirente para que, además del reintegro, proceda la rescisión.
+
+// [38]
+Q: ¿Cuál es el ámbito objetivo de aplicación de los artículos 1390 y 1391 del Código Civil?
+A) Todos los actos realizados por un cónyuge sobre bienes privativos y gananciales.
+B) Exclusivamente los actos sobre bienes gananciales, no los realizados sobre bienes privativos.
+C) Solo los actos de disposición onerosa sobre inmuebles gananciales.
+OK: B
+EXP: El texto precisa que estos preceptos se refieren únicamente a actos sobre bienes gananciales, no a los bienes privativos.
+
+// [39]
+Q: ¿Qué relevancia tiene que el cónyuge actuante estuviera legitimado para actuar individualmente en relación con los actos lesivos o fraudulentos sobre bienes gananciales?
+A) Excluye siempre la aplicación de los artículos 1390 y 1391.
+B) Convierte automáticamente el acto en inatacable por el otro cónyuge.
+C) No impide la aplicación de los artículos 1390 y 1391 si el resultado del acto es lesivo o fraudulento para el otro cónyuge o para la sociedad de gananciales.
+OK: C
+EXP: Estos preceptos no se limitan a infracciones de la gestión conjunta, sino que alcanzan también actos individualmente legítimos si producen lesión o fraude.
+
+// [40]
+Q: ¿Qué mecanismo adicional de protección contempla el artículo 1393.2.ª del Código Civil frente a los actos individuales que entrañen fraude, daño o peligro para los derechos del otro cónyuge?
+A) Legitima al cónyuge perjudicado para instar la disolución judicial de la sociedad de gananciales, aunque la doctrina mayoritaria exija reiteración de esos actos.
+B) Impone siempre la rescisión del acto aunque el adquirente sea de buena fe.
+C) Sustituye el reintegro por una indemnización automática a favor del cónyuge perjudicado.
+OK: A
+EXP: Además del reintegro, el Código permite pedir la disolución judicial, si bien la doctrina dominante suele exigir una conducta reiterada.
+   `;
+
+
+    const BANCO_4 = `
+    #ID = 6
+
+// [41]
+Q: ¿Qué presupone en el régimen de gananciales la transferencia de la gestión a un solo consorte?
+A) La sustitución general de la gestión conjunta por la actuación individual como nuevo principio rector.
+B) La conversión automática de todos los bienes gananciales en bienes privativos del cónyuge gestor.
+C) La atribución a uno de los cónyuges de las facultades de administración y disposición cuando la gestión conjunta resulta inviable por imposibilidad o inconveniencia de la actuación del otro.
+OK: C
+EXP: La transferencia de la gestión no elimina el principio general de actuación conjunta, sino que opera cuando esta resulta inviable.
+
+#ID = 6.1
+
+// [42]
+Q: ¿En qué supuesto opera la transferencia ope legis del artículo 1387 del Código Civil en materia de gestión ganancial?
+A) Cuando un cónyuge es nombrado curador de su consorte con discapacidad y se le atribuyen facultades de representación plena.
+B) Cuando existe cualquier discapacidad del otro cónyuge, aunque no haya representación legal.
+C) Cuando el juez aprecia dificultades de convivencia entre ambos cónyuges.
+OK: A
+EXP: La transferencia legal exige nombramiento como curador del consorte y atribución de facultades representativas plenas.
+
+// [43]
+Q: ¿Qué consecuencia se produce si el curador del cónyuge con discapacidad es una persona distinta del otro consorte o si la curatela no alcanza a los bienes?
+A) El otro cónyuge recibe solo facultades de administración, pero no de disposición.
+B) El otro cónyuge no recibe las facultades de gestión de los bienes gananciales.
+C) El otro cónyuge asume automáticamente la defensa judicial del patrimonio ganancial.
+OK: B
+EXP: El texto precisa que, fuera del supuesto exacto del artículo 1387, no se transfieren al otro cónyuge las facultades de gestión.
+
+#ID = 6.2
+
+// [44]
+Q: ¿Qué supuestos contempla el artículo 1388 del Código Civil para la transferencia judicial de la gestión ganancial?
+A) Únicamente la discapacidad del otro cónyuge con necesidad de apoyo judicial.
+B) La imposibilidad de prestar consentimiento, el abandono de la familia o la separación de hecho.
+C) Solo el desacuerdo continuado entre los cónyuges sobre actos de disposición.
+OK: B
+EXP: El artículo 1388 prevé varios supuestos concretos en los que los tribunales pueden conferir la administración a un solo cónyuge.
+
+// [45]
+Q: ¿Qué diferencia principal señala el texto entre el artículo 1387 y el artículo 1388 respecto del alcance de la transferencia de la gestión?
+A) El artículo 1388 permite conferir solo la administración, de modo que para actos de disposición sería necesaria autorización judicial.
+B) El artículo 1388 atribuye automáticamente administración y disposición con mayor amplitud que el artículo 1387.
+C) El artículo 1387 se limita a los bienes muebles y el artículo 1388 a los inmuebles.
+OK: A
+EXP: Frente a la transferencia ope legis más amplia, la transferencia judicial del artículo 1388 se refiere expresamente a la administración.
+
+#ID = 6.3
+
+// [46]
+Q: ¿Cómo configura el artículo 1389.1 las facultades del cónyuge administrador tras la transferencia de la gestión?
+A) Como facultades siempre subordinadas a autorización judicial para cualquier acto patrimonial.
+B) Como plenas facultades para administrar, salvo las cautelas o limitaciones que el juez establezca en interés de la familia.
+C) Como facultades limitadas exclusivamente a la conservación material de los bienes.
+OK: B
+EXP: El precepto parte de una atribución amplia de facultades, aunque admite restricciones judiciales en interés familiar.
+
+// [47]
+Q: ¿Qué actos de disposición exigen autorización judicial conforme al artículo 1389.2 pese a la transferencia de la gestión a un solo consorte?
+A) Todos los actos de disposición, incluidos los propios de la administración ordinaria.
+B) Solo los actos relativos a bienes muebles de escaso valor.
+C) Los actos sobre inmuebles, establecimientos mercantiles, objetos preciosos o valores mobiliarios, salvo el derecho de suscripción preferente.
+OK: C
+EXP: El artículo 1389.2 reserva autorización judicial para actos de disposición especialmente relevantes sobre determinados bienes valiosos.
+    
+    `;
+
+
+    const BANCO_5 = `
+    #ID = 7
+
+// [48]
+Q: ¿Qué alcance atribuye el artículo 1379 del Código Civil a la disposición testamentaria de los bienes gananciales?
+A) Permite a cada cónyuge disponer mortis causa de todos los bienes gananciales mientras subsista la sociedad.
+B) Prohíbe a cada cónyuge ordenar por testamento cualquier atribución sobre bienes gananciales.
+C) Permite a cada cónyuge disponer por testamento de la mitad de los bienes gananciales.
+OK: C
+EXP: El artículo 1379 reconoce a cada cónyuge la facultad de disponer mortis causa de su mitad en los bienes gananciales.
+
+// [49]
+Q: ¿Por qué considera el texto que el artículo 1379 está mal ubicado sistemáticamente en la regulación de la gestión de la sociedad de gananciales?
+A) Porque la disposición testamentaria solo despliega efectos tras la muerte del testador, cuando la sociedad de gananciales ya se ha disuelto.
+B) Porque regula actos de administración ordinaria que deberían figurar en el régimen de bienes privativos.
+C) Porque se refiere exclusivamente a pactos capitulares y no a sucesiones.
+OK: A
+EXP: La crítica sistemática se basa en que la gestión presupone la vigencia de la sociedad, mientras que el testamento opera una vez disuelta por fallecimiento.
+
+// [50]
+Q: ¿Qué regla establece el artículo 1380 del Código Civil cuando un bien ganancial dispuesto testamentariamente no es adjudicado a la herencia del testador?
+A) El legado queda sin efecto por imposibilidad sobrevenida.
+B) Se entiende legado el valor que el bien tenía al tiempo del fallecimiento del testador.
+C) El heredero adquiere automáticamente la totalidad del bien ganancial.
+OK: B
+EXP: Si el bien no se adjudica a la herencia del testador, el precepto reconduce la atribución al valor del bien en el momento del fallecimiento.
+
+#ID = 8
+
+// [51]
+Q: ¿Cuál es la regla general sobre la administración y disposición de los bienes propios de cada cónyuge?
+A) Cada cónyuge administra y dispone de sus propios bienes, sin que el otro pueda atribuirse su representación si no le ha sido conferida.
+B) La administración de los bienes propios corresponde conjuntamente a ambos cónyuges por razón del matrimonio.
+C) Los bienes propios quedan sometidos al mismo régimen de gestión conjunta que los bienes gananciales.
+OK: A
+EXP: El texto establece como principio que cada cónyuge conserva la administración y disposición de sus bienes propios y excluye la representación espontánea del otro.
+    `;
+    
+
+    const BANCO_TEXTO = [BANCO_1, BANCO_2, BANCO_3, BANCO_4, BANCO_5]
+      .map(s => String(s || "").trim())
+      .filter(Boolean)
+      .join("\n\n");
+
+    /* =========================
+       HELPERS
+    ========================= */
+    function escapeHtml(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+    
+    function quitarTituloRepetidoSeguro(texto, titulo){
+  const t0 = String(texto || "");
+  const h0 = String(titulo || "");
+  if(!t0.trim() || !h0.trim()) return t0.trim();
+
+  // Normaliza: minúsculas + espacios raros (NBSP) + BOM
+  const clean = s => String(s)
+    .replace(/^\uFEFF/, "")          // BOM
+    .replace(/\u00A0/g, " ")         // NBSP -> espacio normal
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+
+  const t = clean(t0);
+  const h = clean(h0);
+
+  if(!t.startsWith(h)) return t0.trim();
+
+  // Corta del texto ORIGINAL, pero usando la longitud del título ORIGINAL
+  // (buscamos el match real al principio ignorando mayúsculas y espacios raros)
+  const re = new RegExp(
+    "^\\s*" + h0.trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")   // escape regex
+      .replace(/\s+/g, "[\\s\\u00A0]+")         // admite NBSP
+    + "[\\s\\u00A0]+",
+    "i"
+  );
+
+  return t0.replace(re, "").trim();
+}
+
+
+
+
+function formatearParrafos(t){
+  const BUL = "[-\\u2010\\u2011\\u2012\\u2013\\u2014\\u2212\\u2022]"; // -, ‐, -, ‒, –, —, −, •
+  const WS  = "[\\s\\u00A0\\u2000-\\u200A\\u202F\\u205F\\u3000]+";   // espacios raros PDF incluidos
+
+  // 1) Normaliza espacios “raros” y saltos
+  let raw = String(t ?? "")
+    .replace(/\r/g,"")
+    .replace(/[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g, " "); // NBSP/EMSP/etc -> espacio normal
+
+  // 2) ✅ Inserta saltos antes de enumeraciones internas "1) 2) 3)"
+  // Caso típico: "puede ser: 1) ... 2) ... 3) ..."
+  raw = raw
+    // después de : ; . ! ? -> salto + "n)"
+    .replace(/([:;.!?])\s*(\d+\)\s+)/g, "$1\n$2")
+    // si vienen encadenadas sin puntuación clara pero con mucho espacio: " ...  2) ..."
+    .replace(/(\s{2,})(\d+\)\s+)/g, "\n$2");
+
+  const lines = raw
+    .split("\n")
+    .map(l => l.replace(/\s+$/,"")); // trimEnd
+
+  const connectors = /^(Además|En consecuencia|No obstante|Sin embargo|Asimismo|Por tanto|Por ello|Finalmente|En cambio|De hecho|Ahora bien|Por otro lado|En efecto|Así,?|En primer lugar|En segundo lugar)\b/i;
+
+  const isNumParenItem = (s) => /^\d+\)\s+/.test(s.trimStart());
+  const isLetterItem   = (s) => /^[a-z]\)\s+/i.test(s.trimStart());
+  const isBullet       = (s) => new RegExp("^" + BUL + WS).test(s.trimStart());
+
+  const isListOrHeading = (s) =>
+    new RegExp("^(\\d+(?:\\.\\d+)*\\.|\\d+\\)|" + BUL + "|[a-z]\\))" + WS).test(s.trimStart());
+
+  const splitBulletAtFirstSentence = (s) => {
+    if(!isBullet(s)) return null;
+    const m = s.match(new RegExp("([.!?])" + WS));
+    if(!m) return null;
+    const idx = s.search(new RegExp("([.!?])" + WS));
+    const cut = idx + 1;
+    const left  = s.slice(0, cut).trim();
+    const right = s.slice(cut).replace(new RegExp("^" + WS), "").trim();
+    if(!right) return null;
+    return { left, right };
+  };
+
+  const paras = [];
+  let current = "";
+
+  const flush = () => {
+    if(current.trim()) paras.push(current.trim());
+    current = "";
+  };
+
+  for (let i=0; i<lines.length; i++){
+    const line = lines[i].trimStart();
+
+    if(!line.trim()){
+      flush();
+      continue;
+    }
+
+    if(isListOrHeading(line)){
+      flush();
+
+      // a) b) c)
+      if(isLetterItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // 1) 2) 3) -> línea propia
+      if(isNumParenItem(line)){
+        paras.push(line.trim());
+        current = "";
+        continue;
+      }
+
+      // viñeta
+      if(isBullet(line)){
+        const sp = splitBulletAtFirstSentence(line);
+        if(sp){
+          paras.push(sp.left);
+          current = sp.right;
+        }else{
+          paras.push(line.trim());
+          current = "";
+        }
+        continue;
+      }
+
+      current = line.trim();
+      continue;
+    }
+
+    if(current && /[.!?]$/.test(current) && connectors.test(line.trim())){
+      flush();
+      current = line.trim();
+      continue;
+    }
+
+    current += (current ? " " : "") + line.trim();
+  }
+
+  flush();
+
+  // Render: si es "1) ..." lo pintamos como bloque tipo lista (sangría real)
+  return paras.map(p => {
+    const s = String(p);
+    const m = s.match(/^(\d+)\)\s+([\s\S]+)$/);
+    if(m){
+      return `<p class="li"><span class="liNum">${escapeHtml(m[1])})</span>${escapeHtml(m[2])}</p>`;
+    }
+    return `<p>${escapeHtml(s)}</p>`;
+  }).join("");
+}
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+
+    // Jerarquía epígrafes
+    function esDescendiente(idHijo, idPadre){
+      return String(idHijo).startsWith(String(idPadre) + ".");
+    }
+    function parentId(id){
+      const parts = String(id || "").split(".");
+      if(parts.length <= 1) return null;
+      parts.pop();
+      return parts.join(".");
+    }
+
+    /* =========================
+       PDF -> epígrafes
+    ========================= */
+    function extraerEncabezados(){
+      // Soporta: "1. TÍTULO" y "1.1. TÍTULO"
+      const re = /^\s*(\d+(?:\.\d+)*)\.\s+(.+?)\s*$/;
+      const lines = String(PDF_TEXTO).replace(/\r/g,"").split("\n");
+      const out = [];
+      for(const l of lines){
+        const m = l.match(re);
+        if(!m) continue;
+        out.push({ id:m[1], titulo:`${m[1]}. ${m[2].trim()}` });
+      }
+      return out;
+    }
+
+    function textoPorId(id){
+      if(!id) return "";
+      const safe = id.replace(/\./g,"\\.");
+      const reStart = new RegExp(`(^|\\n)${safe}\\.\\s+`, "m");
+      const full = String(PDF_TEXTO);
+      const m = full.match(reStart);
+      if(!m) return "";
+      const startIdx = full.indexOf(m[0]) + m[0].length;
+      const rest = full.slice(startIdx);
+      const nextIdx = rest.search(/\n\s*\d+(?:\.\d+)*\.\s+/);
+      const chunk = (nextIdx === -1 ? rest : rest.slice(0, nextIdx)).trim();
+      return chunk;
+    }
+    
+    
+       
+    function normalizeKey(s){
+  return String(s || "")
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")  // quita tildes
+    .replace(/\s+/g," ")
+    .replace(/[^\p{L}\p{N} ]/gu,"")                   // quita signos raros
+    .trim();
+}
+
+    /* =========================
+       PARSER banco
+    ========================= */
+    function parseBanco(texto){
+      const t = String(texto || "").replace(/\r/g, "");
+      const bloques = t.split(/\n(?=#ID\s*=\s*)/g).map(x=>x.trim()).filter(Boolean);
+      const QUIZ = {};
+      for(const bloque of bloques){
+        const mId = bloque.match(/^#ID\s*=\s*([0-9]+(?:\.[0-9]+)*)\s*$/m);
+        if(!mId) continue;
+        const id = mId[1];
+
+        const sinHeader = bloque.replace(/^#ID\s*=\s*[0-9]+(?:\.[0-9]+)*\s*$/m, "").trim();
+        const partesQ = sinHeader.split(/\n(?=Q:\s*)/g).map(x=>x.trim()).filter(Boolean);
+
+        const preguntas = [];
+        for(const pq of partesQ){
+          // ✅ acepta: // [1]  o  // N: 1
+          const nMatch = pq.match(/^\/\/\s*(?:N:|\[)\s*([0-9]{1,3})\s*\]?\s*$/m);
+          const qMatch = pq.match(/^Q:\s*(.+)$/m);
+          if(!qMatch) continue;
+
+          const aMatch = pq.match(/^A\)\s*(.+)$/m);
+          const bMatch = pq.match(/^B\)\s*(.+)$/m);
+          const cMatch = pq.match(/^C\)\s*(.+)$/m);
+          const okMatch = pq.match(/^OK:\s*([ABC])\s*$/m);
+          const expMatch = pq.match(/^EXP:\s*([\s\S]+)$/m);
+
+          if(!aMatch || !bMatch || !cMatch || !okMatch) continue;
+
+          const preguntaTxt = qMatch[1].trim();
+          const uid = `${id}::${normalizeKey(preguntaTxt)}`;
+
+          preguntas.push({
+            __id: id,
+            __uid: uid,
+            __n: nMatch ? Number(nMatch[1]) : null,
+            pregunta: preguntaTxt,
+            a: aMatch[1].trim(),
+            b: bMatch[1].trim(),
+            c: cMatch[1].trim(),
+            correcta: okMatch[1].toLowerCase(),
+            explicacion: expMatch ? expMatch[1].trim() : ""
+          });
+        }
+
+        if(!QUIZ[id]) QUIZ[id] = [];
+        QUIZ[id].push(...preguntas);
+      }
+      return QUIZ;
+    }
+
+    const QUIZ = parseBanco(BANCO_TEXTO);
+
+    function buildTemaPool(QUIZ){
+      const pool = [];
+      for(const id of Object.keys(QUIZ || {})){
+        const list = QUIZ[id];
+        if(Array.isArray(list)) pool.push(...list);
+      }
+      return pool;
+    }
+    let TEMA_POOL = buildTemaPool(QUIZ);
+
+    /* =========================
+       STORAGE
+    ========================= */
+    const STORAGE_KEY = "DA_TEMA2_STATS_V1";
+    function loadStore(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(!raw) return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+        const parsed = JSON.parse(raw);
+        return {
+          wrongUids: parsed.wrongUids || {},
+          stats: parsed.stats || { ok:0, bad:0, blank:0 }
+        };
+      }catch{
+        return { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      }
+    }
+    function saveStore(){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(STORE));
+      }catch{}
+    }
+    let STORE = loadStore();
+
+    function markWrong(uid){ STORE.wrongUids[uid] = true; saveStore(); }
+    function clearWrong(uid){ delete STORE.wrongUids[uid]; saveStore(); }
+    function isWrong(uid){ return !!STORE.wrongUids[uid]; }
+
+    /* =========================
+       DOM refs
+    ========================= */
+    const modalOverlay = document.getElementById("modalOverlay");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const btnNextQuestion = document.getElementById("btnNextQuestion");
+    const btnBlank = document.getElementById("btnBlank");
+
+    const modalPill = document.getElementById("modalPill");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalQuestion = document.getElementById("modalQuestion");
+    const modalOptions = document.getElementById("modalOptions");
+    const modalFeedback = document.getElementById("modalFeedback");
+    const modalFeedbackTitle = document.getElementById("modalFeedbackTitle");
+    const modalExplanation = document.getElementById("modalExplanation");
+    const modalCounter = document.getElementById("modalCounter");
+    const scoreLine = document.getElementById("scoreLine");
+    const modalTimer = document.getElementById("modalTimer");
+
+    const btnTemaRandom = document.getElementById("btnTemaRandom");
+    const selTemaN = document.getElementById("selTemaN");
+    const btnSoloFalladas = document.getElementById("btnSoloFalladas");
+    const btnResetStats = document.getElementById("btnResetStats");
+    const badgeTemaTotal = document.getElementById("badgeTemaTotal");
+
+    /* =========================
+       ESTADO QUIZ
+    ========================= */
+    let currentMode = "epigrafe";
+    let currentId = null;
+    let deck = [];
+    let idx = 0;
+    let currentQ = null;
+    let answered = false;
+
+    let ses_ok = 0, ses_bad = 0, ses_blank = 0;
+
+    function computeUNEDGrade(){
+      const total = ses_ok + ses_bad + ses_blank;
+      const puntos =
+        (ses_ok * SCORE_OK) -
+        (ses_bad * SCORE_BAD) +
+        (ses_blank * SCORE_BLANK);
+      return { puntos, total };
+    }
+    function renderScoreLine(){
+      const { puntos, total } = computeUNEDGrade();
+      scoreLine.textContent =
+        `Aciertos ${ses_ok} · Fallos ${ses_bad} · Blancos ${ses_blank} · Puntos ${puntos.toFixed(2)} (de ${total})`;
+    }
+
+    /* =========================
+       TIMER
+    ========================= */
+    let timerStart = 0;
+    let timerHandle = null;
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]] = [a[j],a[i]];
+      }
+      return a;
+    }
+    function fmtTime(ms){
+      const s = Math.floor(ms/1000);
+      const mm = String(Math.floor(s/60)).padStart(2,"0");
+      const ss = String(s%60).padStart(2,"0");
+      return `${mm}:${ss}`;
+    }
+    function stopTimer(){
+      if(timerHandle){
+        clearInterval(timerHandle);
+        timerHandle = null;
+      }
+    }
+    function startTimer(){
+      stopTimer();
+      timerStart = Date.now();
+      timerHandle = setInterval(()=>{
+        modalTimer.textContent = fmtTime(Date.now() - timerStart);
+      }, 250);
+    }
+    function openModal(){
+      modalOverlay.classList.add("show");
+      modalOverlay.setAttribute("aria-hidden","false");
+      startTimer();
+    }
+    function closeModal(){
+      modalOverlay.classList.remove("show");
+      modalOverlay.setAttribute("aria-hidden","true");
+      stopTimer();
+
+      currentMode = "epigrafe";
+      currentId = null;
+      deck = [];
+      idx = 0;
+      currentQ = null;
+      answered = false;
+
+      modalOptions.innerHTML = "";
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+      modalQuestion.textContent = "—";
+      modalCounter.textContent = "0/0";
+      modalTimer.textContent = "00:00";
+    }
+
+    function setFeedback(kind, title, explanation){
+      modalFeedback.classList.remove("ok","bad");
+      modalFeedback.classList.add(kind);
+      modalFeedbackTitle.textContent = title;
+      modalExplanation.textContent = explanation ? explanation : "";
+      modalFeedback.classList.add("show");
+    }
+
+    /* =========================
+       DECK BUILDERS
+    ========================= */
+    function buildDeckForEpigrafe(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      return shuffle(list);
+    }
+    function buildDeckForTema(n){
+      const pool = TEMA_POOL.slice();
+      const barajado = shuffle(pool);
+      const wanted = Math.max(1, Math.min(Number(n || 20), barajado.length));
+      return barajado.slice(0, wanted);
+    }
+    function buildDeckForFalladas(){
+      const pool = TEMA_POOL.filter(q => isWrong(q.__uid));
+      return shuffle(pool);
+    }
+
+    function getNextFromDeck(){
+      if(!deck.length) return null;
+      if(idx >= deck.length){
+        if(currentMode === "tema") return null;
+        deck = shuffle(deck);
+        idx = 0;
+      }
+      const q = deck[idx];
+      idx += 1;
+      return q;
+    }
+
+    /* =========================
+       RENDER PREGUNTA
+    ========================= */
+    function renderQuestion(){
+      const q = getNextFromDeck();
+      if(!q){
+        alert("Fin del test.");
+        closeModal();
+        return;
+      }
+
+      currentQ = q;
+      answered = false;
+      modalFeedback.className = "feedback";
+      modalFeedback.classList.remove("show");
+
+      modalPill.textContent = q.__id || currentId || "—";
+      modalTitle.textContent =
+        currentMode === "tema" ? "Modo tema (aleatorio)" :
+        currentMode === "falladas" ? "Solo falladas" :
+        "Por epígrafe";
+
+      modalQuestion.textContent = q.pregunta;
+      modalCounter.textContent = `${Math.min(idx, deck.length)}/${deck.length}`;
+
+      let opts = [
+        { label:"A", text:q.a, isCorrect: q.correcta === "a" },
+        { label:"B", text:q.b, isCorrect: q.correcta === "b" },
+        { label:"C", text:q.c, isCorrect: q.correcta === "c" },
+      ];
+      opts = shuffle(opts);
+
+      modalOptions.innerHTML = opts.map(o=>`
+        <button class="optBtn" type="button" data-correct="${o.isCorrect ? "1" : "0"}">
+          <span class="k">${o.label}</span>${escapeHtml(o.text)}
+        </button>
+      `).join("");
+
+      [...modalOptions.querySelectorAll(".optBtn")].forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          if(answered) return;
+          answered = true;
+
+          const chosenCorrect = btn.getAttribute("data-correct") === "1";
+
+          if(chosenCorrect){
+            ses_ok += 1;
+            clearWrong(q.__uid);
+            setFeedback("ok", "Correcto ✅", q.explicacion);
+          }else{
+            ses_bad += 1;
+            markWrong(q.__uid);
+            const correctLabel = (q.correcta || "").toUpperCase();
+            setFeedback("bad", `Incorrecto ❌ (Correcta: ${correctLabel})`, q.explicacion);
+          }
+
+          renderScoreLine();
+          refreshTemaStats();
+        });
+      });
+    }
+
+    /* =========================
+       START MODOS
+    ========================= */
+    function startQuizForId(id){
+      const list = Array.isArray(QUIZ[id]) ? QUIZ[id] : [];
+      if(!list.length){
+        alert(`No hay preguntas cargadas para el epígrafe ${id}.`);
+        return;
+      }
+      currentMode = "epigrafe";
+      currentId = id;
+      deck = buildDeckForEpigrafe(id);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizTema(){
+      if(!TEMA_POOL.length){
+        alert("No hay preguntas cargadas en el tema todavía.");
+        return;
+      }
+      const n = selTemaN ? Number(selTemaN.value) : 20;
+      currentMode = "tema";
+      currentId = "TEMA";
+      deck = buildDeckForTema(n);
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function startQuizFalladas(){
+      const d = buildDeckForFalladas();
+      if(!d.length){
+        alert("No tienes falladas guardadas aún.");
+        return;
+      }
+      currentMode = "falladas";
+      currentId = "FALLADAS";
+      deck = d;
+      idx = 0;
+      ses_ok = 0; ses_bad = 0; ses_blank = 0;
+      renderScoreLine();
+      openModal();
+      renderQuestion();
+    }
+
+    function blankQuestion(){
+      if(answered) return;
+      answered = true;
+      ses_blank += 1;
+      setFeedback("bad", "En blanco ⚪", currentQ ? currentQ.explicacion : "");
+      renderScoreLine();
+      refreshTemaStats();
+    }
+
+    function refreshTemaStats(){
+      const total = TEMA_POOL.length;
+      const wrongCount = Object.keys(STORE.wrongUids || {}).length;
+      if(badgeTemaTotal){
+        badgeTemaTotal.textContent = `${total} cargadas · ${wrongCount} falladas guardadas`;
+      }
+      if(diag){
+        diag.innerHTML = `Diagnóstico: <b>OK</b> · Epígrafes detectados: <b>${extraerEncabezados().length}</b> · Preguntas cargadas: <b>${TEMA_POOL.length}</b>`;
+      }
+    }
+
+    /* =========================
+       ✅ RENDER ACORDEÓN EN CASCADA (ÁRBOL)
+    ========================= */
+    const cont = document.getElementById("contenido");
+    cont.innerHTML = "";
+
+    const heads = extraerEncabezados();
+
+    // Construye nodos
+    const nodesById = new Map();
+    heads.forEach(h=>{
+      nodesById.set(h.id, { ...h, children: [] });
+    });
+
+    // Enlaza padre-hijo
+    const roots = [];
+    heads.forEach(h=>{
+      const node = nodesById.get(h.id);
+      const pid = parentId(h.id);
+      if(pid && nodesById.has(pid)){
+        nodesById.get(pid).children.push(node);
+      }else{
+        roots.push(node);
+      }
+    });
+
+    // Ordena hijos numéricamente (1.10 después de 1.2, etc.)
+    function cmpIds(a,b){
+      const pa = a.id.split(".").map(Number);
+      const pb = b.id.split(".").map(Number);
+      const len = Math.max(pa.length, pb.length);
+      for(let i=0;i<len;i++){
+        const xa = pa[i] ?? -1;
+        const xb = pb[i] ?? -1;
+        if(xa !== xb) return xa - xb;
+      }
+      return 0;
+    }
+    function sortTree(list){
+      list.sort(cmpIds);
+      list.forEach(n=>sortTree(n.children));
+    }
+    sortTree(roots);
+
+    // Render recursivo
+function renderNode(node){
+  let txt = textoPorId(node.id);
+  const idea = (IDEAS_CLAVE[node.id] ?? "").toString().trim();
+  const quizCount = Array.isArray(QUIZ[node.id]) ? QUIZ[node.id].length : 0;
+
+  const titleNoId = node.titulo.replace(
+    new RegExp("^" + node.id.replace(/\./g,"\\.") + "\\.\\s*"),
+    ""
+  );
+
+  // ✅ QUITA el título repetido al inicio del texto
+  txt = quitarTituloRepetidoSeguro(txt, titleNoId);
+
+  const d = document.createElement("details");
+  d.open = false;
+  d.dataset.id = node.id;
+
+      d.innerHTML = `
+        <summary>
+          <div class="sumLeft">
+            <span class="pill">${escapeHtml(node.id)}</span>
+            <span class="sumTitle">${escapeHtml(titleNoId)}</span>
+          </div>
+          <div class="sumRight" style="display:flex; gap:10px; align-items:center;">
+            ${quizCount ? `<span class="badge"></span>` : `<span class="badge"></span>`}
+          </div>
+        </summary>
+
+        <div class="inner">
+          ${txt ? `<div class="prio"><div class="tag">Texto prioritario</div>${formatearParrafos(txt)}</div>` : ""}
+          ${idea ? `<div class="idea"><div class="tag">Idea clave</div>${escapeHtml(idea)}</div>` : ""}
+
+          <div class="rowActions">
+            ${quizCount ? `<button class="btn btnPrimary" type="button" data-quiz="${escapeHtml(node.id)}">Pregúntame</button>` : ""}
+            <span class="badge">Epígrafe ${escapeHtml(node.id)}</span>
+          </div>
+
+          ${quizCount ? `
+            <div class="quizBox">
+              <div class="tag">Banco (cargado)</div>
+              <div style="opacity:.85; font-size:13px">
+                Tienes ${quizCount} preguntas en este epígrafe.
+              </div>
+            </div>
+          ` : ""}
+
+          <div class="children" style="margin-top:10px; padding-left:14px; border-left:2px solid rgba(17,24,39,.08)"></div>
+        </div>
+      `;
+
+      // ✅ Cierre inteligente: deja abierto ancestros + descendientes; cierra lo demás
+      d.addEventListener("toggle", () => {
+        if(!d.open) return;
+
+        const idActual = d.dataset.id;
+
+        cont.querySelectorAll("details").forEach(other=>{
+          if(other === d) return;
+          const otherId = other.dataset.id;
+          if(!otherId) return;
+
+          const esDescDeActual = esDescendiente(otherId, idActual);
+          const esAncestroDeActual = esDescendiente(idActual, otherId);
+
+          if(!esDescDeActual && !esAncestroDeActual){
+            other.open = false;
+          }
+        });
+      });
+
+      // Render hijos dentro del padre (cascada real)
+      const childrenBox = d.querySelector(".children");
+      node.children.forEach(ch=>{
+        childrenBox.appendChild(renderNode(ch));
+      });
+
+      return d;
+    }
+
+    if(!heads.length){
+      cont.innerHTML = `
+        <div class="prio">
+          <div class="tag">No se detectaron epígrafes</div>
+          <div style="opacity:.85">
+            El detector busca líneas tipo <b>“1. TÍTULO”</b> o <b>“1.1. TÍTULO”</b> (con punto y espacio).<br><br>
+            Primeros 300 caracteres del texto:<br><br>
+            <code style="white-space:pre-wrap">${escapeHtml(PDF_TEXTO.slice(0,300))}</code>
+          </div>
+        </div>
+      `;
+    }else{
+      roots.forEach(r=>cont.appendChild(renderNode(r)));
+    }
+
+    // Click de botones “Pregúntame”
+    cont.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-quiz]");
+      if(!btn) return;
+      const id = btn.getAttribute("data-quiz");
+      if(!id) return;
+      startQuizForId(id);
+    });
+
+    /* =========================
+       EVENTOS UI
+    ========================= */
+    btnCloseModal.addEventListener("click", closeModal);
+    modalOverlay.addEventListener("click", (e)=>{
+      if(e.target === modalOverlay) closeModal();
+    });
+    btnNextQuestion.addEventListener("click", renderQuestion);
+    btnBlank.addEventListener("click", blankQuestion);
+
+    document.addEventListener("keydown", (e)=>{
+      if(!modalOverlay.classList.contains("show")) return;
+      if(e.key === "Escape") closeModal();
+      if(e.key === "Enter") renderQuestion();
+    });
+
+    btnTemaRandom.addEventListener("click", startQuizTema);
+    btnSoloFalladas.addEventListener("click", startQuizFalladas);
+
+    btnResetStats.addEventListener("click", ()=>{
+      if(!confirm("¿Seguro que quieres borrar falladas y stats guardadas?")) return;
+      STORE = { wrongUids: {}, stats: { ok:0, bad:0, blank:0 } };
+      saveStore();
+      refreshTemaStats();
+      alert("Listo: reiniciado.");
+    });
+
+    // ✅ Arranque
+    refreshTemaStats();
+    renderScoreLine();
+
+  } catch (err) {
+    showErr("Error fatal: " + (err && err.message ? err.message : String(err)));
+    if(diag){
+      diag.innerHTML = `Diagnóstico: <b>ERROR</b>`;
+    }
+  }
+});
+</script>
+</body>
+</html>
